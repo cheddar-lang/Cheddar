@@ -1,0 +1,80 @@
+// Defines String class
+
+
+// new VSL.__TYPE__(VSL.__CLASS__.String, LITERAL, VALUE);
+
+extends String {
+
+  ::CONSTRUCTOR -> (LEXER) {
+  }
+
+  ::CAST Number -> {
+    return this.__REGISTER__[0]
+  }
+
+  ::CAST Array -> {
+    return this.__REGISTER__[0].split("")
+  }
+
+
+  ::GET len -> {
+    return Number:this.__REGISTER__[0].split("").length;
+  }
+
+  ::SET len -> {
+
+  }
+
+  split -> DELIMITER {
+    def r Array:[];
+    for i in this {
+      if this[i] == DELIMITER {
+        r.end("")
+      } else {
+        r.last += this[i]
+      }
+    }
+  }
+
+  cut -> (START, END = START) {
+    def A Number;
+    def B Number;
+
+    if START.type !== Number {
+      throw ValueError "Expected cut value type #<START.type>"
+    }
+
+    if START < 0 {
+      A = this.len + START
+    }
+
+    if END < 0 {
+      B = this.len + END
+    }
+
+    if START > END {
+      return ""
+    }
+
+    def R String:"";
+    for (i, j) in this {
+      if END > j > START {
+        R += this[i]
+      }
+    }
+  }
+
+  find -> (STRING, START = 0) {
+    def index Number:-1;
+    for (i, j) in this {
+      if this.cut(STRING.len) == STRING & j > START {
+        index = STRING
+        break;
+      }
+    }
+    return index;
+  }
+
+}
+
+interface __TYPE__.__DIGIT__="04689"

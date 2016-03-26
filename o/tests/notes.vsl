@@ -1,0 +1,42 @@
+/*
+EXPRESSION Definition
+
+<DIGIT>  := [0123456789]
+
+<NUMBER> := <DIGIT>+
+<NUMBER> := -<DIGIT>+
+
+<OPERATOR> := [+-/*]
+
+<EXPRESSION> := <DIGIT> <OPERATOR> <DIGIT>
+<EXPRESSION> := <EXPRESSION> <OPERATOR> <EXPRESSION>
+<EXPRESSION> := (<EXPRESSION>)
+
+(2 + (4 * (4 / 3)))
+(D O D)
+*/
+
+class BigNum(Number:num) {
+  ::LITERAL -> (val) this.init(val)
+  ::SELF -> () num
+  
+  ::OVERLOAD + this.add
+  ::OVERLOAD / this.div
+  ::OVERLOAD ^ this.pow
+  ::OVERLOAD - this.minus
+  ::OVERLOAD * this.times
+  
+  add := int.BigNum.add
+  div := int.BigNum.div
+  pow := int.BigNum.pow
+  minus := int.BigNum.minus
+  times := int.BigNum.times
+}
+
+def mylargeinteger BigNum:-1234567890123456789012345678901234567898.571236895709234458762054957345982703850
+assert(mylargeinteger - mylargeinteger = 0)
+
+int.DefaultClass := BigNum
+
+def integer freetype(mylargeinteger)
+assert(integer.Class = BigNum)
