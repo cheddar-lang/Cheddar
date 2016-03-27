@@ -9,72 +9,55 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var VSLTokens = (function () {
-    function VSLTokens(tokens) {
-        _classCallCheck(this, VSLTokens);
+var CheddarTokens = (function () {
+    function CheddarTokens(tokens) {
+        _classCallCheck(this, CheddarTokens);
 
-        if (Number.isInteger(tokens.length) && tokens.splice) {
+        if (tokens === null) {
+            this.length = -1;
+        } else if (Number.isInteger(tokens.length) && tokens.splice) {
             this.length = tokens.length;
             for (var i = 0; i < tokens.length; i++) {
                 this[i] = tokens[i];
             }
-        } else if (tokens === null) {
-            this.length = -1;
         } else {
+            console.log("-----A-----");
+            console.log(tokens);
+            console.log("-----B-----");
             throw new TypeError("VSLTokens: provided instantiation token is invalid");
         }
     }
 
-    _createClass(VSLTokens, [{
+    _createClass(CheddarTokens, [{
         key: "UpdateTokends",
         value: function UpdateTokends(tokens) {
-            if (Number.isInteger(tokens.length) && tokens.splice) {
+            if (tokens === null) {
+                this.length = -1;
+            } else if (Number.isInteger(tokens.length) && tokens.splice) {
                 this.length = tokens.length;
                 for (var i = 0; i < tokens.length; i++) {
                     this[i] = tokens[i];
                 }
-            } else if (tokens === null) {
-                this.length = -1;
             } else {
                 throw new TypeError("VSLTokens: provided update token is invalid");
             }
         }
+
+        // Does nothing ATM
     }, {
-        key: Symbol.iterator,
-        value: regeneratorRuntime.mark(function value() {
-            var i;
-            return regeneratorRuntime.wrap(function value$(context$2$0) {
-                while (1) switch (context$2$0.prev = context$2$0.next) {
-                    case 0:
-                        i = 0;
+        key: "splice",
+        value: function splice() {}
 
-                    case 1:
-                        if (!(i < this.length)) {
-                            context$2$0.next = 7;
-                            break;
-                        }
-
-                        context$2$0.next = 4;
-                        return this[i];
-
-                    case 4:
-                        i++;
-                        context$2$0.next = 1;
-                        break;
-
-                    case 7:
-                        return context$2$0.abrupt("return", this);
-
-                    case 8:
-                    case "end":
-                        return context$2$0.stop();
-                }
-            }, value, this);
-        })
+        //* [Symbol.iterator]() {
+        //    for (let i = 0; i < this.length; i++) {
+        //        yield this[i];
+        //    }
+        //    return this;
+        //}
     }]);
 
-    return VSLTokens;
+    return CheddarTokens;
 })();
 
-exports["default"] = VSLTokens;
+exports["default"] = CheddarTokens;
 module.exports = exports["default"];

@@ -1,6 +1,6 @@
-// Import all constants
 import {DIGITS, ALPHA, UALPHA, MALPHA, NUMERALS, WHITESPACE, OP, UOP, SYMBOL_FILTER} from '../chars';
-import '../tok/tok'; // Import Tokenizer class
+import CheddarTokens from '../tok/tks'; // Import Tokenizer class
+import CheddarTok from '../tok/tok'; // Import Tokens Class
 
 // Set data
 const OPLIST = [].concat(...OP.concat(UOP));
@@ -26,7 +26,6 @@ const Tokenize = (c, i = 0, r = false) => {
     // |   |- bases
     // |       |- binary
     // |       |- hexadecimal
-    // | --- TODO ---
     // |- binary operators
     // |- unary operators
 
@@ -238,15 +237,17 @@ const Tokenize = (c, i = 0, r = false) => {
 
     }
 
-    return [i, tok_list];
-
+    return [i, new CheddarTokens(tok_list)];
+    
 };
 
-export default class VSLTokExpression extends VSLTok {
+export default class CheddarTokExpression extends CheddarTok {
     constructor(Code = "", Index = 0) {
         super(Code, Index)
     }
     exec(Recurse = false) {
-        this.Tokens = Tokenize(this.Code, this.Index, Recurse);
+        let Result = Tokenize(this.Code, this.Index, Recurse);
+        [this.Index, this.Tokens] = Result;
+        return this;
     }
 }

@@ -8,31 +8,38 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-require('VSLTokens');
+var _tks = require('./tks');
 
-var VSLTok = (function () {
-    function VSLTok() {
+var _tks2 = _interopRequireDefault(_tks);
+
+var CheddarTok = (function () {
+    function CheddarTok() {
         var Code = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
         var Index = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
 
-        _classCallCheck(this, VSLTok);
+        _classCallCheck(this, CheddarTok);
 
         this.Code = Code; // Tokenize given code
         this.Index = Index; // Tokenize given code at given index
-        this.Tokens = new VSLTokens(null); // Result for Tokenized
+        this._Tokens = new _tks2["default"](null); // Result for Tokenized
     }
 
-    _createClass(VSLTok, [{
+    _createClass(CheddarTok, [{
         key: "Tokens",
+        get: function get() {
+            return this._Tokens;
+        },
         set: function set(v) {
-            if (v instanceof VSLTokens) this.Tokens = v;else throw new TypeError("VSLTok: provided update `Tokens` is invalid");
+            if (v instanceof _tks2["default"]) this._Tokens = v;else throw new TypeError("VSLTok: provided update `Tokens` is invalid");
         }
     }]);
 
-    return VSLTok;
+    return CheddarTok;
 })();
 
-exports["default"] = VSLTok;
+exports["default"] = CheddarTok;
 module.exports = exports["default"];
