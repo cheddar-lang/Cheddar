@@ -2,36 +2,29 @@ import CheddarLexer from '../tok/lex';
 import {TOKEN_START} from '../chars';
 import * as CheddarError from '../err/list';
 
-export default class CheddarLiteral {
+export default class CheddarLiteral extends CheddarLexer {
     constructor(Code, Index) {
-        // this.InternelRepresentation = InternelRepresentation;
-
-        this.Code  = null;
-        this.Index = null;
-
-        this.Lexer = new CheddarLexer(null, null);
+        super(Code, Index);
     }
-
-    load(Code, Index) { this.Lexer = new CheddarLexer(Code, Index) }
-
+    
     exec() {
 
-        this.Lexer.open();
+        this.open();
 
-        let chr = this.Lexer.getchar();
+        let chr = this.getchar();
 
         if (TOKEN_START.indexOf(chr) > -1) {
-            this.Lexer.addtoken(chr);
+            this.addtoken(chr);
 
-            while (chr = this.Lexer.getchar())
+            while (chr = this.getchar())
                 if (TOKEN_START.indexOf(chr) > -1)
-                    this.Lexer.addtoken(chr);
+                    this.addtoken(chr);
                 else break;
 
-            return this.Lexer.close();
+            return this.close();
 
         } else {
-            return this.Lexer.error(CheddarError.EXIT_NOTFOUND);
+            return this.error(CheddarError.EXIT_NOTFOUND);
         }
 
     }
