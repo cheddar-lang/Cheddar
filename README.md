@@ -8,9 +8,10 @@ To get an idea of how the syntax is going to look, here are examples:
 
 ```groovy
 class Animal(String: Name, Int: Age) {
-   # variable initialization is implicit
-   #  but you can explicitly declare a
-   # main {} block to initialize yoour variables
+   /* variable initialization is implicit
+    *  but you can explicitly declare a
+    * main {} block to initialize yoour variables
+    */
    
    main {
        self.Name := Name
@@ -22,8 +23,9 @@ class Animal(String: Name, Int: Age) {
 
 
 class Dog(String: Name, Int:Age, String:Breed) extends Animal {
-    # super is implicit, but you can
-    # explicitly call super using:
+    /* super is implicit, but you can
+     * explicitly call super using:
+     */
     super Name, Age
     
     speak := => "Woof! I am a #{self.Breed} dog, I am #{self.Age} years old and am called #{self.Name}"
