@@ -11,10 +11,18 @@ The best way to show the language is examples:
 Classes
 
 ```scala
-Class Animal(String: Name, Int: Age) {
-   this.Name := Name
-   this.Age  := Age
+class Animal(String: Name, Int: Age) {
+   Name := Name
+   Age  := Age
    
-   speak => "Hello, my name is #{this.Name}, I am #{this.Age} years old"
+   speak => "Hello, my name is #{self.Name}, I am #{self.Age} years old"
+}
+
+
+class Dog(String: Name, Int:Age, String:Breed) {
+    super Name, Age
+    Breed := Breed
+    
+    speak => "Woof! I am a #{self.Breed} dog, I am #{self.Age} years old and am called #{self.Name}"
 }
 ```
