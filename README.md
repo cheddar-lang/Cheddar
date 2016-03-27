@@ -4,11 +4,7 @@ Cheddar is (or supposed to be) a powerful, reflective, object-oriented, high-lev
 
 ## Example Programs
 
-The best way to show the language is examples:
-
----
-
-Classes
+To get an idea of how the syntax is going to look, here are examples:
 
 ```scala
 class Animal(String: Name, Int: Age) {
