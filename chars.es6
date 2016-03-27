@@ -11,6 +11,10 @@
   * OP  infix operators
   * UOP unary operators 
   * SYMBOL_FILTER valid characters in operators
+  *
+  * STRING_DELIMITERS
+  *
+  * RESERVED reserved token names
 **/
 export const DIGITS = "0123456789";
 export const ALPHA  = "abcdefghijklmnopqrstuvwxyz";
@@ -20,6 +24,9 @@ export const MALPHA = ALPHA + UALPHA;
 export const NUMERALS = `0123456789ABCDEF`;
 
 export const WHITESPACE = "\r\n\t\f ";
+
+export const TOKEN_START = MALPHA + "$_";
+export const TOKEN_END = TOKEN_START + DIGITS;
 
 /*== Operator Constants ==*/
 
@@ -39,3 +46,9 @@ export const UOP = [
 ];
 
 export const SYMBOL_FILTER = `!%&*+-:<=>@\^|~`;
+
+/*== Parse Data ==*/
+export const STRING_DELIMITERS = ['\'', '"'];
+
+/*== Conflict Data ==*/
+export const RESERVED = ['sqrt', 'cos', 'sin', 'sign'];

@@ -34,7 +34,7 @@ var CheddarTok = (function () {
             return this._Tokens;
         },
         set: function set(v) {
-            if (v instanceof _tks2["default"]) this._Tokens = v;else throw new TypeError("VSLTok: provided update `Tokens` is invalid");
+            if (v instanceof _tks2["default"]) this._Tokens = v;else throw new TypeError("CheddarTok: provided update `Tokens` is invalid");
         }
     }]);
 

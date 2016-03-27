@@ -13,7 +13,7 @@ export default class CheddarTok {
     get Tokens() { return this._Tokens }
     set Tokens(v) {
         if (v instanceof CheddarTokens) this._Tokens = v;
-        else throw new TypeError("VSLTok: provided update `Tokens` is invalid");
+        else throw new TypeError("CheddarTok: provided update `Tokens` is invalid");
     }
     
 }

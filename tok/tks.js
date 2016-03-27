@@ -21,9 +21,6 @@ var CheddarTokens = (function () {
                 this[i] = tokens[i];
             }
         } else {
-            console.log("-----A-----");
-            console.log(tokens);
-            console.log("-----B-----");
             throw new TypeError("VSLTokens: provided instantiation token is invalid");
         }
     }

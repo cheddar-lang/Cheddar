@@ -6,9 +6,6 @@ export default class CheddarTokens {
             this.length = tokens.length;
             for (let i = 0; i < tokens.length; i++) this[i] = tokens[i];
         } else {
-            console.log("-----A-----");
-            console.log(tokens);
-            console.log("-----B-----");
             throw new TypeError("VSLTokens: provided instantiation token is invalid");
         }
     }
@@ -23,7 +20,7 @@ export default class CheddarTokens {
             throw new TypeError("VSLTokens: provided update token is invalid");
         }
     }
-    
+
     // Does nothing ATM
     splice() { }
 

@@ -7,11 +7,11 @@ Object.defineProperty(exports, "__esModule", {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var VSLType = function VSLType(InternelRepresentation) {
-    _classCallCheck(this, VSLType);
+var CheddarType = function CheddarType(InternelRepresentation) {
+    _classCallCheck(this, CheddarType);
 
     this.InternelRepresentation = InternelRepresentation;
 };
 
-exports["default"] = VSLType;
+exports["default"] = CheddarType;
 module.exports = exports["default"];

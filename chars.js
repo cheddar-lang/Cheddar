@@ -12,6 +12,10 @@
   * OP  infix operators
   * UOP unary operators 
   * SYMBOL_FILTER valid characters in operators
+  *
+  * STRING_DELIMITERS
+  *
+  * RESERVED reserved token names
 **/
 "use strict";
 
@@ -33,6 +37,11 @@ exports.NUMERALS = NUMERALS;
 var WHITESPACE = "\r\n\t\f ";
 
 exports.WHITESPACE = WHITESPACE;
+var TOKEN_START = MALPHA + "$_";
+exports.TOKEN_START = TOKEN_START;
+var TOKEN_END = TOKEN_START + DIGITS;
+
+exports.TOKEN_END = TOKEN_END;
 /*== Operator Constants ==*/
 
 var OP = [['!'], ['^'], ['*', '/', '%'], ['+', '-'], ['<=', '>=', '<', '>'], ['=', '!='], [':=', '+=', '-=', '*=', '/=', '^=']];
@@ -42,4 +51,12 @@ var UOP = [['sqrt', 'cos', 'sin', 'sign'], ['-', '+']];
 
 exports.UOP = UOP;
 var SYMBOL_FILTER = "!%&*+-:<=>@^|~";
+
 exports.SYMBOL_FILTER = SYMBOL_FILTER;
+/*== Parse Data ==*/
+var STRING_DELIMITERS = ['\'', '"'];
+
+exports.STRING_DELIMITERS = STRING_DELIMITERS;
+/*== Conflict Data ==*/
+var RESERVED = ['sqrt', 'cos', 'sin', 'sign'];
+exports.RESERVED = RESERVED;
