@@ -26,7 +26,7 @@ export default class CheddarLexer {
     error(id) { return id }
 
     get Tokens() { return new CheddarTokens(this._Tokens) }
-    set Tokens(c) {
+    set Tokens(v) {
         if (v instanceof CheddarTokens) this._Tokens = v;
         else throw new TypeError("CheddarLexer: provided update `Tokens` is invalid");
     }

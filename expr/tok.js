@@ -11,7 +11,9 @@ var _ref;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x6, _x7, _x8) { var _again = true; _function: while (_again) { var object = _x6, property = _x7, receiver = _x8; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x6 = parent; _x7 = property; _x8 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x4, _x5, _x6) { var _again = true; _function: while (_again) { var object = _x4, property = _x5, receiver = _x6; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x4 = parent; _x5 = property; _x6 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -27,13 +29,19 @@ var _tokTks = require('../tok/tks');
 
 var _tokTks2 = _interopRequireDefault(_tokTks);
 
-// Import Tokenizer class
+// Import token class
 
-var _tokTok = require('../tok/tok');
+var _tokLex = require('../tok/lex');
 
-var _tokTok2 = _interopRequireDefault(_tokTok);
+var _tokLex2 = _interopRequireDefault(_tokLex);
 
-// Import Tokens Class
+// Import lexer Class
+
+var _errList = require('../err/list');
+
+var CheddarError = _interopRequireWildcard(_errList);
+
+// Import errors
 
 // Set data
 var OPLIST = (_ref = []).concat.apply(_ref, _toConsumableArray(_chars.OP.concat(_chars.UOP)));
@@ -257,36 +265,42 @@ var Tokenize = function Tokenize(c) {
     return [i, new _tokTks2['default'](tok_list)];
 };
 
-var CheddarTokExpression = (function (_CheddarTok) {
-    _inherits(CheddarTokExpression, _CheddarTok);
+var CheddarExpressionTok = (function (_CheddarLexer) {
+    _inherits(CheddarExpressionTok, _CheddarLexer);
 
-    function CheddarTokExpression() {
-        var Code = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-        var Index = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+    function CheddarExpressionTok(Code, Index) {
+        _classCallCheck(this, CheddarExpressionTok);
 
-        _classCallCheck(this, CheddarTokExpression);
-
-        _get(Object.getPrototypeOf(CheddarTokExpression.prototype), 'constructor', this).call(this, Code, Index);
+        _get(Object.getPrototypeOf(CheddarExpressionTok.prototype), 'constructor', this).call(this, Code, Index);
     }
 
-    _createClass(CheddarTokExpression, [{
+    _createClass(CheddarExpressionTok, [{
         key: 'exec',
         value: function exec() {
             var Recurse = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 
-            var Result = Tokenize(this.Code, this.Index, Recurse);
+            var _Tokenize = Tokenize(this.Code, this.Index, Recurse);
 
-            var _Result = _slicedToArray(Result, 2);
+            var _Tokenize2 = _slicedToArray(_Tokenize, 2);
 
-            this.Index = _Result[0];
-            this.Tokens = _Result[1];
+            var Index = _Tokenize2[0];
+            var Result = _Tokenize2[1];
 
-            return this;
+            // Hack so I don't have to recode everything
+            if (Result instanceof _tokTks2['default']) {
+                // all good
+                this.Index = Index;
+                this.Tokens = Result;
+                return this.close();
+            } else {
+                // error
+                return this.error(CheddarError.UNEXPECTED_TOKEN);
+            }
         }
     }]);
 
-    return CheddarTokExpression;
-})(_tokTok2['default']);
+    return CheddarExpressionTok;
+})(_tokLex2['default']);
 
-exports['default'] = CheddarTokExpression;
+exports['default'] = CheddarExpressionTok;
 module.exports = exports['default'];

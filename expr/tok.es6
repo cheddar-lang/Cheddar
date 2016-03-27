@@ -1,6 +1,7 @@
 import {DIGITS, ALPHA, UALPHA, MALPHA, NUMERALS, WHITESPACE, OP, UOP, SYMBOL_FILTER} from '../chars';
-import CheddarTokens from '../tok/tks'; // Import Tokenizer class
-import CheddarTok from '../tok/tok'; // Import Tokens Class
+import CheddarTokens from '../tok/tks'; // Import token class
+import CheddarLexer from '../tok/lex'; // Import lexer Class
+import * as CheddarError from '../err/list'; // Import errors
 
 // Set data
 const OPLIST = [].concat(...OP.concat(UOP));
@@ -241,13 +242,22 @@ const Tokenize = (c, i = 0, r = false) => {
     
 };
 
-export default class CheddarTokExpression extends CheddarTok {
-    constructor(Code = "", Index = 0) {
+export default class CheddarExpressionTok extends CheddarLexer {
+    constructor(Code, Index) {
         super(Code, Index)
     }
     exec(Recurse = false) {
-        let Result = Tokenize(this.Code, this.Index, Recurse);
-        [this.Index, this.Tokens] = Result;
-        return this;
+        let [Index, Result] = Tokenize(this.Code, this.Index, Recurse);
+        
+        // Hack so I don't have to recode everything
+        if (Result instanceof CheddarTokens) {
+            // all good
+            this.Index = Index;
+            this.Tokens = Result;
+            return this.close();
+        } else {
+            // error
+            return this.error(CheddarError.UNEXPECTED_TOKEN)
+        }
     }
 }
