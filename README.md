@@ -19,10 +19,10 @@ class Animal(String: Name, Int: Age) {
 }
 
 
-class Dog(String: Name, Int:Age, String:Breed) {
+class Dog(String: Name, Int:Age, String:Breed) extends Animal {
     super Name, Age
     Breed := Breed
     
-    speak => "Woof! I am a #{self.Breed} dog, I am #{self.Age} years old and am called #{self.Name}"
+    Speak := => "Woof! I am a #{self.Breed} dog, I am #{self.Age} years old and am called #{self.Name}"
 }
 ```
