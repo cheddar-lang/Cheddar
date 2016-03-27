@@ -65,6 +65,11 @@ var CheddarLexer = (function () {
         set: function set(v) {
             if (v instanceof _tks2["default"]) this._Tokens = v;else throw new TypeError("CheddarLexer: provided update `Tokens` is invalid");
         }
+    }, {
+        key: "isLast",
+        get: function get() {
+            return this.Index === this.Code.length;
+        }
     }]);
 
     return CheddarLexer;

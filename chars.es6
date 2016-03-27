@@ -49,6 +49,7 @@ export const SYMBOL_FILTER = `!%&*+-:<=>@\^|~`;
 
 /*== Parse Data ==*/
 export const STRING_DELIMITERS = ['\'', '"'];
+export const STRING_ESCAPE = `\\`;
 
 /*== Conflict Data ==*/
 export const RESERVED = ['sqrt', 'cos', 'sin', 'sign'];

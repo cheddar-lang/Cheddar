@@ -9,3 +9,4 @@
 export const SUCCESS = Symbol('er_SUCCESS');
 export const EXIT_NOTFOUND = Symbol('er_EXIT_NOTFOUND');
 export const UNEXPECTED_TOKEN = Symbol('er_UNEXPECTED_TOKEN');
+export const UNMATCHED_DELIMITER = Symbol('er_UNMATCHED_DELIMITER');

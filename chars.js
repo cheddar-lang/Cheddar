@@ -55,8 +55,10 @@ var SYMBOL_FILTER = "!%&*+-:<=>@^|~";
 exports.SYMBOL_FILTER = SYMBOL_FILTER;
 /*== Parse Data ==*/
 var STRING_DELIMITERS = ['\'', '"'];
-
 exports.STRING_DELIMITERS = STRING_DELIMITERS;
+var STRING_ESCAPE = "\\";
+
+exports.STRING_ESCAPE = STRING_ESCAPE;
 /*== Conflict Data ==*/
 var RESERVED = ['sqrt', 'cos', 'sin', 'sign'];
 exports.RESERVED = RESERVED;

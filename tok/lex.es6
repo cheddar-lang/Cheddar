@@ -30,4 +30,6 @@ export default class CheddarLexer {
         if (v instanceof CheddarTokens) this._Tokens = v;
         else throw new TypeError("CheddarLexer: provided update `Tokens` is invalid");
     }
+    
+    get isLast() { return this.Index === this.Code.length }
 }
