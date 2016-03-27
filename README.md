@@ -15,6 +15,6 @@ Class Animal(String: Name, Int: Age) {
    this.Name := Name
    this.Age  := Age
    
-   speak => "Hello, my name is "
+   speak => "Hello, my name is #{this.Name}, I am #{this.Age} years old"
 }
 ```
