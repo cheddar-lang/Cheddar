@@ -20,12 +20,15 @@ var _tks = require('./tks');
 
 var _tks2 = _interopRequireDefault(_tks);
 
+var _chars = require('../chars');
+
 var CheddarParser = (function () {
     function CheddarParser(Code, Index) {
         _classCallCheck(this, CheddarParser);
 
         this.Code = Code;
         this.Index = Index;
+
         this._Tokens = [];
     }
 
@@ -34,7 +37,7 @@ var CheddarParser = (function () {
     _createClass(CheddarParser, [{
         key: 'parse',
         value: function parse(parseClass) {
-            if (parseClass instanceof _lex2['default']) {
+            if (parseClass.prototype instanceof _lex2['default']) {
                 var _ref;
 
                 for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -45,9 +48,16 @@ var CheddarParser = (function () {
 
                 this._Tokens.push(Parser.Tokens);
                 this.Index = Parser.Index;
+                console.log(JUMP_WHITE);
+                return this;
             } else {
                 throw new TypeError('CheddarParser: provided parser is not a CheddarLexer');
             }
+        }
+    }, {
+        key: 'jumpwhite',
+        value: function jumpwhite() {
+            while (_chars.WHITESPACE.indexOf(this.Code[this.Index]) > -1) this.Index++;
         }
     }, {
         key: 'Tokens',
