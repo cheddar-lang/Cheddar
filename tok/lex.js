@@ -60,10 +60,10 @@ var CheddarLexer = (function () {
     }, {
         key: "Tokens",
         get: function get() {
-            return new _tks2["default"](this._Tokens);
+            return this._Tokens instanceof _tks2["default"] ? this._Tokens : new _tks2["default"](this._Tokens);
         },
         set: function set(v) {
-            if (v instanceof _tks2["default"]) this._Tokens = v;else throw new TypeError("CheddarLexer: provided update `Tokens` is invalid");
+            if (v instanceof _tks2["default"] || v instanceof Array) this._Tokens = v;
         }
     }, {
         key: "isLast",

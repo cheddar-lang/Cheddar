@@ -25,11 +25,8 @@ export default class CheddarLexer {
     close() { return this }
     error(id) { return id }
 
-    get Tokens() { return new CheddarTokens(this._Tokens) }
-    set Tokens(v) {
-        if (v instanceof CheddarTokens) this._Tokens = v;
-        else throw new TypeError("CheddarLexer: provided update `Tokens` is invalid");
-    }
+    get Tokens() { return this._Tokens instanceof CheddarTokens ? this._Tokens : new CheddarTokens(this._Tokens) }
+    set Tokens(v) { if (v instanceof CheddarTokens || v instanceof Array) this._Tokens = v;    }
     
     get isLast() { return this.Index === this.Code.length }
 }
