@@ -19,7 +19,7 @@ export default class CheddarParser {
 
             this._Tokens.push(Parser.Tokens);
             this.Index = Parser.Index;
-            console.log(JUMP_WHITE);
+            
             return this;
         } else {
             throw new TypeError(`CheddarParser: provided parser is not a CheddarLexer`)
@@ -27,7 +27,12 @@ export default class CheddarParser {
     }
     
     jumpwhite() {
-        while(WHITESPACE.indexOf(this.Code[this.Index]) > -1) this.Index++;
+        let WHITESPACE_REGEX = /\s/;
+        while(WHITESPACE_REGEX.test(this.Code[this.Index])) this.Index++;
+    }
+    
+    jumpliteral(l) {
+        if (this.Code.indexOf(l) === this.Index) this.Index += l.length;
     }
 
     get Tokens() { return this._Tokens instanceof CheddarTokens ? this._Tokens : new CheddarTokens(this._Tokens) }

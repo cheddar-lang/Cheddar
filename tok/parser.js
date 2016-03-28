@@ -48,7 +48,7 @@ var CheddarParser = (function () {
 
                 this._Tokens.push(Parser.Tokens);
                 this.Index = Parser.Index;
-                console.log(JUMP_WHITE);
+
                 return this;
             } else {
                 throw new TypeError('CheddarParser: provided parser is not a CheddarLexer');
@@ -57,7 +57,13 @@ var CheddarParser = (function () {
     }, {
         key: 'jumpwhite',
         value: function jumpwhite() {
-            while (_chars.WHITESPACE.indexOf(this.Code[this.Index]) > -1) this.Index++;
+            var WHITESPACE_REGEX = /\s/;
+            while (WHITESPACE_REGEX.test(this.Code[this.Index])) this.Index++;
+        }
+    }, {
+        key: 'jumpliteral',
+        value: function jumpliteral(l) {
+            if (this.Code.indexOf(l) === this.Index) this.Index += l.length;
         }
     }, {
         key: 'Tokens',

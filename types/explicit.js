@@ -44,8 +44,14 @@ var CheddarAnyLiteral = (function (_CheddarLexer) {
 
         // <Literal.Token><WHITE>:<WHITE><Literal.-Token>
         value: function exec() {
-            var Parser = new _tokParser2['default']();
+            var Parser = new _tokParser2['default'](this.Code, this.Index);
+
             Parser.parse(Literal.Token);
+            Parser.jumpwhite();
+            Parser.jumpliteral(':');
+            Parser.jumpwhite();
+            Parser.parse(Literal.String);
+
             return Parser;
         }
     }]);
