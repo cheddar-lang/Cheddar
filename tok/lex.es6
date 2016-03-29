@@ -10,12 +10,12 @@ export default class CheddarLexer {
 
     getChar() {
         if (this.Code[this.Index])
-            return this.Code[this.Index++]
+            return this.Code[this.Index++];
         else return false;
     }
 
-    newToken(fill = "") { this._Tokens[this._Tokens.push(fill) - 1]; return this }
-    addToken(char = "") { this._Tokens[this._Tokens.length - 1] += char; return this }
+    newToken(fill = '') { this._Tokens[this._Tokens.push(fill) - 1]; return this }
+    addToken(char = '') { this._Tokens[this._Tokens.length - 1] += char; return this }
 
     get last() { return this._Tokens[this._Tokens.length - 1] }
     
@@ -26,7 +26,8 @@ export default class CheddarLexer {
             this.newToken();
     }
     close() { delete this.Code; return this }
-    error(id) { return id }
+    error(id) { throw new Error(id.toString()) }
+    //TODO: is this intended behavior?
 
     get Tokens() { return new CheddarTokens(this._Tokens) }
     set Tokens(v) { this._Tokens.push(v) }
@@ -42,7 +43,7 @@ export default class CheddarLexer {
             
             return this;
         } else {
-            throw new TypeError('CheddarParser: provided parser is not a CheddarLexer');
+            throw new TypeError('CheddarLexer: provided parser is not a CheddarLexer');
         }
     }
     

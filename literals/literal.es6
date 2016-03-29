@@ -26,6 +26,5 @@ export default class CheddarLiteral extends CheddarLexer {
         } else {
             return this.error(CheddarError.EXIT_NOTFOUND);
         }
-
     }
 }

@@ -2,7 +2,7 @@ import CheddarLiteral from './literal';
 import {STRING_DELIMITERS, STRING_ESCAPE} from '../chars';
 import * as CheddarError from '../err/list';
 
-export default class CheddarStringTok extends CheddarLiteral {
+export default class CheddarStringToken extends CheddarLiteral {
     exec() {
 
         this.open();
