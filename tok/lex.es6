@@ -17,13 +17,13 @@ export default class CheddarLexer {
     newToken(fill = "") { this._Tokens[this._Tokens.push(fill) - 1]; return this }
     addToken(char = "") { this._Tokens[this._Tokens.length - 1] += char; return this }
 
-    get last() { return this.this._Tokens[this._Tokens.length - 1] }
+    get last() { return this._Tokens[this._Tokens.length - 1] }
     
     open(forceNot) {
         if (this.Code === null || this.Index === null)
             throw new TypeError('CheddarLexer: uninitialized code, index.');
         else if (forceNot !== false)
-            this.newtoken();
+            this.newToken();
     }
     close() { delete this.Code; return this }
     error(id) { return id }

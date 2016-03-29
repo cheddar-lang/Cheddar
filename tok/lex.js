@@ -26,26 +26,26 @@ var CheddarLexer = (function () {
     }
 
     _createClass(CheddarLexer, [{
-        key: "getchar",
-        value: function getchar() {
+        key: "getChar",
+        value: function getChar() {
             if (this.Code[this.Index]) return this.Code[this.Index++];else return false;
         }
     }, {
-        key: "newtoken",
-        value: function newtoken() {
+        key: "newToken",
+        value: function newToken() {
             var fill = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
             this._Tokens[this._Tokens.push(fill) - 1];return this;
         }
     }, {
-        key: "addtoken",
-        value: function addtoken() {
+        key: "addToken",
+        value: function addToken() {
             var char = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
             this._Tokens[this._Tokens.length - 1] += char;return this;
         }
     }, {
         key: "open",
-        value: function open(forcenot) {
-            if (this.Code === null || this.Index === null) throw new TypeError("CheddarLexer: uninitialized code, index.");else if (forcenot !== false) this.newtoken();
+        value: function open(forceNot) {
+            if (this.Code === null || this.Index === null) throw new TypeError('CheddarLexer: uninitialized code, index.');else if (forceNot !== false) this.newToken();
         }
     }, {
         key: "close",
@@ -74,26 +74,26 @@ var CheddarLexer = (function () {
 
                 return this;
             } else {
-                throw new TypeError("CheddarParser: provided parser is not a CheddarLexer");
+                throw new TypeError('CheddarParser: provided parser is not a CheddarLexer');
             }
         }
     }, {
-        key: "jumpwhite",
-        value: function jumpwhite() {
+        key: "jumpWhite",
+        value: function jumpWhite() {
             var WHITESPACE_REGEX = /\s/;
             while (WHITESPACE_REGEX.test(this.Code[this.Index])) this.Index++;
             return this;
         }
     }, {
-        key: "jumpliteral",
-        value: function jumpliteral(l) {
+        key: "jumpLiteral",
+        value: function jumpLiteral(l) {
             if (this.Code.indexOf(l) === this.Index) this.Index += l.length;else return false;
             return this;
         }
     }, {
         key: "last",
         get: function get() {
-            return this["this"]._Tokens[this._Tokens.length - 1];
+            return this._Tokens[this._Tokens.length - 1];
         }
     }, {
         key: "Tokens",

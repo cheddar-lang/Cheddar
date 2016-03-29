@@ -44,7 +44,13 @@ var CheddarTokens = (function () {
     }, {
         key: "splice",
         value: function splice() {
-            return Array;
+            var _Array$prototype$splice;
+
+            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                args[_key] = arguments[_key];
+            }
+
+            return (_Array$prototype$splice = Array.prototype.splice).call.apply(_Array$prototype$splice, [this].concat(args));
         }
 
         //* [Symbol.iterator]() {

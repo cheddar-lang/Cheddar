@@ -20,27 +20,27 @@
   *
   * RESERVED reserved token names
 **/
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
-var DIGITS = "0123456789";
+var DIGITS = '0123456789';
 exports.DIGITS = DIGITS;
-var ALPHA = "abcdefghijklmnopqrstuvwxyz";
+var ALPHA = 'abcdefghijklmnopqrstuvwxyz';
 exports.ALPHA = ALPHA;
-var UALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var UALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 exports.UALPHA = UALPHA;
 var MALPHA = ALPHA + UALPHA;
 
 exports.MALPHA = MALPHA;
-var NUMERALS = "0123456789ABCDEF";
+var NUMERALS = '0123456789ABCDEF';
 
 exports.NUMERALS = NUMERALS;
-var WHITESPACE = "\r\n\t\f ";
+var WHITESPACE = '\r\n\t\f ';
 
 exports.WHITESPACE = WHITESPACE;
-var TOKEN_START = MALPHA + "$_";
+var TOKEN_START = MALPHA + '$_';
 exports.TOKEN_START = TOKEN_START;
 var TOKEN_END = TOKEN_START + DIGITS;
 
@@ -53,15 +53,20 @@ exports.OP = OP;
 var UOP = [['sqrt', 'cos', 'sin', 'sign'], ['-', '+']];
 
 exports.UOP = UOP;
-var SYMBOL_FILTER = "!%&*+-:<=>@^|~";
+var SYMBOL_FILTER = '!%&*+-:<=>@\^|~';
 
 exports.SYMBOL_FILTER = SYMBOL_FILTER;
 /*== Parse Data ==*/
 var STRING_DELIMITERS = ['\'', '"'];
 exports.STRING_DELIMITERS = STRING_DELIMITERS;
-var STRING_ESCAPE = "\\";
+var STRING_ESCAPE = '\\';
 
 exports.STRING_ESCAPE = STRING_ESCAPE;
+var NUMBER_GROUPING = ['_'];
+exports.NUMBER_GROUPING = NUMBER_GROUPING;
+var NUMBER_DECIMALS = ['.'];
+
+exports.NUMBER_DECIMALS = NUMBER_DECIMALS;
 /*== Number Data ==*/
 var BASE_IDENTIFIERS = ['b', 'o', 'h'];
 exports.BASE_IDENTIFIERS = BASE_IDENTIFIERS;
