@@ -9,7 +9,8 @@ export default class CheddarLexer {
     }
 
     getchar() {
-        if (this.Code[this.Index]) return this.Code[this.Index++]
+        if (this.Code[this.Index])
+            return this.Code[this.Index++]
         else return false;
     }
 
@@ -19,8 +20,8 @@ export default class CheddarLexer {
     open(forcenot) {
         if (this.Code === null || this.Index === null)
             throw new TypeError("CheddarLexer: uninitialized code, index.");
-        else
-            if (forcenot !== false) this.newtoken();
+        else if (forcenot !== false)
+            this.newtoken();
     }
     close() { delete this.Code; return this }
     error(id) { return id }
@@ -43,15 +44,18 @@ export default class CheddarLexer {
         }
     }
     
-    jumpwhite() {
-        let WHITESPACE_REGEX = /\s/;
-        while(WHITESPACE_REGEX.test(this.Code[this.Index])) this.Index++;
+    jumpWhite() {
+        const WHITESPACE_REGEX = /\s/;
+        while(WHITESPACE_REGEX.test(this.Code[this.Index]))
+            this.Index++;
         return this;
     }
     
-    jumpliteral(l) {
-        if (this.Code.indexOf(l) === this.Index) this.Index += l.length;
-        else return false;
+    jumpLiteral(l) {
+        if (this.Code.indexOf(l) === this.Index)
+            this.Index += l.length;
+        else
+            return false;
         return this;
     }
 }
