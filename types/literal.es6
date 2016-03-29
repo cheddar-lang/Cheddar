@@ -19,7 +19,7 @@ export default class ChessarAnyLiteral extends CheddarLexer {
             return attempt;
 
         this.Index = start_index;
-        attempt = this.Parse(CheddarNumberToken);
+        attempt = this.parse(CheddarNumberToken);
         if (attempt instanceof CheddarLexer)
             return this;
         else if (attempt !== CheddarError.EXIT_NOTFOUND)
