@@ -12,6 +12,7 @@ export default class CheddarAnyLiteral extends CheddarLexer {
         if (!this.jumpLiteral(":"))
             this.error(CheddarError.EXIT_NOTFOUND);
         this.jumpWhite();
+        // this.parse(<Expression>); // add way to parse expression
         
         return this.close();
     }
