@@ -1,4 +1,5 @@
 ##To Do List
+- [x] Matche an arbitrary literal
 - [ ] Array Literals - `[literal, literal, literal]`
 - [ ] Operator Literals - `:=`, `+`, `<=`, should be greedy matched
 - [ ] Variable parser - `foo`, `foo.bar`, `foo.bar(foo.bar())`
