@@ -51,3 +51,16 @@ sqrt 4 // unary operators
 4 + 4  // infix operators
 a := 4 // assigment
 ```
+
+condition-blocks:
+
+```groovy
+if true foo() // runs foo if `true` evalutes to true
+if (true) foo()
+if true {
+    foo()
+}
+if (true) {
+    foo()
+}
+```
