@@ -4,7 +4,7 @@ export default class CheddarLexer {
     constructor(Code, Index) {
         this.Code  = Code;
         this.Index = Index;
-
+        
         this._Tokens = [];
     }
 
@@ -16,17 +16,42 @@ export default class CheddarLexer {
     newtoken(fill = "") { this._Tokens[this._Tokens.push(fill) - 1] }
     addtoken(char = "") { this._Tokens[this._Tokens.length - 1] += char }
 
-    open() {
+    open(forcenot) {
         if (this.Code === null || this.Index === null)
             throw new TypeError("CheddarLexer: uninitialized code, index.");
         else
-            this.newtoken();
+            if (forcenot !== false) this.newtoken();
     }
-    close() { return this }
+    close() { delete this.Code; return this }
     error(id) { return id }
 
-    get Tokens() { return this._Tokens instanceof CheddarTokens ? this._Tokens : new CheddarTokens(this._Tokens) }
-    set Tokens(v) { if (v instanceof CheddarTokens || v instanceof Array) this._Tokens = v;    }
+    get Tokens() { return new CheddarTokens(this._Tokens) }
+    set Tokens(v) { this._Tokens.push(v); }
     
     get isLast() { return this.Index === this.Code.length }
+    
+    parse(parseClass, ...args) {
+        if (parseClass.prototype instanceof CheddarLexer) {
+            let Parser = new parseClass(this.Code, this.Index).exec(...args);
+            
+            this.Tokens = Parser;
+            this.Index = Parser.Index;
+            
+            return this;
+        } else {
+            throw new TypeError(`CheddarParser: provided parser is not a CheddarLexer`)
+        }
+    }
+    
+    jumpwhite() {
+        let WHITESPACE_REGEX = /\s/;
+        while(WHITESPACE_REGEX.test(this.Code[this.Index])) this.Index++;
+        return this;
+    }
+    
+    jumpliteral(l) {
+        if (this.Code.indexOf(l) === this.Index) this.Index += l.length;
+        else return false;
+        return this;
+    }
 }

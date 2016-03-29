@@ -44,13 +44,13 @@ var CheddarLexer = (function () {
         }
     }, {
         key: "open",
-        value: function open() {
-            if (this.Code === null || this.Index === null) throw new TypeError("CheddarLexer: uninitialized code, index.");else this.newtoken();
+        value: function open(forcenot) {
+            if (this.Code === null || this.Index === null) throw new TypeError("CheddarLexer: uninitialized code, index.");else if (forcenot !== false) this.newtoken();
         }
     }, {
         key: "close",
         value: function close() {
-            return this;
+            delete this.Code;return this;
         }
     }, {
         key: "error",
@@ -58,12 +58,45 @@ var CheddarLexer = (function () {
             return id;
         }
     }, {
+        key: "parse",
+        value: function parse(parseClass) {
+            if (parseClass.prototype instanceof CheddarLexer) {
+                var _ref;
+
+                for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                    args[_key - 1] = arguments[_key];
+                }
+
+                var Parser = (_ref = new parseClass(this.Code, this.Index)).exec.apply(_ref, args);
+
+                this.Tokens = Parser;
+                this.Index = Parser.Index;
+
+                return this;
+            } else {
+                throw new TypeError("CheddarParser: provided parser is not a CheddarLexer");
+            }
+        }
+    }, {
+        key: "jumpwhite",
+        value: function jumpwhite() {
+            var WHITESPACE_REGEX = /\s/;
+            while (WHITESPACE_REGEX.test(this.Code[this.Index])) this.Index++;
+            return this;
+        }
+    }, {
+        key: "jumpliteral",
+        value: function jumpliteral(l) {
+            if (this.Code.indexOf(l) === this.Index) this.Index += l.length;else return false;
+            return this;
+        }
+    }, {
         key: "Tokens",
         get: function get() {
-            return this._Tokens instanceof _tks2["default"] ? this._Tokens : new _tks2["default"](this._Tokens);
+            return new _tks2["default"](this._Tokens);
         },
         set: function set(v) {
-            if (v instanceof _tks2["default"] || v instanceof Array) this._Tokens = v;
+            this._Tokens.push(v);
         }
     }, {
         key: "isLast",

@@ -22,7 +22,7 @@ export default class CheddarTokens {
     }
 
     // Does nothing ATM
-    splice() { }
+    splice(...args) { return Array.prototype.splice.call(this, ...args); }
 
     //* [Symbol.iterator]() {
     //    for (let i = 0; i < this.length; i++) {

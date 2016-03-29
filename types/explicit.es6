@@ -1,19 +1,19 @@
 // Explicit type literals
+import * as CheddarError from '../err/list';
 import CheddarParser from '../tok/parser';
 import CheddarLexer from '../tok/lex';
-import * as Literal from './types';
+import * as Literals from './types';
 
 export default class CheddarAnyLiteral extends CheddarLexer {
-    // <Literal.Token><WHITE>:<WHITE><Literal.-Token>
     exec() {
-        let Parser = new CheddarParser(this.Code, this.Index);
+        this.open(false);
+                
+        this.parse(Literals.Token);
+        this.jumpwhite();
+        if (!this.jumpliteral(":"))
+            this.error(CheddarError.EXIT_NOTFOUND);
+        this.jumpwhite();
         
-        Parser.parse(Literal.Token);
-        Parser.jumpwhite();
-        Parser.jumpliteral(':');
-        Parser.jumpwhite();
-        Parser.parse(Literal.String);
-        
-        return Parser
+        return this.close();
     }
 }

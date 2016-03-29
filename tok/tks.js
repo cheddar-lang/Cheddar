@@ -43,7 +43,9 @@ var CheddarTokens = (function () {
         // Does nothing ATM
     }, {
         key: "splice",
-        value: function splice() {}
+        value: function splice() {
+            return Array;
+        }
 
         //* [Symbol.iterator]() {
         //    for (let i = 0; i < this.length; i++) {

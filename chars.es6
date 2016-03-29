@@ -13,6 +13,9 @@
   * SYMBOL_FILTER valid characters in operators
   *
   * STRING_DELIMITERS
+  * STRING_ESCAPE
+  *
+  * BASE_IDENTIFIERS
   *
   * RESERVED reserved token names
 **/
@@ -50,6 +53,9 @@ export const SYMBOL_FILTER = `!%&*+-:<=>@\^|~`;
 /*== Parse Data ==*/
 export const STRING_DELIMITERS = ['\'', '"'];
 export const STRING_ESCAPE = `\\`;
+
+/*== Number Data ==*/
+export const BASE_IDENTIFIERS = [ 'b', 'o', 'h' ];
 
 /*== Conflict Data ==*/
 export const RESERVED = ['sqrt', 'cos', 'sin', 'sign'];

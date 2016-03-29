@@ -14,6 +14,9 @@
   * SYMBOL_FILTER valid characters in operators
   *
   * STRING_DELIMITERS
+  * STRING_ESCAPE
+  *
+  * BASE_IDENTIFIERS
   *
   * RESERVED reserved token names
 **/
@@ -59,6 +62,10 @@ exports.STRING_DELIMITERS = STRING_DELIMITERS;
 var STRING_ESCAPE = "\\";
 
 exports.STRING_ESCAPE = STRING_ESCAPE;
+/*== Number Data ==*/
+var BASE_IDENTIFIERS = ['b', 'o', 'h'];
+
+exports.BASE_IDENTIFIERS = BASE_IDENTIFIERS;
 /*== Conflict Data ==*/
 var RESERVED = ['sqrt', 'cos', 'sin', 'sign'];
 exports.RESERVED = RESERVED;
