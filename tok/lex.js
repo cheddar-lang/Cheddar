@@ -91,6 +91,11 @@ var CheddarLexer = (function () {
             return this;
         }
     }, {
+        key: "last",
+        get: function get() {
+            return this["this"]._Tokens[this._Tokens.length - 1];
+        }
+    }, {
         key: "Tokens",
         get: function get() {
             return new _tks2["default"](this._Tokens);

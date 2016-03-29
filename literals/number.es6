@@ -21,14 +21,16 @@ export default class CheddarNumberTok extends CheddarLiteral {
                     NUMERALS.slice(0, BASE_RESPECTIVE_NUMBERS[BASE_IDENTIFIERS.indexOf(chr)]);
                 this.addtoken(chr);
             } else {
-                this.addtoken('00');
+                this.addtoken('0');
             }
             
             this.newtoken();
 
             let decimal = digit_set === DIGITS;
             
-            
+            while ( digit_set.indexOf(chr = this.getchar()) > -1 ) {
+                if (
+            }
             
         } else {
             return this.close(CheddarError.EXIT_NOTFOUND);

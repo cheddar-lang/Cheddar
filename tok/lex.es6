@@ -17,6 +17,8 @@ export default class CheddarLexer {
     newtoken(fill = "") { this._Tokens[this._Tokens.push(fill) - 1]; return this }
     addtoken(char = "") { this._Tokens[this._Tokens.length - 1] += char; return this }
 
+    get last() { return this.this._Tokens[this._Tokens.length - 1] }
+    
     open(forcenot) {
         if (this.Code === null || this.Index === null)
             throw new TypeError("CheddarLexer: uninitialized code, index.");
@@ -44,14 +46,14 @@ export default class CheddarLexer {
         }
     }
     
-    jumpWhite() {
+    jumpwhite() {
         const WHITESPACE_REGEX = /\s/;
         while(WHITESPACE_REGEX.test(this.Code[this.Index]))
             this.Index++;
         return this;
     }
     
-    jumpLiteral(l) {
+    jumpliteral(l) {
         if (this.Code.indexOf(l) === this.Index)
             this.Index += l.length;
         else

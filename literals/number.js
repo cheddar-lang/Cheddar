@@ -55,7 +55,7 @@ var CheddarNumberTok = (function (_CheddarLiteral) {
                     digit_set = _chars.NUMERALS.slice(0, _chars.BASE_RESPECTIVE_NUMBERS[_chars.BASE_IDENTIFIERS.indexOf(chr)]);
                     this.addtoken(chr);
                 } else {
-                    this.addtoken('00');
+                    this.addtoken('0');
                 }
 
                 this.newtoken();
