@@ -25,14 +25,14 @@ bar(2, 2) // 4
 ```
 
 Constructing Classes / Explicit Typed literals
-```scala
+```groovy
 MyClass:(2,2) // Inits "MyClass" with arguments 2 and 2
 String:3      // Makes string with value of '3' (functions like a cast)
 Number:"32"   // Makes "32" into a number (functions like a case)
 ```
 
 Literals:
-```scala
+```c++
 1234  // number
 12.34 // decimal
 0x123 // hexadecimal literal
