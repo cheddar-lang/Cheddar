@@ -46,7 +46,7 @@ var CheddarNumberTok = (function (_CheddarLiteral) {
 
             if (_chars.DIGITS.indexOf(chr) > -1 || _chars.NUMBER_DECIMALS.indexOf(chr) > -1) {
 
-                chr = this.getChar();
+                chr = this.Code[this.Index];
 
                 var digit_set = _chars.DIGITS;
                 var digit_base = _chars.BASE_IDENTIFIERS.indexOf(chr);
@@ -57,7 +57,7 @@ var CheddarNumberTok = (function (_CheddarLiteral) {
                     this.addToken(base); // Add the base number as a token
                 } else {
                         this.addToken(10); // base 10
-                        this.Index -= 2; // Go back to the beginning of the literal
+                        --this.Index; // Go back to the beginning of the literal
                     }
 
                 this.newToken(); // Start new token

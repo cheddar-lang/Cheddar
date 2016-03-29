@@ -11,7 +11,7 @@ export default class CheddarNumberTok extends CheddarLiteral {
 
         if (DIGITS.indexOf(chr) > -1 || NUMBER_DECIMALS.indexOf(chr) > -1) {
 
-            chr = this.getChar();
+            chr = this.Code[this.Index];
 
             let digit_set = DIGITS;
             let digit_base = BASE_IDENTIFIERS.indexOf(chr);
@@ -22,7 +22,7 @@ export default class CheddarNumberTok extends CheddarLiteral {
                 this.addToken(base); // Add the base number as a token
             } else {
                 this.addToken(10); // base 10
-                this.Index -= 2; // Go back to the beginning of the literal
+                --this.Index; // Go back to the beginning of the literal
             }
 
             this.newToken(); // Start new token
