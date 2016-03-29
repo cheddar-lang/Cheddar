@@ -1,7 +1,9 @@
 ##To Do List
-- [ ] Assignment - `var := val`
-- [ ] Lambdas - `function foo -> DoSomething()`, 
-`function foo bar baz-> DoSomething(bar, baz)`, 
-`function Int:foo String:bar Char:baz-> DoSomething(bar, baz)` 
-(`Int` is the return type)
+- [ ] Array Literals - `[literal, literal, literal]`
+- [ ] Operator Literals - `:=`, `+`, `<=`, should be greedy matched
+- [ ] Variable parser - `foo`, `foo.bar`, `foo.bar(foo.bar())`
+- [ ] Expression parser - `foo + foo.bar() * (sqrt 4)`
+- [ ] Lambdas - `foo => DoSomething()`, 
+`foo -> (bar, baz) DoSomething(bar, baz)`, 
+`foo -> (String:bar, Char:baz) DoSomething(bar, baz)` 
 - [ ] `infix`, `prefix`, `postfix` keywords to declare operators

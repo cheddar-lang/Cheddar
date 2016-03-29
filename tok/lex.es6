@@ -26,8 +26,10 @@ export default class CheddarLexer {
             this.newToken();
     }
     close() { delete this.Code; return this }
-    error(id) { throw new Error(id.toString()) }
-    //TODO: is this intended behavior?
+    error(id) { return id }
+    // Return error, perhaps later in a CheddarError() class
+    // Error not thrown because it is a error with the provided
+    // not the actual interpreter
 
     get Tokens() { return new CheddarTokens(this._Tokens) }
     set Tokens(v) { this._Tokens.push(v) }
