@@ -11,14 +11,14 @@ export default class CheddarLiteral extends CheddarLexer {
 
         this.open();
 
-        let chr = this.getchar();
+        let chr = this.getChar();
 
         if (TOKEN_START.indexOf(chr) > -1) {
-            this.addtoken(chr);
+            this.addToken(chr);
 
             while (chr = this.getchar())
                 if (TOKEN_START.indexOf(chr) > -1)
-                    this.addtoken(chr);
+                    this.addToken(chr);
                 else break;
 
             return this.close();

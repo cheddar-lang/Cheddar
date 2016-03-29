@@ -7,22 +7,22 @@ export default class CheddarStringTok extends CheddarLiteral {
 
         this.open();
 
-        let chr = this.getchar();
+        let chr = this.getChar();
 
         if (STRING_DELIMITERS.indexOf(chr) > -1) {
             // in a string
 
             let qt = chr; // store quote
 
-            while(chr = this.getchar())
+            while(chr = this.getChar())
                 if (chr === qt)
                     break;
                 else if (this.isLast)
                     return this.close(CheddarError.UNMATCHED_DELIMITER);
                 else if (chr === STRING_ESCAPE)
-                    this.addtoken(this.getchar());
+                    this.addtoken(this.getChar());
                 else
-                    this.addtoken(chr);
+                    this.addToken(chr);
 
             return this.close();
 

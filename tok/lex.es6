@@ -8,28 +8,28 @@ export default class CheddarLexer {
         this._Tokens = [];
     }
 
-    getchar() {
+    getChar() {
         if (this.Code[this.Index])
             return this.Code[this.Index++]
         else return false;
     }
 
-    newtoken(fill = "") { this._Tokens[this._Tokens.push(fill) - 1]; return this }
-    addtoken(char = "") { this._Tokens[this._Tokens.length - 1] += char; return this }
+    newToken(fill = "") { this._Tokens[this._Tokens.push(fill) - 1]; return this }
+    addToken(char = "") { this._Tokens[this._Tokens.length - 1] += char; return this }
 
     get last() { return this.this._Tokens[this._Tokens.length - 1] }
     
-    open(forcenot) {
+    open(forceNot) {
         if (this.Code === null || this.Index === null)
-            throw new TypeError("CheddarLexer: uninitialized code, index.");
-        else if (forcenot !== false)
+            throw new TypeError('CheddarLexer: uninitialized code, index.');
+        else if (forceNot !== false)
             this.newtoken();
     }
     close() { delete this.Code; return this }
     error(id) { return id }
 
     get Tokens() { return new CheddarTokens(this._Tokens) }
-    set Tokens(v) { this._Tokens.push(v); }
+    set Tokens(v) { this._Tokens.push(v) }
     
     get isLast() { return this.Index === this.Code.length }
     
@@ -42,18 +42,18 @@ export default class CheddarLexer {
             
             return this;
         } else {
-            throw new TypeError(`CheddarParser: provided parser is not a CheddarLexer`)
+            throw new TypeError('CheddarParser: provided parser is not a CheddarLexer');
         }
     }
     
-    jumpwhite() {
+    jumpWhite() {
         const WHITESPACE_REGEX = /\s/;
         while(WHITESPACE_REGEX.test(this.Code[this.Index]))
             this.Index++;
         return this;
     }
     
-    jumpliteral(l) {
+    jumpLiteral(l) {
         if (this.Code.indexOf(l) === this.Index)
             this.Index += l.length;
         else
