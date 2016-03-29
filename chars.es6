@@ -56,6 +56,7 @@ export const STRING_ESCAPE = `\\`;
 
 /*== Number Data ==*/
 export const BASE_IDENTIFIERS = [ 'b', 'o', 'h' ];
+export const BASE_RESPECTIVE_NUMBERS = [2, 8, 16];
 
 /*== Conflict Data ==*/
 export const RESERVED = ['sqrt', 'cos', 'sin', 'sign'];

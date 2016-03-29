@@ -44,9 +44,26 @@ var CheddarNumberTok = (function (_CheddarLiteral) {
 
             var chr = this.getchar();
 
-            if (_chars.DIGITS.indexOf(chr) > -1) {}
+            if (_chars.DIGITS.indexOf(chr) > -1 || chr === ".") {
 
-            return this.close(CheddarError.EXIT_NOTFOUND);
+                chr = this.getchar();
+
+                var digit_set = _chars.DIGITS;
+                var digit_base = _chars.BASE_IDENTIFIERS.indexOf(chr);
+
+                if (digit_base > -1) {
+                    digit_set = _chars.NUMERALS.slice(0, _chars.BASE_RESPECTIVE_NUMBERS[_chars.BASE_IDENTIFIERS.indexOf(chr)]);
+                    this.addtoken(chr);
+                } else {
+                    this.addtoken('00');
+                }
+
+                this.newtoken();
+
+                var decimal = digit_set === _chars.DIGITS;
+            } else {
+                return this.close(CheddarError.EXIT_NOTFOUND);
+            }
         }
     }]);
 

@@ -64,8 +64,10 @@ var STRING_ESCAPE = "\\";
 exports.STRING_ESCAPE = STRING_ESCAPE;
 /*== Number Data ==*/
 var BASE_IDENTIFIERS = ['b', 'o', 'h'];
-
 exports.BASE_IDENTIFIERS = BASE_IDENTIFIERS;
+var BASE_RESPECTIVE_NUMBERS = [2, 8, 16];
+
+exports.BASE_RESPECTIVE_NUMBERS = BASE_RESPECTIVE_NUMBERS;
 /*== Conflict Data ==*/
 var RESERVED = ['sqrt', 'cos', 'sin', 'sign'];
 exports.RESERVED = RESERVED;

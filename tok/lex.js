@@ -34,13 +34,13 @@ var CheddarLexer = (function () {
         key: "newtoken",
         value: function newtoken() {
             var fill = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-            this._Tokens[this._Tokens.push(fill) - 1];
+            this._Tokens[this._Tokens.push(fill) - 1];return this;
         }
     }, {
         key: "addtoken",
         value: function addtoken() {
             var char = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-            this._Tokens[this._Tokens.length - 1] += char;
+            this._Tokens[this._Tokens.length - 1] += char;return this;
         }
     }, {
         key: "open",

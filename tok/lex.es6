@@ -13,8 +13,8 @@ export default class CheddarLexer {
         else return false;
     }
 
-    newtoken(fill = "") { this._Tokens[this._Tokens.push(fill) - 1] }
-    addtoken(char = "") { this._Tokens[this._Tokens.length - 1] += char }
+    newtoken(fill = "") { this._Tokens[this._Tokens.push(fill) - 1]; return this }
+    addtoken(char = "") { this._Tokens[this._Tokens.length - 1] += char; return this }
 
     open(forcenot) {
         if (this.Code === null || this.Index === null)
