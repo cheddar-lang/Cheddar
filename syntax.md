@@ -41,7 +41,7 @@ Literals:
 "double quoted string"
 'single quoted string'
 
-["this", 'is', [String:"an", 'array', 4+4]]
+["this", 'is', [String:"an", 'array', 4+4]] // array
 ```
 
 Expressions:
