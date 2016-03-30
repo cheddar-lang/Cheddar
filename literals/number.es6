@@ -2,74 +2,72 @@ import CheddarLiteral from './literal';
 import {DIGITS, NUMERALS, BASE_IDENTIFIERS, BASE_RESPECTIVE_NUMBERS, NUMBER_GROUPING, NUMBER_DECIMALS} from '../chars';
 import * as CheddarError from '../err/list';
 
-export default class CheddarNumberToken extends CheddarLiteral {
+export default class CheddarNumberTok extends CheddarLiteral {
     exec() {
-        this.open();
 
-        //TODO: this.Code[this.Code.length] to get base as last character?
-        //i.e. 1001b instead of b1001
-        //then this.Code = this.Code.slice(0, -1)
-        let chr = this.getChar().toLowerCase();
-        let digit_set = [];
-        let digit_base = BASE_IDENTIFIERS.indexOf(chr);
+        this.open(false);
 
-        if (digit_base > -1) {
-            let base = BASE_RESPECTIVE_NUMBERS[digit_base];
-            digit_set = NUMERALS.slice(0, base);
-            this.addToken(base); // Add the base number as a token
-        } else {
-            digit_set = DIGITS;
-            this.addToken(10); // base 10
-            --this.Index; // Go back to the beginning of the literal
-        }
-
-        this.newToken(); // Start new token
-
-        // ensure digits are valid in base
-        while (chr = this.getChar()) {
-            chr = chr.toUpperCase();
-            if (digit_set.indexOf(chr) > -1)
-                this.addToken(chr);
-            else if (NUMBER_GROUPING.indexOf(chr) > -1)
-                if (this.last) //&& digit_base.indexOf(this.Code[this.Index]) > -1) //TODO: digit_base?!
-                    continue;
-                else
-                    this.error(CheddarError.UNEXPECTED_TOKEN);
-            else {
-                this.Index--;
-                break; // continue parsing
+        let chr = this.getChar(); // Get first char
+        
+        // Ensure it starts with a digit or decimal
+        if (DIGITS.indexOf(chr) > -1 || NUMBER_DECIMALS.indexOf(chr) > -1) {
+            
+            // Is a number
+            // Parses in two parts:
+            // 1. determining the base
+            // 2. parsing the integer
+            // 3. parsing the decimal
+            // Errors are handled each step
+            // Fatal errors only occur with
+            //  number seperators
+            
+            // Base Determination
+            
+            let second_char = this.Code[this.Index]; // Gets the next character
+            let digit_set;
+            
+            if (BASE_IDENTIFIERS.indexOf(second_char) > -1) {
+                // if it's a different base
+                let base = BASE_RESPECTIVE_NUMBERS[BASE_IDENTIFIERS.indexOf(second_char)];
+                digit_set = NUMERALS.slice(0, base);
+                this.newToken(base);
+            } else {
+                this.newToken(10);
+                digit_set  = DIGITS;
+                --this.Index; // take it back now y'all
             }
-        }
-
-        // this.jumpWhite() // uncomment to allow whitespace before decimal
-
-        // if there were no digits and it's not a decimal
-        if (!this.last && NUMBER_DECIMALS.indexOf(chr) === -1) {
-            --this.Index; // Go back a char
-            this.error(CheddarError.EXIT_NOTFOUND); // Respond that it's not a number
-        }
-
-        // if it's at a decimal
-        if (NUMBER_DECIMALS.indexOf(chr) > -1) {
-            // this.jumpWhite() // Uncomment to allow whitespace after decimal
-            this.addToken(chr);
-            while (chr = this.getChar()) {
-                chr = chr.toUpperCase();
+            
+            // Integer Parsing
+            this.newToken();
+            
+            let decimal_parsed = false
+            
+            // Loop through literal
+            while (chr = this.getChar())
+                // Within base range?
                 if (digit_set.indexOf(chr) > -1)
                     this.addToken(chr);
+                // If is a decimal and no decimals have occured yet
+                else if (NUMBER_DECIMALS.indexOf(chr) > -1 && decimal_parsed === false)
+                    (decimal_parsed = true, this.addToken(chr));
+                // Is a digit seperator e.g. _
                 else if (NUMBER_GROUPING.indexOf(chr) > -1)
-                    continue;
+                    // Not the first or last integer digit
+                    if (this.last && digit_set.indexOf(this.Code[this.Index]) > -1)
+                        continue;
+                    else
+                        return this.error(CheddarError.UNEXPECTED_TOKEN);
                 else
-                    this.error(CheddarError.EXIT_NOTFOUND);
-            }
+                    break;
+                    
+            // If no digits were found in the literal
+            if (!this.last)
+                return this.error(CheddarError.EXIT_NOTFOUND); // Safe exit
+            
+            this.done(); // 
+            
+        } else {
+            return this.error(CheddarError.EXIT_NOTFOUND); // Safe exit
         }
-        
-        if (this.getChar()) {//didn't finish parsing
-        //TODO: implement peek() that doesn't increment index?
-            this.Index--;
-            this.error(CheddarError.EXIT_NOTFOUND);
-        }
-
-        return this.close();
     }
 }
