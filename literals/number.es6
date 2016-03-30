@@ -64,7 +64,7 @@ export default class CheddarNumberTok extends CheddarLiteral {
             if (!this.last)
                 return this.error(CheddarError.EXIT_NOTFOUND); // Safe exit
             
-            this.done(); // 
+            this.done(); // Close the parser
             
         } else {
             return this.error(CheddarError.EXIT_NOTFOUND); // Safe exit
