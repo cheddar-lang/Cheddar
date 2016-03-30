@@ -10,7 +10,7 @@ export default class CheddarTokens {
         }
     }
 
-    UpdateTokends(tokens) {
+    UpdateTokens(tokens) {
         if (tokens === null) {
             this.length = -1;
         } else if (Number.isInteger(tokens.length) && tokens.splice) {

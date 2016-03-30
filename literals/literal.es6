@@ -1,6 +1,6 @@
 import CheddarLexer from '../tok/lex';
-import {TOKEN_START} from '../chars';
-import * as CheddarError from '../err/list';
+import {TOKEN_START} from '../consts/chars';
+import * as CheddarError from '../consts/err';
 
 export default class CheddarLiteral extends CheddarLexer {
     constructor(Code, Index) {

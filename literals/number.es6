@@ -1,8 +1,8 @@
 import CheddarLiteral from './literal';
-import {DIGITS, NUMERALS, BASE_IDENTIFIERS, BASE_RESPECTIVE_NUMBERS, NUMBER_GROUPING, NUMBER_DECIMALS} from '../chars';
-import * as CheddarError from '../err/list';
+import {DIGITS, NUMERALS, BASE_IDENTIFIERS, BASE_RESPECTIVE_NUMBERS, NUMBER_GROUPING, NUMBER_DECIMALS} from '../consts/chars';
+import * as CheddarError from '../consts/err';
 
-export default class CheddarNumberTok extends CheddarLiteral {
+export default class CheddarNumberToken extends CheddarLiteral {
     exec() {
 
         this.open(false);
@@ -24,18 +24,28 @@ export default class CheddarNumberTok extends CheddarLiteral {
             // Base Determination
             
             let second_char = this.Code[this.Index]; // Gets the next character
-            let digit_set;
+            let base;
+            
+            if (second_char)
+                second_char = second_char.toLowerCase();
             
             if (BASE_IDENTIFIERS.indexOf(second_char) > -1) {
                 // if it's a different base
-                let base = BASE_RESPECTIVE_NUMBERS[BASE_IDENTIFIERS.indexOf(second_char)];
-                digit_set = NUMERALS.slice(0, base);
-                this.newToken(base);
+                base = BASE_RESPECTIVE_NUMBERS[BASE_IDENTIFIERS.indexOf(second_char)];
+                ++this.Index;
             } else {
-                this.newToken(10);
-                digit_set  = DIGITS;
+                base = 10;
                 --this.Index; // take it back now y'all
             }
+            
+            this.newToken(base);
+            let digit_set = NUMERALS.slice(0, base);
+            
+            // add bitshift as token
+            if (base !== 10)
+                this.newToken(chr);
+            else
+                this.newToken(0);
             
             // Integer Parsing
             this.newToken();
@@ -45,7 +55,7 @@ export default class CheddarNumberTok extends CheddarLiteral {
             // Loop through literal
             while (chr = this.getChar())
                 // Within base range?
-                if (digit_set.indexOf(chr) > -1)
+                if (digit_set.indexOf(chr.toUpperCase()) > -1)
                     this.addToken(chr);
                 // If is a decimal and no decimals have occured yet
                 else if (NUMBER_DECIMALS.indexOf(chr) > -1 && decimal_parsed === false)
@@ -53,7 +63,7 @@ export default class CheddarNumberTok extends CheddarLiteral {
                 // Is a digit seperator e.g. _
                 else if (NUMBER_GROUPING.indexOf(chr) > -1)
                     // Not the first or last integer digit
-                    if (this.last && digit_set.indexOf(this.Code[this.Index]) > -1)
+                    if (this.last && digit_set.indexOf(this.Code[this.Index].toUpperCase()) > -1)
                         continue;
                     else
                         return this.error(CheddarError.UNEXPECTED_TOKEN);
@@ -62,9 +72,9 @@ export default class CheddarNumberTok extends CheddarLiteral {
                     
             // If no digits were found in the literal
             if (!this.last)
-                return this.error(CheddarError.EXIT_NOTFOUND); // Safe exit
+                return this.error(CheddarError.UNEXPECTED_TOKEN); // throw compile error
             
-            this.done(); // Close the parser
+            return this.close(); // Close the parser
             
         } else {
             return this.error(CheddarError.EXIT_NOTFOUND); // Safe exit

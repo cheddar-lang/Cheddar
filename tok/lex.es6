@@ -25,9 +25,10 @@ export default class CheddarLexer {
         else if (forceNot !== false)
             this.newToken();
     }
+
     close() { delete this.Code; return this }
     error(id) { return id }
-    // Return error, perhaps later in a CheddarError() class
+    // Return error, perhaps later in a CheddarSyntaxError() class
     // Error not thrown because it is a error with the provided
     // not the actual interpreter
 
@@ -38,12 +39,18 @@ export default class CheddarLexer {
     
     parse(parseClass, ...args) {
         if (parseClass.prototype instanceof CheddarLexer) {
-            let Parser = new parseClass(this.Code, this.Index).exec(...args);
+            // Run provided parser
+            let Parser = new parseClass(this.Code, this.Index);
+            let ParserResult = Parser.exec(...args);
             
+            // Add new tokens
+            // this does NOT override old tokens
+            // this is because `this.Tokens` has
+            // a custom wh
             this.Tokens = Parser;
             this.Index = Parser.Index;
             
-            return this;
+            return ParserResult;
         } else {
             throw new TypeError('CheddarLexer: provided parser is not a CheddarLexer');
         }

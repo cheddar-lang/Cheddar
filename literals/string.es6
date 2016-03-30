@@ -1,6 +1,6 @@
 import CheddarLiteral from './literal';
-import {STRING_DELIMITERS, STRING_ESCAPE} from '../chars';
-import * as CheddarError from '../err/list';
+import {STRING_DELIMITERS, STRING_ESCAPE} from '../consts/chars';
+import * as CheddarError from '../consts/err';
 
 export default class CheddarStringToken extends CheddarLiteral {
     exec() {
@@ -8,26 +8,25 @@ export default class CheddarStringToken extends CheddarLiteral {
         this.open();
 
         let chr = this.getChar();
-
         if (STRING_DELIMITERS.indexOf(chr) > -1) {
             // in a string
 
             let qt = chr; // store quote
 
-            while(chr = this.getChar())
+            while (chr = this.getChar())
                 if (chr === qt)
                     break;
                 else if (this.isLast)
-                    return this.close(CheddarError.UNMATCHED_DELIMITER);
+                    return this.error(CheddarError.UNMATCHED_DELIMITER);
                 else if (chr === STRING_ESCAPE)
-                    this.addtoken(this.getChar());
+                    this.addToken(this.getChar());
                 else
                     this.addToken(chr);
 
             return this.close();
 
         } else {
-            return this.close(CheddarError.EXIT_NOTFOUND);
+            return this.error(CheddarError.EXIT_NOTFOUND);
         }
 
     }
