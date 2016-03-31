@@ -14,8 +14,11 @@ export default class CheddarAnyLiteral extends CheddarLexer {
         
         for (let i = 0; i < types.length; i++) {
             attempt = new types[i](this.Code, this.Index).exec();
-            if (attempt !== CheddarError.EXIT_NOTFOUND)
-                return attempt;
+            if (attempt !== CheddarError.EXIT_NOTFOUND) {
+                this.Token = attempt;
+                this.Index = attempt.Index;
+                return this.close();
+            }
         }
         
         return CheddarError.EXIT_NOTFOUND;

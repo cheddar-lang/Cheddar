@@ -6,7 +6,7 @@ export default class CheddarTokens {
             this.length = tokens.length;
             for (let i = 0; i < tokens.length; i++) this[i] = tokens[i];
         } else {
-            throw new TypeError("VSLTokens: provided instantiation token is invalid");
+            throw new TypeError("CheddarTokens: provided instantiation token is invalid");
         }
     }
 
@@ -17,8 +17,13 @@ export default class CheddarTokens {
             this.length = tokens.length;
             for (let i = 0; i < tokens.length; i++) this[i] = tokens[i];
         } else {
-            throw new TypeError("VSLTokens: provided update token is invalid");
+            throw new TypeError("CheddarTokens: provided update token is invalid");
         }
+    }
+    
+    push(token) {
+        this[this.length] = token;
+        this.length++;
     }
 
     // Does nothing ATM

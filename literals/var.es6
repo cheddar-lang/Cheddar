@@ -13,7 +13,7 @@ export default class CheddarVariableToken extends CheddarLiteral {
         if (TOKEN_START.indexOf(chr) > -1) {
             this.addToken(chr);
 
-            while (chr = this.getchar())
+            while (chr = this.getChar())
                 if (TOKEN_END.indexOf(chr) > -1)
                     this.addToken(chr);
                 else break;

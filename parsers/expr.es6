@@ -20,11 +20,10 @@ export default class CheddarExpressionToken extends CheddarLexer {
             
             // Attempt to identify what the item by:
             //  1. Attempt to find literal
-            //  2. Attempt to find token
-            //  3. (TODO: Way Later) Attempt to find variable 
-            //  4. Attempt to find operator
-            //  5. Attempt to find subexpression
-            //  6. (if recurse) Attempt to check if recurse closes
+            //  2. Attempt to find variable 
+            //  3. Attempt to find operator
+            //  4. Attempt to find subexpression
+            //  5. (if recurse) Attempt to check if recurse closes
             
             const types = [CheddarAnyLiteral, CheddarLiteral];
             let attempt;
