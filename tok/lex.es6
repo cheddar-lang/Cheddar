@@ -46,7 +46,7 @@ export default class CheddarLexer {
             // Add new tokens
             // this does NOT override old tokens
             // this is because `this.Tokens` has
-            // a custom wh
+            // a custom setter
             this.Tokens = Parser;
             this.Index = Parser.Index;
             

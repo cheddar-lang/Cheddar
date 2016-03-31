@@ -3,12 +3,14 @@ import * as CheddarError from '../consts/err';
 import CheddarExpressionToken from './any'; // temporary
 import CheddarTokens from '../tok/tks';
 import CheddarLexer from '../tok/lex';
+import PropertyType from '../enums/propertyType';
 
 import CheddarVariableToken from '../literals/var';
 
 export default class CheddarPropertyToken extends CheddarLexer {
     exec() {
         this.open(false);
+        this.Type = PropertyType.Property;
 
         // Plans for property parsing:
         //  1. Match <variable> ("." | end)
@@ -17,7 +19,7 @@ export default class CheddarPropertyToken extends CheddarLexer {
         //IDK if classes will have same naming rules as variables
         // Well there's `Token`s which aren't allowed to have numbres
         // @Downgoat: Will class names be allowed to have numbers
-        parse: while (true) {
+        while (true) {
             
             this.jumpWhite();
             
@@ -35,6 +37,7 @@ export default class CheddarPropertyToken extends CheddarLexer {
                     continue;
                 case '(': //TODO: get from chars as well
                     this.jumpWhite();
+                    this.Type = PropertyType.Method
                     
                     // Parse function call
                     // Parse with CheddarExpressionToken
@@ -73,13 +76,10 @@ export default class CheddarPropertyToken extends CheddarLexer {
                     this.Tokens = tokens;
                     
                     return this.close();
-                    break parse;
                 default:
                     --this.Index;
                     return this.close();
             }
         }
-
-        return CheddarError.EXIT_NOTFOUND;
     }
 }

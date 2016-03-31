@@ -2,6 +2,13 @@
 
 Cheddar is (or supposed to be) a powerful, reflective, object-oriented, high-level programming language.
 
+It is currenty in development, to give an approximate idea of how much work has been done, an expression parser is almost finished.
+
+Contributors:
+
+ - @vihanb
+ - @somebody
+
 ## Example Programs
 
 To get an idea of how the syntax is going to look, here are examples:
