@@ -9,6 +9,33 @@ Contributors:
  - @vihanb
  - @somebody
 
+## Milestones
+
+A list of milestones in Cheddar's development:
+
+ 1. Expression parsing works
+```js
+CheddarExpressionToken {
+  Index: 20,
+  _Tokens: 
+   [ CheddarPropertyToken {
+       Index: 20,
+       _Tokens: 
+        [ CheddarVariableToken { Index: 4, _Tokens: [ 'foo' ] },
+          CheddarVariableToken { Index: 8, _Tokens: [ 'bar' ] },
+          CheddarTokens {
+            '0': 
+             CheddarAnyLiteral {
+               Index: 13,
+               _Tokens: [ CheddarStringToken { Index: 13, _Tokens: [ 'foo' ] } ] },
+            '1': 
+             CheddarAnyLiteral {
+               Index: 19,
+               _Tokens: [ CheddarNumberToken { Index: 19, _Tokens: [ 10, 0, '1234' ] } ] },
+            length: 2 } ],
+       Type: Symbol(Method) } ] }
+```
+
 ## Example Programs
 
 To get an idea of how the syntax is going to look, here are examples:
