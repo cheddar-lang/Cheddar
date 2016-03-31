@@ -13,7 +13,7 @@ Contributors:
 
 A list of milestones in Cheddar's development:
 
- 1. Expression parsing works
+ 1. Expression parsing works (for input `foo.bar("foo", 1234)`)
 ```js
 CheddarExpressionToken {
   Index: 20,
