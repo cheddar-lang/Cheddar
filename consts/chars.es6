@@ -28,7 +28,7 @@ export const MALPHA = ALPHA + UALPHA;
 
 export const NUMERALS = '0123456789ABCDEF';
 
-export const WHITESPACE = '\r\n\t\f ';
+export const WHITESPACE = '\r\n\f '; // Add \t here to allow tabs
 
 export const TOKEN_START = MALPHA + '$_';
 export const TOKEN_END = TOKEN_START + DIGITS;
@@ -44,6 +44,9 @@ export const SYMBOL_FILTER = '!%&*+-:<=>@\^|~';
 
 export const NUMBER_GROUPING = ['_'];
 export const NUMBER_DECIMALS = ['.'];
+
+export const EXPR_OPEN  = '(';
+export const EXPR_CLOSE = ')'
 
 /*== Array Data ==*/
 export const ARRAY_OPEN  = '[';

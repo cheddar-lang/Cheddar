@@ -9,9 +9,7 @@ export default class CheddarLexer {
     }
 
     getChar() {
-        if (this.Code[this.Index])
-            return this.Code[this.Index++];
-        else return false;
+        return this.Code[this.Index++];
     }
 
     newToken(fill = '') { this._Tokens[this._Tokens.push(fill) - 1]; return this }

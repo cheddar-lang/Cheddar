@@ -74,6 +74,7 @@ export default class CheddarNumberToken extends CheddarLiteral {
             if (!this.last)
                 return this.error(CheddarError.UNEXPECTED_TOKEN); // throw compile error
             
+            --this.Index;
             return this.close(); // Close the parser
             
         } else {
