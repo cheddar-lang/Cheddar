@@ -1,8 +1,11 @@
 import * as CheddarError from '../consts/err';
+import CheddarParenthesizedExpression from './paren_expr';
 import CheddarVariableToken from '../literals/var';
 import {PropertyType} from '../consts/types';
 //import CheddarExpressionToken from './expr';
 import CheddarExpressionToken from './any'; // temporary
+import CheddarArrayToken from './array';
+import CheddarAnyLiteral from './any';
 import CheddarTokens from '../tok/tks';
 import CheddarLexer from '../tok/lex';
 
@@ -11,71 +14,51 @@ export default class CheddarPropertyToken extends CheddarLexer {
         this.open(false);
         this.Type = PropertyType.Property;
 
+        let Initial = false;
+
         // Plans for property parsing:
         //  1. Match <variable> ("." | end)
-        //  2. Match (<expr>, <expr>) if there is a (
-        
+        //  2. Match <variable (<expr>,*<expr>)?
+
         while (true) {
-            
+
             this.jumpWhite();
-            
-            let variable = new CheddarVariableToken(this.Code, this.Index);
-            let variableParsed = variable.exec();
-            // Check if variable is valid
-            if (!(variableParsed instanceof CheddarLexer))
-                return this.error(variableParsed);
-            
-            this.Index  = variable.Index - 1;
-            this.Tokens = variable; // Add Variable token to chain
-            
-            switch (this.getChar()) {
-                case '.': //TODO: get from chars
-                    continue;
-                case '(': //TODO: get from chars as well
-                    this.jumpWhite();
-                    this.Type = PropertyType.Method;
-                    
-                    // Parse function call
-                    // Parse with CheddarExpressionToken
-                    let expr,
-                        res;
-                    let tokens = new CheddarTokens([]);
-                    while (true) {
-                        this.jumpWhite();
-                        
-                        expr = new CheddarExpressionToken(this.Code, this.Index);
-                        res = expr.exec(",)");
-                        
-                        if (!(res instanceof CheddarLexer) && res !== CheddarError.EXIT_NOTFOUND)
-                            return this.error(res);
-                            
-                        if (res !== CheddarError.EXIT_NOTFOUND)
-                            tokens.push(expr);
-                        
-                        this.Index = expr.Index;
-                        
-                        this.jumpWhite();
-                        
-                        let chr = this.getChar();
-                        switch (chr) {
-                            case ',':
-                                continue;
-                            case ')':
-                                break;
-                            default:
-                                return this.error(CheddarError.UNEXPECTED_TOKEN);
-                        }
-                        
-                        break;
-                    }
-                    
-                    this.Tokens = tokens;
-                    
-                    return this.close();
-                default:
-                    --this.Index;
-                    return this.close();
+
+            let attempt;
+            if (Initial === false)
+                attempt = this.attempt(CheddarVariableToken, CheddarAnyLiteral, CheddarParenthesizedExpression);
+            else
+                attempt = this.initParser(CheddarVariableToken).exec();
+
+            Initial = true;
+
+            if (!(attempt instanceof CheddarLexer))
+                return this.error(attempt);
+
+            this.Index = attempt.Index;
+            this.Tokens = attempt;
+
+            if (this.curchar === '(') {
+                this.jumpWhite();
+                this.Type = PropertyType.Method;
+
+                let expr = this.initParser(CheddarArrayToken);
+                let res = expr.exec('(', ')');
+
+                this.Index = expr.Index;
+
+                if (!(res instanceof CheddarLexer))
+                    return this.error(expr);
+
+                this.Tokens = expr;
             }
+            
+            if (this.curchar === '.') {
+                ++this.Index;
+                continue;
+            }
+            
+            return this.close();
         }
     }
 }

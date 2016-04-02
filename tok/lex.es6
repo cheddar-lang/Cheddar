@@ -1,3 +1,4 @@
+import * as CheddarError from '../consts/err';
 import CheddarTokens from './tks';
 
 export default class CheddarLexer {
@@ -11,6 +12,8 @@ export default class CheddarLexer {
     getChar() {
         return this.Code[this.Index++];
     }
+    
+    get curchar() { return this.Code[this.Index] }
 
     newToken(fill = '') { this._Tokens[this._Tokens.push(fill) - 1]; return this }
     addToken(char = '') { this._Tokens[this._Tokens.length - 1] += char; return this }
@@ -52,6 +55,28 @@ export default class CheddarLexer {
         } else {
             throw new TypeError('CheddarLexer: provided parser is not a CheddarLexer');
         }
+    
+    }
+    
+    attempt(...parsers) {
+        let attempt;
+        
+        for (let i = 0; i < parsers.length; i++) {
+            attempt = this.initParser(parsers[i]).exec();
+            if (attempt instanceof CheddarLexer)
+                return attempt;
+            else if (attempt !== CheddarError.EXIT_NOTFOUND)
+                return this.error(attempt);
+        }
+        
+        return this.error(CheddarError.EXIT_NOTFOUND);
+    }
+    
+    initParser(parseClass) {
+        if (parseClass.prototype instanceof CheddarLexer)
+            return new parseClass(this.Code, this.Index);
+        else
+            throw new TypeError('CheddarLexer: provided parser is not a CheddarLexer');
     }
     
     jumpWhite() {

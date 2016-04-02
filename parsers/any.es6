@@ -4,23 +4,20 @@ import CheddarTokens from '../tok/tks';
 
 import CheddarStringToken from '../literals/string';
 import CheddarNumberToken from '../literals/number';
+import CheddarArrayToken from './array';
 
 export default class CheddarAnyLiteral extends CheddarLexer {
     exec() {
         this.open(false);
-
-        const types = [CheddarStringToken, CheddarNumberToken];
-        let attempt;
         
-        for (let i = 0; i < types.length; i++) {
-            attempt = new types[i](this.Code, this.Index).exec();
-            if (attempt !== CheddarError.EXIT_NOTFOUND) {
-                this.Tokens = attempt;
-                this.Index = attempt.Index;
-                return this.close();
-            }
+        let attempt = this.attempt(CheddarStringToken, CheddarNumberToken, CheddarArrayToken);
+        
+        if (attempt instanceof CheddarLexer) {
+            this.Tokens = attempt;
+            this.Index = attempt.Index;
+            return this.close()
+        } else {
+            return this.error(attempt);
         }
-        
-        return CheddarError.EXIT_NOTFOUND;
     }
 }

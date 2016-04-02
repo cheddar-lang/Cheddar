@@ -14,9 +14,12 @@ export default class CheddarVariableToken extends CheddarLiteral {
             this.addToken(chr);
 
             while (chr = this.getChar())
-                if (TOKEN_END.indexOf(chr) > -1)
+                if (TOKEN_END.indexOf(chr) > -1) {
                     this.addToken(chr);
-                else break;
+                } else {
+                    --this.Index;
+                    break;
+                }
 
             return this.close();
 
