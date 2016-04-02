@@ -8,6 +8,15 @@ Contributors:
 
  - @vihanb
  - @somebody
+ 
+## Roadmap
+
+ - Property / Method parser. To parse: `(2+2).prop.func(expr, expr)`
+ - Expression parser `sqrt 4 + 3`
+ - Some shunting-yard, to work out command arities e.g. `4 + 3 * 2` -> `3 2 * 4 +`
+ - Command Parser e.g. `if condition { function() }`
+ - Code Block Parser e.g. `{ /* my code block */ }`
+
 
 ## Milestones
 
