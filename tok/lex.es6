@@ -34,7 +34,12 @@ export default class CheddarLexer {
     // not the actual interpreter
 
     get Tokens() { return new CheddarTokens(this._Tokens) }
-    set Tokens(v) { this._Tokens.push(v) }
+    set Tokens(v) {
+        if (Array.isArray(v))
+            this._Tokens.push(...v);
+        else
+            this._Tokens.push(v);
+    }
     
     get isLast() { return this.Index === this.Code.length }
     
@@ -77,6 +82,58 @@ export default class CheddarLexer {
             return new parseClass(this.Code, this.Index);
         else
             throw new TypeError('CheddarLexer: provided parser is not a CheddarLexer');
+    }
+    
+    grammar(whitespace, ...defs) {
+        // defs<Array<CheddarLexer or String>>
+        let index,
+            parser,
+            result,
+            tokens;
+        
+        main: for (let i = 0; i < defs.length; i++) {
+            
+            index = this.Index;
+            tokens = [];
+            for (let j = 0; j < defs[i].length; j++) {
+                
+                if (defs[i][j].prototype instanceof CheddarLexer) {
+                    parser = new (defs[i][j])(this.Code, index);
+                    result = parser.exec();
+                    if (result === CheddarError.EXIT_NOTFOUND)
+                        continue main;
+                    else if (!(result instanceof CheddarLexer))
+                        return this.error(result);
+                
+                    index = parser.Index;
+                    tokens.push(parser);
+                } else if (defs[i][j] === this.jumpWhite) {
+                    parser = new CheddarLexer(this.Code, index);
+                    parser.jumpWhite();
+                    index = parser.Index;
+                } else {
+                    parser = new CheddarLexer(this.Code, index);
+                    result = parser.jumpLiteral(defs[i][j]);
+                    if (!result)
+                        continue main;
+                    
+                    index = parser.Index;
+                }
+                
+                if (whitespace) {
+                    parser = new CheddarLexer(this.Code, index);
+                    parser.jumpWhite();
+                    index = parser.Index;
+                }
+            }
+            
+            this.Tokens = tokens;
+            this.Index = index;
+            return this.close();
+            
+        }
+        
+        return CheddarError.EXIT_NOTFOUND;
     }
     
     jumpWhite() {

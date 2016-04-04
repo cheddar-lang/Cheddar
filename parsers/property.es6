@@ -1,12 +1,8 @@
-import * as CheddarError from '../consts/err';
 import CheddarParenthesizedExpression from './paren_expr';
 import CheddarVariableToken from '../literals/var';
 import {PropertyType} from '../consts/types';
-//import CheddarExpressionToken from './expr';
-import CheddarExpressionToken from './any'; // temporary
 import CheddarArrayToken from './array';
 import CheddarAnyLiteral from './any';
-import CheddarTokens from '../tok/tks';
 import CheddarLexer from '../tok/lex';
 
 export default class CheddarPropertyToken extends CheddarLexer {

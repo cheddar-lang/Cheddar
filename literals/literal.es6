@@ -17,9 +17,12 @@ export default class CheddarLiteral extends CheddarLexer {
             this.addToken(chr);
 
             while (chr = this.getChar())
-                if (TOKEN_START.indexOf(chr) > -1)
+                if (TOKEN_START.indexOf(chr) > -1) {
                     this.addToken(chr);
-                else break;
+                } else {
+                    --this.Index;
+                    break;
+                }
 
             return this.close();
 
