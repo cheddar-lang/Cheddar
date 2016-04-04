@@ -8,8 +8,11 @@ Contributors:
 
  - @vihanb
  - @somebody
+ - @CᴏɴᴏʀO'Bʀɪᴇɴ
  
 ## Roadmap
+
+**The formal grammar is written: [here](https://github.com/vihanb/Cheddar/blob/master/Grammar.md)**
 
  - Property / Method parser. To parse: `(2+2).prop.func(expr, expr)`
  - Expression parser `sqrt 4 + 3`
