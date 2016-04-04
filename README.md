@@ -8,6 +8,7 @@ Contributors:
 
  - @vihanb
  - @somebody
+ - @CᴏɴᴏʀO'Bʀɪᴇɴ
  
 ## Roadmap
 
