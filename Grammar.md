@@ -9,12 +9,25 @@ Expression Definitions:
     TypedLiteral = TOKEN ':' (PARENTHESIZED_EXPRESSION | PROPERTY | LITERAL)
                  | LITERAL .
     Operator     = TOKEN | OPERATOR .
+    
+Expression Grammar
+
     Expression   = Expression Operator Expression |
                  | Operator Expression
                  | Expression Operator
                  | '(' Expression ')'
                  | PROPERTY
                  | TypedLiteral .
+
+This is left recursive so we can refactor to:
+
+    E -> O E α
+         '(' E ')' α
+         P α
+         L α
+    α -> O E α
+         O α
+         ε
 
 Class Names:
 
