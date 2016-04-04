@@ -31,6 +31,7 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
         let O = CheddarOperatorToken;
         let P = CheddarPropertyToken;
         let L = CheddarTypedLiteral;
+        
         let ε = [];
         
         let grammar = this.grammar(true,

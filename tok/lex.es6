@@ -100,7 +100,7 @@ export default class CheddarLexer {
                 if (defs[i][j].prototype instanceof CheddarLexer) {
                     parser = new (defs[i][j])(this.Code, index);
                     result = parser.exec();
-                    
+
                     if (result === CheddarError.EXIT_NOTFOUND)
                         continue main;
                     else if (!(result instanceof CheddarLexer))
@@ -115,8 +115,7 @@ export default class CheddarLexer {
                 } else {
                     parser = new CheddarLexer(this.Code, index);
                     result = parser.jumpLiteral(defs[i][j]);
-                    
-                    
+
                     if (!result)
                         continue main;
                     
