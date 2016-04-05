@@ -49,7 +49,7 @@ CheddarExpressionToken {
             _Tokens: [ CheddarNumberToken { Index: 7, _Tokens: [ 10, 0, '2' ] } ] } ] } ] }
 
 ```
- 1. Property parsing works (for input `foo.bar("foo", 1234)`)
+ 2. Property parsing works (for input `foo.bar("foo", 1234)`)
 ```js
 CheddarExpressionToken {
   Index: 20,
