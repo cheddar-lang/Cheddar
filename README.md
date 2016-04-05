@@ -25,7 +25,31 @@ Contributors:
 
 A list of milestones in Cheddar's development:
 
- 1. Expression parsing works (for input `foo.bar("foo", 1234)`)
+ 2. Expression parsing works (a huge milestone)
+```js
+CheddarExpressionToken {
+  Index: 8,
+  _Tokens: 
+   [ CheddarArrayToken {
+       Index: 8,
+       _Tokens: 
+        [ CheddarExpressionToken {
+            Index: 5,
+            _Tokens: 
+             [ CheddarNumberToken { Index: 2, _Tokens: [ 10, 0, '0' ] },
+               CheddarExpressionTokenAlpha {
+                 Index: 5,
+                 _Tokens: 
+                  [ CheddarOperatorToken { Index: 4, _Tokens: [ '+' ] },
+                    CheddarExpressionToken {
+                      Index: 5,
+                      _Tokens: [ CheddarNumberToken { Index: 5, _Tokens: [ 10, 0, '1' ] } ] } ] } ] },
+          CheddarExpressionToken {
+            Index: 7,
+            _Tokens: [ CheddarNumberToken { Index: 7, _Tokens: [ 10, 0, '2' ] } ] } ] } ] }
+
+```
+ 1. Property parsing works (for input `foo.bar("foo", 1234)`)
 ```js
 CheddarExpressionToken {
   Index: 20,
