@@ -9,9 +9,11 @@ import CheddarCustomLexer from './custom';
 export default class CheddarFunctionToken extends CheddarLexer {
     exec() {
         this.open(false);
+        
+        
 
         const E = CheddarExpressionToken;
-        const S = CheddarExpressionToken;
+        const S = CheddarExpressionsToken;
         const L = LAMBDA_ASSIGNMENT;
         const N = LAMBDA_NO_ARGS;
         const A = CheddarCustomLexer(CheddarArrayToken, '(', ')', CheddarArgumentToken);

@@ -104,10 +104,13 @@ export default class CheddarLexer {
             i,
             j;
 
+        console.log('==== GRAMMAR CALLED ====', this.constructor.name);
+        console.log('grammar A', this.Code, this.Index);
         main: for (i = 0; i < defs.length; i++) {
             index = this.Index;
             tokens = [];
             sub: for (j = 0; j < defs[i].length; j++) {
+                console.log('grammar B', this.Code, this.Index, index, this.Tokens, tokens);
                 if (whitespace) {
                     let oldIndex = this.Index;
                     this.Index = index;
@@ -223,10 +226,13 @@ export default class CheddarLexer {
                     if (!result)
                         continue main;
                 }
+                console.log('grammar C', this.Code, this.Index, index, this.Tokens);
             }
 
             this.Tokens = tokens;
             this.Index = index;
+
+            console.log('grammar D', this.Code, this.Index, this.Tokens, tokens);
 
             return this.close();
         }
@@ -247,7 +253,7 @@ export default class CheddarLexer {
         //downgoat D: this returned first index
         //took me 6 hours to figure out the problem :(
         //D: D: D:
-        if (new RegExp("^.{" + this.Index + "}" +
+        if (new RegExp('^.{' + this.Index + '}' +
                 l.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
             .test(this.Code))
             this.Index += l.length;

@@ -50,35 +50,41 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
         const α = CheddarExpressionTokenAlpha;
         const ε = [];
 
-
-        return this.grammar(true,
+        let t= this.grammar(true,
             [O, E, α],
             [O, α],
             ε
         );
+
+        console.log("expr' val:", t);
+        return t;
     }
 
     get isExpression() { return true; }
 }
 
 export default class CheddarExpressionToken extends CheddarLexer {
-    exec(recurse = false) {
+    exec() {
         this.open(false);
 
         this.jumpWhite();
 
         const E = CheddarExpressionToken;
         const α = CheddarExpressionTokenAlpha;
-
-        return new CheddarShuntingYard().exec(this.grammar(true,
+        let grammar = this.grammar(true,
             [F, α], // <- this may or may not be a good idea
             // how else would it work?
+            // not sure but this gives ir a really high presedence
+            // over things such as parenthesized expressions
+            // yeah, but functions always start with ->/=>/~>; paren expressions don't
             [O, E, α],
             ['(', E, ')', α],
             [B, α],
             [P, α],
             [L, α]
-        ));
+        );
+        console.log('grammar result:', grammar);
+        return grammar;
     }
 
     get isExpression() { return true; }

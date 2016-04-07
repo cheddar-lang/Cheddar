@@ -5,7 +5,7 @@
 **/
 // TODO: should these be split into pre/postfix?
 // I'm not sure. Does it matter?
-export const UNARY = [ 'sin', 'cos', 'tan', 'sign', 'sqrt' ];
+export const UNARY = [ 'sin', 'cos', 'tan', 'sign', 'sqrt', 'print' ];
 
 // wat. i thought trig was unary/prefix
 export const OP = [ '!', '^', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '=', '!=', ':=', '+=', '-=', '*=', '/=', '^=' ].concat(UNARY);
@@ -58,5 +58,6 @@ export const PRECEDENCE = new Map([
     ['^=', 1000],
     ['<<=', 1000],
     ['>>=', 1000],
-    ['=>', 1000]
+    ['=>', 1000],
+    ['print', 500]
 ]);

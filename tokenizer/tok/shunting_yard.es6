@@ -10,13 +10,14 @@ import CheddarLexer from './lex';
 //how about CheddarExpressionStackGen?
 export default class CheddarShuntingYard extends CheddarLexer {
     exec(expression) {
-        console.log('sgrammar', expression)
+        if (expression && expression.Code)
+            this.Code = expression.Code;
+        if (expression && expression.Index)
+            this.Index = expression.Index;
 
         // Flatten the expression
         let current = expression;
         let tokens = [];
-        if (current && current.isExpression && current._Tokens.length === 1)
-            return this.close(expression);
         if (!current ||
             !current.isExpression ||
             current._Tokens.length > 2 ||
@@ -79,13 +80,16 @@ export default class CheddarShuntingYard extends CheddarLexer {
                 unary = false;
             }
             else if (token instanceof CheddarShuntingYard) {
+                console.log("found a ChedarShuntingYard", token, this._Tokens);
                 this.Tokens = token.tok();
                 if (unary && unary !== true)
                     this.Tokens = unary;
                 for (let i = 1; i < token._Tokens.length; i++)
-                    this.Tokens = token._Tokens[i];
+                    this.Tokens = token.tok(i);
                 if (token._Tokens[token._Tokens.length] instanceof CheddarOperatorToken)
                     unary = true;
+
+                console.log("ended the CheddarShuntingYard block", token, this.Tokens);
             } else { // It's an operator
                 if (unary) {
                     if (unary !== true)
@@ -113,9 +117,6 @@ export default class CheddarShuntingYard extends CheddarLexer {
         let operator = 0;
         while (operator = operators.pop())
             this.Tokens = operator;
-
-        if (this._Tokens.length === 1)
-            return this.close(this.tok());
 
         return this.close();
     }
