@@ -83,12 +83,7 @@ class Animal(String: Name, Int: Age) {
     * main {} block to initialize yoour variables
     */
    
-   main {
-       self.Name := Name
-       self.Age  := Age
-   }
-   
-   speak := => "Hello, my name is #{self.Name}, I am #{self.Age} years old"
+   speak => "Hello, my name is #{self.Name}, I am #{self.Age} years old"
 }
 
 
@@ -98,6 +93,6 @@ class Dog(String: Name, Int:Age, String:Breed) extends Animal {
      */
     super Name, Age
     
-    speak := => "Woof! I am a #{self.Breed} dog, I am #{self.Age} years old and am called #{self.Name}"
+    speak => "Woof! I am a #{self.Breed} dog, I am #{self.Age} years old and am called #{self.Name}"
 }
 ```
