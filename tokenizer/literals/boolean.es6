@@ -1,5 +1,4 @@
 import CheddarPrimitive from './primitive';
-import CheddarVariableToken from './var';
 import * as CheddarError from '../consts/err';
 
 export default class CheddarBooleanToken extends CheddarPrimitive {

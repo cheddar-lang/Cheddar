@@ -19,7 +19,6 @@ export default class CheddarLiteral extends CheddarLexer {
                     --this.Index;
                     break;
                 }
-
             return this.close();
 
         } else {

@@ -5,26 +5,31 @@ import CheddarLexer from '../tok/lex';
 import CheddarPrimitive from '../literals/primitive';
 
 export default class CheddarArrayToken extends CheddarPrimitive {
-    exec(OPEN = ARRAY_OPEN, CLOSE = ARRAY_CLOSE) {
-        if (this.getChar() !== OPEN) {
+    exec(OPEN = ARRAY_OPEN, CLOSE = ARRAY_CLOSE, PARSER = CheddarExpressionToken) {
+        if (this.getChar() !== OPEN)
             return this.error(CheddarError.EXIT_NOTFOUND);
-        }
-            
+
         while (true) {
-            
+
             this.jumpWhite();
-            
-            let value = this.initParser(CheddarExpressionToken);
-            let parsed = value.exec();
-            
-            this.Index = value.Index;
-            if (parsed instanceof CheddarLexer)
-                this.Tokens = parsed;
-            else
-                return this.error(parsed);
-                
+
+            if (Array.isArray(PARSER)) {
+                let parser = this.grammar(true, ...PARSER);
+                if (!(parser instanceof CheddarLexer))
+                    return this.error(parser);
+            } else {
+                let value = this.initParser(PARSER),
+                    parsed = value.exec();
+
+                this.Index = value.Index;
+                if (parsed instanceof CheddarLexer)
+                    this.Tokens = parsed;
+                else
+                    return this.error(parsed);
+            }
+
             this.jumpWhite();
-            
+
             switch (this.getChar()) {
                 case CLOSE:
                     return this.close();

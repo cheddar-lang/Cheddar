@@ -6,12 +6,13 @@ import CheddarLexer from '../tok/lex';
 export default class CheddarParenthesizedExpression extends CheddarLexer {
     exec() {
         this.open(false);
-        
+
         /*
         This may be shorter:
         return this.grammar(true, ['(', CheddarExpressionToken , ')']);
         */
-        
+        // @Downgoat you change it if it works
+
         if (this.getChar() !== '(')
             this.error(CheddarError.EXIT_NOTFOUND);
 
@@ -30,5 +31,6 @@ export default class CheddarParenthesizedExpression extends CheddarLexer {
             this.error(CheddarError.UNMATCHED_DELIMITER);
 
         this.close();
+        // TODO: shouldn't these be returns? (also, is this even needed anymore?)
     }
 }
