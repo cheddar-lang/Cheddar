@@ -14,11 +14,19 @@ Contributors:
 
 **The formal grammar is written: [here](https://github.com/vihanb/Cheddar/blob/master/Grammar.md)**
 
- - Property / Method parser. To parse: `(2+2).prop.func(expr, expr)`
- - Expression parser `sqrt 4 + 3`
- - Some shunting-yard, to work out command arities e.g. `4 + 3 * 2` -> `3 2 * 4 +`
- - Command Parser e.g. `if condition { function() }`
- - Code Block Parser e.g. `{ /* my code block */ }`
+ - Fix infinite precedence with unary operators bug
+ - Define basic runtime enviorment
+ - Define streams
+ - Define class structure
+ - Token linking
+ - Call stack handling
+ - Define namespaces
+ - Handle loopups
+ - Define primitive classes
+ - Call stack optimization
+ - Conditional expression handling
+ - Interpretation
+ - Congrats! Cheddar is done!
 
 
 ## Milestones
