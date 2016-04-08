@@ -14,10 +14,10 @@ Contributors:
 
 **The formal grammar is written: [here](https://github.com/vihanb/Cheddar/blob/master/Grammar.md)**
 
- - [ ] Fix infinite precedence with unary operators bug
- - [ ] Define basic runtime enviorment
- - [ ] Define streams
+ - [x] Fix infinite precedence with unary operators bug
+ - [x] Define streams
  - [ ] Define class structure
+ - [ ] Define basic runtime enviorment
  - [ ] Token linking
  - [ ] Call stack handling
  - [ ] Define namespaces
