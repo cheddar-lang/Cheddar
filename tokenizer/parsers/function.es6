@@ -9,8 +9,8 @@ import CheddarCustomLexer from './custom';
 export default class CheddarFunctionToken extends CheddarLexer {
     exec() {
         this.open(false);
-        
-        
+
+        this.jumpWhite();
 
         const E = CheddarExpressionToken;
         const S = CheddarExpressionsToken;
@@ -18,11 +18,13 @@ export default class CheddarFunctionToken extends CheddarLexer {
         const N = LAMBDA_NO_ARGS;
         const A = CheddarCustomLexer(CheddarArrayToken, '(', ')', CheddarArgumentToken);
 
-        return this.grammar(true,
+        let grammar = this.grammar(true,
             [L, A, '{', S, '}'],
             [L, A, E],
             //[N, '{', S, '}'],
             [N, E]
         );
+        //console.log(grammar);
+        return grammar;
     }
 }

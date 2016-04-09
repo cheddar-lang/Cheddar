@@ -104,13 +104,10 @@ export default class CheddarLexer {
             i,
             j;
 
-        console.log('==== GRAMMAR CALLED ====', this.constructor.name);
-        console.log('grammar A', this.Code, this.Index);
         main: for (i = 0; i < defs.length; i++) {
             index = this.Index;
             tokens = [];
             sub: for (j = 0; j < defs[i].length; j++) {
-                console.log('grammar B', this.Code, this.Index, index, this.Tokens, tokens);
                 if (whitespace) {
                     let oldIndex = this.Index;
                     this.Index = index;
@@ -226,13 +223,10 @@ export default class CheddarLexer {
                     if (!result)
                         continue main;
                 }
-                console.log('grammar C', this.Code, this.Index, index, this.Tokens);
             }
 
             this.Tokens = tokens;
             this.Index = index;
-
-            console.log('grammar D', this.Code, this.Index, this.Tokens, tokens);
 
             return this.close();
         }
@@ -240,11 +234,73 @@ export default class CheddarLexer {
         return this.error(CheddarError.EXIT_NOTFOUND);
     }
 
+    /*
+    Whitespace Grammar:
+    W -> w
+         w C1 w
+         w C2 w
+         ... etc
+
+    Right-recursive:
+    W -> w α
+         α
+    α -> C1 W
+         C2 W
+
+    where C1...CN are terminal comment grammars
+    */
     jumpWhite() {
-        // TODO: Add support for comments
-        const WHITESPACE_REGEX = /\s/;
-        while(WHITESPACE_REGEX.test(this.Code[this.Index]))
+        while (/\s/.test(this.Code[this.Index]))
             this.Index++;
+
+        this._jumpComment();
+        return this;
+    }
+
+    _jumpComment() {
+        if (this.Code[this.Index] === '/') {
+            switch (this.Code[this.Index + 1]) {
+                case '*':
+                   // match till EOF or '*/'
+                   this.Index += 2;
+                   this._jumpBlockComment();
+                   break;
+                case '/':
+                    // match till EOF or newline
+                    this.Index += 2; // jump ahead to the start of the comment
+                    while (this.curchar && this.curchar !== '\n')
+                        this.Index++;
+                    break;
+                default:
+                    return;
+            }
+            return this.jumpWhite();
+        }
+
+        //if (!(this.Code[this.Index] === this.Code[this.Index + 1] === '/'))
+        //    return this;
+        //this.Index = /\n/.exec(this.Code.slice(this.Index));
+        //return this;
+    }
+
+    _jumpBlockComment() {
+        let nextStart, nextEnd,
+            depth = 1,
+            newIndex = this.Index + 2;
+        while (depth) {
+            nextStart = this.Code.indexOf('/*', newIndex);
+            nextEnd = this.Code.indexOf('*/', newIndex);
+            if (nextStart < nextEnd) {
+                depth++;
+                newIndex = nextStart + 2;
+            } else {
+                depth--;
+                newIndex = nextEnd + 2;
+            }
+            if (nextEnd === -1)
+                return this.error(CheddarError.UNEXPECTED_TOKEN);
+        }
+        this.Index = newIndex;
         return this;
     }
 

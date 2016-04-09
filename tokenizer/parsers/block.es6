@@ -14,7 +14,7 @@ export default class CheddarBlockToken extends CheddarLexer {
             B = BLOCK_NAMES;
 
         return this.grammar(true,
-            [B, '(', E, ')', '{', S, '}']
+            [B, [['(', E, ')'], E], [['{', S, '}'], E]]
         );
     }
 }

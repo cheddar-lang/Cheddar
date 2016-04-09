@@ -4,6 +4,8 @@ import CheddarExpressionToken from './expr';
 import CheddarLexer from '../tok/lex';
 import CheddarPrimitive from '../literals/primitive';
 
+import {ClassType} from '../consts/types';
+
 export default class CheddarArrayToken extends CheddarPrimitive {
     exec(OPEN = ARRAY_OPEN, CLOSE = ARRAY_CLOSE, PARSER = CheddarExpressionToken) {
         if (this.getChar() !== OPEN)
@@ -40,4 +42,6 @@ export default class CheddarArrayToken extends CheddarPrimitive {
             }
         }
     }
+
+    get Type() { return ClassType.Array }
 }

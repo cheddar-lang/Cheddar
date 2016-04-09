@@ -1,6 +1,8 @@
 import CheddarPrimitive from './primitive';
 import * as CheddarError from '../consts/err';
 
+import {ClassType} from '../consts/types';
+
 export default class CheddarBooleanToken extends CheddarPrimitive {
     exec() {
         if (this.curchar === 't' &&
@@ -11,7 +13,7 @@ export default class CheddarBooleanToken extends CheddarPrimitive {
             this.Tokens = true;
             return this.close();
         }
-        
+
         if (this.curchar === 'f' &&
             this.Code[this.Index + 1] === 'a' &&
             this.Code[this.Index + 2] === 'l' &&
@@ -21,7 +23,9 @@ export default class CheddarBooleanToken extends CheddarPrimitive {
             this.Tokens = false;
             return this.close();
         }
-        
+
         return this.close(CheddarError.EXIT_NOTFOUND);
     }
+
+    get Type() { return ClassType.Boolean }
 }

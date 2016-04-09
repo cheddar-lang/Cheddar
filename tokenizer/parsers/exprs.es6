@@ -8,19 +8,11 @@ export default class CheddarExpressionsToken extends CheddarLexer {
         let E = CheddarExpressionToken,
             S = CheddarExpressionsToken;
 
-        let grammar = this.grammar(true,
+        return this.grammar(true,
             [E, ';', S],
             [E]
         );
-
-        console.log('grammar', grammar);
-
-        while (grammar) {
-            if (grammar.tok())
-                this.Tokens = grammar.tok();
-            grammar = grammar.tok(1);
-        }
-
-        return this.close();
     }
+
+    get isExpression() { return true; }
 }

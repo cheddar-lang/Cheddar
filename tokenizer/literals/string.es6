@@ -2,6 +2,8 @@ import CheddarPrimitive from './primitive';
 import {STRING_DELIMITERS, STRING_ESCAPE} from '../consts/chars';
 import * as CheddarError from '../consts/err';
 
+import {ClassType} from '../consts/types';
+
 export default class CheddarStringToken extends CheddarPrimitive {
     exec() {
 
@@ -28,6 +30,7 @@ export default class CheddarStringToken extends CheddarPrimitive {
         } else {
             return this.error(CheddarError.EXIT_NOTFOUND);
         }
-
     }
+
+    get Type() { return ClassType.String }
 }

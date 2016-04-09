@@ -2,16 +2,18 @@ import CheddarPrimitive from './primitive';
 import {DIGITS, NUMERALS, BASE_IDENTIFIERS, BASE_RESPECTIVE_NUMBERS, NUMBER_GROUPING, NUMBER_DECIMALS} from '../consts/chars';
 import * as CheddarError from '../consts/err';
 
+import {ClassType} from '../consts/types';
+
 export default class CheddarNumberToken extends CheddarPrimitive {
     exec() {
 
         this.open(false);
 
         let chr = this.getChar(); // Get first char
-        
+
         // Ensure it starts with a digit or decimal
         if (DIGITS.indexOf(chr) > -1 || NUMBER_DECIMALS.indexOf(chr) > -1) {
-            
+
             // Is a number
             // Parses in two parts:
             // 1. determining the base
@@ -20,15 +22,15 @@ export default class CheddarNumberToken extends CheddarPrimitive {
             // Errors are handled each step
             // Fatal errors only occur with
             //  number seperators
-            
+
             // Base Determination
-            
+
             let second_char = this.Code[this.Index]; // Gets the next character
             let base;
-            
+
             if (second_char)
                 second_char = second_char.toLowerCase();
-            
+
             if (BASE_IDENTIFIERS.indexOf(second_char) > -1) {
                 // if it's a different base
                 base = BASE_RESPECTIVE_NUMBERS[BASE_IDENTIFIERS.indexOf(second_char)];
@@ -37,21 +39,21 @@ export default class CheddarNumberToken extends CheddarPrimitive {
                 base = 10;
                 --this.Index; // take it back now y'all
             }
-            
+
             this.newToken(base);
             let digit_set = NUMERALS.slice(0, base);
-            
+
             // add bitshift as token
             if (base !== 10)
                 this.newToken(chr);
             else
                 this.newToken(0);
-            
+
             // Integer Parsing
             this.newToken();
-            
+
             let decimal_parsed = false
-            
+
             // Loop through literal
             while (chr = this.getChar())
                 // Within base range?
@@ -69,16 +71,18 @@ export default class CheddarNumberToken extends CheddarPrimitive {
                         return this.error(CheddarError.UNEXPECTED_TOKEN);
                 else
                     break;
-                    
+
             // If no digits were found in the literal
             if (!this.last)
                 return this.error(CheddarError.UNEXPECTED_TOKEN); // throw compile error
-            
+
             --this.Index;
             return this.close(); // Close the parser
-            
+
         } else {
             return this.error(CheddarError.EXIT_NOTFOUND); // Safe exit
         }
     }
+
+    get Type() { return ClassType.Number }
 }

@@ -17,7 +17,7 @@ export default class CheddarArgumentToken extends CheddarLexer {
         [V, [['=', E]]]
         */
         return this.grammar(true,
-            [T, [['=', E]]]
+            [T, [["?"]], [['=', E]]]
         );
     }
 }

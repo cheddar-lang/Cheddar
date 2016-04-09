@@ -4,7 +4,6 @@ import P from './property';
 import L from './typed';
 import F from './function';
 import CheddarLexer from '../tok/lex';
-import CheddarShuntingYard from '../tok/shunting_yard';
 import {OP, UOP, EXPR_OPEN, EXPR_CLOSE} from '../consts/ops';
 
 // Special Exceptions
@@ -50,14 +49,11 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
         const α = CheddarExpressionTokenAlpha;
         const ε = [];
 
-        let t= this.grammar(true,
+        return this.grammar(true,
             [O, E, α],
             [O, α],
             ε
         );
-
-        console.log("expr' val:", t);
-        return t;
     }
 
     get isExpression() { return true; }
@@ -71,8 +67,9 @@ export default class CheddarExpressionToken extends CheddarLexer {
 
         const E = CheddarExpressionToken;
         const α = CheddarExpressionTokenAlpha;
-        let grammar = this.grammar(true,
-            [F, α], // <- this may or may not be a good idea
+
+        return this.grammar(true,
+            [/*[[V]], */F, α], // <- this may or may not be a good idea
             // how else would it work?
             // not sure but this gives ir a really high presedence
             // over things such as parenthesized expressions
@@ -81,10 +78,9 @@ export default class CheddarExpressionToken extends CheddarLexer {
             ['(', E, ')', α],
             [B, α],
             [P, α],
-            [L, α]
+            [L, α],
+            [P, [':=', []], E] //so '=' is captured
         );
-        console.log('grammar result:', grammar);
-        return grammar;
     }
 
     get isExpression() { return true; }
