@@ -9,6 +9,6 @@
     "load-grunt-tasks": "^3.5.0"
   },
   "scripts": {
-    "test": "grunt --verbose"
+    "test": "grunt"
   }
 }
