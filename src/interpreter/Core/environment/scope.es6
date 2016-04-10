@@ -30,6 +30,7 @@ export default class CheddarExecutionScope {
             // It's in the inheritance chain
             // just use the parent's function
             return this.inheritanceChain.manage(token, value);
+
         } else {
             if (RESERVED_KEYWORDS.has(token))
                 return CheddarError.KEY_IS_RESERVED;
