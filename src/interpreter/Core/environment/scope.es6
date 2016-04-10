@@ -2,10 +2,11 @@ import * as CheddarError from '../consts/err';
 import {RESERVED_KEYWORDS} from '../../../tokenizer/consts/ops';
 
 export default class CheddarExecutionScope {
-    constructor(inherit = null) {
+    constructor(inherit = null, preset) {
         // Initialize the hash
         this.Scope = new Map();
         this.inheritanceChain = inherit;
+
     }
 
     has(token) {
