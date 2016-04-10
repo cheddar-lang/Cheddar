@@ -7,7 +7,7 @@
 // I'm not sure. Does it matter?
 // yes, it'll impact shunting-yard parsing
 // but we don't have postfix yet (e.g. i++)
-export const RESERVED_KEYWORDS = [ 'sqrt', 'cbrt', 'sin', 'cos', 'tan', 'cosh', 'sinh', 'tanh', 'acos', 'asin', 'atan', 'acosh', 'asinh', 'atanh', 'log', 'log10', 'log1p', 'log2', 'floor', 'ceil', 'round', 'sign', 'imul', 'abs', 'clz32', 'fround', 'print' ];
+export const RESERVED_KEYWORDS = new Set( 'sqrt', 'cbrt', 'sin', 'cos', 'tan', 'cosh', 'sinh', 'tanh', 'acos', 'asin', 'atan', 'acosh', 'asinh', 'atanh', 'log', 'log10', 'log1p', 'log2', 'floor', 'ceil', 'round', 'sign', 'imul', 'abs', 'clz32', 'fround', 'print' );
 
 export const OP = [
 '!', '^', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '=', '!=', ':=', '+=', '-=', '*=', '/=', '^=',

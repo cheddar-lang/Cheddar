@@ -129,6 +129,14 @@ export const PREFIX_OPS = new Map([
     ['+', new Map([
         [N, x => num(x)]
     ])],
+    ['js', new Map([
+        [S, x => num(x.length)],
+        [A, x => num(x.length)]
+    ])],
+    ['len', new Map([
+        [S, x => num(x.length)],
+        [A, x => num(x.length)]
+    ])],
     ['print', new Map([
         [B, x => { console.log(x.toString()); return bool(x); }], //clone
         [N, x => { console.log(x.toString()); return num(x); }],
