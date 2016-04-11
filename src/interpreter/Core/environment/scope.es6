@@ -51,7 +51,7 @@ export default class CheddarExecutionScope {
         //  |   +--------|
         //  |   |- <ExecutionToken> ===> <OUTPUT>
         //  |_________|
-
+        console.log(path);
         let access = this.accessor(path.shift());
         console.log(access, path);
 
