@@ -1,10 +1,29 @@
+// Basic idea of the Execution Enviorments:
+//
+//  ExecutionEnviorment
+//    |    ^
+//    |- Sandboxed Enviorment
+//    |    |- Crossdepedent scoping
+//    |    |    ^
+//    |    v    | - Inheritence Chain
+//    |- Scope  v
+//    |   |- Inheritence
+//    |- Preset data
+
 import * as CheddarError from '../consts/err';
 import {RESERVED_KEYWORDS} from '../../../tokenizer/consts/ops';
 
 export default class CheddarExecutionScope {
-    constructor(inherit = null, preset) {
+    constructor(inherit = null, preset = new Map()) {
         // Initialize the hash
-        this.Scope = new Map();
+        this.Scope = preset;
+
+        // Global scope
+        // Make sure to move preset items
+        // Avoid duplicating scopes
+        //  by providing a loopup within
+        //  a seperate hash which is linked
+        //  by overriding a properties get
         this.inheritanceChain = inherit;
 
     }
@@ -15,15 +34,37 @@ export default class CheddarExecutionScope {
         );
     }
 
-    access(token) {
-        // Throw a different error for reserved tokens
-        if (RESERVED_KEYWORDS.has(token))
-            return CheddarError.KEY_IS_RESERVED;
-
+    accessor(token) {
         if (!this.has(token))
             return CheddarError.KEY_NOT_FOUND;
 
         return this.Scope.get(token);
+
+    }
+
+    access(path) {
+        // Access state:
+        // <ExecutionEnviorment>
+        //  |- ExecutionScope[attempt](path)
+        //  ^   |- <ExecutionEnviorment>[has](path)
+        //  |       |- <ExecutionScope>[Accessor](access)
+        //  |   +--------|
+        //  |   |- <ExecutionToken> ===> <OUTPUT>
+        //  |_________|
+
+        let access = this.accessor(path.shift());
+        console.log(access, path);
+
+        if (path.length) {
+            console.log(access instanceof CheddarExecutionScope);
+            console.log(access.accessor(path));
+            if (access instanceof CheddarExecutionScope)
+                return access.accessor(path);
+            else
+                return CheddarError.KEY_NOT_FOUND;
+        } else {
+            return access;
+        }
     }
 
     manage(token, value) {

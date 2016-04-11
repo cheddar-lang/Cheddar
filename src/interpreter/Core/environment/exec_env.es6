@@ -11,10 +11,10 @@
 //    |- Preset data
 
 import CheddarExecutionScope from './scope';
-import CheddarError from '../consts/err.CheddarError';
+import CheddarError from '../consts/err';
 
 export default class CheddarExecutionEnvironment {
-    constructor(inherit = new CheddarExecutionScope()) {
+    constructor(preset = new CheddarExecutionScope()) {
 
         // Global scope
         // Make sure to move preset items
@@ -22,7 +22,7 @@ export default class CheddarExecutionEnvironment {
         //  by providing a loopup within
         //  a seperate hash which is linked
         //  by overriding a properties get
-        this.Scope = inherit.Scope;
+        this.Scope = inherit;
 
     }
 
@@ -54,7 +54,7 @@ export default class CheddarExecutionEnvironment {
     }
 
     add_scope() {
-        return new CheddarExecutionEnvironment(this.Scope);
+        return new CheddarExecutionScope(this.Scope);
     }
 
 }
