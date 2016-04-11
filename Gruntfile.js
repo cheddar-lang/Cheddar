@@ -5,7 +5,8 @@ module.exports = function(grunt) {
     grunt.initConfig({
         babel: {
             options: {
-                presets: ['es2015']
+                presets: ['es2015'],
+                plugins: ['babel-plugin-transform-class-properties']
             },
             dist: {
                 files: [

@@ -13,7 +13,7 @@
 import * as CheddarError from '../consts/err';
 import {RESERVED_KEYWORDS} from '../../../tokenizer/consts/ops';
 
-export default class CheddarExecutionScope {
+export default class CheddarScope {
     constructor(inherit = null, preset = new Map()) {
         // Initialize the hash
         this.Scope = preset;
@@ -55,7 +55,7 @@ export default class CheddarExecutionScope {
         let access = this.accessor(path.shift());
 
         if (path.length) {
-            if (access instanceof CheddarExecutionScope)
+            if (access instanceof CheddarScope)
                 return access.access(path);
             else
                 return CheddarError.KEY_NOT_FOUND;

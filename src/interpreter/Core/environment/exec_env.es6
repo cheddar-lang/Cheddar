@@ -22,7 +22,7 @@ export default class CheddarExecutionEnvironment {
         //  by providing a loopup within
         //  a seperate hash which is linked
         //  by overriding a properties get
-        this.Scope = inherit;
+        this.Scope = preset;
 
     }
 
