@@ -22,13 +22,18 @@ Contributors:
  - [ ] Define basic runtime enviorment
  - [ ] Token linking
  - [ ] Call stack handling
- - [ ] Define namespaces
+ - [x] Define namespaces
  - [ ] Handle loopups
  - [ ] Define primitive classes
  - [ ] Call stack optimization
  - [ ] Conditional expression handling
  - [ ] Interpretation
  - [ ] Congrats! Cheddar is done!
+
+Further Development
+ 
+ - [ ] JS Interfacing
+ - [ ] A bunch of libraries
 
 
 ## Milestones
