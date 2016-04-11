@@ -51,15 +51,12 @@ export default class CheddarExecutionScope {
         //  |   +--------|
         //  |   |- <ExecutionToken> ===> <OUTPUT>
         //  |_________|
-        console.log(path);
+
         let access = this.accessor(path.shift());
-        console.log(access, path);
 
         if (path.length) {
-            console.log(access instanceof CheddarExecutionScope);
-            console.log(access.accessor(path));
             if (access instanceof CheddarExecutionScope)
-                return access.accessor(path);
+                return access.access(path);
             else
                 return CheddarError.KEY_NOT_FOUND;
         } else {
