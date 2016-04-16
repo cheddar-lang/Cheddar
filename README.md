@@ -40,7 +40,28 @@ Further Development
 
 A list of milestones in Cheddar's development:
 
- 2. Expression parsing works (a huge milestone)
+ - Scoping works (half of a huge milestone)
+```js
+Cheddar:T_REPL> set A scope
+Cheddar:T_REPL> set B 123
+Cheddar:T_REPL> get B
+123
+Cheddar:T_REPL> enter A
+Cheddar:T_REPL> set C 000
+Cheddar:T_REPL> get C
+000
+Cheddar:T_REPL> get B
+123
+Cheddar:T_REPL> set B 456
+Cheddar:T_REPL> get B
+456
+Cheddar:T_REPL> exit
+Cheddar:T_REPL> get B
+456
+Cheddar:T_REPL> get C
+Symbol(KEY_NOT_FOUND)
+```
+ - Expression parsing works (a huge milestone)
 ```js
 CheddarExpressionToken {
   Index: 8,
@@ -64,7 +85,7 @@ CheddarExpressionToken {
             _Tokens: [ CheddarNumberToken { Index: 7, _Tokens: [ 10, 0, '2' ] } ] } ] } ] }
 
 ```
- 2. Property parsing works (for input `foo.bar("foo", 1234)`)
+ - Property parsing works (for input `foo.bar("foo", 1234)`)
 ```js
 CheddarExpressionToken {
   Index: 20,
