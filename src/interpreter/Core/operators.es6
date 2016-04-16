@@ -118,6 +118,11 @@ export const OPS = new Map([
         [N, new Map([
             [N, (l, r) => num(Math.pow(l, r))]
         ])]
+    ])],
+    ['in', new Map([
+        [N, new Map([
+            [S, (l, r) => bool()]
+        ])]
     ])]
 ]);
 
@@ -129,9 +134,9 @@ export const PREFIX_OPS = new Map([
     ['+', new Map([
         [N, x => num(x)]
     ])],
-    ['js', new Map([
-        [S, x => num(x.length)],
-        [A, x => num(x.length)]
+    ['reverse', new Map([ //TODO: shorten here and in ops
+        [S, x => str(x.split('').reverse().join(''))],
+        [A, x => arr(x.reverse())]
     ])],
     ['len', new Map([
         [S, x => num(x.length)],
@@ -196,6 +201,9 @@ export const PREFIX_OPS = new Map([
     ])],
     ['round', new Map([
         [N, x => num(Math.round(x))]
+    ])],
+    ['trunc', new Map([
+        [N, x => num(Math.trunc(x))]
     ])],
     ['clz32', new Map([
         [N, x => num(Math.clz32(x))]

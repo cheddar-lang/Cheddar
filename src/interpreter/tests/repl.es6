@@ -19,8 +19,10 @@ REPL.prompt();
 REPL.on('line', function(STDIN) {
 
     if (STDIN === 'exit') REPL.close();
-    if (STDIN.indexOf('**EVALJS**') === 0)
+    if (STDIN.indexOf('**EVALJS**') === 0) {
         console.log(eval(STDIN.slice(10)));
+        return;
+    }
 
     let Exec = new CheddarExpressionToken(STDIN, 0).exec(),
         Global = new CheddarExecutionEnvironment();
@@ -39,7 +41,7 @@ REPL.on('line', function(STDIN) {
                 let simplified = simplify(item);
                 if (simplified !== undefined) {
                     if (simplified.constructor.name === 'CheddarProperty')
-                        1;//set
+                        1;//TODO: set
                     else
                         stack.push(simplified);
                 } else if (item.constructor.name === 'CheddarOperatorToken') {

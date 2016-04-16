@@ -20,9 +20,10 @@ export const OP = [
 'acosh', 'asinh', 'atanh',
 'log', 'log10', 'log1p', 'log2',
 'floor', 'ceil', 'round',
+'len', 'reverse',
 'sign', 'imul', 'abs', 'clz32', 'fround', 'print'];
 
-// TODO: how will the user modify this?
+// TODO: how will the user modify this? no idea
 //TODO: fix precedence
 export const UNARY_PRECEDENCE = new Map([
     ['-', 20000],
@@ -58,6 +59,8 @@ export const UNARY_PRECEDENCE = new Map([
     ['print', 0]
 ]);
 
+
+
 export const PRECEDENCE = new Map([
     ['^', 14000],
     ['*', 13000],
@@ -82,7 +85,6 @@ export const PRECEDENCE = new Map([
     ['||', 4000],
     ['??', 3000], // null coalesce, like js' `obj1 || obj2`, if needed
     ['?:', 2000], // ternary, idk how to represent
-    [':=', 1000],
     ['+=', 1000],
     ['-=', 1000],
     ['*=', 1000],
@@ -95,3 +97,13 @@ export const PRECEDENCE = new Map([
     ['>>=', 1000],
     ['=>', 1000]
 ]);
+
+export const RA_PRECEDENCE = new Map([
+    [':=', 1000]
+]);
+
+export const TYPE = {
+    UNARY: Symbol('Unary Operator'),
+    LTR: Symbol('LTR Operator'),
+    RTL: Symbol('RTL Operator')
+}

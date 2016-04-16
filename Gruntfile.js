@@ -6,7 +6,10 @@ module.exports = function(grunt) {
         babel: {
             options: {
                 presets: ['es2015'],
-                plugins: ['babel-plugin-transform-class-properties']
+                plugins: [
+                    'babel-plugin-transform-class-properties',
+                    'babel-plugin-add-module-exports'
+                ]
             },
             dist: {
                 files: [

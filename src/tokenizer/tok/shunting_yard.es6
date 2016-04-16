@@ -1,6 +1,6 @@
 import CheddarPrimitive from '../literals/primitive';
 import CheddarOperatorToken from '../literals/op';
-import {PRECEDENCE, UNARY_PRECEDENCE} from '../consts/ops';
+import {PRECEDENCE, UNARY_PRECEDENCE, RA_PRECEDENCE, TYPE} from '../consts/ops';
 import * as CheddarError from '../consts/err';
 import CheddarLexer from './lex';
 
@@ -66,12 +66,28 @@ export default class CheddarShuntingYard extends CheddarLexer {
                     this.Tokens = token.tok(i);
                 unary = false;
             } else if (token instanceof CheddarOperatorToken) { // It's an operator
-                if (unary)
-                    token.Tokens = true;
+                if (RA_PRECEDENCE.has(token.tok(0)))
+                    token.Tokens = TYPE.RTL;
+                else if (unary)
+                    token.Tokens = TYPE.UNARY;
+                else
+                    token.Tokens = TYPE.LTR;
 
-                let precedence = (token.tok(1) ? UNARY_PRECEDENCE : PRECEDENCE).get(token);
+                let precedence;
+                switch (token.tok(1)) {
+                    case TYPE.RTL:
+                        precedence = RA_PRECEDENCE.get(token);
+                        break;
+                    case TYPE.UNARY:
+                        precedence = UNARY_PRECEDENCE.get(token);
+                        break;
+                    case TYPE.LTR:
+                        precedence = PRECEDENCE.get(token);
+                        break;
+                }
 
-                while (precedence <= previousPrecedence) {
+                let minus = token.tok(1) == TYPE.RTL ? 0 : 1;
+                while (precedence - minus < previousPrecedence) {
                     this.Tokens = operators.pop();
                     precedences.pop();
                     previousPrecedence = precedences[precedence.length];

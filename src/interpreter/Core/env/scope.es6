@@ -38,7 +38,9 @@ export default class CheddarScope {
         if (!this.has(token))
             return CheddarError.KEY_NOT_FOUND;
 
-        return this.Scope.get(token);
+        return this.Scope.get(token) || (this.inheritanceChain ?
+            this.inheritanceChain.accessor(token) : CheddarError.KEY_NOT_FOUND
+        );
 
     }
 
