@@ -50,10 +50,8 @@ Cheddar:T_REPL> set C 000   //     C = 000
 Cheddar:T_REPL> get C       //     print C // Outputs: 000
 000                         //             
 Cheddar:T_REPL> get B       //     print B // Outputs: 123
-123                         //             
+123                         //     
 Cheddar:T_REPL> set B 456   //     B = 456
-Cheddar:T_REPL> get B       //     print B // Outputs: 456
-456                         //             
 Cheddar:T_REPL> exit        // }
 Cheddar:T_REPL> get B       // print B     // Outputs: 456
 456                         //         
