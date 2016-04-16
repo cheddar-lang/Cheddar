@@ -45,8 +45,7 @@ A list of milestones in Cheddar's development:
 Cheddar:T_REPL> set B 123   // B = 123
 Cheddar:T_REPL> get B       // print B     // Outputs: 123
 123                         //         
-Cheddar:T_REPL> set A scope // {
-Cheddar:T_REPL> enter A     //
+Cheddar:T_REPL> scope      // {
 Cheddar:T_REPL> set C 000   //     C = 000
 Cheddar:T_REPL> get C       //     print C // Outputs: 000
 000                         //             
