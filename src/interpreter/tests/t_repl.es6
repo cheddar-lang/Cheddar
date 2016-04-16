@@ -56,6 +56,8 @@ REPL.on('line', function(STDIN) {
             console.log(cs.accessor(A));
         else
             console.log(REPL_ERROR + A.italic + " is not an accessor");
+    } else if (C === 'scope') {
+        cs = new Scope(cs, new Map([['USI', USI++]]));
     } else {
         console.log(REPL_ERROR + "No known command");
     }
