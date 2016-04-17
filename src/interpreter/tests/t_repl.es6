@@ -1,16 +1,23 @@
 import readline from 'readline';
 import colors from 'colors'; // MAKE SURE TO RUN `npm install colors`
-import Scope from '../Core/env/scope';
 
+// The test dependencies
+import CheddarExpressionToken from '../../tokenizer/parsers/expr';
+import CheddarShuntingYard from '../../tokenizer/tok/shunting_yard';
+
+// Error dependecies
+import {DESC} from '../../tokenizer/consts/err_msg';
+
+// Helpers
+import HelperLocateIndex from '../../helpers/loc';
+
+// Setup
 let REPL = readline.createInterface(process.stdin, process.stdout);
 REPL.setPrompt('Cheddar:T_REPL> '.yellow.bold);
 REPL.prompt();
 
-const REPL_ERROR = "T_REPL:ERROR".red.underline.bold + " - ".dim;
-
-let USI = 0;
-const GLOBAL = new Scope();
-let cs = GLOBAL;
+const REPL_ERROR = text => console.log("T_REPL:ERROR".red.underline.bold + " - ".dim + text);
+const REPL_HEAD  = text => console.log(`━━${text}━━`.bold.magenta);
 
 // Workaround
 REPL._setPrompt = REPL.setPrompt;
@@ -18,49 +25,31 @@ REPL.setPrompt = (prompt, length) =>
     REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
 
+
 REPL.on('line', function(STDIN) {
 
     if (STDIN === 'quit') REPL.close()
 
-    const [C, A, B] = STDIN.split(" ");
-    if (C === 'set') {
+    let _ExprressionToken = new CheddarExpressionToken(STDIN, 0);
+    let ExpressionToken = _ExprressionToken.exec();
+    console.log(_ExprressionToken);
+    if (_ExprressionToken.Errored) {
 
-        if (B === 'scope')
-            cs.manage(A, new Scope(cs, new Map([['USI', USI++]])));
-        else
-            cs.manage(A, B);
+        // [Line Number, Index in line]
+        let [ROW, COL, INDEX] = HelperLocateIndex(STDIN, ExpressionToken.Index);
 
-    } else if (C === 'get') {
+        REPL_ERROR(
+            DESC.get(ExpressionToken)
+                .replace(/\$C/g, COL)
+                .replace(/\$R/g, ROW)
+                .replace(/\$1/g, STDIN[INDEX])
+             + "\n  " + STDIN.split("\n")[ROW - 1] + "\n  " + " ".repeat(COL) + "^".bold
+        );
 
-        console.log(cs.access(A.split(".")));
-
-    } else if (C === 'exit') {
-
-        if (cs.inheritanceChain)
-            cs = cs.inheritanceChain;
-        else
-            console.log(REPL_ERROR + "No predecessor");
-
-    } else if (C == 'enter') {
-
-        const access = cs.accessor(A);
-        if (access.constructor.name === "CheddarScope")
-            cs = access;
-        else
-            console.log(REPL_ERROR + A.italic + " is not a inheritor");
-
-    } else if (C === 'view') {
-        console.log(cs.Scope);
-    } else if (C ==='accessor') {
-        if (cs.constructor.name === "CheddarScope")
-            console.log(cs.accessor(A));
-        else
-            console.log(REPL_ERROR + A.italic + " is not an accessor");
-    } else if (C === 'scope') {
-        cs = new Scope(cs, new Map([['USI', USI++]]));
-    } else {
-        console.log(REPL_ERROR + "No known command");
+        return REPL.prompt();
     }
+
+    let CallStack = new CheddarShuntingYard().exec(ExpressionToken);
 
     REPL.prompt();
 

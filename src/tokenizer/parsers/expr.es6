@@ -47,9 +47,13 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
 
         const E = CheddarExpressionToken;
         const α = CheddarExpressionTokenAlpha;
+        // Setting ε to a terminating terminal
+        // not sure about this but I'll add a
+        // special control character for that
         const ε = [];
 
         return this.grammar(true,
+        //  ['?', E, ':', E] // ternary
             [O, E, α],
             [O, α],
             ε

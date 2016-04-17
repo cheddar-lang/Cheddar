@@ -31,7 +31,10 @@ export default class CheddarLexer {
         delete this.Code;
         return arg || this;
     }
-    error(id) { return id }
+    error(id) {
+        this.Errored = true;
+        return id;
+    }
 
     get Tokens() { return new CheddarTokens(this._Tokens) }
     set Tokens(v) {
@@ -107,6 +110,7 @@ export default class CheddarLexer {
         main: for (i = 0; i < defs.length; i++) {
             index = this.Index;
             tokens = [];
+
             sub: for (j = 0; j < defs[i].length; j++) {
                 if (whitespace) {
                     let oldIndex = this.Index;
