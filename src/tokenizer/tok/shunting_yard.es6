@@ -43,8 +43,10 @@ export default class CheddarShuntingYard extends CheddarLexer {
             //TODO: make sure this covers all cases; otherwise, see when this doesn't work
         }
 
-        if (current && current._Tokens.length > 1)
+        if (current && current._Tokens.length > 1) {
+            this.Index = current.Index;
             return this.error(CheddarError.UNEXPECTED_TOKEN);
+        }
 
         if (current &&
             current._Tokens.length === 1) {

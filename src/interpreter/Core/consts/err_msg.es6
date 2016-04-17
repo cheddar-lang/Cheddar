@@ -1,4 +1,4 @@
-import * as RuntimeError from './err';
+import RuntimeError from './err';
 
 export const DESC = new Map([
     [RuntimeError.RUNTIME.KEY_NOT_FOUND, "Attempted to access undefined key $0"],

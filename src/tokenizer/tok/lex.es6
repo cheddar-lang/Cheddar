@@ -313,9 +313,7 @@ export default class CheddarLexer {
         //downgoat D: this returned first index
         //took me 6 hours to figure out the problem :(
         //D: D: D:
-        if (new RegExp('^.{' + this.Index + '}' +
-                l.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
-            .test(this.Code))
+        if (this.Code.indexOf(l, this.Index) === this.Index)
             this.Index += l.length;
         else
             return false;

@@ -17,40 +17,44 @@ REPL.setPrompt('Cheddar:T_REPL> '.yellow.bold);
 REPL.prompt();
 
 const REPL_ERROR = text => console.log("T_REPL:ERROR".red.underline.bold + " - ".dim + text);
-const REPL_HEAD  = text => console.log(`━━${text}━━`.bold.magenta);
+const REPL_HEAD  = text => console.log(`━━ ${text} ━━`.bold.magenta);
 
 // Workaround
 REPL._setPrompt = REPL.setPrompt;
 REPL.setPrompt = (prompt, length) =>
-    REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
+	REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
 
 
 REPL.on('line', function(STDIN) {
 
-    if (STDIN === 'quit') REPL.close()
+	if (STDIN === 'quit') REPL.close();
 
-    let _ExprressionToken = new CheddarExpressionToken(STDIN, 0);
-    let ExpressionToken = _ExprressionToken.exec();
-    console.log(_ExprressionToken);
-    if (_ExprressionToken.Errored) {
+	let _ExprressionToken = new CheddarExpressionToken(STDIN, 0);
+	let ExpressionToken = _ExprressionToken.exec();
 
-        // [Line Number, Index in line]
-        let [ROW, COL, INDEX] = HelperLocateIndex(STDIN, ExpressionToken.Index);
+	if (_ExprressionToken.Errored) {
 
-        REPL_ERROR(
-            DESC.get(ExpressionToken)
-                .replace(/\$C/g, COL)
-                .replace(/\$R/g, ROW)
-                .replace(/\$1/g, STDIN[INDEX])
-             + "\n  " + STDIN.split("\n")[ROW - 1] + "\n  " + " ".repeat(COL) + "^".bold
-        );
+		// [Line Number, Index in line]
+		let [ROW, COL, INDEX] = HelperLocateIndex(STDIN, ExpressionToken.Index);
 
-        return REPL.prompt();
-    }
+		REPL_ERROR(
+			DESC.get(ExpressionToken)
+				.replace(/\$C/g, COL)
+				.replace(/\$R/g, ROW)
+				.replace(/\$1/g, STDIN[INDEX])
+			 + "\n  " + STDIN.split("\n")[ROW - 1] + "\n  " + " ".repeat(COL) + "^".bold
+		);
 
-    let CallStack = new CheddarShuntingYard().exec(ExpressionToken);
+		return REPL.prompt();
+	}
 
-    REPL.prompt();
+	let _CallStack = new CheddarShuntingYard();
+	let CallStack = _CallStack.exec(ExpressionToken);
+
+	REPL_HEAD("Execution Instruction");
+	console.log(CallStack._Tokens);
+
+	REPL.prompt();
 
 }).on('close', () => process.exit(0));
