@@ -37,7 +37,33 @@ Combined into one expression:
 E -> (OE|(E)|P|L|B)[OE|O]
 
 where groups are only nested to a depth of one
+
+=== Forget the above ===
+With thanks to [@orlp](http://chat.stackexchange.com/transcript/message/29080854#29080854),
+ errors in the above have been fixed and now the following grammar should work
+
+Obfuscated because I'm an idiot
+expr -> α β
+start -> ( E )     // parenthesis
+     L         // number
+     B         // boolean
+     P         // identifier
+     prefix E  // prefix
+end -> infix E   // infix
+     postfix   // postfix
+       ε
+
+
 */
+
+/*A -> '(' expr ')'
+A -> op expr
+A -> (indentifier | bool | literal)
+
+B -> op expr?
+
+expr -> A B*/
+
 
 class CheddarExpressionTokenAlpha extends CheddarLexer {
     exec() {
@@ -46,17 +72,31 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
         this.jumpWhite();
 
         const E = CheddarExpressionToken;
-        const α = CheddarExpressionTokenAlpha;
-        // Setting ε to a terminating terminal
-        // not sure about this but I'll add a
-        // special control character for that
-        const ε = [];
 
         return this.grammar(true,
-        //  ['?', E, ':', E] // ternary
-            [O, E, α],
-            [O, α],
-            ε
+            ['(', E, ')'],
+            [O, E], // Prefix
+            [L],
+            [B],
+            [P]
+        );
+    }
+
+    get isExpression() { return true; }
+}
+
+class CheddarExpressionTokenBeta extends CheddarLexer {
+    exec() {
+        this.open(false);
+
+        this.jumpWhite();
+
+        const E = CheddarExpressionToken;
+
+        return this.grammar(true,
+            [O, E], //infix
+            [O],
+            [] // ε
         );
     }
 
@@ -69,21 +109,8 @@ export default class CheddarExpressionToken extends CheddarLexer {
 
         this.jumpWhite();
 
-        const E = CheddarExpressionToken;
-        const α = CheddarExpressionTokenAlpha;
-
         return this.grammar(true,
-            [/*[[V]], */F, α], // <- this may or may not be a good idea
-            // how else would it work?
-            // not sure but this gives ir a really high presedence
-            // over things such as parenthesized expressions
-            // yeah, but functions always start with ->/=>/~>; paren expressions don't
-            [O, E, α],
-            ['(', E, ')', α],
-            [B, α],
-            [P, α],
-            [L, α],
-            [P, [':=', []], E] //so '=' is captured
+            [CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta]
         );
     }
 

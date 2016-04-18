@@ -13,9 +13,11 @@ export default class CheddarAnyLiteral extends CheddarLexer {
 
         let attempt = this.attempt(CheddarStringToken, CheddarNumberToken, CheddarBooleanToken, CheddarArrayToken, CheddarFunctionToken);
 
-        if (attempt instanceof CheddarLexer)
+        if (attempt instanceof CheddarLexer) {
+            this.Index = attempt.Index;
             return this.close(attempt);
-        else
+        } else {
             return this.error(attempt);
+        }
     }
 }

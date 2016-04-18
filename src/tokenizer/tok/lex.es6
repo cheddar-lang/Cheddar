@@ -145,7 +145,11 @@ export default class CheddarLexer {
                     index = parser.Index;
 
                     // Filters out meaningless data
-                    if (!(result.constructor.name.endsWith('Alpha') &&
+                    if (!(
+                        (
+                            result.constructor.name.endsWith('Alpha') ||
+                            result.constructor.name.endsWith('Beta')
+                        ) &&
                         result._Tokens.length === 0))
                         tokens.push(result);
                 } else if (defs[i][j] === this.jumpWhite) {
@@ -175,7 +179,11 @@ export default class CheddarLexer {
                                 index = parser.Index;
 
                                 // Filter
-                                if (!(result.constructor.name.endsWith('Alpha') &&
+                                if (!(
+                                    (
+                                        result.constructor.name.endsWith('Alpha') ||
+                                        result.constructor.name.endsWith('Beta')
+                                    ) &&
                                     result._Tokens.length === 0))
                                     tokens.push(result);
                             }
@@ -188,7 +196,7 @@ export default class CheddarLexer {
                             this.Index = index;
                             if (defs[i][j][k] instanceof CheddarLexer) {
                                 result = this.initParser(defs[i][j][k]).exec();
-                                if (result instanceof CheddarError) {
+                                if (result instanceof CheddarLexer) {
                                     match = result;
                                     index = result.Index;
                                     break;
@@ -207,7 +215,11 @@ export default class CheddarLexer {
                         this.Index = oldIndex;
 
                         if (match) {
-                            if (!(result.constructor.name.endsWith('Alpha') &&
+                            if (!(
+                                (
+                                    result.constructor.name.endsWith('Alpha') ||
+                                    result.constructor.name.endsWith('Beta')
+                                ) &&
                                 result._Tokens.length === 0)) {
                                 tokens.push(match);
                                 continue sub;
