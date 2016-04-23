@@ -113,7 +113,7 @@ To get an idea of how the syntax is going to look, here are examples:
 class Animal(String: Name, Int: Age) {
    /* variable initialization is implicit
     *  but you can explicitly declare a
-    * main {} block to initialize yoour variables
+    * main {} block to initialize your variables
     */
 
    speak => "Hello, my name is #{self.Name}, I am #{self.Age} years old"
