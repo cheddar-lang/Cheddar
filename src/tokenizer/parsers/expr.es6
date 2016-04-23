@@ -53,6 +53,18 @@ end -> infix E   // infix
      postfix   // postfix
        ε
 
+even worse:
+
+E -> α β
+     ε
+α -> ( E )     // parenthesis
+     L         // number
+     B         // boolean
+     P         // identifier
+     O E  // prefix
+β -> O E   // infix
+     O   // postfix
+      ε
 
 */
 
@@ -110,7 +122,8 @@ export default class CheddarExpressionToken extends CheddarLexer {
         this.jumpWhite();
 
         return this.grammar(true,
-            [CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta]
+            [CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta],
+            [] // ε
         );
     }
 

@@ -92,7 +92,7 @@ export default class CheddarShuntingYard extends CheddarLexer {
                 while (precedence - minus < previousPrecedence) {
                     this.Tokens = operators.pop();
                     precedences.pop();
-                    previousPrecedence = precedences[precedence.length];
+                    previousPrecedence = precedences[precedences.length - 1];
                 }
 
                 operators.push(token);

@@ -268,8 +268,8 @@ export default class CheddarLexer {
     jumpWhite() {
         while (/\s/.test(this.Code[this.Index]))
             this.Index++;
+            this._jumpComment();
 
-        this._jumpComment();
         return this;
     }
 
@@ -290,7 +290,7 @@ export default class CheddarLexer {
                 default:
                     return;
             }
-            return this.jumpWhite();
+            return;
         }
 
         //if (!(this.Code[this.Index] === this.Code[this.Index + 1] === '/'))
