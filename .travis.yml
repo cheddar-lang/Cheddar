@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-- 4.4.0
+  - 4.4.0
 before_script:
-- npm install grunt-cli -g
+  - npm install grunt-cli -g
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 deploy:
   provider: heroku
   api_key:
