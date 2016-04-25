@@ -36,7 +36,7 @@ export default class CheddarLexer {
         return id;
     }
 
-    get Tokens() { return new CheddarTokens(this._Tokens) }
+    get Tokens() { return this._Tokens }
     set Tokens(v) {
         if (Array.isArray(v))
             this._Tokens.push(...v);

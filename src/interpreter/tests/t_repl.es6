@@ -36,10 +36,10 @@ REPL.on('line', function(STDIN) {
 	if (_ExprressionToken.Errored) {
 
 		// [Line Number, Index in line]
-		let [ROW, COL, INDEX] = HelperLocateIndex(STDIN, ExpressionToken.Index);
-
+		let [ROW, COL, INDEX] = HelperLocateIndex(STDIN, _ExprressionToken.Index);
+		console.log(DESC, ExpressionToken);
 		REPL_ERROR(
-			DESC.get(ExpressionToken)
+			(DESC.get(ExpressionToken) || "An unexpected error occured")
 				.replace(/\$C/g, COL)
 				.replace(/\$R/g, ROW)
 				.replace(/\$1/g, STDIN[INDEX])

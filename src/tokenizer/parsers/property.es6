@@ -10,7 +10,7 @@ import CheddarPrimitive from '../literals/primitive';
 export default class CheddarPropertyToken extends CheddarLexer {
     exec() {
         this.open(false);
-        
+
         this.Type = PropertyType.Property;
 
         let Initial = false;
@@ -21,6 +21,7 @@ export default class CheddarPropertyToken extends CheddarLexer {
 
         while (true) {
             this.jumpWhite();
+
 
             let attempt;
             if (Initial === false)
@@ -44,13 +45,13 @@ export default class CheddarPropertyToken extends CheddarLexer {
                 let res = expr.exec('(', ')');
 
                 this.Index = expr.Index;
-
+                console.log(expr, res);
                 if (!(res instanceof CheddarLexer))
-                    return this.error(expr);
+                    return this.error(res);
 
                 this.Tokens = expr;
             }
-            
+
             if (this.curchar === '.') {
                 ++this.Index;
                 continue;

@@ -44,6 +44,10 @@ export default class CheddarScope {
 
     }
 
+    setter(path, setter) {
+        this.Scope.set(path, setter);
+    }
+
     access(path) {
         // Access state:
         // <ExecutionEnviorment>
@@ -76,7 +80,7 @@ export default class CheddarScope {
             if (RESERVED_KEYWORDS.has(token))
                 return CheddarError.KEY_IS_RESERVED;
             else
-                return this.Scope.set(token, value), token;
+                return this.setter(token, value), token;
         }
 
     }

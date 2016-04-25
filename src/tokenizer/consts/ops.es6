@@ -7,25 +7,36 @@
 // I'm not sure. Does it matter?
 // yes, it'll impact shunting-yard parsing
 // but we don't have postfix yet (e.g. i++)
-export const RESERVED_KEYWORDS = new Set( 'sqrt', 'cbrt', 'sin', 'cos', 'tan', 'cosh', 'sinh', 'tanh', 'acos', 'asin', 'atan', 'acosh', 'asinh', 'atanh', 'log', 'log10', 'log1p', 'log2', 'floor', 'ceil', 'round', 'sign', 'imul', 'abs', 'clz32', 'fround', 'print' );
+export const RESERVED_KEYWORDS = new Set(
+    'sqrt', 'cbrt', 'root',
+    'sin', 'cos', 'tan',
+    'acos', 'asin', 'atan',
+    'log', 'log2', 'log10',
+    'floor', 'ceil', 'round',
+    'len', 'reverse',
+    'sign', 'print',
+    'and', 'or', 'xor' );
 
 export const OP = [
-'!', '^', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '=', '!=', ':=', '+=', '-=', '*=', '/=', '^=',
+'!', '^', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '=', '&', '|',
+'!=', ':=', '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
+'..',
+'and', 'or', 'xor',
 // Unary operators
 '-', '+',
-'sqrt', 'cbrt',
+'sqrt', 'cbrt', 'root',
 'sin', 'cos', 'tan',
-'cosh', 'sinh', 'tanh',
 'acos', 'asin', 'atan',
-'acosh', 'asinh', 'atanh',
-'log', 'log10', 'log1p', 'log2',
+'log', 'log2', 'log10',
 'floor', 'ceil', 'round',
 'len', 'reverse',
-'sign', 'imul', 'abs', 'clz32', 'fround', 'print'];
+'sign',
+'print'];
 
 // TODO: how will the user modify this? no idea
 //TODO: fix precedence
 export const UNARY_PRECEDENCE = new Map([
+    ['!', 20000],
     ['-', 20000],
     ['+', 20000],
     ['sqrt', 15000],
@@ -33,36 +44,25 @@ export const UNARY_PRECEDENCE = new Map([
     ['cos', 15000],
     ['sin', 15000],
     ['tan', 15000],
-    ['cosh', 15000],
-    ['sinh', 15000],
-    ['tanh', 15000],
     ['acos', 15000],
     ['asin', 15000],
     ['atan', 15000],
-    ['acosh', 15000],
-    ['asinh', 15000],
-    ['atanh', 15000],
-    ['sign', 15000],
     ['log', 15000],
     ['log10', 15000],
-    ['log1p', 15000],
     ['log2', 15000],
-    ['imul', 15000],
-    ['abs', 15000],
     ['floor', 15000],
     ['ceil', 15000],
+    ['len', 15000],
+    ['reverse', 15000],
     ['round', 15000],
-    ['clz32', 15000],
-    ['exp', 15000],
-    ['expm1', 15000],
-    ['fround', 15000],
+    ['sign', 15000],
     ['print', 0]
 ]);
 
-
-
 export const PRECEDENCE = new Map([
+    ['..', 25000],
     ['^', 14000],
+    ['root', 14000],
     ['*', 13000],
     ['/', 13000],
     ['%', 13000],
@@ -74,17 +74,14 @@ export const PRECEDENCE = new Map([
     ['>', 10000],
     ['<=', 10000],
     ['>=', 10000],
-    ['as', 10000], // safe type cast - gives null if cannot be casted
-    ['is', 10000], // c# instanceof
+    ['sign', 10000],
     ['=', 9000],
     ['!=', 9000],
     ['&', 8000],
-    ['xor', 7000], //xor
+    ['xor', 7000],
     ['|', 6000],
-    ['&&', 5000],
-    ['||', 4000],
-    ['??', 3000], // null coalesce, like js' `obj1 || obj2`, if needed
-    ['?:', 2000], // ternary, idk how to represent
+    ['and', 5000],
+    ['or', 4000],
     ['+=', 1000],
     ['-=', 1000],
     ['*=', 1000],
@@ -94,8 +91,7 @@ export const PRECEDENCE = new Map([
     ['|=', 1000],
     ['^=', 1000],
     ['<<=', 1000],
-    ['>>=', 1000],
-    ['=>', 1000]
+    ['>>=', 1000]
 ]);
 
 export const RA_PRECEDENCE = new Map([

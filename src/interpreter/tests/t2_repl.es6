@@ -3,10 +3,10 @@ import colors from 'colors'; // MAKE SURE TO RUN `npm install colors`
 import Scope from '../Core/env/scope';
 
 let REPL = readline.createInterface(process.stdin, process.stdout);
-REPL.setPrompt('Cheddar:T_REPL> '.yellow.bold);
+REPL.setPrompt('Cheddar:PIT_REPL> '.yellow.bold);
 REPL.prompt();
 
-const REPL_ERROR = "T_REPL:ERROR".red.underline.bold + " - ".dim;
+const REPL_ERROR = "PIT_REPL:ERROR".red.underline.bold + " - ".dim;
 
 let USI = 0;
 const GLOBAL = new Scope();
@@ -22,19 +22,24 @@ REPL.on('line', function(STDIN) {
 
     if (STDIN === 'quit') REPL.close()
 
-    const [C, A, B] = STDIN.split(" ");
-    if (C === 'set') {
+    let [C, A, B] = STDIN.split(" ");
+
+    const CHECK = /([A-Za-z_$][\w$]*)\s*:=\s*(.+)/;
+    if (C === 'set' || CHECK.test(STDIN)) {
+
+        if (CHECK.test(STDIN))
+            [,A, B] = STDIN.match(CHECK);
 
         if (B === 'scope')
             cs.manage(A, new Scope(cs, new Map([['USI', USI++]])));
         else
             cs.manage(A, B);
 
-    } else if (C === 'get') {
+    } else if (C === 'get' || C === 'print') {
 
         console.log(cs.access(A.split(".")));
 
-    } else if (C === 'exit') {
+    } else if (C === 'exit' || C === "}") {
 
         if (cs.inheritanceChain)
             cs = cs.inheritanceChain;
@@ -56,7 +61,7 @@ REPL.on('line', function(STDIN) {
             console.log(cs.accessor(A));
         else
             console.log(REPL_ERROR + A.italic + " is not an accessor");
-    } else if (C === 'scope') {
+    } else if (C === 'scope' || C === "{") {
         cs = new Scope(cs, new Map([['USI', USI++]]));
     } else {
         console.log(REPL_ERROR + "No known command");

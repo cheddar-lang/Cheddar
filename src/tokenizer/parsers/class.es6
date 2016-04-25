@@ -43,7 +43,7 @@ export default class CheddarClassToken extends CheddarLexer {
         const A = CheddarCustomLexer(CheddarArrayToken, '(', ')', CheddarArgumentToken);
 
         return this.grammar(true,
-            [V, [[A]], 'e   xtends', V, '{', α]
+            [V, [[A]], 'extends', V, '{', α]
         );
     }
 

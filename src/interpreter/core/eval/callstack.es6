@@ -1,17 +1,19 @@
 export default class CheddarCallStack {
-    constructor(exec_instruct) {
+    constructor(exec_instruct, scope) {
         this.InStack = exec_instruct._Tokens;
+        console.log(this.InStack);
         this.CallStack = [];
+        this.Scope = scope;
     }
 
     get stack() { return this.CallStack }
 
-    push(n) {
-        return this.CallStack(n);
+    put(n) {
+        return this.CallStack.unshift(n);
     }
 
-    pop(n) {
-        return this.CallStack.splice(-n, n);
+    shift() {
+        return this.CallStack.pop();
     }
 
     next() {

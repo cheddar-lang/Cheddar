@@ -50,21 +50,22 @@ start -> ( E )     // parenthesis
      P         // identifier
      prefix E  // prefix
 end -> infix E   // infix
-     postfix   // postfix
+       postfix   // postfix
        ε
+
+
 
 even worse:
 
 E -> α β
      ε
-α -> ( E )     // parenthesis
-     L         // number
-     B         // boolean
-     P         // identifier
-     O E  // prefix
-β -> O E   // infix
-     O   // postfix
-      ε
+α -> ( E )
+     L
+     B
+     P
+     O E
+β -> O E?
+     ε
 
 */
 
@@ -86,7 +87,7 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
         const E = CheddarExpressionToken;
 
         return this.grammar(true,
-            ['(', E, ')'],
+            // ['(', E, ')'],
             [O, E], // Prefix
             [L],
             [B],
