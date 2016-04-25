@@ -8,6 +8,7 @@ export const DEFAULT_OP = new Map([
 
     // print: Definition
     ['print', (LHS) => {
+        // Attempt to cast to string
         LHS = LHS.constructor.Cast.has(CheddarString)
             ? LHS.constructor.Cast.get(CheddarString)(LHS)
             : LHS;

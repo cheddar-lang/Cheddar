@@ -13,7 +13,7 @@ export default class CheddarCallStack {
     }
 
     shift() {
-        return this.CallStack.pop();
+        return this.CallStack.shift();
     }
 
     next() {

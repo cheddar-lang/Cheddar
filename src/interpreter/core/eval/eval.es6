@@ -45,13 +45,12 @@ export default class CheddarEval extends CheddarCallStack {
         if (Operation instanceof CheddarOperatorToken) {
             TOKEN = this.shift();
 
-            this.put(
-                TOKEN.constructor.Operator.get(Operation.Tokens[0])(TOKEN,
-                    Operation.Tokens[1] === OP_TYPE.UNARY
-                        ? null
-                        : this.shift()
-                )
-            );
+            // okay, I need to swap these two args somehow
+            //  will do later when I get more time
+            if (Operation.Tokens[1] === OP_TYPE.UNARY)
+                this.put(TOKEN.constructor.Operator.get(Operation.Tokens[0])(TOKEN, null));
+            else
+                this.put(TOKEN.constructor.Operator.get(Operation.Tokens[0])(this.shift(), TOKEN));
         } else if (Operation instanceof CheddarTypedLiteral) {
             TOKEN = Operation.Tokens.pop();
 

@@ -78,17 +78,18 @@ export default class CheddarShuntingYard extends CheddarLexer {
                 let precedence;
                 switch (token.tok(1)) {
                     case TYPE.RTL:
-                        precedence = RA_PRECEDENCE.get(token);
+                        precedence = RA_PRECEDENCE.get(token.tok());
                         break;
                     case TYPE.UNARY:
-                        precedence = UNARY_PRECEDENCE.get(token);
+                        precedence = UNARY_PRECEDENCE.get(token.tok());
                         break;
                     case TYPE.LTR:
-                        precedence = PRECEDENCE.get(token);
+                        precedence = PRECEDENCE.get(token.tok());
                         break;
                 }
 
                 let minus = token.tok(1) == TYPE.RTL ? 0 : 1;
+                previousPrecedence = precedences[precedences.length - 1];
                 while (precedence - minus < previousPrecedence) {
                     this.Tokens = operators.pop();
                     precedences.pop();
@@ -105,9 +106,7 @@ export default class CheddarShuntingYard extends CheddarLexer {
             }
         }
 
-        let operator = 0;
-        while (operator = operators.pop())
-            this.Tokens = operator;
+        this.Tokens.push(...operators.reverse());
 
         return this.close();
     }

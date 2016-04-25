@@ -13,7 +13,16 @@ export default class CheddarNumber extends CheddarClass {
         if (bitshift)
             value += "0".repeat(bitshift);
 
-        this.value = parseInt(value, +base);
+        if (typeof value === "string") {
+            let [INT, DEC] = value.split(".");
+
+            if (base !== 10)
+                this.value = DEC ? parseInt(INT, base) + parseInt(DEC, base) / Math.pow(base, DEC.length) : parseInt(value, base)
+            else
+                this.value = +value;
+        } else {
+            this.value = value;
+        }
     }
 
     // String is the lowest level class
