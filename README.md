@@ -171,6 +171,37 @@ class Dog(String: Name, Int:Age, String:Breed) extends Animal {
 }
 ```
 
+# Details
+
+**The following is detailed description on the functionality and implementation of Cheddar, you probably can save yourself some scrolling, by not reading it**
+
+### Class Notes
+
+The Cheddar Class is a critical component in Cheddar execution. All literals either are constructed upon an internal or external classes.
+The class layer provides a custom set of all functions to provide a distinct level of abstraction throughout the interpreter
+
+### Info
+The classes implementation is designed to provide a significant level of abstraction as stated before
+Various parts to interface with operators and scopes are added through seperate classes.
+
+### Proccess
+A classes construction is illustration in thefollowing diagram:
+```
+               Class
+    ____________|______________
+    |           |             |
+  args        main()       instance
+           _____|________
+           |    |       |
+        scope main()  return
+```
+Within the constructor. The class stores an internal scope as itself is an extention of CheddarScope. Built-ins are merged through `main()` whether implicit or explicit.
+
+Define operators. Each item in the hash-map, defines behavior for the specific token in an `OperatorToken` `Operators:HashMap<Token, Behavior(LHS, RHS)>` Unary operators will RHS explicitly be an unabstrated, native, `null` value which will require an interface in order for a Cheddar unary operator interface
+
+
+### Syntax
+
 Comments:
 
 ```scala
