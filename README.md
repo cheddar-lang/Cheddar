@@ -1,8 +1,16 @@
-# Cheddar
+<p align="center">
+  <a href="https://github.com/vihanb/Cheddar">
+    <img src="https://raw.githubusercontent.com/vihanb/Cheddar/master/misc/logo_wide.png" alt="Cheddar" width="846">
+  </a>
+</p>
 
-[![Build Status](https://travis-ci.org/vihanb/Cheddar.svg?branch=master)](https://travis-ci.org/vihanb/Cheddar)
+<p align="center">
+  A powerful, object-oriented, functional, high-level programming language.
+</p>
 
-Cheddar is (or supposed to be) a powerful, reflective, object-oriented, high-level programming language.
+<p align="center">
+  <a href="https://travis-ci.org/vihanb/Cheddar"><img alt="Travis Status" src="https://travis-ci.org/vihanb/Cheddar.svg?branch=master"></a>
+</p>
 
 It is currenty in development, to give an approximate idea of how much work has been done, an expression parser is almost finished.
 
@@ -16,7 +24,6 @@ Contributors:
 
 **The formal grammar is written: [here](https://github.com/vihanb/Cheddar/blob/master/Grammar.md)**
 
- - [x] Fix infinite precedence with unary operators bug
  - [x] Define streams
  - [x] Define class structure
  - [x] Define basic runtime enviorment
@@ -25,10 +32,44 @@ Contributors:
  - [x] Define namespaces
  - [x] Handle lookups
  - [x] Define primitive classes
- - [ ] Call stack optimization
+  - [x] String
+  - [x] Number
+  - [ ] Array
+  - [ ] Boolean
+  - [ ] Undefined
+ - [ ] Expression evaluation integration
  - [ ] Conditional expression handling
+ - [ ] Loop expression handling
+ - [ ] Functions
+  - [ ] Syntax definition
+  - [x] Functional design
+  - [x] Function scope
+  - [ ] Function handling
+  - [ ] Function lookup
+  - [ ] Function execution
+  - [ ] Token linking
+ - [ ] Class handling
+  - [x] Syntax definition
+  - [x] Class design, and implementation
+  - [x] Class scoping
+  - [x] Class lookup
+  - [x] Class Execution
+  - [ ] Token linking
+ - [ ] I/O Interfacing
+ - [ ] Statement handling
  - [ ] Interpretation
+ - [ ] Call stack optimization
  - [ ] Congrats! Cheddar is done!
+
+Critical Running Bugs:
+
+ - [x] Fix infinite precedence with unary operators bug
+ - [ ] Precendence ignored
+
+Bugs:
+
+ - [ ] Stack overflowing during various invalid expression syntax
+ - [ ] Error handling is completely borked.
 
 Further Development
 
@@ -129,6 +170,37 @@ class Dog(String: Name, Int:Age, String:Breed) extends Animal {
     speak => "Woof! I am a #{self.Breed} dog, I am #{self.Age} years old and am called #{self.Name}"
 }
 ```
+
+# Details
+
+**The following is detailed description on the functionality and implementation of Cheddar, you probably can save yourself some scrolling, by not reading it**
+
+### Class Notes
+
+The Cheddar Class is a critical component in Cheddar execution. All literals either are constructed upon an internal or external classes.
+The class layer provides a custom set of all functions to provide a distinct level of abstraction throughout the interpreter
+
+### Info
+The classes implementation is designed to provide a significant level of abstraction as stated before
+Various parts to interface with operators and scopes are added through seperate classes.
+
+### Proccess
+A classes construction is illustration in thefollowing diagram:
+```
+               Class
+    ____________|______________
+    |           |             |
+  args        main()       instance
+           _____|________
+           |    |       |
+        scope main()  return
+```
+Within the constructor. The class stores an internal scope as itself is an extention of CheddarScope. Built-ins are merged through `main()` whether implicit or explicit.
+
+Define operators. Each item in the hash-map, defines behavior for the specific token in an `OperatorToken` `Operators:HashMap<Token, Behavior(LHS, RHS)>` Unary operators will RHS explicitly be an unabstrated, native, `null` value which will require an interface in order for a Cheddar unary operator interface
+
+
+### Syntax
 
 Comments:
 
