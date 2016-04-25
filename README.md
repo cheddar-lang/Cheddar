@@ -24,7 +24,6 @@ Contributors:
 
 **The formal grammar is written: [here](https://github.com/vihanb/Cheddar/blob/master/Grammar.md)**
 
- - [x] Fix infinite precedence with unary operators bug
  - [x] Define streams
  - [x] Define class structure
  - [x] Define basic runtime enviorment
@@ -33,10 +32,44 @@ Contributors:
  - [x] Define namespaces
  - [x] Handle lookups
  - [x] Define primitive classes
- - [ ] Call stack optimization
+  - [x] String
+  - [x] Number
+  - [ ] Array
+  - [ ] Boolean
+  - [ ] Undefined
+ - [ ] Expression evaluation integration
  - [ ] Conditional expression handling
+ - [ ] Loop expression handling
+ - [ ] Functions
+  - [ ] Syntax definition
+  - [x] Functional design
+  - [x] Function scope
+  - [ ] Function handling
+  - [ ] Function lookup
+  - [ ] Function execution
+  - [ ] Token linking
+ - [ ] Class handling
+  - [x] Syntax definition
+  - [x] Class design, and implementation
+  - [x] Class scoping
+  - [x] Class lookup
+  - [x] Class Execution
+  - [ ] Token linking
+ - [ ] I/O Interfacing
+ - [ ] Statement handling
  - [ ] Interpretation
+ - [ ] Call stack optimization
  - [ ] Congrats! Cheddar is done!
+
+Critical Running Bugs:
+
+ - [x] Fix infinite precedence with unary operators bug
+ - [ ] Precendence ignored
+
+Bugs:
+
+ - [ ] Stack overflowing during various invalid expression syntax
+ - [ ] Error handling is completely borked.
 
 Further Development
 
