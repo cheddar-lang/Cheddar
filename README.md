@@ -18,13 +18,13 @@ Contributors:
 
  - [x] Fix infinite precedence with unary operators bug
  - [x] Define streams
- - [ ] Define class structure
- - [ ] Define basic runtime enviorment
- - [ ] Token linking
- - [ ] Call stack handling
+ - [x] Define class structure
+ - [x] Define basic runtime enviorment
+ - [x] Token linking
+ - [x] Call stack handling
  - [x] Define namespaces
- - [ ] Handle loopups
- - [ ] Define primitive classes
+ - [x] Handle lookups
+ - [x] Define primitive classes
  - [ ] Call stack optimization
  - [ ] Conditional expression handling
  - [ ] Interpretation
