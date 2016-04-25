@@ -1,8 +1,16 @@
-# Cheddar
+<p align="center">
+  <a href="https://github.com/vihanb/Cheddar">
+    <img src="https://raw.githubusercontent.com/vihanb/Cheddar/master/misc/logo_wide.png" alt="Cheddar" width="846">
+  </a>
+</p>
 
-[![Build Status](https://travis-ci.org/vihanb/Cheddar.svg?branch=master)](https://travis-ci.org/vihanb/Cheddar)
+<p align="center">
+  A powerful, object-oriented, functional, high-level programming language.
+</p>
 
-Cheddar is (or supposed to be) a powerful, reflective, object-oriented, high-level programming language.
+<p align="center">
+  <a href="https://travis-ci.org/vihanb/Cheddar"><img alt="Travis Status" src="https://travis-ci.org/vihanb/Cheddar.svg?branch=master"></a>
+</p>
 
 It is currenty in development, to give an approximate idea of how much work has been done, an expression parser is almost finished.
 
