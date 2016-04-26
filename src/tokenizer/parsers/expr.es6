@@ -87,7 +87,7 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
         const E = CheddarExpressionToken;
 
         return this.grammar(true,
-            // ['(', E, ')'],
+            ['(', E, ')'],
             [O, E], // Prefix
             [L],
             [B],

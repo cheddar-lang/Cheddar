@@ -1,7 +1,8 @@
+import CheddarScope from '../env/scope';
+
 export default class CheddarCallStack {
-    constructor(exec_instruct, scope) {
+    constructor(exec_instruct, scope = new CheddarScope()) {
         this.InStack = exec_instruct._Tokens;
-        console.log(this.InStack);
         this.CallStack = [];
         this.Scope = scope;
     }

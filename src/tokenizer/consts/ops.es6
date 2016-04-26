@@ -13,14 +13,15 @@ export const RESERVED_KEYWORDS = new Set(
     'acos', 'asin', 'atan',
     'log', 'log2', 'log10',
     'floor', 'ceil', 'round',
-    'len', 'reverse',
+    'len', 'reverse', 'abs',
     'sign', 'print',
     'and', 'or', 'xor' );
 
 export const OP = [
 '!', '^', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '=', '&', '|',
 '!=', ':=', '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
-'..',
+':',
+'@"',
 'and', 'or', 'xor',
 // Unary operators
 '-', '+',
@@ -29,7 +30,7 @@ export const OP = [
 'acos', 'asin', 'atan',
 'log', 'log2', 'log10',
 'floor', 'ceil', 'round',
-'len', 'reverse',
+'len', 'reverse', 'abs',
 'sign',
 'print'];
 
@@ -39,6 +40,7 @@ export const UNARY_PRECEDENCE = new Map([
     ['!', 20000],
     ['-', 20000],
     ['+', 20000],
+    ['@"', 17000],
     ['sqrt', 15000],
     ['cbrt', 15000],
     ['cos', 15000],
@@ -52,6 +54,7 @@ export const UNARY_PRECEDENCE = new Map([
     ['log2', 15000],
     ['floor', 15000],
     ['ceil', 15000],
+    ['abs', 15000],
     ['len', 15000],
     ['reverse', 15000],
     ['round', 15000],
@@ -60,7 +63,7 @@ export const UNARY_PRECEDENCE = new Map([
 ]);
 
 export const PRECEDENCE = new Map([
-    ['..', 25000],
+    [':', 15000],
     ['^', 14000],
     ['root', 14000],
     ['*', 13000],
@@ -68,6 +71,7 @@ export const PRECEDENCE = new Map([
     ['%', 13000],
     ['+', 12000],
     ['-', 12000],
+    ['@"', 12000],
     ['<<', 11000],
     ['>>', 11000],
     ['<', 10000],

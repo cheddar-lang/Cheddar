@@ -1,5 +1,7 @@
 import CheddarError from '../../consts/err';
 
+import CheddarArray from '../Array';
+
 // == STRING ==
 export default new Map([
     // String concatenation

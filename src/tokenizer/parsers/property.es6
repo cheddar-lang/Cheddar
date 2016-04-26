@@ -1,4 +1,3 @@
-
 import CheddarParenthesizedExpression from './paren_expr';
 import CheddarVariableToken from '../literals/var';
 import {PropertyType} from '../consts/types';
@@ -56,6 +55,8 @@ export default class CheddarPropertyToken extends CheddarLexer {
                 ++this.Index;
                 continue;
             }
+
+            console.log("DEBUG", this);
 
             if (this._Tokens.length === 1 && this._Tokens[0] instanceof CheddarPrimitive)
                 return this.close(this._Tokens[0]);

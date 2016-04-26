@@ -1,6 +1,6 @@
 import readline from 'readline';
 import colors from 'colors'; // MAKE SURE TO RUN `npm install colors`
-import Scope from '../Core/env/scope';
+import Scope from '../core/env/scope';
 
 let REPL = readline.createInterface(process.stdin, process.stdout);
 REPL.setPrompt('Cheddar:PIT_REPL> '.yellow.bold);

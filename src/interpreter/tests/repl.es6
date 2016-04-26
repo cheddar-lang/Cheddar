@@ -1,90 +1,85 @@
 import readline from 'readline';
+import colors from 'colors'; // MAKE SURE TO RUN `npm install colors`
 
+// Tokenization Depedencies
 import CheddarExpressionToken from '../../tokenizer/parsers/expr';
 import CheddarShuntingYard from '../../tokenizer/tok/shunting_yard';
-import CheddarLexer from '../../tokenizer/tok/lex';
 
-import CheddarExecutionEnvironment from '../Core/environment/exec_env';
+// Evaluation Dependencies
+import CheddarScope from '../core/env/scope';
+import CheddarEval from '../core/eval/eval';
 
-import simplify from '../Core/simplify';
-import {OPS, PREFIX_OPS} from '../Core/operators';
+// Preset Dependencies
+import CheddarNumber from '../core/primitives/Number';
 
+// Error dependecies
+import {
+	DESC
+}
+from '../../tokenizer/consts/err_msg';
+
+// Helpers
+import HelperLocateIndex from '../../helpers/loc';
+
+// Setup
 let REPL = readline.createInterface(process.stdin, process.stdout);
-REPL.setPrompt('Cheddar> ');
+REPL.setPrompt('Cheddar:T_REPL> '.yellow.bold);
 REPL.prompt();
 
-// TODO: assignment
-// TODO: how is
+const REPL_ERROR = text => console.log("T_REPL:ERROR".red.underline.bold + " - ".dim + text);
+const REPL_HEAD = text => console.log(`━━ ${text} ━━`.bold.magenta);
+
+// Workaround
+REPL._setPrompt = REPL.setPrompt;
+REPL.setPrompt = (prompt, length) =>
+	REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
+
+
 
 REPL.on('line', function(STDIN) {
 
-    if (STDIN === 'exit') REPL.close();
-    if (STDIN.indexOf('**EVALJS**') === 0) {
-        console.log(eval(STDIN.slice(10)));
-        return;
-    }
+	if (STDIN === 'quit') REPL.close();
 
-    let Exec = new CheddarExpressionToken(STDIN, 0).exec(),
-        Global = new CheddarExecutionEnvironment();
-    if (!(Exec instanceof CheddarLexer)) {
-        console.log('[SyntaxError: ' + Exec.Index + ']');
-    } else {
-        let shunt = new CheddarShuntingYard().exec(Exec);
-        if (!(shunt instanceof CheddarLexer)) {
-            console.log('[StackError: ' + shunt + ']');
-        } else {
-            console.log("Execution Stack: ", require ?
-                require('util').inspect(shunt._Tokens, {showHidden: false, depth: null}) :
-                shunt._Tokens);
-            let stack = [];
-            shunt._Tokens.forEach(item => {
-                let simplified = simplify(item);
-                if (simplified !== undefined) {
-                    if (simplified.constructor.name === 'CheddarProperty')
-                        1;//TODO: set
-                    else
-                        stack.push(simplified);
-                } else if (item.constructor.name === 'CheddarOperatorToken') {
-                    if (item.tok(1)) {//unary
-                        let x;
-                        try {
-                            x = stack.pop();
-                            stack.push(PREFIX_OPS.get(item.tok()).get(x.Type)(x));
-                        } catch (e) {
-                            console.log('[RuntimeError: Operator ' +
-                                item.tok() +
-                                ' not found for type ' +
-                                x.Type.toString() + ']');
-                            console.log(e);
-                            REPL.close();
-                        }
-                    } else {
-                        let r, l;
-                        try {
-                            r = stack.pop();
-                            l = stack.pop();
-                            stack.push(OPS.get(item.tok()).get(l.Type).get(r.Type)(l, r));
-                        } catch (e) {
-                            console.log('[RuntimeError: Operator ' +
-                                item.tok() +
-                                ' not found for types ' + l.Type.toString() +
-                                ' and ' + r.Type.toString() + ']');
-                            console.log(e);
-                            REPL.close();
-                        }
-                    }
-                } else {
-                    if (item.constructor.name === 'CheddarPropertyToken')
-                        console.log('[RuntimeError: Function ' + item._Tokens.join('.') + ' not found]');
-                    else
-                        console.log('[RuntimeError: Unhandled type ' + item.constructor.name + ' found]');
-                }
-            });
-            console.log(stack[stack.length - 1]);
-        }
-    }
+	let _ExprressionToken = new CheddarExpressionToken(STDIN, 0);
+	let ExpressionToken = _ExprressionToken.exec();
 
-    REPL.prompt();
+	if (_ExprressionToken.Errored) {
 
+		// [Line Number, Index in line]
+		let [ROW, COL, INDEX] = HelperLocateIndex(STDIN, _ExprressionToken.Index);
+
+		REPL_ERROR(
+			(DESC.get(ExpressionToken) || "An unexpected error occured")
+			.replace(/\$C/g, COL)
+			.replace(/\$R/g, ROW)
+			.replace(/\$1/g, STDIN[INDEX]) + "\n  " + STDIN.split("\n")[ROW - 1] + "\n  " + " ".repeat(COL) + "^".bold
+		);
+
+		return REPL.prompt();
+	}
+
+	let _CallStack = new CheddarShuntingYard();
+	let CallStack = _CallStack.exec(ExpressionToken);
+
+	REPL_HEAD("Execution Instruction");
+	console.log(CallStack._Tokens);
+
+	REPL_HEAD("STDOUT");
+	let EvaluationEnviorment = new CheddarEval(CallStack, new CheddarScope(null, new Map([
+		["pi", new CheddarNumber(10, 0, Math.PI)]
+	])));
+	let Implicit = EvaluationEnviorment.exec();
+
+	REPL_HEAD("Implicit Output");
+	if (Implicit) {
+		if (Implicit.value !== undefined)
+			console.log(JSON.stringify(Implicit.value));
+		else if (typeof Implicit === "symbol")
+			console.log(Implicit);
+		else
+			console.log(`Unprintable object of class "${Implicit.constructor.name}" with literal value ${Implicit}`);
+	}
+
+	REPL.prompt();
 
 }).on('close', () => process.exit(0));
