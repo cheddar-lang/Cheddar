@@ -4,10 +4,6 @@ import {PRECEDENCE, UNARY_PRECEDENCE, RA_PRECEDENCE, TYPE} from '../consts/ops';
 import * as CheddarError from '../consts/err';
 import CheddarLexer from './lex';
 
-//TODO: use isPrimitive() if not deleted
-
-//TODO: rename
-//how about CheddarExpressionStackGen?
 export default class CheddarShuntingYard extends CheddarLexer {
     exec(expression) {
         if (expression && expression.Code)

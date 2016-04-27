@@ -48,6 +48,7 @@ export default class CheddarEval extends CheddarCallStack {
 
         // Handle Operator
         if (Operation instanceof CheddarOperatorToken) {
+
             TOKEN = this.shift(); // Get the value to operate upon
 
             // Do some long winded shit to make sure everything works without blowing up
@@ -64,13 +65,16 @@ export default class CheddarEval extends CheddarCallStack {
 
             TOKEN = Operation.Tokens.pop();
 
-            if (Operation.Tokens.length)
+            // Get constructor from scope
+            //  do some more complex shit
+            if (Operation.Tokens.length) {
                 /* TODO: Implement */;
-            else
+            } else {
                 if ((OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name)))
                     this.put( new OPERATOR(...TOKEN.Tokens) );
                 else
                     return CheddarError.UNLINKED_CLASS;
+            }
         } else if (Operation instanceof CheddarPropertyToken) {
             // Lookup in cuurrent scope
             TOKEN = [];
