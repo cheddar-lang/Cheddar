@@ -11,12 +11,11 @@ import CheddarEval from '../core/eval/eval';
 
 // Preset Dependencies
 import CheddarNumber from '../core/primitives/Number';
+import CheddarString from '../core/primitives/String';
+import CheddarBool from '../core/primitives/Bool';
 
 // Error dependecies
-import {
-	DESC
-}
-from '../../tokenizer/consts/err_msg';
+import {DESC} from '../../tokenizer/consts/err_msg';
 
 // Helpers
 import HelperLocateIndex from '../../helpers/loc';
@@ -66,11 +65,21 @@ REPL.on('line', function(STDIN) {
 
 	REPL_HEAD("STDOUT");
 	let EvaluationEnviorment = new CheddarEval(CallStack, new CheddarScope(null, new Map([
-		["pi", new CheddarNumber(10, 0, Math.PI)]
+		["pi", new CheddarNumber(10, 0, Math.PI)],
+		["e", new CheddarNumber(10, 0, Math.E)],
+		["phi", new CheddarNumber(10, 0, 1.618033988749894)],
+
+		["Time", new CheddarScope([
+			["get"]
+		])],
+
+		["alex", new CheddarBool(false)]
 	])));
+
 	let Implicit = EvaluationEnviorment.exec();
 
 	REPL_HEAD("Implicit Output");
+
 	if (Implicit) {
 		if (Implicit.value !== undefined)
 			console.log(JSON.stringify(Implicit.value));

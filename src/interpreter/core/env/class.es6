@@ -50,6 +50,8 @@ export default class CheddarClass extends CheddarScope {
     static Operator = DEFAULT_OP;
     static Cast = DEFAULT_CAST;
 
+    Scope = new CheddarScope();
+
     // TODO: Write some superflicious and redundant
     //  explanation elaborating on the abstract
     //  nature of this particulator subject of matter

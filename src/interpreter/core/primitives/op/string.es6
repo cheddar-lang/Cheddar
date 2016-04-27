@@ -1,6 +1,7 @@
 import CheddarError from '../../consts/err';
 
 import CheddarArray from '../Array';
+import CheddarNumber from '../Number';
 
 // == STRING ==
 export default new Map([
@@ -33,5 +34,13 @@ export default new Map([
         else
             return CheddarError.NO_OP_BEHAVIOR;
 
+    }],
+
+
+    ['@"', (LHS, RHS) => {
+        if(LHS === null)
+            return new CheddarArray(...[...RHS.value].map(x => new CheddarNumber(10, 0, x.charCodeAt())));
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
     }]
 ]);

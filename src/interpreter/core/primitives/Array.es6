@@ -3,11 +3,26 @@ import CheddarClass from '../env/class';
 import BehaviorOperator from './op/array';
 import BehaviorCast from './cast/array';
 
+import CheddarEval from '../eval/eval';
+
 export default class CheddarArray extends CheddarClass {
     static Name = "Array";
 
     constructor(...items) {
         super();
+
+        for (let i = 0; i < items.length; i++) {
+            if (i instanceof CheddarClass) {
+                // Is a class
+            } else {
+                // Is an expression
+                //  halp how do this
+                // NOTE TO SELF:
+                //  IMPLEMENT SCOPE PASSING AND EVALUATION
+                //  IMPLEMENT CONSTRUCTION ERRORS
+                new CheddarEval(items[i], this.Scope);
+            }
+        }
 
         this.value = items;
     }

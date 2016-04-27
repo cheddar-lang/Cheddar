@@ -53,7 +53,7 @@ export default class CheddarEval extends CheddarCallStack {
             // Do some long winded shit to make sure everything works without blowing up
             if (TOKEN.constructor.Operator.has(Operation.Tokens[0]))
                 if (Operation.Tokens[1] === OP_TYPE.UNARY)
-                    this.put(TOKEN.constructor.Operator.get(Operation.Tokens[0])(TOKEN, null));
+                    this.put(TOKEN.constructor.Operator.get(Operation.Tokens[0])(null, TOKEN));
                 else
                     this.put(TOKEN.constructor.Operator.get(Operation.Tokens[0])(this.shift(), TOKEN));
             else
@@ -74,7 +74,7 @@ export default class CheddarEval extends CheddarCallStack {
         } else if (Operation instanceof CheddarPropertyToken) {
             // Lookup in cuurrent scope
             TOKEN = [];
-            console.log("DEBUG2", Operation._Tokens[0] instanceof CheddarVariableToken, Operation);
+
             if (Operation._Tokens[0] instanceof CheddarPrimitive)
                 if ((OPERATOR = PRIMITIVE_LINKS.get(Operation._Tokens[0].constructor.name)))
                     OPERATOR = new OPERATOR(...Operation._Tokens[0].Tokens);
