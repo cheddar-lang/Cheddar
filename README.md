@@ -34,10 +34,15 @@ Contributors:
  - [x] Define primitive classes
   - [x] String
   - [x] Number
-  - [ ] Array
-  - [ ] Boolean
+  - [x] Array
+  - [x] Boolean
   - [ ] Undefined
  - [ ] Expression evaluation integration
+  - [x] Linking
+  - [x] Call stack configuration
+  - [ ] Scope linking
+  - [ ] Explicit Casting
+  - [ ] Constructing
  - [ ] Conditional expression handling
  - [ ] Loop expression handling
  - [ ] Functions
