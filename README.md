@@ -22,8 +22,6 @@ Contributors:
 
 ## Roadmap
 
-**The formal grammar is written: [here](https://github.com/vihanb/Cheddar/blob/master/Grammar.md)**
-
  - [x] Define streams
  - [x] Define class structure
  - [x] Define basic runtime enviorment
@@ -356,4 +354,3 @@ this.grammar(true,
   ['~>', CheddarExpressionToken]
 )
 ```
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
