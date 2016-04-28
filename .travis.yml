@@ -6,8 +6,6 @@ cache:
     - node_modules
 before_script:
   - npm install grunt-cli -g
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
 deploy:
   provider: heroku
   api_key:
