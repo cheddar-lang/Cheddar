@@ -63,6 +63,6 @@ export default class CheddarClass extends CheddarScope {
 
         // This abstract interface should never
         //  be constructed.
-        return CheddarError.ABSTRACT_USED;
+        this.ErrorStream = CheddarError.ABSTRACT_USED;
     }
 }
