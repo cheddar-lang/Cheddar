@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.org/vihanb/Cheddar"><img alt="Travis Status" src="https://travis-ci.org/vihanb/Cheddar.svg?branch=master"></a>
+  <a href="https://travis-ci.org/cheddar-lang/Cheddar"><img alt="Travis Status" src="https://travis-ci.org/cheddar-lang/Cheddar.svg?branch=master"></a>
 </p>
 
 It is currenty in development, to give an approximate idea of how much work has been done, an expression parser is almost finished.
