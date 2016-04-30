@@ -4,8 +4,6 @@ node_js:
 cache:
   directories:
     - node_modules
-before_script:
-  - npm install grunt-cli -g
 deploy:
   provider: heroku
   api_key:
