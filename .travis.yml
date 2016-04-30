@@ -6,12 +6,10 @@ cache:
     - node_modules
 before_script:
   - npm install grunt-cli -g
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
 deploy:
   provider: heroku
   api_key:
     secure: hVwUlOJASC9DxSP5ztIu8O6I5ApJd5SapHmGW4YDNlQjFNrmA4/dh+hrLTnJ2ninMwk7jfQRvqa3PdmjzEFsXqaiLocVu5bFyBAtiidzTcgs9/t0glaY17uVGY5dAaSh4dXjk3JCGC0P3Z/7WF8CravUeq3s9sn4ZufMarWJAugRq5Z1yIPFk+FgSe/Ex8+qSzx6XxcGnGD4UxwopWcYqegnSVB2ajEffxS0KFYyFPhMbhLJrh05fVl1cRH580oBZbuGxvu3AvcD8IFGZI8tNI9pS4S08s2w0WRqWXLsDwwZTVN6IqD/X/7LtHllOQ2Bd5g/mTSB5fzK6qB5N2WuRVn3m1DtUWXxasQwN4omHuv3EHCaX9/gQxhbV7sgWV/NH8wNe8WCsHj9qN5MPztgeOR3XL+FQI6Ow0oVk5n2B5SUdsNtwCLjp4xKVN8zs1KL9bQBclzWEsDup9jU7wwm65l3MxzwHYX8SlDUv7SUnwfKazBj4qJ6JpcYA+RTdkgrlZ6pGz60WQas3nr98x8rGGVi4GCSOELDaYBQSAbvFTK7bzrmgQL0nspiozEcWxpIDIlj+5T74kg65qEjB8PJ52bF3SDdH2V4cpHI7cQYrYQmXfj0F+pWW4ozs+d4lkVHxBXhDfJ3c3E/t75w0Pkjg82vZjkE/+eCiG/9S7LK8qI=
   app: cheddar-lang
   on:
-    repo: vihanb/Cheddar
+    repo: cheddar-lang/Cheddar

@@ -22,6 +22,8 @@ Contributors:
 
 ## Roadmap
 
+Tokenizer roadmap excluded.
+
  - [x] Define streams
  - [x] Define class structure
  - [x] Define basic runtime enviorment
@@ -32,7 +34,7 @@ Contributors:
  - [x] Define primitive classes
   - [x] String
   - [x] Number
-  - [x] Array
+  - [ ] Array
   - [x] Boolean
   - [ ] Undefined
  - [ ] Expression evaluation integration
@@ -67,7 +69,7 @@ Contributors:
 Critical Running Bugs:
 
  - [x] Fix infinite precedence with unary operators bug
- - [ ] Precendence ignored
+ - [x] Precendence ignored
 
 Bugs:
 
