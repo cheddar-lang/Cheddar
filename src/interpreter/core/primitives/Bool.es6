@@ -6,10 +6,9 @@ import BehaviorCast from './cast/bool';
 export default class CheddarBool extends CheddarClass {
     static Name = "Boolean";
 
-    constructor(bool) {
-        super();
-
+    init(bool) {
         this.value = Boolean(bool);
+        return true;
     }
 
     // String is the lowest level class

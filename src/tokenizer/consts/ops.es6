@@ -50,8 +50,6 @@ export const UNARY_PRECEDENCE = new Map([
     ['asin', 15000],
     ['atan', 15000],
     ['log', 15000],
-    ['log10', 15000],
-    ['log2', 15000],
     ['floor', 15000],
     ['ceil', 15000],
     ['abs', 15000],
@@ -65,6 +63,7 @@ export const UNARY_PRECEDENCE = new Map([
 export const PRECEDENCE = new Map([
     [':', 15000],
     ['^', 14000],
+    ['log', 14000],
     ['root', 14000],
     ['*', 13000],
     ['/', 13000],

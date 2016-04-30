@@ -19,6 +19,7 @@ import {DESC} from '../../tokenizer/consts/err_msg';
 
 // Helpers
 import HelperLocateIndex from '../../helpers/loc';
+import HelperInit from '../../helpers/init';
 
 // Setup
 let REPL = readline.createInterface(process.stdin, process.stdout);
@@ -65,17 +66,18 @@ REPL.on('line', function(STDIN) {
 
 	REPL_HEAD("STDOUT");
 	let EvaluationEnviorment = new CheddarEval(CallStack, new CheddarScope(null, new Map([
-		["pi", new CheddarNumber(10, 0, Math.PI)],
-		["e", new CheddarNumber(10, 0, Math.E)],
-		["phi", new CheddarNumber(10, 0, 1.618033988749894)],
+		["pi", HelperInit(CheddarNumber, 10, 0, Math.PI)],
+		["e", HelperInit(CheddarNumber, 10, 0, Math.E)],
+		["phi", HelperInit(CheddarNumber, 10, 0, 1.618033988749894)],
 
 		["Time", new CheddarScope([
 			["get"]
 		])],
 
-		["alex", new CheddarBool(false)]
+		["alex", HelperInit(CheddarBool, false)]
 	])));
 
+	REPL_HEAD("T:eval..EXEC");
 	let Implicit = EvaluationEnviorment.exec();
 
 	REPL_HEAD("Implicit Output");

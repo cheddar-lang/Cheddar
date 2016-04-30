@@ -6,10 +6,9 @@ import BehaviorCast from './cast/string';
 export default class CheddarString extends CheddarClass {
     static Name = "String";
 
-    constructor(string) {
-        super();
-
+    init(string) {
         this.value = string;
+        return true;
     }
 
     // String is the lowest level class

@@ -6,9 +6,7 @@ import BehaviorCast from './cast/number';
 export default class CheddarNumber extends CheddarClass {
     static Name = "Number";
 
-    constructor(base, bitshift, value) {
-        super();
-
+    init(base, bitshift, value) {
         // TODO: Optimize
         if (bitshift)
             value += "0".repeat(bitshift);
@@ -23,6 +21,7 @@ export default class CheddarNumber extends CheddarClass {
         } else {
             this.value = value;
         }
+        return true;
     }
 
     // String is the lowest level class

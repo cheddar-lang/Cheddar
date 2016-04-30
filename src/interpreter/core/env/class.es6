@@ -50,19 +50,29 @@ export default class CheddarClass extends CheddarScope {
     static Operator = DEFAULT_OP;
     static Cast = DEFAULT_CAST;
 
-    Scope = new CheddarScope();
-
     // TODO: Write some superflicious and redundant
     //  explanation elaborating on the abstract
     //  nature of this particulator subject of matter
     //  being discussed.
-    constructor() {
+    constructor(Scope) {
         super();
         // CheddarClass serves as an interface
         //  for higher-level classes.
 
+        // Provide scope construction interface
+        this.Scope = Scope;
+    }
+
+    // Initialize class
+    // This method is to be overloaded
+    //  and provide an simple interface
+    //  in which details can be passed to
+    //  the interpreter while data of the
+    //  class itself can remain sandboxed
+    init() {
+
         // This abstract interface should never
         //  be constructed.
-        this.ErrorStream = CheddarError.ABSTRACT_USED;
+        return CheddarError.ABSTRACT_USED;
     }
 }
