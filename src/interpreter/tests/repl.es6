@@ -82,9 +82,15 @@ REPL.on('line', function(STDIN) {
 
 	REPL_HEAD("Implicit Output");
 
+	console.log(Implicit, Implicit, Implicit.constructor, Implicit.constructor.Cast, Implicit.constructor.Cast.has(CheddarString));
 	if (Implicit) {
 		if (Implicit.value !== undefined)
-			console.log(JSON.stringify(Implicit.value));
+			if (Implicit.constructor.Cast.has(CheddarString))
+				console.log(
+					new Implicit.constructor.Cast.get(CheddarString)(Implicit).value
+				);
+			else
+				console.log(JSON.stringify(Implicit.value));
 		else if (typeof Implicit === "symbol")
 			console.log(Implicit);
 		else
