@@ -13,3 +13,5 @@ deploy:
   app: cheddar-lang
   on:
     repo: cheddar-lang/Cheddar
+notifications:
+  slack: cheddarlang:9RXf81jwP9LXRVyrcPPXX1vO

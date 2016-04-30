@@ -20,6 +20,41 @@ Contributors:
  - @somebody
  - @CᴏɴᴏʀO'Bʀɪᴇɴ
 
+## Building
+
+Building is rather simple. After cloning or installing the files, once in the directory simple run `npm install`. The rest should automatically happen.
+
+```bash
+npm install
+npm WARN prefer global coffee-script@1.10.0 should be installed with -g
+
+> Cheddar@0.2.0 postinstall ./Cheddar
+> grunt
+
+Running "babel:dist" (babel) task
+
+Done.
+```
+
+Now, when you check the contents of the folder you should notice a `dist/` folder containing the transpiled code. The next section will contain information on running Cheddar (make sure to `cd dist`)
+
+## Using Cheddar
+
+At the moment, only the REPL exists. They are a few REPLs, some for debugging, some for use. They are two REPLs, the main one which you can access using:
+
+```bash
+$ node ./interpreter/tests/repl
+Cheddar:T_REPL> 
+```
+
+Additionally, you can access the scope testing/assignment REPL by calling a slightly different file:
+```bash
+$ node ./interpreter/tests/t_repl
+Cheddar:T_REPL> 
+```
+
+# === Development Info ===
+
 ## Roadmap
 
 Tokenizer roadmap excluded.
