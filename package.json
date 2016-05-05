@@ -11,7 +11,10 @@
     "load-grunt-tasks": "^3.5.0"
   },
   "scripts": {
-    "test": "grunt",
+    "test": "istanbul cover grunt",
     "postinstall": "grunt"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.3"
   }
 }

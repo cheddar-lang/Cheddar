@@ -1,7 +1,7 @@
 import * as CheddarError from '../../consts/err';
 
 import CheddarString from '../String';
-import CheddarArray from '../Array';
+//import CheddarArray from '../Array';
 import CheddarBool from '../Bool';
 
 import HelperInit from '../../../../helpers/init';

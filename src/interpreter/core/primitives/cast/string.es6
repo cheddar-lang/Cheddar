@@ -14,7 +14,7 @@ export default new Map([
     [CheddarNumber, (LHS) => {
         let Attempt = new CheddarNumberToken(LHS, 0).exec();
         if (Attempt instanceof CheddarLexer)
-            return new CheddarNumber(...Attempt._Tokens)
+            return HelperInit(CheddarNumber, ...Attempt._Tokens);
         else
             return CheddarError.CAST_FAILED;
     }]
@@ -32,4 +32,5 @@ CLASS ::= class <identifier> <idlist> {
               <ITEM> (\n<ITEM> | })
 ITEM  ::= main <codeblock> |
           (cast (from|to)|(get|set))? <indentifier> <arglist> <codeblock> |
+          (assignby (copy|reference))|
 */
