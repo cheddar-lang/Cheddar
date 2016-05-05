@@ -22,6 +22,8 @@ Contributors:
 
 ## Building
 
+[![Join the chat at https://gitter.im/cheddar-lang/Cheddar](https://badges.gitter.im/cheddar-lang/Cheddar.svg)](https://gitter.im/cheddar-lang/Cheddar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Building is rather simple. After cloning or installing the files, once in the directory simple run `npm install`. The rest should automatically happen.
 
 ```bash
