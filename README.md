@@ -10,6 +10,8 @@
 
 <p align="center">
   <a href="https://travis-ci.org/cheddar-lang/Cheddar"><img alt="Travis Status" src="https://travis-ci.org/cheddar-lang/Cheddar.svg?branch=master"></a>
+  <a href="https://gitter.im/cheddar-lang/Cheddar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/cheddar-lang/Cheddar" src="https://badges.gitter.im/cheddar-lang/Cheddar.svg"></a>
+  <a href="https://codeclimate.com/github/cheddar-lang/Cheddar"><img src="https://codeclimate.com/github/cheddar-lang/Cheddar/badges/gpa.svg" /></a>
 </p>
 
 It is currenty in development, to give an approximate idea of how much work has been done, an expression parser is almost finished.
@@ -123,21 +125,21 @@ A list of milestones in Cheddar's development:
 
  - Scoping works (half of a huge milestone)
 ```js
-Cheddar:T_REPL> set B 123   // B = 123
-Cheddar:T_REPL> get B       // print B     // Outputs: 123
-123                         //
-Cheddar:T_REPL> scope      // {
-Cheddar:T_REPL> set C 000   //     C = 000
-Cheddar:T_REPL> get C       //     print C // Outputs: 000
-000                         //
-Cheddar:T_REPL> get B       //     print B // Outputs: 123
-123                         //
-Cheddar:T_REPL> set B 456   //     B = 456
-Cheddar:T_REPL> exit        // }
-Cheddar:T_REPL> get B       // print B     // Outputs: 456
-456                         //
-Cheddar:T_REPL> get C       // print C     // Outputs: KEY_NOT_FOUND
-Symbol(KEY_NOT_FOUND)       //
+Cheddar:T_REPL> B = 123
+Cheddar:T_REPL> print B  
+123                         
+Cheddar:T_REPL> {
+Cheddar:T_REPL>     C = 000
+Cheddar:T_REPL>     print C 
+000                         
+Cheddar:T_REPL>     print B 
+123                         
+Cheddar:T_REPL>     B = 456
+Cheddar:T_REPL> }
+Cheddar:T_REPL> print B     
+456                         
+Cheddar:T_REPL> print C
+Symbol(KEY_NOT_FOUND)       
 ```
  - Expression parsing works (a huge milestone)
 ```js
