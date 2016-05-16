@@ -7,15 +7,14 @@ import CheddarError from '../consts/err';
 export const DEFAULT_OP = new Map([
 
     // print: Definition
-    ['print', (LHS) => {
+    ['print', (_, LHS) => {
         // Attempt to cast to string
-        LHS = LHS.constructor.Cast.has(CheddarString)
-            ? LHS.constructor.Cast.get(CheddarString)(LHS)
+        LHS = LHS.constructor.Cast.has('String')
+            ? LHS.constructor.Cast.get('String')(LHS)
             : LHS;
 
         if (LHS instanceof CheddarString)
-            // REVISE: Stream
-            console.log(LHS.value)
+            console.log(LHS.value);
         else
             return CheddarError.NO_UNARY_BEHAVIOR;
         return LHS;

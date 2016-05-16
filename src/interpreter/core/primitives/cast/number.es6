@@ -1,5 +1,6 @@
 import CheddarString from '../String';
+import HelperInit from '../../../../helpers/init';
 
 export default new Map([
-    [CheddarString, (LHS) => new CheddarString(LHS.value)]
+    ['String', (LHS) => HelperInit(CheddarString, LHS.value)]
 ]);

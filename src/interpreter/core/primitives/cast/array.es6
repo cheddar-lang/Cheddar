@@ -1,19 +1,20 @@
 import CheddarError from '../../consts/err';
-import CheddarString from '../String';
+import HelperInit from '../../../../helpers/init';
 
-console.log("CS", CheddarString); // WHY IS CHEDDAR STRING UNDEFINED WTF
 export default new Map([
-    [CheddarString, (self) => {
+    ['String', (self) => {
+        // Get Dependencies
+        let CheddarString = require('../String');
+
         let Stringified = "",
             Cast;
         for (let i = 0; i < self.value.length; i++) {
-            Cast = self.value[i].constructor.Cast.get(CheddarString);
-            console.log("D2", self.value[i].constructor.Cast);
+            Cast = self.value[i].constructor.Cast.get('String');
             if (Cast)
-                Stringified += Cast(self.value[i]) + ", ";
+                Stringified += (i ? ", " : "") + Cast(self.value[i]).value;
             else
-                return CheddarError.CAST_FAILED;
+                Stringified += `<${self.value[i].constructor.Name}>`;
         }
-        return new CheddarString("[" + Stringified + "]");
+        return HelperInit(CheddarString, "[" + Stringified + "]");
     }]
 ]);

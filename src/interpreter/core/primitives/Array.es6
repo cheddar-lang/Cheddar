@@ -32,7 +32,7 @@ export default class CheddarArray extends CheddarClass {
     }
 
     reverse() {
-        this.value.reverse(); //this is only so the array thing works, for cheddar there can be an immutable method
+        this.value.reverse();
         return this;
     }
 

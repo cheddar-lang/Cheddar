@@ -14,6 +14,9 @@ import CheddarNumber from '../core/primitives/Number';
 import CheddarString from '../core/primitives/String';
 import CheddarBool from '../core/primitives/Bool';
 
+// Data Dependencies
+import CheddarPrimitiveInterfaceDefaultScopeAliases from '../core/config/alias';
+
 // Error dependecies
 import {DESC} from '../../tokenizer/consts/err_msg';
 
@@ -37,7 +40,7 @@ REPL.setPrompt = (prompt, length) =>
 
 
 REPL.on('line', function(STDIN) {
-
+	console.log(CheddarString.Operator);
 	if (STDIN === 'quit') REPL.close();
 
 	let _ExprressionToken = new CheddarExpressionToken(STDIN, 0);
@@ -81,15 +84,14 @@ REPL.on('line', function(STDIN) {
 	let Implicit = EvaluationEnviorment.exec();
 
 	REPL_HEAD("Implicit Output");
-
 	if (Implicit) {
-		if (Implicit.value !== undefined)
-			if (Implicit.constructor.Cast.has(CheddarString))
-				console.log(
-					Implicit.constructor.Cast.get(CheddarString)(Implicit).value
-				);
-			else
-				console.log(JSON.stringify(Implicit.value));
+
+		if (Implicit instanceof CheddarString)
+			console.log(`"${Implicit.value}"`);
+		else if (Implicit.constructor.Cast.has('String'))
+			console.log(
+				Implicit.constructor.Cast.get('String')(Implicit).value
+			);
 		else if (typeof Implicit === "symbol")
 			console.log(Implicit);
 		else

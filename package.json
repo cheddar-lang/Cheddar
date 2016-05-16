@@ -11,10 +11,11 @@
     "load-grunt-tasks": "^3.5.0"
   },
   "scripts": {
-    "test": "istanbul cover grunt",
+    "test": "grunt; istanbul cover ./dist/*.js",
     "postinstall": "grunt"
   },
   "devDependencies": {
+    "codecov.io": "^0.1.6",
     "istanbul": "^0.4.3"
   }
 }
