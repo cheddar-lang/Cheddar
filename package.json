@@ -11,7 +11,7 @@
     "load-grunt-tasks": "^3.5.0"
   },
   "scripts": {
-    "test": "grunt; istanbul cover ./dist/*.js",
+    "test": "grunt",
     "postinstall": "grunt"
   },
   "devDependencies": {
