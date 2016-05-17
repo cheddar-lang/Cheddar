@@ -68,16 +68,16 @@ Tokenizer roadmap excluded.
  - [x] Call stack handling
  - [x] Define namespaces
  - [x] Handle lookups
- - [x] Define primitive classes
+ - [ ] Define primitive classes
   - [x] String
+  - [x] Array
   - [x] Number
-  - [ ] Array
   - [x] Boolean
   - [ ] Undefined
  - [ ] Expression evaluation integration
   - [x] Linking
   - [x] Call stack configuration
-  - [ ] Scope linking
+  - [x] Scope linking
   - [ ] Explicit Casting
   - [ ] Constructing
  - [ ] Conditional expression handling
