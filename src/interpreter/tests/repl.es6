@@ -38,7 +38,6 @@ REPL.setPrompt = (prompt, length) =>
 	REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
 
-
 REPL.on('line', function(STDIN) {
 	console.log(CheddarString.Operator);
 	if (STDIN === 'quit') REPL.close();

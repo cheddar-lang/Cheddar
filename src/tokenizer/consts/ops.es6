@@ -13,7 +13,7 @@ export const RESERVED_KEYWORDS = new Set(
     'acos', 'asin', 'atan',
     'log', 'log2', 'log10',
     'floor', 'ceil', 'round',
-    'len', 'reverse', 'abs',
+    'len', 'reverse', 'abs', 'repr',
     'sign', 'print',
     'and', 'or', 'xor' );
 
@@ -30,7 +30,7 @@ export const OP = [
 'acos', 'asin', 'atan',
 'log', 'log2', 'log10',
 'floor', 'ceil', 'round',
-'len', 'reverse', 'abs',
+'len', 'reverse', 'abs', 'repr',
 'sign',
 'print'];
 
@@ -54,6 +54,7 @@ export const UNARY_PRECEDENCE = new Map([
     ['ceil', 15000],
     ['abs', 15000],
     ['len', 15000],
+    ['repr', 15000]
     ['reverse', 15000],
     ['round', 15000],
     ['sign', 15000],

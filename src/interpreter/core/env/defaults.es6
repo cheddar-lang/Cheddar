@@ -3,13 +3,16 @@
 //  handling
 import CheddarString from '../primitives/String';
 import CheddarError from '../consts/err';
+import HelperInit from '../../../helpers/init';
 
 export const DEFAULT_OP = new Map([
 
     // print: Definition
     ['print', (_, LHS) => {
-        // Attempt to cast to string
-        LHS = LHS.constructor.Cast.has('String')
+        // Attempt to call `repr`, else, cast to string
+        LHS = LHS.constructor.Operator.has('repr')
+            ? LHS.constructor.Operator.get('repr')(LHS)
+            : LHS.constructor.Cast.has('String')
             ? LHS.constructor.Cast.get('String')(LHS)
             : LHS;
 
@@ -18,6 +21,11 @@ export const DEFAULT_OP = new Map([
         else
             return CheddarError.NO_UNARY_BEHAVIOR;
         return LHS;
+    }],
+
+    ['repr', (_, LHS) => {
+        // this thing's syntax is due to change
+        return HelperInit(CheddarString, `${LHS.Name || "nil"}:()`);
     }]
 
 ]);
