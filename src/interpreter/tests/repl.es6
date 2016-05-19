@@ -15,7 +15,7 @@ import CheddarString from '../core/primitives/String';
 import CheddarBool from '../core/primitives/Bool';
 
 // Data Dependencies
-import CheddarPrimitiveInterfaceDefaultScopeAliases from '../core/config/alias';
+import CheddarPrimitiveAliases from '../core/config/alias';
 
 // Error dependecies
 import {DESC} from '../../tokenizer/consts/err_msg';
@@ -85,16 +85,19 @@ REPL.on('line', function(STDIN) {
 	REPL_HEAD("Implicit Output");
 	if (Implicit) {
 
-		if (Implicit instanceof CheddarString)
+		if (typeof Implicit === "string") {
+			REPL_ERROR(Implicit);
+		} else if (Implicit instanceof CheddarString) {
 			console.log(`"${Implicit.value}"`);
-		else if (Implicit.constructor.Cast.has('String'))
+		} else if (Implicit.constructor.Cast.has('String')) {
 			console.log(
 				Implicit.constructor.Cast.get('String')(Implicit).value
 			);
-		else if (typeof Implicit === "symbol")
+		} else if (typeof Implicit === "symbol") {
 			console.log(Implicit);
-		else
+		} else {
 			console.log(`Unprintable object of class "${Implicit.constructor.name}" with literal value ${Implicit}`);
+		}
 	}
 
 	REPL.prompt();

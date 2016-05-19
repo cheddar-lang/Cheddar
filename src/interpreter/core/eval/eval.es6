@@ -34,6 +34,7 @@ import CheddarCallStack from './callstack';
 
 // Standard Error class
 import CheddarError from '../consts/err';
+import CheddarErrorDesc from '../consts/err_msg';
 
 export default class CheddarEval extends CheddarCallStack {
     // To iterativaley evaluate the expression
@@ -44,7 +45,8 @@ export default class CheddarEval extends CheddarCallStack {
         const Operation = this.next();
 
         let OPERATOR,
-            TOKEN;
+            TOKEN,
+            DATA;
 
         // Handle Operator
         if (Operation instanceof CheddarOperatorToken) {
@@ -52,15 +54,25 @@ export default class CheddarEval extends CheddarCallStack {
             TOKEN = this.shift(); // Get the value to operate upon
 
             // Ensure behavior exists for the types
-            if (TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
+            if (!TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
+                OPERATOR = Operation.Tokens[1] === OP_TYPE.UNARY
+                         ? CheddarError.NO_UNARY_BEHAVIOR
+                         : CheddarError.NO_OP_BEHAVIOR;
+            } else if (Operation.Tokens[1] === OP_TYPE.UNARY) {
                 // Check if unary or binary operator
-                if (Operation.Tokens[1] === OP_TYPE.UNARY) {
-                    this.put(TOKEN.constructor.Operator.get(Operation.Tokens[0])(null, TOKEN));
-                } else {
-                    this.put(TOKEN.constructor.Operator.get(Operation.Tokens[0])(this.shift(), TOKEN));
-                }
+                OPERATOR = TOKEN.constructor.Operator.get(Operation.Tokens[0])(null, TOKEN);
             } else {
-                return CheddarError.NO_OP_BEHAVIOR;
+                DATA = this.shift();
+                OPERATOR = TOKEN.constructor.Operator.get(Operation.Tokens[0])(DATA, TOKEN);
+            }
+
+            if (OPERATOR === CheddarError.NO_OP_BEHAVIOR) {
+                return CheddarErrorDesc.get(CheddarError.NO_OP_BEHAVIOR)
+                .replace(/\$0/g, Operation.Tokens[0])
+                .replace(/\$1/g, DATA ? DATA.constructor.Name : "nil")
+                .replace(/\$2/g, TOKEN ? TOKEN.constructor.Name : "nil");
+            } else {
+                this.put(OPERATOR);
             }
 
         } else if (Operation instanceof CheddarTypedLiteral) {
@@ -98,18 +110,24 @@ export default class CheddarEval extends CheddarCallStack {
             // Lookup in cuurrent scope
             TOKEN = [];
 
-            if (Operation._Tokens[0] instanceof CheddarPrimitive)
-                if ((OPERATOR = PRIMITIVE_LINKS.get(Operation._Tokens[0].constructor.name)))
+            // Is a primitive
+            if (Operation._Tokens[0] instanceof CheddarPrimitive) {
+                OPERATOR = PRIMITIVE_LINKS.get(Operation._Tokens[0].constructor.name);
+                if (OPERATOR) {
                     OPERATOR = new OPERATOR(...Operation._Tokens[0].Tokens);
-                else
+                } else {
                     return CheddarError.UNLINKED_CLASS;
-            else if (Operation._Tokens[0] instanceof CheddarVariableToken)
-                if ((OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0])) === CheddarError.KEY_NOT_FOUND)
+                }
+            } else if (Operation._Tokens[0] instanceof CheddarVariableToken) {
+                // Lookup variable -> initial variable name
+                OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]);
+                if (OPERATOR === CheddarError.KEY_NOT_FOUND)
                     return OPERATOR;
-                else;
-            else
+            } else {
                 return CheddarError.MALFORMED_TOKEN;
+            }
 
+            // Advance variable tree
             for (let i = 1; i < Operation._Tokens.length; i++) {
                 // If there are more than one tokens it is
                 if (Operation._Tokens[i] instanceof CheddarArrayToken)

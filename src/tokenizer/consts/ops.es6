@@ -54,7 +54,7 @@ export const UNARY_PRECEDENCE = new Map([
     ['ceil', 15000],
     ['abs', 15000],
     ['len', 15000],
-    ['repr', 15000]
+    ['repr', 15000],
     ['reverse', 15000],
     ['round', 15000],
     ['sign', 15000],

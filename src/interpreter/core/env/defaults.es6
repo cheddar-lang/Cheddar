@@ -11,7 +11,7 @@ export const DEFAULT_OP = new Map([
     ['print', (_, LHS) => {
         // Attempt to call `repr`, else, cast to string
         LHS = LHS.constructor.Operator.has('repr')
-            ? LHS.constructor.Operator.get('repr')(LHS)
+            ? LHS.constructor.Operator.get('repr')(null, LHS)
             : LHS.constructor.Cast.has('String')
             ? LHS.constructor.Cast.get('String')(LHS)
             : LHS;
@@ -21,11 +21,6 @@ export const DEFAULT_OP = new Map([
         else
             return CheddarError.NO_UNARY_BEHAVIOR;
         return LHS;
-    }],
-
-    ['repr', (_, LHS) => {
-        // this thing's syntax is due to change
-        return HelperInit(CheddarString, `${LHS.Name || "nil"}:()`);
     }]
 
 ]);
