@@ -39,7 +39,6 @@ REPL.setPrompt = (prompt, length) =>
 
 
 REPL.on('line', function(STDIN) {
-	console.log(CheddarString.Operator);
 	if (STDIN === 'quit') REPL.close();
 
 	let _ExprressionToken = new CheddarExpressionToken(STDIN, 0);

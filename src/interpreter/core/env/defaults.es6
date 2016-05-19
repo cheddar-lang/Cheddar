@@ -10,16 +10,17 @@ export const DEFAULT_OP = new Map([
     // print: Definition
     ['print', (_, LHS) => {
         // Attempt to call `repr`, else, cast to string
-        LHS = LHS.constructor.Operator.has('repr')
-            ? LHS.constructor.Operator.get('repr')(null, LHS)
-            : LHS.constructor.Cast.has('String')
-            ? LHS.constructor.Cast.get('String')(LHS)
-            : LHS;
+        let VAL = LHS.constructor.Operator.has('repr')
+                ? LHS.constructor.Operator.get('repr')(null, LHS)
+                : LHS.constructor.Cast.has('String')
+                ? LHS.constructor.Cast.get('String')(LHS)
+                : LHS;
 
-        if (LHS instanceof CheddarString)
-            console.log(LHS.value);
+        if (VAL instanceof CheddarString)
+            console.log(VAL.value);
         else
             return CheddarError.NO_UNARY_BEHAVIOR;
+
         return LHS;
     }]
 
