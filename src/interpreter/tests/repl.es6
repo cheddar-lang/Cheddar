@@ -22,12 +22,11 @@ import {DESC} from '../../tokenizer/consts/err_msg';
 
 // Helpers
 import HelperLocateIndex from '../../helpers/loc';
-import HelperVariable from '../../helpers/var';
 import HelperInit from '../../helpers/init';
 
 // Setup
 let REPL = readline.createInterface(process.stdin, process.stdout);
-REPL.setPrompt('Cheddar:T_REPL> '.yellow.bold);
+REPL.setPrompt('Cheddar:T_REPL..expr.exec> '.yellow.bold);
 REPL.prompt();
 
 const REPL_ERROR = text => console.log("T_REPL:ERROR".red.underline.bold + " - ".dim + text);
@@ -68,12 +67,14 @@ REPL.on('line', function(STDIN) {
 
 	REPL_HEAD("STDOUT");
 
-	let EvaluationEnviorment = new CheddarEval(CallStack, new CheddarScope(null, new Map([
-		["pi", HelperVariable(CheddarNumber, [10, 0, Math.PI])],
-		["e", HelperVariable(CheddarNumber, [10, 0, Math.E])],
-		["phi", HelperVariable(CheddarNumber, [10, 0, 1.618033988749894])],
-		["alex", HelperVariable(CheddarBool, [false])]
-	])));
+	let GlobalScope = new CheddarScope();
+
+	GlobalScope.make("pi", CheddarNumber, [10, 0, Math.PI]);
+	GlobalScope.make("e", CheddarNumber, [10, 0, Math.E]);
+	GlobalScope.make("phi", CheddarNumber, [10, 0, 1.618033988749894]);
+	GlobalScope.make("alex", CheddarBool, ["false"]);
+
+	let EvaluationEnviorment = new CheddarEval(CallStack, GlobalScope);
 
 	REPL_HEAD("T:eval..EXEC");
 	let Implicit = EvaluationEnviorment.exec();

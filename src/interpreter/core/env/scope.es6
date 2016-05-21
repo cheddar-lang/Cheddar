@@ -13,6 +13,8 @@
 import * as CheddarError from '../consts/err';
 import {RESERVED_KEYWORDS} from '../../../tokenizer/consts/ops';
 
+import CheddarVariable from './var';
+
 export default class CheddarScope {
     constructor(inherit = null, preset = new Map()) {
         // Initialize the hash
@@ -28,24 +30,21 @@ export default class CheddarScope {
 
     }
 
+    make(Name, Type, Value, Arguments) {
+        let A = new Type(this, Name),
+            B;
+
+        if ((B = A.init(...Value)) === true)
+            return this.Scope.set(Name, new CheddarVariable(A, Arguments));
+        else
+            return B;
+    }
+
+    // ONLY Within scopes
     has(token) {
         return RESERVED_KEYWORDS.has(token) ? false : this.Scope.has(token) || (
             this.inheritanceChain && this.inheritanceChain.has(token)
         );
-    }
-
-    accessor(token) {
-        if (!this.has(token))
-            return CheddarError.KEY_NOT_FOUND;
-
-        return this.Scope.get(token) || (this.inheritanceChain ?
-            this.inheritanceChain.accessor(token) : CheddarError.KEY_NOT_FOUND
-        );
-
-    }
-
-    setter(path, setter) {
-        this.Scope.set(path, setter);
     }
 
     access(path) {
@@ -83,5 +82,20 @@ export default class CheddarScope {
                 return this.setter(token, value), token;
         }
 
+    }
+
+    // Property accessors
+    accessor(token) {
+        if (!this.has(token))
+            return CheddarError.KEY_NOT_FOUND;
+
+        return this.Scope.get(token) || (this.inheritanceChain ?
+            this.inheritanceChain.accessor(token) : CheddarError.KEY_NOT_FOUND
+        );
+
+    }
+
+    setter(path, setter) {
+        this.Scope.set(path, setter);
     }
 }

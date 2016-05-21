@@ -29,6 +29,8 @@ import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
 
+import NIL from '../primitives/nil';
+
 // Call stack wrapper
 import CheddarCallStack from './callstack';
 
@@ -126,7 +128,8 @@ export default class CheddarEval extends CheddarCallStack {
                 }
             } else if (Operation._Tokens[0] instanceof CheddarVariableToken) {
                 // Lookup variable -> initial variable name
-                OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]);
+                OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]).Value;
+
                 if (OPERATOR === CheddarError.KEY_NOT_FOUND)
                     return OPERATOR;
             } else {
