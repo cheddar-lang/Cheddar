@@ -7,7 +7,7 @@ export default class CheddarBool extends CheddarClass {
     static Name = "Boolean";
 
     init(bool) {
-        this.value = Boolean(bool);
+        this.value = !!bool;
         return true;
     }
 

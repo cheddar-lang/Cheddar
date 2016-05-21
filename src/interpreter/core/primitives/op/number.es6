@@ -113,7 +113,7 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
-    ['=', (LHS, RHS) => {
+    ['==', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
             return HelperInit(CheddarBool, LHS.value === RHS.value);
         else

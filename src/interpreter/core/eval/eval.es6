@@ -66,26 +66,28 @@ export default class CheddarEval extends CheddarCallStack {
                 OPERATOR = TOKEN.constructor.Operator.get(Operation.Tokens[0])(DATA, TOKEN);
             }
 
-            if (OPERATOR === CheddarError.NO_OP_BEHAVIOR) {
-                return CheddarErrorDesc.get(CheddarError.NO_OP_BEHAVIOR)
+            if (OPERATOR === CheddarError.NO_OP_BEHAVIOR ||
+                OPERATOR === CheddarError.NO_UNARY_BEHAVIOR) {
+                return CheddarErrorDesc.get(OPERATOR)
                 .replace(/\$0/g, Operation.Tokens[0])
-                .replace(/\$1/g, DATA ? DATA.constructor.Name : "nil")
-                .replace(/\$2/g, TOKEN ? TOKEN.constructor.Name : "nil");
+                .replace(/\$1/g, TOKEN ? TOKEN.constructor.Name : "nil")
+                .replace(/\$2/g, DATA ? DATA.constructor.Name : "nil");
             } else {
                 this.put(OPERATOR);
             }
 
         } else if (Operation instanceof CheddarTypedLiteral) {
-            // If it is a token, pass tokens to the associated ckass constructor
+            // If it is a token, pass tokens to the associated class constructor
 
-            TOKEN = Operation.Tokens.pop();
+            TOKEN = Operation.Tokens.pop(); // Get the top token (e.g. CheddarNumber)
 
-            // This means it is a cast/constructor
+            // This means it is a cast/constructor because it has an additional arg
             if (Operation.Tokens.length) {
                 /* TODO: Implement */;
             } else {
                 // Otherwise locate the class to link
                 //  and the construct it
+                // Do a lookup in the PRIMITIVE_LINKS class and get the link class
                 if ((OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name))) {
                     // OPERATOR has the class to construct upon
 
@@ -98,7 +100,7 @@ export default class CheddarEval extends CheddarCallStack {
                         // place on stack
                         this.put( OPERATOR );
                     } else {
-                        // returne error
+                        // return error
                         return TOKEN;
                     }
 
@@ -107,10 +109,14 @@ export default class CheddarEval extends CheddarCallStack {
                 }
             }
         } else if (Operation instanceof CheddarPropertyToken) {
+            // If it's a property
+            //  this includes functions
+
             // Lookup in cuurrent scope
             TOKEN = [];
 
             // Is a primitive
+            // this includes `"foo".bar`
             if (Operation._Tokens[0] instanceof CheddarPrimitive) {
                 OPERATOR = PRIMITIVE_LINKS.get(Operation._Tokens[0].constructor.name);
                 if (OPERATOR) {

@@ -54,13 +54,14 @@ export default class CheddarClass extends CheddarScope {
     //  explanation elaborating on the abstract
     //  nature of this particulator subject of matter
     //  being discussed.
-    constructor(Scope) {
+    constructor(Scope, Reference) {
         super();
         // CheddarClass serves as an interface
         //  for higher-level classes.
 
         // Provide scope construction interface
         this.Scope = Scope;
+        this.Reference = Reference;
     }
 
     // Initialize class

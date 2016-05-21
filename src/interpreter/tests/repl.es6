@@ -22,6 +22,7 @@ import {DESC} from '../../tokenizer/consts/err_msg';
 
 // Helpers
 import HelperLocateIndex from '../../helpers/loc';
+import HelperVariable from '../../helpers/var';
 import HelperInit from '../../helpers/init';
 
 // Setup
@@ -66,16 +67,12 @@ REPL.on('line', function(STDIN) {
 	console.log(CallStack._Tokens);
 
 	REPL_HEAD("STDOUT");
+
 	let EvaluationEnviorment = new CheddarEval(CallStack, new CheddarScope(null, new Map([
-		["pi", HelperInit(CheddarNumber, 10, 0, Math.PI)],
-		["e", HelperInit(CheddarNumber, 10, 0, Math.E)],
-		["phi", HelperInit(CheddarNumber, 10, 0, 1.618033988749894)],
-
-		["Time", new CheddarScope([
-			["get"]
-		])],
-
-		["alex", HelperInit(CheddarBool, false)]
+		["pi", HelperVariable(CheddarNumber, [10, 0, Math.PI])],
+		["e", HelperVariable(CheddarNumber, [10, 0, Math.E])],
+		["phi", HelperVariable(CheddarNumber, [10, 0, 1.618033988749894])],
+		["alex", HelperVariable(CheddarBool, [false])]
 	])));
 
 	REPL_HEAD("T:eval..EXEC");
