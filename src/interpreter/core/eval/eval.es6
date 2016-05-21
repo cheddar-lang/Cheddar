@@ -57,19 +57,16 @@ export default class CheddarEval extends CheddarCallStack {
 
             // Ensure behavior exists for the types
             if (!TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
-                OPERATOR = Operation.Tokens[1] === OP_TYPE.UNARY
-                         ? CheddarError.NO_UNARY_BEHAVIOR
-                         : CheddarError.NO_OP_BEHAVIOR;
+                OPERATOR = CheddarError.NO_OP_BEHAVIOR;
             } else if (Operation.Tokens[1] === OP_TYPE.UNARY) {
-                // Check if unary or binary operator
+                // Check if unary or binary operator, then execute
                 OPERATOR = TOKEN.constructor.Operator.get(Operation.Tokens[0])(null, TOKEN);
             } else {
-                DATA = this.shift();
+                DATA = this.shift(); // Get the other arg
                 OPERATOR = TOKEN.constructor.Operator.get(Operation.Tokens[0])(DATA, TOKEN);
             }
 
-            if (OPERATOR === CheddarError.NO_OP_BEHAVIOR ||
-                OPERATOR === CheddarError.NO_UNARY_BEHAVIOR) {
+            if (OPERATOR === CheddarError.NO_OP_BEHAVIOR) {
                 return CheddarErrorDesc.get(OPERATOR)
                 .replace(/\$0/g, Operation.Tokens[0])
                 .replace(/\$1/g, TOKEN ? TOKEN.constructor.Name : "nil")

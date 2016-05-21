@@ -19,9 +19,13 @@ export const DEFAULT_OP = new Map([
         if (VAL instanceof CheddarString)
             console.log(VAL.value);
         else
-            return CheddarError.NO_UNARY_BEHAVIOR;
+            return CheddarError.NO_OP_BEHAVIOR;
 
         return LHS;
+    }],
+
+    ['==', (LHS, RHS) => {
+
     }]
 
 ]);

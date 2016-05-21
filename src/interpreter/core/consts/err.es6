@@ -4,7 +4,6 @@ export default {
     KEY_IS_RESERVED   : Symbol('KEY_IS_RESERVED'),
 
     NO_OP_BEHAVIOR    : Symbol('NO_OP_BEHAVIOR'),
-    NO_UNARY_BEHAVIOR : Symbol('NO_UNARY_BEHAVIOR'),
 
     CAST_FAILED       : Symbol('CAST_FAILED'),
 
