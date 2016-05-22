@@ -29,7 +29,7 @@ import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
 
-import NIL from '../primitives/nil';
+import NIL from '../consts/nil';
 
 // Call stack wrapper
 import CheddarCallStack from './callstack';
