@@ -63,7 +63,7 @@ Cheddar:T_REPL>
 
 ## Roadmap
 
-Tokenizer roadmap excluded.
+**Tokenizer roadmap excluded.**
 
  - [x] Define streams
  - [x] Define class structure
@@ -72,12 +72,12 @@ Tokenizer roadmap excluded.
  - [x] Call stack handling
  - [x] Define namespaces
  - [x] Handle lookups
- - [ ] Define primitive classes
+ - [x] Define primitive classes
   - [x] String
   - [x] Array
   - [x] Number
   - [x] Boolean
-  - [ ] Undefined
+  - [x] Nil
  - [ ] Expression evaluation integration
   - [x] Linking
   - [x] Call stack configuration
@@ -114,8 +114,10 @@ Critical Running Bugs:
 
 Bugs:
 
- - [ ] Stack overflowing during various invalid expression syntax
+ - [x] Stack overflowing during various invalid expression syntax
  - [ ] Error handling is completely borked.
+  - [ ] Syntax Errors (index & prop data is lost)
+  - [x] Runtime Errors
 
 Further Development
 
