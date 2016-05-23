@@ -30,8 +30,10 @@ import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
 
 import CheddarVariable from '../env/var';
-
 import NIL from '../consts/nil';
+
+// Helpers
+import HelperInit from '../../../helpers/init';
 
 // Call stack wrapper
 import CheddarCallStack from './callstack';
@@ -86,7 +88,7 @@ export default class CheddarEval extends CheddarCallStack {
                     DATA.Scope.manage(DATA.Reference, TOKEN.Scope.Scope.get(TOKEN.Reference));
                 }
 
-                OPERATOR = NIL;
+                OPERATOR = HelperInit(NIL);
 
             } else if (!TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
                 // Ensure behavior exists for the types
