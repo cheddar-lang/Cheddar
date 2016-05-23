@@ -29,6 +29,8 @@ import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
 
+import CheddarVariable from '../env/var';
+
 import NIL from '../consts/nil';
 
 // Call stack wrapper
@@ -55,8 +57,30 @@ export default class CheddarEval extends CheddarCallStack {
 
             TOKEN = this.shift(); // Get the value to operate upon
 
-            // Ensure behavior exists for the types
-            if (!TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
+            // SPECIAL BEHAVIOR FOR ASSIGNMENT
+            if (Operation.tok(0) === ":=") {
+                DATA = this.shift();
+
+                if ((
+                    !(DATA.Scope instanceof this.Scope.constructor) ||
+                    DATA.Reference === null
+                ) || Operation.tok(1) === OP_TYPE.UNARY) {
+                    return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
+                }
+
+                TOKEN.Scope = DATA.Scope;
+                TOKEN.Reference = DATA.Reference;
+
+                DATA.Scope.manage(
+                    DATA.Reference,
+                    new CheddarVariable(TOKEN, {
+                        Writeable: !DATA.const,
+                        StrictType: null
+                    })
+                );
+
+            } else if (!TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
+                // Ensure behavior exists for the types
                 OPERATOR = CheddarError.NO_OP_BEHAVIOR;
             } else if (Operation.Tokens[1] === OP_TYPE.UNARY) {
                 // Check if unary or binary operator, then execute
@@ -127,15 +151,21 @@ export default class CheddarEval extends CheddarCallStack {
                 // Lookup variable -> initial variable name
                 OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]).Value;
 
-                if (OPERATOR === CheddarError.KEY_NOT_FOUND)
-                    return OPERATOR;
+                if (OPERATOR === CheddarError.KEY_NOT_FOUND || !OPERATOR) {
+                    //return OPERATOR;
+                    OPERATOR = { // fake a class
+                        Scope: this.Scope,
+                        Reference: Operation.tok(0).tok(0)
+                    };
+                }
             } else {
                 return CheddarError.MALFORMED_TOKEN;
             }
 
             // Advance variable tree
+            // i dunno how to do this shit so ill do it later
             for (let i = 1; i < Operation._Tokens.length; i++) {
-                // If there are more than one tokens it is
+                // if it is a function call, call the function
                 if (Operation._Tokens[i] instanceof CheddarArrayToken)
                     ;
             }

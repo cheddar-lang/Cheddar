@@ -54,7 +54,7 @@ export default class CheddarClass extends CheddarScope {
     //  explanation elaborating on the abstract
     //  nature of this particulator subject of matter
     //  being discussed.
-    constructor(Scope, Reference) {
+    constructor(Scope = null, Reference = null) {
         super();
         // CheddarClass serves as an interface
         //  for higher-level classes.

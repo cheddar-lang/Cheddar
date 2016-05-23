@@ -5,6 +5,7 @@ export default new Map([
     [RuntimeError.KEY_IS_RESERVED, "Attempted to access reserved keyword $0"],
 
     [RuntimeError.NO_OP_BEHAVIOR, "`$0` has no behavior for types `$2` and `$1`"],
+    [RuntimeError.NOT_A_REFERENCE, "Left side of assignment is not a reference"],
 
     [RuntimeError.UNLINKED_CLASS, "InternalError: Token `$0` has no link."],
     [RuntimeError.ABSTRACT_USED, "InternalError: Attempted to construct an abstract interface"]

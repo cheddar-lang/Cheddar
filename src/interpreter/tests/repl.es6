@@ -26,7 +26,7 @@ import HelperInit from '../../helpers/init';
 
 // Setup
 let REPL = readline.createInterface(process.stdin, process.stdout);
-REPL.setPrompt('Cheddar:T_REPL..expr.exec> '.yellow.bold);
+REPL.setPrompt('Cheddar> '.yellow.bold);
 REPL.prompt();
 
 const REPL_ERROR = text => console.log("T_REPL:ERROR".red.underline.bold + " - ".dim + text);
@@ -37,6 +37,13 @@ REPL._setPrompt = REPL.setPrompt;
 REPL.setPrompt = (prompt, length) =>
 	REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
+
+let GlobalScope = new CheddarScope();
+
+GlobalScope.make("pi", CheddarNumber, [10, 0, Math.PI]);
+GlobalScope.make("e", CheddarNumber, [10, 0, Math.E]);
+GlobalScope.make("phi", CheddarNumber, [10, 0, 1.618033988749894]);
+GlobalScope.make("alex", CheddarBool, ["false"]);
 
 REPL.on('line', function(STDIN) {
 	if (STDIN === 'quit') REPL.close();
@@ -66,13 +73,6 @@ REPL.on('line', function(STDIN) {
 	console.log(CallStack._Tokens);
 
 	REPL_HEAD("STDOUT");
-
-	let GlobalScope = new CheddarScope();
-
-	GlobalScope.make("pi", CheddarNumber, [10, 0, Math.PI]);
-	GlobalScope.make("e", CheddarNumber, [10, 0, Math.E]);
-	GlobalScope.make("phi", CheddarNumber, [10, 0, 1.618033988749894]);
-	GlobalScope.make("alex", CheddarBool, ["false"]);
 
 	let EvaluationEnviorment = new CheddarEval(CallStack, GlobalScope);
 
