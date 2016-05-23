@@ -68,16 +68,25 @@ export default class CheddarEval extends CheddarCallStack {
                     return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
                 }
 
-                TOKEN.Scope = DATA.Scope;
-                TOKEN.Reference = DATA.Reference;
+                // NAVIGATE TOKEN AND DATA
 
-                DATA.Scope.manage(
-                    DATA.Reference,
-                    new CheddarVariable(TOKEN, {
-                        Writeable: !DATA.const,
-                        StrictType: null
-                    })
-                );
+                // Check if variable needs to be wrapped
+                if ((TOKEN.Reference === null || !TOKEN.Reference)) {
+                    TOKEN.Scope = DATA.Scope;
+                    TOKEN.Reference = DATA.Reference;
+
+                    DATA.Scope.manage(
+                        DATA.Reference,
+                        new CheddarVariable(TOKEN, {
+                            Writeable: !DATA.const,
+                            StrictType: null
+                        })
+                    );
+                } else {
+                    DATA.Scope.manage(DATA.Reference, TOKEN.Scope.Scope.get(TOKEN.Reference));
+                }
+
+                OPERATOR = NIL;
 
             } else if (!TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
                 // Ensure behavior exists for the types

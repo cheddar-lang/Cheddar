@@ -86,7 +86,7 @@ REPL.on('line', function(STDIN) {
 			REPL_ERROR(Implicit);
 		} else if (Implicit instanceof CheddarString) {
 			console.log(`"${Implicit.value}"`);
-		} else if (Implicit.constructor.Cast.has('String')) {
+		} else if (Implicit && Implicit.constructor.Cast && Implicit.constructor.Cast.has('String')) {
 			console.log(
 				Implicit.constructor.Cast.get('String')(Implicit).value
 			);
