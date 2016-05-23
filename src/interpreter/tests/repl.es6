@@ -14,6 +14,8 @@ import CheddarNumber from '../core/primitives/Number';
 import CheddarString from '../core/primitives/String';
 import CheddarBool from '../core/primitives/Bool';
 
+import NIL from '../core/consts/nil';
+
 // Data Dependencies
 import CheddarPrimitiveAliases from '../core/config/alias';
 
@@ -69,31 +71,28 @@ REPL.on('line', function(STDIN) {
 	let _CallStack = new CheddarShuntingYard();
 	let CallStack = _CallStack.exec(ExpressionToken);
 
-	REPL_HEAD("Execution Instruction");
-	console.log(CallStack._Tokens);
-
-	REPL_HEAD("STDOUT");
+	//REPL_HEAD("Execution Instruction");
+	//console.log(CallStack._Tokens);
 
 	let EvaluationEnviorment = new CheddarEval(CallStack, GlobalScope);
-
-	REPL_HEAD("T:eval..EXEC");
 	let Implicit = EvaluationEnviorment.exec();
 
-	REPL_HEAD("Implicit Output");
 	if (Implicit) {
 
 		if (typeof Implicit === "string") {
 			REPL_ERROR(Implicit);
+		} else if (Implicit instanceof NIL) {
+			// do nothing?
 		} else if (Implicit instanceof CheddarString) {
-			console.log(`"${Implicit.value}"`);
+			console.log(`"${Implicit.value}"`.magenta);
 		} else if (Implicit && Implicit.constructor.Cast && Implicit.constructor.Cast.has('String')) {
 			console.log(
-				Implicit.constructor.Cast.get('String')(Implicit).value
+				`${Implicit.constructor.Cast.get('String')(Implicit).value}`.magenta
 			);
 		} else if (typeof Implicit === "symbol") {
-			console.log(Implicit);
+			console.log(Implicit.toString().magenta);
 		} else {
-			console.log(`Unprintable object of class "${Implicit.constructor.name}" with literal value ${Implicit}`);
+			console.log(`< Unprintable object of class "${Implicit.constructor.name.magenta}" with literal value ${Implicit.magenta}`);
 		}
 	}
 
