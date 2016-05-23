@@ -105,7 +105,8 @@ export default class CheddarLexer {
             result,
             tokens,
             i,
-            j;
+            j,
+            WDIFF;
 
         main: for (i = 0; i < defs.length; i++) {
             index = this.Index;
@@ -114,9 +115,11 @@ export default class CheddarLexer {
             sub: for (j = 0; j < defs[i].length; j++) {
                 if (whitespace) {
                     let oldIndex = this.Index;
+                    let deltaIndex = index;
                     this.Index = index;
                     this.jumpWhite();
                     index = this.Index;
+                    WDIFF = this.Index - deltaIndex > 0;
                     this.Index = oldIndex;
                 }
                 if (defs[i][j] instanceof CheddarLexer) {
@@ -155,6 +158,8 @@ export default class CheddarLexer {
                 } else if (defs[i][j] === this.jumpWhite) {
                     let oldIndex = this.Index;
                     this.Index = index;
+                    if (whitespace ? !WDIFF : !/\s/.test(this.curchar))
+                        return this.error(CheddarError.EXIT_NOTFOUND);
                     this.jumpWhite();
                     index = this.Index;
                     this.Index = oldIndex;
@@ -171,7 +176,8 @@ export default class CheddarLexer {
                             continue main;
                         }
                         // Optional
-                        result = this.initParser(defs[i][j][0]).exec();
+                        parser = this.initParser(defs[i][j][0]);
+                        result = parser.exec();
                         if (result !== CheddarError.EXIT_NOTFOUND) {
                             if (!(result instanceof CheddarLexer)) {
                                 return this.error(result);
@@ -266,6 +272,7 @@ export default class CheddarLexer {
     where C1...CN are terminal comment grammars
     */
     jumpWhite() {
+        let STARTINDEX = this.Index;
         while (/\s/.test(this.Code[this.Index]))
             this.Index++;
             this._jumpComment();

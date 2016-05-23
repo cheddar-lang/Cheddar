@@ -24,7 +24,7 @@ export default class CheddarPropertyToken extends CheddarLexer {
 
             let attempt;
             if (Initial === false)
-                attempt = this.attempt(CheddarVariableToken, CheddarAnyLiteral, CheddarParenthesizedExpression);
+                attempt = this.attempt(CheddarVariableToken, CheddarAnyLiteral/*, CheddarParenthesizedExpression*/);
             else
                 attempt = this.initParser(CheddarVariableToken).exec();
 

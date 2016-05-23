@@ -5,6 +5,8 @@ import {MALFORMED_TOKEN} from '../consts/err';
 import BehaviorOperator from './op/array';
 import BehaviorCast from './cast/array';
 
+import CheddarScope from '../env/scope';
+
 import CheddarEval from '../eval/eval';
 import CheddarShuntingYard from '../../../tokenizer/tok/shunting_yard';
 
@@ -21,7 +23,7 @@ export default class CheddarArray extends CheddarClass {
             } else if (items[i].constructor.name === "CheddarExpressionToken") {
                 // Is an expression
                 let Expr = new CheddarShuntingYard().exec(items[i]);
-                this.value.push(new CheddarEval(Expr, this.Scope).exec());
+                this.value.push(new CheddarEval(Expr, new CheddarScope(this.Scope)).exec());
             } else {
                 return MALFORMED_TOKEN;
             }
