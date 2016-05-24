@@ -5,8 +5,8 @@
     "colors": "^1.1.2"
   },
   "scripts": {
-    "test": "grunt",
-    "postinstall": "grunt"
+    "test": "./node_modules/.bin/grunt",
+    "build": "./node_modules/.bin/grunt"
   },
   "devDependencies": {
     "babel-plugin-add-module-exports": "^0.1.2",
