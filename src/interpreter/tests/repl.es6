@@ -39,6 +39,20 @@ REPL._setPrompt = REPL.setPrompt;
 REPL.setPrompt = (prompt, length) =>
 	REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
+let Input = process.argv[3] || process.argv[2];
+
+try {
+	Input = eval(Input);
+	if (typeof Input === 'string') {
+		Input = [CheddarString, [Input]]
+	} else if (typeof Input === 'number') {
+		Input = [CheddarNumber, [10, 0, Input]];
+	} else {
+		Input = [NIL, []];
+	}
+} catch(e) {
+	Input = [NIL, []];
+}
 
 let GlobalScope = new CheddarScope();
 
@@ -46,6 +60,7 @@ GlobalScope.make("pi", CheddarNumber, [10, 0, Math.PI]);
 GlobalScope.make("e", CheddarNumber, [10, 0, Math.E]);
 GlobalScope.make("phi", CheddarNumber, [10, 0, 1.618033988749894]);
 GlobalScope.make("alex", CheddarBool, ["false"]);
+GlobalScope.make("$0", ...Input);
 
 REPL.on('line', function(STDIN) {
 	if (STDIN === 'quit') REPL.close();

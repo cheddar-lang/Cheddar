@@ -6,7 +6,7 @@ export default class StatementExpression extends CheddarLexer {
         this.open(false);
 
         return this.grammar(true,
-            [[CheddarExpressionToken]]
+            [CheddarExpressionToken]
         )
     }
 }
