@@ -28,7 +28,6 @@ export default class CheddarArray extends CheddarClass {
                 return MALFORMED_TOKEN;
             }
         }
-        console.log(this.value);
 
         return true;
     }

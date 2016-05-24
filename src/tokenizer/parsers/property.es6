@@ -44,7 +44,7 @@ export default class CheddarPropertyToken extends CheddarLexer {
                 let res = expr.exec('(', ')');
 
                 this.Index = expr.Index;
-                console.log(expr, res);
+
                 if (!(res instanceof CheddarLexer))
                     return this.error(res);
 
