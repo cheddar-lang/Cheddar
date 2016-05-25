@@ -14,6 +14,17 @@
   <a href="https://codeclimate.com/github/cheddar-lang/Cheddar"><img src="https://codeclimate.com/github/cheddar-lang/Cheddar/badges/gpa.svg" /></a>
 </p>
 
+## Installation
+
+Simply paste this in your bash console:
+```bash
+bash <(curl -s cheddar.vihan.org/bashinstall.sh)
+```
+
+Ensure you have `node` and `npm` installed. Everything else should be automatically installed.
+
+---
+
 
 Contributors:
 
