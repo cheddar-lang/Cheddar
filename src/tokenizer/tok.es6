@@ -8,6 +8,9 @@ import * as CheddarError from './consts/err';
 import S1_ASSIGN from './states/assign';
 import S2_EXPR from './states/expr';
 
+const VALID_END = chr =>
+    chr === "\n" || chr === ";" || !chr;
+
 export default class CheddarTokenize extends CheddarLexer {
     exec() {
 
@@ -25,9 +28,27 @@ export default class CheddarTokenize extends CheddarLexer {
                 this.Index++;
             }
 
-            if (this.Code[this.Index] !== "\n" && this.Code[this.Index] !== ";" && this.Code[this.Index]) {
+            if (!VALID_END(this.Code[this.Index])) {
                 return CheddarError.UNEXPECTED_TOKEN;
             } else {
+                this.Index++;
+                this.jumpWhite();
+
+                if (this.Code[this.Index]) {
+
+                    let M2 = new CheddarTokenize(this.Code, this.Index);
+                    let response = M2.exec();
+
+                    if (response instanceof CheddarLexer) {
+                        this._Tokens.push(...M2._Tokens);
+                        this.Index = M2.Index;
+                    } else {
+                        if (response !== CheddarError.EXIT_NOTFOUND)
+                            return this.error(response);
+                    }
+
+                }
+
                 return this.close();
             }
         } else {
