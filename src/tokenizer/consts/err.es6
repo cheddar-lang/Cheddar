@@ -3,7 +3,7 @@
  * Codes:
   0. Success
   1. Unexpected token
-  2. Unexpected 
+  2. Unexpected
 **/
 
 export const SUCCESS = Symbol('er_SUCCESS');

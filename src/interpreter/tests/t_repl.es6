@@ -2,6 +2,8 @@ import readline from 'readline';
 import colors from 'colors';
 
 import cheddar from '../eval';
+import tokenizer from '../../tokenizer/tok';
+//import tokenizer from '../../tokenizer/states/assign';
 
 let REPL = readline.createInterface(process.stdin, process.stdout);
 REPL.setPrompt('Cheddar:T_REPL> '.yellow.bold);
@@ -20,6 +22,11 @@ REPL.setPrompt = (prompt, length) =>
 REPL.on('line', function(STDIN) {
 
     if (STDIN === 'quit') REPL.close();
+
+    let Tokenizer = new tokenizer(STDIN, 0);
+    let Result = Tokenizer.exec();
+
+    console.log(Result);
 
     REPL.prompt();
 

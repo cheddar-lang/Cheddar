@@ -87,8 +87,9 @@ export default class CheddarEval extends CheddarCallStack {
                 } else {
                     DATA.Scope.manage(DATA.Reference, TOKEN.Scope.Scope.get(TOKEN.Reference));
                 }
-
-                OPERATOR = HelperInit(NIL);
+                
+                
+                OPERATOR = TOKEN;
 
             } else if (!TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
                 // Ensure behavior exists for the types

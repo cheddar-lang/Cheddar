@@ -92,8 +92,7 @@ export default class CheddarLexer {
             return parseClass;
         } else if (parseClass.prototype instanceof CheddarLexer) {
             return new parseClass(this.Code, this.Index);
-        } else
-            throw new TypeError('CheddarLexer: provided parser is not a CheddarLexer ');
+        }
     }
 
     tok(n = 0) { return this._Tokens[n] }
@@ -163,6 +162,12 @@ export default class CheddarLexer {
                     this.jumpWhite();
                     index = this.Index;
                     this.Index = oldIndex;
+                } else if (defs[i][j] === this.jumpSpace) {
+                    let oldIndex = this.Index;
+                    this.Index = index;
+                    this.jumpWhite();
+                    index = this.Index;
+                    this.Index = oldIndex;
                 } else if (Array.isArray(defs[i][j])) {
                     if (defs[i][j].length === 1) {
                         if (Array.isArray(defs[i][j][0])) {
@@ -200,7 +205,7 @@ export default class CheddarLexer {
                         let oldIndex = this.Index;
                         for (let k = 0; k < defs[i][j].length; k++) {
                             this.Index = index;
-                            if (defs[i][j][k] instanceof CheddarLexer) {
+                            if (defs[i][j][k].prototype instanceof CheddarLexer) {
                                 result = this.initParser(defs[i][j][k]).exec();
                                 if (result instanceof CheddarLexer) {
                                     match = result;
@@ -219,7 +224,6 @@ export default class CheddarLexer {
                             }
                         }
                         this.Index = oldIndex;
-
                         if (match) {
                             if (!(
                                 (
@@ -295,15 +299,15 @@ export default class CheddarLexer {
                         this.Index++;
                     break;
                 default:
-                    return;
+                    return false;
             }
-            return;
+
+            return true;
+        } else {
+            return false;
         }
 
-        //if (!(this.Code[this.Index] === this.Code[this.Index + 1] === '/'))
-        //    return this;
-        //this.Index = /\n/.exec(this.Code.slice(this.Index));
-        //return this;
+        // you must of borked something bad if this is executing
     }
 
     _jumpBlockComment() {
@@ -337,6 +341,10 @@ export default class CheddarLexer {
         else
             return false;
         return this;
+    }
+
+    jumpSpace() {
+        return this.jumpWhite();
     }
 
     get isExpression() { return false; }
