@@ -2,11 +2,13 @@
 //  tokenizes expressions and all that great stuff
 
 import CheddarLexer from './tok/lex';
+import CheddarEXPLICIT from './patterns/EXPLICIT';
 
 import * as CheddarError from './consts/err';
 
 import S1_ASSIGN from './states/assign';
-import S2_EXPR from './states/expr';
+import S2_IF from './states/if';
+import S3_EXPR from './states/expr';
 
 const VALID_END = chr =>
     chr === "\n" || chr === ";" || !chr;
@@ -16,7 +18,8 @@ export default class CheddarTokenize extends CheddarLexer {
 
         let MATCH = this.attempt(
             S1_ASSIGN,
-            S2_EXPR
+            S2_IF,
+            S3_EXPR
         );
 
         this.Tokens = MATCH;
@@ -52,7 +55,7 @@ export default class CheddarTokenize extends CheddarLexer {
                 return this.close();
             }
         } else {
-            this.error(MATCH);
+            return this.error(MATCH);
         }
     }
 }
