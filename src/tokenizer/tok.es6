@@ -10,17 +10,21 @@ import S1_ASSIGN from './states/assign';
 import S2_IF from './states/if';
 import S3_EXPR from './states/expr';
 
+var CLOSES = '\n;';
+
 const VALID_END = chr =>
-    chr === "\n" || chr === ";" || !chr;
+    (CLOSES.indexOf(chr) > -1) || !chr;
 
 export default class CheddarTokenize extends CheddarLexer {
-    exec() {
+    exec(ENDS = "") {
 
         let MATCH = this.attempt(
             S1_ASSIGN,
             S2_IF,
             S3_EXPR
         );
+
+        console.log(`DELIMITERS ARE: ${ENDS}`);
 
         this.Tokens = MATCH;
         this.Index = MATCH.Index;
@@ -31,31 +35,40 @@ export default class CheddarTokenize extends CheddarLexer {
                 this.Index++;
             }
 
-            if (!VALID_END(this.Code[this.Index])) {
-                return CheddarError.UNEXPECTED_TOKEN;
-            } else {
-                this.Index++;
-                this.jumpWhite();
-
-                if (this.Code[this.Index]) {
-
-                    let M2 = new CheddarTokenize(this.Code, this.Index);
-                    let response = M2.exec();
-
-                    if (response instanceof CheddarLexer) {
-                        this._Tokens.push(...M2._Tokens);
-                        this.Index = M2.Index;
-                    } else {
-                        if (response !== CheddarError.EXIT_NOTFOUND)
-                            return this.error(response);
-                    }
-
-                }
-
+            if (ENDS.indexOf(this.Code[this.Index]) > -1) {
                 return this.close();
             }
-        } else {
+
+            if (!MATCH instanceof CheddarEXPLICIT) {
+                if (!VALID_END(this.Code[this.Index])) {
+                    return CheddarError.UNEXPECTED_TOKEN;
+                }
+            }
+
+            this.Index++;
+
+            this.jumpWhite();
+
+            if (this.Code[this.Index]) {
+                let M2 = new CheddarTokenize(this.Code, this.Index);
+                let response = M2.exec();
+
+                if (response instanceof CheddarLexer) {
+                    this._Tokens.push(...M2._Tokens);
+                    this.Index = M2.Index;
+                }
+                else {
+                    if (response !== CheddarError.EXIT_NOTFOUND)
+                        return this.error(response);
+                }
+
+            }
+
+            return this.close();
+        }
+        else {
             return this.error(MATCH);
         }
     }
+
 }

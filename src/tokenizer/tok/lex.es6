@@ -253,7 +253,8 @@ export default class CheddarLexer {
 
             this.Tokens = tokens;
             this.Index = index;
-
+            //console.log("SUCCESS:");
+            //console.log(this);
             return this.close();
         }
 

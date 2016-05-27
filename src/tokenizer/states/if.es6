@@ -1,4 +1,4 @@
-import CheddarExpressionToken from '../parsers/expr';
+import CheddarExpressionToken from './expr';
 import CheddarCodeblock from '../patterns/block';
 import CheddarLexer from '../patterns/EXPLICIT';
 
