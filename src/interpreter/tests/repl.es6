@@ -1,116 +1,59 @@
 import readline from 'readline';
-import colors from 'colors'; // MAKE SURE TO RUN `npm install colors`
+import colors from 'colors';
 
-// Tokenization Depedencies
-import CheddarExpressionToken from '../../tokenizer/parsers/expr';
-import CheddarShuntingYard from '../../tokenizer/tok/shunting_yard';
-
-// Evaluation Dependencies
 import CheddarScope from '../core/env/scope';
-import CheddarEval from '../core/eval/eval';
 
-// Preset Dependencies
-import CheddarNumber from '../core/primitives/Number';
 import CheddarString from '../core/primitives/String';
-import CheddarBool from '../core/primitives/Bool';
-
 import NIL from '../core/consts/nil';
 
-// Data Dependencies
-import CheddarPrimitiveAliases from '../core/config/alias';
+import cheddar from '../exec';
+import tokenizer from '../../tokenizer/tok';
 
-// Error dependecies
-import {DESC} from '../../tokenizer/consts/err_msg';
-
-// Helpers
-import HelperLocateIndex from '../../helpers/loc';
-import HelperInit from '../../helpers/init';
-
-// Setup
 let REPL = readline.createInterface(process.stdin, process.stdout);
-REPL.setPrompt('Cheddar> '.yellow.bold);
+REPL.setPrompt('Cheddar:T_REPL> '.yellow.bold);
 REPL.prompt();
 
-const REPL_ERROR = text => console.log("T_REPL:ERROR".red.underline.bold + " - ".dim + text);
-const REPL_HEAD = text => console.log(`━━ ${text} ━━`.bold.magenta);
+const REPL_ERROR = "T_REPL:ERROR".red.underline.bold + " - ".dim;
+
+let USI = 0;
 
 // Workaround
 REPL._setPrompt = REPL.setPrompt;
 REPL.setPrompt = (prompt, length) =>
-	REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
+    REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
-let Input = process.argv[3] || process.argv[2];
 
-try {
-	Input = eval(Input);
-	if (typeof Input === 'string') {
-		Input = [CheddarString, [Input]]
-	} else if (typeof Input === 'number') {
-		Input = [CheddarNumber, [10, 0, Input]];
-	} else {
-		Input = [NIL, []];
-	}
-} catch(e) {
-	Input = [NIL, []];
-}
-
-let GlobalScope = new CheddarScope();
-
-GlobalScope.make("pi", CheddarNumber, [10, 0, Math.PI]);
-GlobalScope.make("e", CheddarNumber, [10, 0, Math.E]);
-GlobalScope.make("phi", CheddarNumber, [10, 0, 1.618033988749894]);
-GlobalScope.make("alex", CheddarBool, ["false"]);
-GlobalScope.make("$0", ...Input);
+let GLOBAL_SCOPE = new CheddarScope();
 
 REPL.on('line', function(STDIN) {
-	if (STDIN === 'quit') REPL.close();
 
-	let _ExprressionToken = new CheddarExpressionToken(STDIN, 0);
-	let ExpressionToken = _ExprressionToken.exec();
+    if (STDIN === 'quit') REPL.close();
 
-	if (_ExprressionToken.Errored) {
+    let Tokenizer = new tokenizer(STDIN, 0);
+    let Result = Tokenizer.exec();
 
-		// [Line Number, Index in line]
-		let [ROW, COL, INDEX] = HelperLocateIndex(STDIN, _ExprressionToken.Index);
+    let Executor = new cheddar(Result, GLOBAL_SCOPE);
+    let Output = Executor.exec();
 
-		REPL_ERROR(
-			(DESC.get(ExpressionToken) || "An unexpected error occured")
-			.replace(/\$C/g, COL)
-			.replace(/\$R/g, ROW)
-			.replace(/\$1/g, STDIN[INDEX]) + "\n  " + STDIN.split("\n")[ROW - 1] + "\n  " + " ".repeat(COL) + "^".bold
-		);
-
-		return REPL.prompt();
-	}
-
-	let _CallStack = new CheddarShuntingYard();
-	let CallStack = _CallStack.exec(ExpressionToken);
-
-	//REPL_HEAD("Execution Instruction");
-	//console.log(CallStack._Tokens);
-
-	let EvaluationEnviorment = new CheddarEval(CallStack, GlobalScope);
-	let Implicit = EvaluationEnviorment.exec();
-
-	if (Implicit) {
+    if (Output) {
 
 		if (typeof Implicit === "string") {
-			REPL_ERROR(Implicit);
-		} else if (Implicit instanceof NIL) {
+			REPL_ERROR(Output);
+		} else if (Output instanceof NIL) {
 			// do nothing?
-		} else if (Implicit instanceof CheddarString) {
-			console.log(`"${Implicit.value}"`.magenta);
-		} else if (Implicit && Implicit.constructor.Cast && Implicit.constructor.Cast.has('String')) {
+		} else if (Output instanceof CheddarString) {
+			console.log(`"${Output.value}"`.magenta);
+		} else if (Output && Output.constructor.Cast && Output.constructor.Cast.has('String')) {
 			console.log(
-				`${Implicit.constructor.Cast.get('String')(Implicit).value}`.magenta
+				`${Output.constructor.Cast.get('String')(Output).value}`.magenta
 			);
-		} else if (typeof Implicit === "symbol") {
-			console.log(Implicit.toString().magenta);
+		} else if (typeof Output === "symbol") {
+			console.log(Output.toString().magenta);
 		} else {
-			console.log(`< Unprintable object of class "${Implicit.constructor.name.magenta}" with literal value ${Implicit.magenta}`);
+			console.log(`< Unprintable object of class "${Output.constructor.name.magenta}" with literal value ${Output.magenta} >`);
 		}
 	}
 
-	REPL.prompt();
+    REPL.prompt();
 
 }).on('close', () => process.exit(0));

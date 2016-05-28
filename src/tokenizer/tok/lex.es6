@@ -1,5 +1,4 @@
 import * as CheddarError from '../consts/err';
-import CheddarTokens from './tks';
 
 export default class CheddarLexer {
     constructor(Code, Index) {
