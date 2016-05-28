@@ -24,8 +24,6 @@ export default class CheddarTokenize extends CheddarLexer {
             S3_EXPR
         );
 
-        console.log(`DELIMITERS ARE: ${ENDS}`);
-
         this.Tokens = MATCH;
         this.Index = MATCH.Index;
 

@@ -8,7 +8,8 @@ import {ClassType} from '../consts/types';
 
 export default class CheddarArrayToken extends CheddarPrimitive {
     exec(OPEN = ARRAY_OPEN, CLOSE = ARRAY_CLOSE, PARSER = CheddarExpressionToken) {
-        if (this.getChar() !== OPEN)
+        var c = this.getChar();
+        if (c !== OPEN)
             return this.error(CheddarError.EXIT_NOTFOUND);
         while (true) {
 

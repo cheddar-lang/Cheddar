@@ -3,7 +3,6 @@ import colors from 'colors';
 
 import cheddar from '../eval';
 import tokenizer from '../../tokenizer/tok';
-//import tokenizer from '../../tokenizer/states/assign';
 
 let REPL = readline.createInterface(process.stdin, process.stdout);
 REPL.setPrompt('Cheddar:T_REPL> '.yellow.bold);
