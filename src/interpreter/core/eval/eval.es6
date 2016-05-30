@@ -174,7 +174,7 @@ export default class CheddarEval extends CheddarCallStack {
                 if (Operation._Tokens[i] instanceof CheddarArrayToken)
                     console.log("Yeah... no functions yet...\nIf you're complaining that why I haven't made them, make them yourself and make a PR\nwhy do I have to make everything?");
                 else
-                    console.log(":/");
+                    console.log(":/ this is also not finished... will get to after a bit");
             }
 
             this.put( OPERATOR );
