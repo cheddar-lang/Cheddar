@@ -5,6 +5,7 @@ export default {
 
     NO_OP_BEHAVIOR    : Symbol('NO_OP_BEHAVIOR'),
     NOT_A_REFERENCE   : Symbol('NOT_A_REFERENCE'),
+    CANNOT_READ_PROP  : Symbol('CANNOT_READ_PROP'),
 
     CAST_FAILED       : Symbol('CAST_FAILED'),
 

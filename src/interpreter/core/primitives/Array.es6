@@ -14,6 +14,7 @@ export default class CheddarArray extends CheddarClass {
     static Name = "Array";
 
     init(...items) {
+        console.log(items);
         this.value = [];
 
         for (let i = 0; i < items.length; i++) {
@@ -22,8 +23,7 @@ export default class CheddarArray extends CheddarClass {
                 this.value.push(items[i]);
             } else if (items[i].constructor.name === "CheddarExpressionToken") {
                 // Is an expression
-                let Expr = new CheddarShuntingYard().exec(items[i]);
-                this.value.push(new CheddarEval(Expr, new CheddarScope(this.Scope)).exec());
+                this.value.push(new CheddarEval(items[i], this.Scope).exec());
             } else {
                 return MALFORMED_TOKEN;
             }

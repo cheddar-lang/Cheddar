@@ -28,7 +28,7 @@ import HelperInit from '../../helpers/init';
 
 // Setup
 let REPL = readline.createInterface(process.stdin, process.stdout);
-REPL.setPrompt('Cheddar> '.yellow.bold);
+REPL.setPrompt('Cheddar::2> '.yellow.bold);
 REPL.prompt();
 
 const REPL_ERROR = text => console.log("T_REPL:ERROR".red.underline.bold + " - ".dim + text);

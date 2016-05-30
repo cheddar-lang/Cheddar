@@ -32,9 +32,6 @@ import CheddarVariableToken from '../../../tokenizer/literals/var';
 import CheddarVariable from '../env/var';
 import NIL from '../consts/nil';
 
-// Helpers
-import HelperInit from '../../../helpers/init';
-
 // Call stack wrapper
 import CheddarCallStack from './callstack';
 
@@ -87,8 +84,8 @@ export default class CheddarEval extends CheddarCallStack {
                 } else {
                     DATA.Scope.manage(DATA.Reference, TOKEN.Scope.Scope.get(TOKEN.Reference));
                 }
-                
-                
+
+
                 OPERATOR = TOKEN;
 
             } else if (!TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
@@ -164,11 +161,7 @@ export default class CheddarEval extends CheddarCallStack {
                 OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]).Value;
 
                 if (OPERATOR === CheddarError.KEY_NOT_FOUND || !OPERATOR) {
-                    //return OPERATOR;
-                    OPERATOR = { // fake a class
-                        Scope: this.Scope,
-                        Reference: Operation.tok(0).tok(0)
-                    };
+                    return CheddarError.KEY_NOT_FOUND;
                 }
             } else {
                 return CheddarError.MALFORMED_TOKEN;
@@ -179,7 +172,9 @@ export default class CheddarEval extends CheddarCallStack {
             for (let i = 1; i < Operation._Tokens.length; i++) {
                 // if it is a function call, call the function
                 if (Operation._Tokens[i] instanceof CheddarArrayToken)
-                    ;
+                    console.log("Yeah... no functions yet...\nIf you're complaining that why I haven't made them, make them yourself and make a PR\nwhy do I have to make everything?");
+                else
+                    console.log(":/");
             }
 
             this.put( OPERATOR );

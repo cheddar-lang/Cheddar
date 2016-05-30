@@ -1,8 +1,8 @@
 // Request dependencies for
 //  preset casing for operator
 //  handling
-import CheddarString from '../primitives/String';
 import CheddarError from '../consts/err';
+
 import HelperInit from '../../../helpers/init';
 
 export const DEFAULT_OP = new Map([
@@ -16,7 +16,7 @@ export const DEFAULT_OP = new Map([
                 ? LHS.constructor.Cast.get('String')(LHS)
                 : LHS;
 
-        if (VAL instanceof CheddarString)
+        if (VAL.constructor.Name === "String")
             console.log(VAL.value);
         else
             return CheddarError.NO_OP_BEHAVIOR;
@@ -25,7 +25,7 @@ export const DEFAULT_OP = new Map([
     }],
 
     ['==', (LHS, RHS) => {
-
+        return HelperInit(require("../primitives/Bool"), RHS && LHS instanceof RHS.constructor && LHS.value === RHS.value);
     }]
 
 ]);

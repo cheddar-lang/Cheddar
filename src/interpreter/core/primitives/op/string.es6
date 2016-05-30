@@ -1,7 +1,7 @@
 import CheddarError from '../../consts/err';
 
-import CheddarArray from '../Array';
 import CheddarNumber from '../Number';
+import HelperInit from '../../../../helpers/init';
 
 // == STRING ==
 export default new Map([
@@ -15,9 +15,7 @@ export default new Map([
         //    RHS = RHS.Cast.get(CheddarString)();
 
         if (RHS instanceof LHS.constructor)
-            return new LHS.constructor(
-                RHS.value + LHS.value
-            );
+            return HelperInit(LHS.constructor, LHS.value + RHS.value);
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -30,7 +28,7 @@ export default new Map([
     ['*', (LHS, RHS) => {
 
         if (RHS.constructor.Name === "Number")
-            return new this.constructor(LHS.value.repeat(RHS.value));
+            return HelperInit(this.constructor, LHS.value.repeat(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
 
@@ -38,8 +36,9 @@ export default new Map([
 
 
     ['@"', (LHS, RHS) => {
+        let CheddarArray = require("../Array");
         if(LHS === null)
-            return new CheddarArray(...[...RHS.value].map(x => new CheddarNumber(10, 0, x.charCodeAt())));
+            return new CheddarArray(...[...RHS.value].map(x => HelperInit(CheddarNumber, 10, 0, x.charCodeAt())));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }]

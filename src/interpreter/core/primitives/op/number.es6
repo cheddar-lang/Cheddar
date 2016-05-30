@@ -1,7 +1,6 @@
 import * as CheddarError from '../../consts/err';
 
 import CheddarString from '../String';
-//import CheddarArray from '../Array';
 import CheddarBool from '../Bool';
 
 import HelperInit from '../../../../helpers/init';
@@ -150,6 +149,7 @@ export default new Map([
     }],
 
     [':', (LHS, RHS) => {
+        let CheddarArray = require("../Array");
         if (LHS === null)
             return HelperInit(CheddarArray, range(0, ~~RHS.value - Math.sign(~~RHS.value)));
         else if (RHS instanceof LHS.constructor)
