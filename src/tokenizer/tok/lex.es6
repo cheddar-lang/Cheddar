@@ -275,10 +275,16 @@ export default class CheddarLexer {
     where C1...CN are terminal comment grammars
     */
     jumpWhite() {
+        console.log(this);
         let STARTINDEX = this.Index;
-        while (/\s/.test(this.Code[this.Index]))
+        while (/\s/.test(this.Code[this.Index])) {
+            console.log("R");
             this.Index++;
+            console.log("S");
             this._jumpComment();
+        }
+
+        console.log("T", this);
 
         return this;
     }
@@ -344,6 +350,13 @@ export default class CheddarLexer {
 
     jumpSpace() {
         return this.jumpWhite();
+    }
+
+    lookAhead(seq) {
+        console.log("P");
+        this.jumpWhite();
+        console.log("U");
+        return this.Code.indexOf(seq, this.Index) === this.Index;
     }
 
     get isExpression() { return false; }
