@@ -9,6 +9,6 @@ export default new Map([
     [RuntimeError.CANNOT_READ_PROP, "Cannot read property `$0` of nil (`$1`)"],
 
     [RuntimeError.UNLINKED_CLASS, "InternalError: Token `$0` has no link."],
-    [RuntimeError.MALFORMED_TOKEN, "InternalError: Recieved a malformed token"],
+    [RuntimeError.MALFORMED_TOKEN, "InternalError: Recieved a malformed token at callstack ref. $0"],
     [RuntimeError.ABSTRACT_USED, "InternalError: Attempted to construct an abstract interface"]
 ]);

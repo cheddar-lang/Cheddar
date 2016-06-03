@@ -13,6 +13,7 @@ export default class CheddarIf {
     }
 
     exec() {
+        console.log(this.toks);
         let expr,  // Conditional Expression
             val,   // Result Holder
             evalf; // Evaluation frame
@@ -20,7 +21,6 @@ export default class CheddarIf {
         let tok;
 
         while ((tok = this.toks.shift()) !== undefined) {
-            console.log(tok);
             switch (tok) {
                 case "":     // If-statement
                 case "elif": // Else-if statement
@@ -29,9 +29,7 @@ export default class CheddarIf {
 
                     // Check if expression is true
                     val = new CheddarBool(this.scope);
-
                     // Ensure: a. Succesful cast; b. evals to true
-                    console.log(val, expr);
                     if (val.init(expr) && val.value === true) {
                         evalf = new CheddarExec(
                             this.toks.shift()._Tokens[0], // Code Block
@@ -39,8 +37,10 @@ export default class CheddarIf {
                         );
 
                         return evalf.exec();
+                    } else {
+                        this.toks.shift();
+                        break;
                     }
-                    break;
                 case "else": // Else statement
                     evalf = new CheddarExec(
                         this.toks.shift()._Tokens[0],
@@ -49,7 +49,11 @@ export default class CheddarIf {
 
                     return evalf.exec();
                 default:
-                    return CheddarErrorMessage.get(CheddarError.MALFORMED_TOKEN);
+                    console.log("== START STACK DUMP ==");
+                    console.log(this.toks);
+                    console.log(tok);
+                    console.log("== END STACK DUMP ==");
+                    return CheddarErrorMessage.get(CheddarError.MALFORMED_TOKEN).replace(/\$0/, this.toks._Tokens.length);
             }
         }
     }
