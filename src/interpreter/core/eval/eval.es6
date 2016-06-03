@@ -57,7 +57,7 @@ export default class CheddarEval extends CheddarCallStack {
             TOKEN = this.shift(); // Get the value to operate upon
 
             // SPECIAL BEHAVIOR FOR ASSIGNMENT
-            if (Operation.tok(0) === ":=") {
+            if (Operation.tok(0) === "=") {
                 DATA = this.shift();
 
                 if ((
