@@ -1,12 +1,12 @@
 import readline from 'readline';
 import colors from 'colors';
 
-import CheddarScope from './interpreter/core/env/scope';
+import CheddarScope from '../interpreter/core/env/scope';
 
-import NIL from './interpreter/core/consts/nil';
+import NIL from '../interpreter/core/consts/nil';
 
-import cheddar from './interpreter/exec';
-import tokenizer from './tokenizer/tok';
+import cheddar from '../interpreter/exec';
+import tokenizer from '../tokenizer/tok';
 
 let REPL = readline.createInterface(process.stdin, process.stdout);
 REPL.setPrompt('cheddar> '.yellow.bold);
