@@ -37,11 +37,8 @@ export default class CheddarTokenize extends CheddarLexer {
                 return this.close();
             }
 
-            if (!MATCH instanceof CheddarEXPLICIT) {
-                if (!VALID_END(this.Code[this.Index])) {
-                    return CheddarError.UNEXPECTED_TOKEN;
-                }
-            }
+            if (!MATCH instanceof CheddarEXPLICIT && !VALID_END(this.Code[this.Index]))
+                return CheddarError.UNEXPECTED_TOKEN;
 
             this.Index++;
 
