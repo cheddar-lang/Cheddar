@@ -3,8 +3,6 @@ import CheddarCodeblock from '../patterns/block';
 import CheddarLexer from '../patterns/EXPLICIT';
 import * as CheddarError from '../consts/err';
 
-var util = require('util')
-
 export default class StatementIf extends CheddarLexer {
     exec() {
         this.open();

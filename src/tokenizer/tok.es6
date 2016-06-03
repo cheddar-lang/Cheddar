@@ -8,6 +8,7 @@ import * as CheddarError from './consts/err';
 
 import S1_ASSIGN from './states/assign';
 import S2_IF from './states/if';
+import S2_FOR from './states/for';
 import S3_EXPR from './states/expr';
 
 var CLOSES = '\n;';
@@ -21,6 +22,7 @@ export default class CheddarTokenize extends CheddarLexer {
         let MATCH = this.attempt(
             S1_ASSIGN,
             S2_IF,
+            S2_FOR,
             S3_EXPR
         );
 
