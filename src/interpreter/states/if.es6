@@ -3,7 +3,7 @@ import CheddarExec from '../exec';
 import CheddarEval from '../core/eval/eval';
 import CheddarBool from '../core/primitives/Bool';
 import CheddarScope from '../core/env/scope';
-import CheddarError from '../core/consts/err';
+import * as CheddarError from '../core/consts/err';
 import CheddarErrorMessage from '../core/consts/err_msg';
 
 export default class CheddarIf {

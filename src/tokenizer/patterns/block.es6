@@ -1,7 +1,7 @@
 import CheddarLexer from '../tok/lex';
 import CheddarTokenize from '../tok';
 import CheddarCustomParser from '../parsers/custom';
-import CheddarError from '../consts/err';
+import * as CheddarError from '../consts/err';
 
 export default class CheddarCodeblock extends CheddarLexer {
     exec() {
