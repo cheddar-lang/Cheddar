@@ -27,7 +27,6 @@ export default class CheddarLexer {
     }
 
     close(arg) {
-        delete this.Code;
         return arg || this;
     }
     error(id) {
@@ -275,16 +274,11 @@ export default class CheddarLexer {
     where C1...CN are terminal comment grammars
     */
     jumpWhite() {
-        console.log(this);
         let STARTINDEX = this.Index;
         while (/\s/.test(this.Code[this.Index])) {
-            console.log("R");
             this.Index++;
-            console.log("S");
             this._jumpComment();
         }
-
-        console.log("T", this);
 
         return this;
     }
@@ -353,9 +347,7 @@ export default class CheddarLexer {
     }
 
     lookAhead(seq) {
-        console.log("P");
         this.jumpWhite();
-        console.log("U");
         return this.Code.indexOf(seq, this.Index) === this.Index;
     }
 
