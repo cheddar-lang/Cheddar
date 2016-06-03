@@ -6,7 +6,8 @@ export default class CheddarExec {
         this.Code = exec_stack._Tokens;
         this.Scope = scope;
 
-        this.lrep = new NIL().init();
+        this.errored = false;
+        this.lrep = new NIL;
     }
 
     step() {
@@ -16,12 +17,18 @@ export default class CheddarExec {
         let proc = new sproc(item, this.Scope);
         let resp = proc.exec();
 
-        if (resp)
+        if (typeof resp === "string") {
+            this.errored = true;
             this.lrep = resp;
+        } else if (typeof resp === "undefined") {
+            this.lrep = new NIL;
+        } else {
+            this.lrep = resp;
+        }
     }
 
     exec() {
-        while (this.Code.length)
+        while (this.Code.length && !this.errored)
             this.step();
         return this.lrep;
     }

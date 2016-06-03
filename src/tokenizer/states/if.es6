@@ -12,16 +12,20 @@ export default class StatementIf extends CheddarLexer {
         if (!this.lookAhead("if"))
             return CheddarError.EXIT_NOTFOUND;
 
+        // Match the `expr { block }` format
         let FORMAT = [CheddarExpressionToken, CheddarCodeblock];
+
+        // Match initial `if`
         let IF = this.grammar(true, ['if', ...FORMAT]);
 
         if (!IF instanceof CheddarLexer)
-            return IF;
+            return this.error(IF);
 
         while (this.lookAhead("else")) {
             this.jumpLiteral("else");
+
             if (this.lookAhead("if")) {
-                // else if
+                // else-if Statement
 
                 this.jumpLiteral("if");
                 this.newToken("elif");
@@ -30,10 +34,11 @@ export default class StatementIf extends CheddarLexer {
                 let OUT = this.grammar(true, FORMAT);
 
                 if (!OUT instanceof CheddarLexer)
-                    return OUT;
+                    return this.error(OUT);
             }
             else {
-                // else
+                // else Statement
+
                 this.newToken("else");
                 this.jumpWhite();
 
@@ -43,7 +48,7 @@ export default class StatementIf extends CheddarLexer {
                 this.Index = RES.Index || RUN.Index;
 
                 if (RUN.Errored || !RES instanceof CheddarLexer)
-                    return RES;
+                    return this.error(RES);
 
                 this.Tokens = RES;
             }

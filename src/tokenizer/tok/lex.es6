@@ -19,6 +19,10 @@ export default class CheddarLexer {
 
     get last() { return this._Tokens[this._Tokens.length - 1] }
 
+    shift() {
+        return this._Tokens.shift();
+    }
+
     open(forceNot) {
         if (this.Code === null || this.Index === null)
             throw new TypeError('CheddarLexer: uninitialized code, index.');
