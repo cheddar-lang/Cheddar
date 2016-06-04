@@ -1,3 +1,5 @@
+const exec = require('child_process').exec;
+const path = require('path');
 module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
@@ -25,5 +27,19 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['babel']);
+    grunt.registerTask('build', ['babel']);
+    grunt.registerTask('install', 'Installs and initalizes Cheddar', () => {
+        var RCLOC = grunt.option('rc') || '~/.bashrc';
+        var METHOD = grunt.option('method') || 'alias';
+
+        if (!grunt.option('no-build'))
+            grunt.task.run('build');
+
+        if (METHOD === "alias") {
+            exec(`bash ${path.resolve()}/script/alias ${RCLOC}`);
+        } else {
+            grunt.util.error(`Unknown installation method '${METHOD}'`);
+        }
+
+    });
 };

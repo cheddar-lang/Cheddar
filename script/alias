@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+echo "Determining build"
+cpath="$(dirname $(readlink -f $0))"
+if [ ! -d "dist" ]; then
+    echo "No existing build, building..."
+    $cpath/../node_modules/.bin/grunt build
+fi
+
+if [ -z $1 ]; then
+    echo "Unknown rc location"; exit 1
+fi
+
+echo "Verifying execution permissons"
+if ! grep -q -E "^alias +sudo *= *['\"]sudo ['\"]" "$1"; then
+    echo "alias sudo='sudo '" >> "$1"
+    echo "Enabled execution with sudo"
+fi
+
+echo "Removing existing installations"
+sed -i.bak '/^alias cheddar/d' "$1"
+
+echo "Copying to ~/.Cheddar..."
+cp -r "$cpath/../dist" ~/.Cheddar/
+echo "Aliasing Cheddar..."
+echo "alias cheddar='node ~/.Cheddar/cli/cheddar'" >> $1
+echo "Restarting bash..."
+exec bash
+echo
+echo "Note: If you are running in another terminal"
+echo " be sure to restart it for `cheddar` to be available"
+echo
+echo "Succesfully installed `cheddar`!"
+exit 0

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import CheddarScope from '../interpreter/core/env/scope';
 
 import cheddar from '../interpreter/exec';

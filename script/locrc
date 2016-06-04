@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+rcs=("zshrc" "bashrc" "bash_profile")
+
+for rc in "${rcs[@]}"; do
+    if [[ -e "~/.$rc" ]]; then
+        printf "~/.$rc"; exit
+    fi
+done
+exit 1
