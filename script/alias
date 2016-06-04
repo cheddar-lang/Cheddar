@@ -6,7 +6,7 @@ if [ ! -d "dist" ]; then
     $cpath/../node_modules/.bin/grunt build
 fi
 
-if [ -z $1 ]; then
+if [ -z "$1" ]; then
     echo "Unknown rc location"; exit 1
 fi
 
@@ -22,12 +22,10 @@ sed -i.bak '/^alias cheddar/d' "$1"
 echo "Copying to ~/.Cheddar..."
 cp -r "$cpath/../dist" ~/.Cheddar/
 echo "Aliasing Cheddar..."
-echo "alias cheddar='node ~/.Cheddar/cli/cheddar'" >> $1
-echo "Restarting bash..."
-exec bash
+echo "alias cheddar='node ~/.Cheddar/cli/cheddar'" >> "$1"
 echo
 echo "Note: If you are running in another terminal"
-echo " be sure to restart it for `cheddar` to be available"
+echo " be sure to restart it for 'cheddar' to be available"
 echo
-echo "Succesfully installed `cheddar`!"
+echo "Succesfully installed 'cheddar'!"
 exit 0

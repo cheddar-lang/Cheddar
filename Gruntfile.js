@@ -1,5 +1,7 @@
-const exec = require('child_process').exec;
+const child_process = require('child_process');
 const path = require('path');
+
+const $HOME = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
@@ -14,31 +16,40 @@ module.exports = function(grunt) {
                 ]
             },
             dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'src/',
-                        src: ['**/*.es6'],
-                        dest: 'dist/',
-                        ext: '.js'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: 'src/',
+                    src: ['**/*.es6'],
+                    dest: 'dist/',
+                    ext: '.js'
+                }]
             }
         }
     });
 
     grunt.registerTask('build', ['babel']);
-    grunt.registerTask('install', 'Installs and initalizes Cheddar', () => {
-        var RCLOC = grunt.option('rc') || '~/.bashrc';
+    grunt.registerTask('install', 'Installs and initalizes Cheddar', function() {
+        var done = this.async();
+
+        var RCLOC = grunt.option('rc') || 'bashrc';
         var METHOD = grunt.option('method') || 'alias';
+        var M;
 
         if (!grunt.option('no-build'))
             grunt.task.run('build');
 
         if (METHOD === "alias") {
-            exec(`bash ${path.resolve()}/script/alias ${RCLOC}`);
-        } else {
-            grunt.util.error(`Unknown installation method '${METHOD}'`);
+            console.log("Installing using `alias` method");
+            console.log(`Using: '${path.resolve()}/script/alias'`);
+
+            M = child_process.execFile(`${path.resolve()}/script/alias`, [
+                $HOME + "/." + RCLOC
+            ], done);
+
+            M.stdout.on('data', data => process.stdout.write(data.toString()));
+        }
+        else {
+            throw new Error(`Unknown installation method '${METHOD}'`);
         }
 
     });
