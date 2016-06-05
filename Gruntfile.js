@@ -50,9 +50,6 @@ module.exports = function(grunt) {
         var METHOD = grunt.option('method') || 'path';
         var M;
 
-        if (!grunt.option('no-build'))
-            grunt.task.run('build');
-
         if (METHOD === "alias") {
             console.log("Installing using `alias` method");
             console.log(`Using: '${path.resolve()}/bin/alias'`);
@@ -67,7 +64,9 @@ module.exports = function(grunt) {
             console.log("Installing using `path` method");
             console.log(`Using: '${path.resolve()}/bin/path'`);
 
-            M = child_process.execFile(`${path.resolve()}/bin/path`, done);
+            M = child_process.execFile(`${path.resolve()}/bin/path`, [
+                grunt.option('rpath') || '/usr/local'
+            ], done);
             M.stdout.on('data', data => process.stdout.write(data.toString()));
         }
         else {

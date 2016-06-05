@@ -7,12 +7,11 @@ if [ ! -d "$cpath/../dist" ]; then
     $cpath/../node_modules/.bin/grunt build
 fi
 
-# sudo -s
 echo "Installing executable..."
-cp "$cpath/../dist/cli/cheddar" /usr/local/bin/
+cp "$cpath/../dist/cli/cheddar" "$1/bin/"
 echo "Installing cheddar..."
-cp -r "$cpath/../dist/" /usr/local/share/cheddar
+cp -r "$cpath/../dist/" "$1/share/cheddar"
 echo
 echo "Cleaning up..."
-bash "$cpath/cleanup" /usr/local/share/cheddar
+bash "$cpath/cleanup" "$1/share/cheddar"
 echo "Done."
