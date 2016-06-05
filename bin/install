@@ -6,7 +6,7 @@ cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 which realpath
 if [ $? -eq 0 ]; then
-    rp=realpath
+    rp="realpath"
 else
     rp="readlink -f"
 fi
