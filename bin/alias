@@ -2,9 +2,17 @@
 echo
 echo "Determining build"
 cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-if [ ! -d "$cpath/../dist" ]; then
+
+which realpath
+if [ $? -eq 0 ]; then
+    rp=realpath
+else
+    rp="readlink -f"
+fi
+
+if [ ! -d "$($rp "$cpath/../dist")" ]; then
     echo "No existing build, building..."
-    $cpath/../node_modules/.bin/grunt build
+    "$($rp "$cpath/../node_modules/.bin/grunt")" build
 fi
 
 echo

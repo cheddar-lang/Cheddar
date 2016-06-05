@@ -2,16 +2,24 @@
 cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo
 echo "Determining build"
-if [ ! -d "$cpath/../dist" ]; then
+
+which realpath
+if [ $? -eq 0 ]; then
+    rp=realpath
+else
+    rp="readlink -f"
+fi
+
+if [ ! -d "$($rp "$cpath/../dist")" ]; then
     echo "No existing build, building..."
-    $cpath/../node_modules/.bin/grunt build
+    "$($rp "$cpath/../node_modules/.bin/grunt")" build
 fi
 
 echo "Installing executable..."
-cp "$cpath/../dist/cli/cheddar" "$1/bin/"
+cp "$($rp "$cpath/../dist/cli/cheddar")" "$1/bin/"
 echo "Installing cheddar..."
-cp -r "$cpath/../dist/" "$1/share/cheddar"
+cp -r "$($rp "$cpath/../dist/")" "$1/share/cheddar"
 echo
 echo "Cleaning up..."
-bash "$cpath/cleanup" "$1/share/cheddar"
+bash "$($rp "$cpath/cleanup")" "$1/share/cheddar"
 echo "Done."
