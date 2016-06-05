@@ -13,7 +13,8 @@ module.exports = function(grunt) {
                 plugins: [
                     'babel-plugin-transform-class-properties',
                     'babel-plugin-add-module-exports'
-                ]
+                ],
+                minified: grunt.option('minified') || false
             },
             dist: {
                 files: [{
