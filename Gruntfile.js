@@ -47,7 +47,7 @@ module.exports = function(grunt) {
         var done = this.async();
 
         var RCLOC = grunt.option('rc') || 'bashrc';
-        var METHOD = grunt.option('method') || 'alias';
+        var METHOD = grunt.option('method') || 'path';
         var M;
 
         if (!grunt.option('no-build'))
@@ -61,6 +61,13 @@ module.exports = function(grunt) {
                 $HOME + "/." + RCLOC
             ], done);
 
+            M.stdout.on('data', data => process.stdout.write(data.toString()));
+        }
+        else if (METHOD === "path") {
+            console.log("Installing using `path` method");
+            console.log(`Using: '${path.resolve()}/bin/path'`);
+
+            M = child_process.execFile(`${path.resolve()}/bin/path`, done);
             M.stdout.on('data', data => process.stdout.write(data.toString()));
         }
         else {

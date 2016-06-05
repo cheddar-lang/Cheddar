@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+cpath="$(dirname $(readlink -f $0))"
+echo
+echo "Determining build"
+if [ ! -d "$cpath/../dist" ]; then
+    echo "No existing build, building..."
+    $cpath/../node_modules/.bin/grunt build
+fi
+
+# sudo -s
+echo "Installing executable..."
+cp "$cpath/../dist/cli/cheddar" /usr/local/bin/
+echo "Installing cheddar..."
+cp -r "$cpath/../dist/" /usr/local/share/cheddar
+echo
+echo "Cleaning up..."
+bash "$cpath/cleanup" /usr/local/share/cheddar
+echo "Done."

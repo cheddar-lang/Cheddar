@@ -2,7 +2,7 @@
 echo
 echo "Determining build"
 cpath="$(dirname $(readlink -f $0))"
-if [ ! -d "dist" ]; then
+if [ ! -d "$cpath/../dist" ]; then
     echo "No existing build, building..."
     $cpath/../node_modules/.bin/grunt build
 fi
@@ -26,10 +26,7 @@ echo
 echo "Copying to ~/.Cheddar..."
 cp -r "$(dirname "$cpath")" ~/.Cheddar/
 echo "Cleaning up..."
-rm -rf "~/.Cheddar/src/"
-rm -rf "~/.Cheddar/coverage/"
-rm -rf "~/.Cheddar/misc"
-rm -rf "~/.Cheddar/tests"
+bash "$cpath/cleanup" ~/.Cheddar
 echo "Aliasing Cheddar..."
 echo "alias cheddar='~/.Cheddar/dist/cli/cheddar'" >> "$1"
 echo

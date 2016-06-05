@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 base=`dirname "$0"`
-CHEDDAR_EXE="$base/cheddar.js"
+rel="$base/cheddar.js"
+CHEDDAR_EXE=$([[ -f "$rel" ]] && echo "$rel" || echo /usr/bin/share/cheddar/cli/cheddar.js)
 NODE_EXE=`which node`
-
 "$NODE_EXE" "$CHEDDAR_EXE" "$@"

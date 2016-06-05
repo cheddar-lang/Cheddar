@@ -4,4 +4,5 @@ npm install
 echo "Installing..."
 cpath="$(dirname $(readlink -f $0))"
 $cpath/../node_modules/.bin/grunt install \
-    --method=alias --rc=`bash < "$cpath/locrc"`
+    --method=alias --rc=`bash < "$cpath/locrc"` \
+    --minify
