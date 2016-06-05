@@ -1,24 +1,15 @@
 #!/usr/bin/env node
-import CheddarScope from '../interpreter/core/env/scope';
 
-import cheddar from '../interpreter/exec';
-import tokenizer from '../tokenizer/tok';
+const program = require('commander');
+const child_process = require('child_process');
+const tty = require('tty');
 
-let GLOBAL_SCOPE = new CheddarScope();
+/*== Handle REPL Seperately ==*/
+if (!process.argv[2]) {
+    child_process.fork(__dirname + (tty.isatty(0) ? '/repl.js' : '/prog.js'));
+}
 
+program
+    .version('0.0.1');
 
-let STDIN = "";
-let chunk;
-process.stdin.setEncoding('utf8');
-process.stdin.on('readable', () => {
-    chunk = process.stdin.read();
-    if (chunk !== null)
-        STDIN += chunk;
-});
-process.stdin.on('end', () => {
-    let Tokenizer = new tokenizer(STDIN, 0);
-    let Result = Tokenizer.exec();
-
-    let Executor = new cheddar(Result, GLOBAL_SCOPE);
-    Executor.exec();
-});
+program.parse(process.argv);

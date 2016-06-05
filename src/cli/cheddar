@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+base=`dirname "$0"`
+CHEDDAR_EXE="$base/cheddar.js"
+NODE_EXE=`which node`
+
+"$NODE_EXE" "$CHEDDAR_EXE" "$@"

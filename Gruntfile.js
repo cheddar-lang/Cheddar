@@ -24,10 +24,24 @@ module.exports = function(grunt) {
                     ext: '.js'
                 }]
             }
+        },
+
+        copy: {
+            bin: {
+                options: {
+                    mode: "777"
+                },
+                expand: true,
+                cwd: 'src/',
+                src: [
+                    'cli/cheddar'
+                ],
+                dest: 'dist/'
+            }
         }
     });
 
-    grunt.registerTask('build', ['babel']);
+    grunt.registerTask('build', ['babel', 'copy:bin']);
     grunt.registerTask('install', 'Installs and initalizes Cheddar', function() {
         var done = this.async();
 
@@ -40,9 +54,9 @@ module.exports = function(grunt) {
 
         if (METHOD === "alias") {
             console.log("Installing using `alias` method");
-            console.log(`Using: '${path.resolve()}/script/alias'`);
+            console.log(`Using: '${path.resolve()}/bin/alias'`);
 
-            M = child_process.execFile(`${path.resolve()}/script/alias`, [
+            M = child_process.execFile(`${path.resolve()}/bin/alias`, [
                 $HOME + "/." + RCLOC
             ], done);
 
