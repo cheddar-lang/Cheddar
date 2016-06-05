@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo
 echo "Determining build"
-cpath="$(dirname $(readlink -f $0))"
+cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 if [ ! -d "$cpath/../dist" ]; then
     echo "No existing build, building..."
     $cpath/../node_modules/.bin/grunt build

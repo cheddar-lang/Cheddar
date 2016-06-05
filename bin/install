@@ -2,7 +2,7 @@
 echo "Downloading..."
 npm install
 echo "Installing..."
-cpath="$(dirname $(readlink -f $0))"
+cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 $cpath/../node_modules/.bin/grunt install \
     --method=path --rpath=/usr/local \
     --rc=`bash < "$cpath/locrc"` \

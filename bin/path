@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cpath="$(dirname $(readlink -f $0))"
+cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo
 echo "Determining build"
 if [ ! -d "$cpath/../dist" ]; then
