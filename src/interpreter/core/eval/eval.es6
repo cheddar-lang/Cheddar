@@ -112,6 +112,7 @@ export default class CheddarEval extends CheddarCallStack {
             // If it is a token, pass tokens to the associated class constructor
 
             TOKEN = Operation.Tokens.pop(); // Get the top token (e.g. CheddarNumber)
+            Operation.Tokens.push(TOKEN);
 
             // This means it is a cast/constructor because it has an additional arg
             if (Operation.Tokens.length) {

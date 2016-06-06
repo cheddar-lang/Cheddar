@@ -1,3 +1,4 @@
+import StatementAssign from './assign';
 import CheddarExpressionToken from './expr';
 import CheddarCodeblock from '../patterns/block';
 import CheddarLexer from '../patterns/EXPLICIT';
@@ -10,8 +11,18 @@ export default class StatementFor extends CheddarLexer {
         if (!this.lookAhead("for"))
             return CheddarError.EXIT_NOTFOUND;
 
+        let FOR = this.grammar(true, [
+            'for', '(',
+                [StatementAssign, CheddarExpressionToken], ';',
+                CheddarExpressionToken, ';',
+                CheddarExpressionToken,
+            ')', CheddarCodeblock
+        ]);
 
-
-        return this.close();
+        if (FOR === CheddarError.EXIT_NOTFOUND) {
+            return CheddarError.UNEXPECTED_TOKEN;
+        } else {
+            return FOR;
+        }
     }
 }

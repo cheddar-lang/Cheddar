@@ -119,6 +119,13 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
+    ['!=', (LHS, RHS) => {
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(CheddarBool, LHS.value !== RHS.value);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
     ['<=', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
             return HelperInit(CheddarBool, LHS.value <= RHS.value);
@@ -237,6 +244,8 @@ export default new Map([
         ? HelperInit(RHS.constructor, 10, 0, Math.abs(Math.floor(RHS.value)))
         : CheddarError.NO_OP_BEHAVIOR],
 
+    // == Assignment Operators
+
     // == Testing Operators ==
     ['@"', (LHS, RHS) => {
         if(LHS === null)    // monadic
@@ -249,7 +258,7 @@ export default new Map([
 /*
 TODO:
 '&', '|', // will do later
-'!=', ':=', '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
+'+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
 
 'and', 'or', 'xor',
 */

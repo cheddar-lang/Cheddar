@@ -13,7 +13,6 @@ export default class CheddarIf {
     }
 
     exec() {
-        console.log(this.toks);
         let expr,  // Conditional Expression
             val,   // Result Holder
             evalf; // Evaluation frame

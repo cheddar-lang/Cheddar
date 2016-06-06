@@ -24,14 +24,12 @@ export default class CheddarBool extends CheddarClass {
                     if ((bool.value) instanceof Array) {
                         this.value = bool.value.length > 0;
                     } else {
-                        this.value = "true";
+                        this.value = true;
                     }
             }
         } else {
             this.value = false;
         }
-
-        this.value = bool && (bool.value);
 
         return true;
     }
