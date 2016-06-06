@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - 4.4.0
   - 5.5.0
-  - latest
+  - node
 env:
   - CXX=g++-4.8
 addons:
