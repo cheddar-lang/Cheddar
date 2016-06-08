@@ -3,7 +3,7 @@ echo
 echo "Determining build"
 cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-which realpath
+which realpath &> /dev/null
 if [ $? -eq 0 ]; then
     rp=realpath
 else

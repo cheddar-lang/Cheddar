@@ -2,7 +2,7 @@
 
 base=`dirname "$0"`
 rel="$base/cheddar.js"
-which realpath
+which realpath &> /dev/null
 if [ $? -eq 0 ]; then
     rp="realpath"
 else
