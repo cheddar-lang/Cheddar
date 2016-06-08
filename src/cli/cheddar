@@ -8,7 +8,7 @@ if [ $? -eq 0 ]; then
 else
     rp="readlink -f"
 fi
-cpath="$(dirname $($rp -f $0))"
-CHEDDAR_EXE=$([[ -f "$rel" ]] && echo "$rel" || echo "$cpath/../share/cheddar/dist/cli/cheddar.js")
+cpath="$(dirname $($rp $0))"
+CHEDDAR_EXE="`$rp $([[ -f "$rel" ]] && echo "$rel" || echo "$cpath/../share/cheddar/dist/cli/cheddar.js")`"
 NODE_EXE=`which node`
 "$NODE_EXE" "$CHEDDAR_EXE" "$@"
