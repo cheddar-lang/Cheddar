@@ -17,7 +17,9 @@ export default class CheddarFor {
         // Create `for`'s scope
         let SCOPE = new CheddarScope(this.scope);
 
-        let pool0, poola, poolb, poolc, // Token caching
+        let pool0,
+            poola, poolb, poolc, // Token caching
+            nma, nmb,
             res, bool, // Storage
             ralloc, // Pending result
             trs; // Temp
@@ -28,24 +30,28 @@ export default class CheddarFor {
 
         if (pool0.constructor.name === "StatementAssign") {
             trs = new CheddarAssign(pool0, SCOPE).exec();
-            console.log("ASSIGN");
-            console.log(trs);
         } else {
             trs = new CheddarEval(pool0, SCOPE).exec();
-            console.log("EXPR EVAL");
-            console.log(trs);
         }
 
         // Cache tokens to avoid new lookup
         poola = this.toks.shift();
         poolb = this.toks.shift();
         poolc = this.toks.shift();
-let max = 0;
-        while (true && max < 10) {
-            max++;
-            res = new CheddarEval(poola, SCOPE, true).exec();
+
+        while (true) {
+            res = new CheddarEval(poola, SCOPE);
+
+            if (nma)
+                res.InStack = nma;
+            else {
+                nma = res.InStack.slice();
+            }
+
+            res = res.exec();
+
             bool = new CheddarBool(SCOPE);
-            console.log(SCOPE, res);
+            console.log(res);
             if (bool.init(res) && bool.value === true) {
                 ralloc = new CheddarExec(
                     poolc._Tokens[0],
@@ -54,9 +60,16 @@ let max = 0;
 
                 ralloc = ralloc.exec();
 
-                new CheddarEval(poolb, SCOPE).exec();
+                trs = new CheddarEval(poolb, SCOPE);
 
-                if (typeof pres === "string")
+                if (nmb)
+                    trs.InStack = nmb;
+                else
+                    nmb = trs.InStack.slice();
+
+                trs.exec();
+
+                if (typeof ralloc === "string")
                     break;
             } else {
                 break;

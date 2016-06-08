@@ -1,6 +1,6 @@
 {
   "name": "cheddar",
-  "version": "0.0.201",
+  "version": "0.0.316",
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",

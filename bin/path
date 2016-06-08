@@ -18,7 +18,7 @@ fi
 echo "Installing executable..."
 cp "$($rp "$cpath/../dist/cli/cheddar")" "$1/bin/"
 echo "Installing cheddar..."
-cp -r "$($rp "$cpath/../dist/")" "$1/share/cheddar"
+cp -r "$($rp "$cpath/../")" "$1/share/cheddar"
 echo
 echo "Cleaning up..."
 bash "$($rp "$cpath/cleanup")" "$1/share/cheddar"

@@ -115,7 +115,7 @@ export default class CheddarEval extends CheddarCallStack {
             Operation.Tokens.push(TOKEN);
 
             // This means it is a cast/constructor because it has an additional arg
-            if (Operation.Tokens.length) {
+            if (Operation.Tokens.length > 1) {
                 /* TODO: Implement */;
             } else {
                 // Otherwise locate the class to link

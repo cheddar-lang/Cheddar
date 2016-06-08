@@ -2,13 +2,16 @@ import CheddarScope from '../env/scope';
 import CheddarShuntingYard from '../../../tokenizer/tok/shunting_yard';
 
 export default class CheddarCallStack {
-    constructor(exec_instruct, scope = new CheddarScope(), copy) {
+    constructor(exec_instruct, scope = new CheddarScope()) {
         this.InStack = new CheddarShuntingYard().exec(
             exec_instruct._Tokens[0]
         )._Tokens;
 
         this.CallStack = [];
         this.Scope = scope;
+
+        this._ur = 0; // Upper-stack ref
+        this._lr = 0; // Lower-stack ref
     }
 
     get stack() { return this.CallStack }
