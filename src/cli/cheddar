@@ -2,7 +2,13 @@
 
 base=`dirname "$0"`
 rel="$base/cheddar.js"
-cpath="$(dirname $(readlink -f $0))"
+which realpath
+if [ $? -eq 0 ]; then
+    rp="realpath"
+else
+    rp="readlink -f"
+fi
+cpath="$(dirname $($rp -f $0))"
 CHEDDAR_EXE=$([[ -f "$rel" ]] && echo "$rel" || echo "$cpath/../share/cheddar/dist/cli/cheddar.js")
 NODE_EXE=`which node`
 "$NODE_EXE" "$CHEDDAR_EXE" "$@"
