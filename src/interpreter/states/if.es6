@@ -9,7 +9,7 @@ import CheddarErrorMessage from '../core/consts/err_msg';
 export default class CheddarIf {
     constructor(toks, scope) {
         this.toks = toks;
-        this.scope = scope;
+        this.Scope = scope;
     }
 
     exec() {
@@ -27,7 +27,7 @@ export default class CheddarIf {
                     expr = new CheddarEval(expr, this.Scope).exec();
 
                     // Check if expression is true
-                    val = new CheddarBool(this.scope);
+                    val = new CheddarBool(this.Scope);
                     // Ensure: a. Succesful cast; b. evals to true
                     if (val.init(expr) && val.value === true) {
                         evalf = new CheddarExec(
