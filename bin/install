@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+echo "Downloading..."
+npm install
+echo "Installing..."
+cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+which realpath &> /dev/null
+if [ $? -eq 0 ]; then
+    rp="realpath"
+else
+    rp="readlink -f"
+fi
+
+"$($rp "$cpath/../node_modules/.bin/grunt")" install \
+    --method=path --rpath=/usr/local \
+    --rc=`bash < "$cpath/locrc"` \
+    --minify

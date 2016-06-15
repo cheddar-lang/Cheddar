@@ -1,0 +1,3 @@
+var a := "b"
+var b := "c";
+const d := "e";
