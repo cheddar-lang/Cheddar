@@ -1,0 +1,15 @@
+var c = true
+
+if c {
+    print "true"
+} else {
+    print "false"
+}
+
+c = false
+
+if c {
+    print "true"
+} else {
+    print "false"
+}
