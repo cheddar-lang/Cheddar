@@ -162,7 +162,8 @@ export default class CheddarEval extends CheddarCallStack {
                 OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]).Value;
 
                 if (OPERATOR === CheddarError.KEY_NOT_FOUND || !OPERATOR) {
-                    return CheddarError.KEY_NOT_FOUND;
+                    return CheddarErrorDesc.get(CheddarError.KEY_NOT_FOUND)
+                    .replace('$0', Operation._Tokens[0]._Tokens[0]);
                 }
             } else {
                 return CheddarError.MALFORMED_TOKEN;
