@@ -66,7 +66,7 @@ REPL.on('line', function(STDIN) {
 		} else if (Output instanceof CheddarScope) {
 			console.log(`< Instance of "${Output.constructor.Name}" >`);
 		} else if (Output.prototype instanceof CheddarScope) {
-			console.log(`< Class "${Output.Name}"" >`);
+			console.log(`< Class "${Output.Name}" >`);
 		} else if (typeof Output === "symbol") {
 			console.log(Output.toString().magenta);
 		} else {

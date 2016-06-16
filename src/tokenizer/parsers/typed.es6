@@ -16,11 +16,4 @@ export default class CheddarTypedLiteral extends CheddarLexer {
             [CheddarAnyLiteral]
         );
     }
-    static makeparser(arg) {
-        let passed = new CheddarLexer();
-        passed.exec = function() {
-            return new CheddarTypedLiteral(this.Code, this.Index).exec(arg);
-        };
-        return passed;
-    }
 }
