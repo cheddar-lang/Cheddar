@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Downloading..."
-npm install
+sudo npm install
 echo "Installing..."
 cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
