@@ -8,6 +8,15 @@ import NIL from '../interpreter/core/consts/nil';
 import cheddar from '../interpreter/exec';
 import tokenizer from '../tokenizer/tok';
 
+/*== ENVIORNMENT GENERATION DEPENDENCIES ==*/
+// TODO Externalize this
+import dep_String from '../interpreter/core/primitives/String';
+import dep_Bool from '../interpreter/core/primitives/Bool';
+import dep_Number from '../interpreter/core/primitives/Number';
+import dep_Array from '../interpreter/core/primitives/Array';
+
+import CheddarVariable from '../interpreter/core/env/var';
+
 let REPL = readline.createInterface(process.stdin, process.stdout);
 REPL.setPrompt('cheddar> '.yellow.bold);
 REPL.prompt();
@@ -22,8 +31,13 @@ REPL.setPrompt = (prompt, length) =>
 const REPL_ERROR = text => console.log("T_REPL:ERROR".red.underline.bold + " - ".dim + text);
 const REPL_HEAD = text => console.log(`━━ ${text} ━━`.bold.magenta);
 
-
-let GLOBAL_SCOPE = new CheddarScope();
+const CONSTANT = { Writeable: false };
+let GLOBAL_SCOPE = new CheddarScope(null, new Map([
+	["String" , new CheddarVariable(dep_String, CONSTANT)],
+	["Number" , new CheddarVariable(dep_Number, CONSTANT)],
+	["Array"  , new CheddarVariable(dep_Array , CONSTANT)],
+	["Boolean", new CheddarVariable(dep_Bool  , CONSTANT)]
+]));
 
 REPL.on('line', function(STDIN) {
 
@@ -49,6 +63,10 @@ REPL.on('line', function(STDIN) {
 			console.log(
 				`${Output.constructor.Cast.get('String')(Output).value}`.magenta
 			);
+		} else if (Output instanceof CheddarScope) {
+			console.log(`< Instance of "${Output.constructor.Name}" >`);
+		} else if (Output.prototype instanceof CheddarScope) {
+			console.log(`< Class "${Output.Name}"" >`);
 		} else if (typeof Output === "symbol") {
 			console.log(Output.toString().magenta);
 		} else {
