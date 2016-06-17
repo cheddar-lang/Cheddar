@@ -14,6 +14,10 @@ addons:
 after_success:
   - npm run coveralls
   - bash <(curl -s https://codecov.io/bash)
+addons:
+  codeclimate:
+    repo_token:
+      - secure: CODECLIMATE_REPO_TOKEN
 cache:
   directories:
     - node_modules
