@@ -11,7 +11,7 @@ import CheddarNumberToken from '../../../../tokenizer/literals/number';
 import HelperInit from '../../../../helpers/init';
 
 export default new Map([
-    [CheddarNumber, (LHS) => {
+    ['Number', (LHS) => {
         let Attempt = new CheddarNumberToken(LHS, 0).exec();
         if (Attempt instanceof CheddarLexer)
             return HelperInit(CheddarNumber, ...Attempt._Tokens);

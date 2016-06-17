@@ -29,7 +29,9 @@ import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
 
+
 import CheddarVariable from '../env/var';
+import CheddarClass from '../env/class';
 import NIL from '../consts/nil';
 
 // Call stack wrapper
@@ -102,8 +104,20 @@ export default class CheddarEval extends CheddarCallStack {
             if (OPERATOR === CheddarError.NO_OP_BEHAVIOR) {
                 return CheddarErrorDesc.get(OPERATOR)
                 .replace(/\$0/g, Operation.Tokens[0])
-                .replace(/\$1/g, TOKEN ? TOKEN.constructor.Name : "nil")
-                .replace(/\$2/g, DATA ? DATA.constructor.Name : "nil");
+                .replace(/\$1/g, TOKEN ? (
+                    TOKEN.constructor.Name || (
+                        TOKEN.prototype instanceof CheddarClass
+                        ? "Class"
+                        : "nil"
+                    )
+                ) : "nil")
+                .replace(/\$2/g, DATA ? (
+                    DATA.constructor.Name || (
+                        DATA.prototype instanceof CheddarClass
+                        ? "Class"
+                        : "nil"
+                    )
+                ) : "nil");
             } else {
                 this.put(OPERATOR);
             }
