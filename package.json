@@ -8,14 +8,20 @@
   },
   "scripts": {
     "prepublish": "./node_modules/.bin/grunt build --minify",
-    "build": "./node_modules/.bin/grunt build"
+    "build": "./node_modules/.bin/grunt build",
+    "test": "make test",
+    "coveralls": "make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.9.1",
+    "babel-istanbul": "^0.8.0",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-transform-class-properties": "^6.6.0",
     "babel-preset-es2015": "^6.6.0",
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
+    "coveralls": "^2.11.9",
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-cli": "^1.2.0",
