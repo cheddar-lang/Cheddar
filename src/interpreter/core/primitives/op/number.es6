@@ -8,12 +8,13 @@ import HelperInit from '../../../../helpers/init';
 // from Cyoce the almighty platypus modified;
 // http://chat.stackexchange.com/transcript/message/27392766#27392766
 const range = (a, b) => {
+    let CheddarNumber = require('../Number');
     if (a > b) return range(b, a).reverse();
     b = ~~b;
     var iPart = a - ~~a;
     a = ~~a;
     var out = Array(b - a + 1);
-    while (b + iPart >= a) out[b - a] = b-- + iPart;
+    while (b + iPart >= a) out[b - a] = HelperInit(CheddarNumber, 10, 0, b-- + iPart);
     if(iPart) out.pop();
     return out;
 };
@@ -157,10 +158,8 @@ export default new Map([
 
     [':', (LHS, RHS) => {
         let CheddarArray = require("../Array");
-        if (LHS === null)
-            return HelperInit(CheddarArray, range(0, ~~RHS.value - Math.sign(~~RHS.value)));
-        else if (RHS instanceof LHS.constructor)
-            return HelperInit(CheddarArray, range(LHS.value, RHS.value));
+        if (LHS && RHS instanceof LHS.constructor)
+            return HelperInit(CheddarArray, ...range(LHS.value, RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
