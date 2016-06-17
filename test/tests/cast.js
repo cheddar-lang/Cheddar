@@ -3,7 +3,7 @@ chai.should();
 
 var fs = require('fs');
 var path = require('path');
-var cheddar = require('../../dist/cli/cheddar.js');
+var cheddar = require('../../src/cli/cheddar.es6');
 
 function TestCheddar(file, result) {
     return () => {

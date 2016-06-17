@@ -5,7 +5,7 @@ build:
 install:
 	./bin/install
 test:
-	./node_modules/.bin/istanbul cover _mocha test/**/*.js
+	./node_modules/.bin/babel-istanbul cover _mocha test/**/*.js
 clean:
 	rm -rf ./dist/
  .PHONY: test
