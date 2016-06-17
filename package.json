@@ -10,7 +10,7 @@
     "prepublish": "./node_modules/.bin/grunt build --minify",
     "build": "./node_modules/.bin/grunt build",
     "test": "make test",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+    "coveralls": "make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",

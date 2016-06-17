@@ -25,17 +25,26 @@ function TestCheddar(file, result) {
             })
         );
         
-        STDOUT.should.equal('1+1=2\n');
+        STDOUT.should.equal(result ? result + '\n' : "");
         
         console.log = c;
     }
 }
 
 describe('Expressions', () => {
+    /*== CASTING ==*/
     describe('casting', () => {
         it('should cast to string', TestCheddar(
             'casting.cdr',
             '1+1=2'
+        ))
+    })
+    
+    /*== OPERATORS ==*/
+    describe('literals', () => {
+        it('should not error', TestCheddar(
+            'literals.cdr',
+            ''
         ))
     })
 });

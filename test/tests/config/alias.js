@@ -24,6 +24,6 @@ var Alias = require('../../../src/interpreter/core/config/alias.es6');
 
 describe('alias config', () => {
     it ('should provide a correct result', () => {
-        Alias.should.equal(result);
+        Alias.should.deep.equal(result);
     })
 })
