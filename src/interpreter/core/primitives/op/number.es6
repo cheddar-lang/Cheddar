@@ -220,7 +220,7 @@ export default new Map([
     ['acos', (LHS, RHS) => LHS === null
         ? HelperInit(RHS.constructor, 10, 0, Math.acos(RHS.value))
         : CheddarError.NO_OP_BEHAVIOR],
-    ['asin', (LHS, RHS) => LHS === null
+    ['atan', (LHS, RHS) => LHS === null
         ? HelperInit(RHS.constructor, 10, 0, Math.atan(RHS.value))
         : CheddarError.NO_OP_BEHAVIOR],
 
