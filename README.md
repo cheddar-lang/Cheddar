@@ -12,6 +12,7 @@
   <a href="https://travis-ci.org/cheddar-lang/Cheddar"><img alt="Travis Status" src="https://travis-ci.org/cheddar-lang/Cheddar.svg?branch=master"></a>
   <a href="https://gitter.im/cheddar-lang/Cheddar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/cheddar-lang/Cheddar" src="https://badges.gitter.im/cheddar-lang/Cheddar.svg"></a>
   <a href="https://codeclimate.com/github/cheddar-lang/Cheddar"><img src="https://codeclimate.com/github/cheddar-lang/Cheddar/badges/gpa.svg" /></a>
+  <a href='https://coveralls.io/github/cheddar-lang/Cheddar?branch=master'><img src='https://coveralls.io/repos/github/cheddar-lang/Cheddar/badge.svg?branch=master' alt='Coverage Status' /></a>
 </p>
 
 ## Installation
