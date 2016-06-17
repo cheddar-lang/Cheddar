@@ -20,7 +20,7 @@ export const RESERVED_KEYWORDS = new Set(
 export const OP = [
 '!', '^', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '==', '&', '|',
 '!=', '=', '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
-':',
+':', '::',
 '@"',
 'and', 'or', 'xor',
 // Unary operators
@@ -32,11 +32,13 @@ export const OP = [
 'floor', 'ceil', 'round',
 'len', 'reverse', 'abs', 'repr',
 'sign',
-'print'];
+'print',
+'new'];
 
 // TODO: how will the user modify this? no idea
 //TODO: fix precedence
 export const UNARY_PRECEDENCE = new Map([
+    ['new', 21000],
     ['!', 20000],
     ['-', 20000],
     ['+', 20000],

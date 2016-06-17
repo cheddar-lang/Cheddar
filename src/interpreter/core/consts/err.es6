@@ -8,6 +8,7 @@ export default {
     CANNOT_READ_PROP  : Symbol('CANNOT_READ_PROP'),
 
     CAST_FAILED       : Symbol('CAST_FAILED'),
+    NOT_A_CLASS       : Symbol('NOT_A_CLASS'),
 
     UNLINKED_CLASS    : Symbol('UNLINKED_CLASS'),
     MALFORMED_TOKEN   : Symbol('MALFORMED_TOKEN'),

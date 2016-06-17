@@ -35,10 +35,11 @@
 import CheddarScope from './scope';
 import * as CheddarError from '../consts/err';
 
-import { DEFAULT_OP, DEFAULT_CAST } from './defaults';
+import { DEFAULT_OP, DEFAULT_CAST, IS_CLASS } from './defaults';
 
 export default class CheddarClass extends CheddarScope {
     static Name = "UNDEFINED";
+
     // Define operators. Each item in the
     //  hash-map, defines behavior for the
     //  specific token in an OperatorToken

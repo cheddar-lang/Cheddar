@@ -24,7 +24,7 @@ import {TYPE as OP_TYPE} from '../../../tokenizer/consts/ops';
 // Reference tokens
 import CheddarPropertyToken from '../../../tokenizer/parsers/property';
 import CheddarPrimitive from '../../../tokenizer/literals/primitive';
-import CheddarTypedLiteral from '../../../tokenizer/parsers/typed';
+import CheddarLiteral from '../../../tokenizer/parsers/any';
 import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
@@ -108,38 +108,29 @@ export default class CheddarEval extends CheddarCallStack {
                 this.put(OPERATOR);
             }
 
-        } else if (Operation instanceof CheddarTypedLiteral) {
+        } else if (Operation instanceof CheddarLiteral) {
             // If it is a token, pass tokens to the associated class constructor
+            TOKEN = Operation._Tokens[0]; // Get token
 
-            TOKEN = Operation.Tokens.pop(); // Get the top token (e.g. CheddarNumber)
-            Operation.Tokens.push(TOKEN);
+            // Do a lookup in the PRIMITIVE_LINKS class and get the link class
+            if ((OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name))) {
+                // OPERATOR has the class to construct upon
 
-            // This means it is a cast/constructor because it has an additional arg
-            if (Operation.Tokens.length > 1) {
-                /* TODO: Implement */;
-            } else {
-                // Otherwise locate the class to link
-                //  and the construct it
-                // Do a lookup in the PRIMITIVE_LINKS class and get the link class
-                if ((OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name))) {
-                    // OPERATOR has the class to construct upon
+                // Operator Construction
+                OPERATOR = new OPERATOR(this.Scope);
 
-                    // Operator Construction
-                    OPERATOR = new OPERATOR(this.Scope);
-
-                    // Initialize operator class
-                    //  check if successful (true)
-                    if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) === true) {
-                        // place on stack
-                        this.put( OPERATOR );
-                    } else {
-                        // return error
-                        return TOKEN;
-                    }
-
+                // Initialize operator class
+                //  check if successful (true)
+                if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) === true) {
+                    // place on stack
+                    this.put( OPERATOR );
                 } else {
-                    return CheddarError.UNLINKED_CLASS;
+                    // return error
+                    return TOKEN;
                 }
+
+            } else {
+                return CheddarError.UNLINKED_CLASS;
             }
         } else if (Operation instanceof CheddarPropertyToken) {
             // If it's a property
@@ -162,7 +153,8 @@ export default class CheddarEval extends CheddarCallStack {
                 OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]).Value;
 
                 if (OPERATOR === CheddarError.KEY_NOT_FOUND || !OPERATOR) {
-                    return CheddarError.KEY_NOT_FOUND;
+                    return CheddarErrorDesc.get(CheddarError.KEY_NOT_FOUND)
+                    .replace('$0', Operation._Tokens[0]._Tokens[0]);
                 }
             } else {
                 return CheddarError.MALFORMED_TOKEN;

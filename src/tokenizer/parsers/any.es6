@@ -15,7 +15,8 @@ export default class CheddarAnyLiteral extends CheddarLexer {
 
         if (attempt instanceof CheddarLexer) {
             this.Index = attempt.Index;
-            return this.close(attempt);
+            this.Tokens = attempt;
+            return this.close();
         } else {
             return this.error(attempt);
         }
