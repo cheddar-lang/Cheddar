@@ -11,6 +11,16 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+install:
+  - npm install -g codeclimate-test-reporter
+after_success:
+  - npm run coveralls
+  - bash <(curl -s https://codecov.io/bash)
+  - codeclimate-test-reporter < ./coverage/lcov.info
+addons:
+  codeclimate:
+    repo_token:
+      - secure: CODECLIMATE_REPO_TOKEN
 cache:
   directories:
     - node_modules
