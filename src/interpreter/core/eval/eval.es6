@@ -178,12 +178,20 @@ export default class CheddarEval extends CheddarCallStack {
             // i dunno how to do this shit so ill do it later
             for (let i = 1; i < Operation._Tokens.length; i++) {
                 // if it is a function call, call the function
-                if (Operation._Tokens[i] instanceof CheddarArrayToken)
+                if (Operation._Tokens[i] instanceof CheddarArrayToken) {
                     console.log("Yeah... no functions yet...\nIf you're complaining that why I haven't made them, make them yourself and make a PR\nwhy do I have to make everything?");
-                else
-                    console.log(":/ this is also not finished... will get to after a bit");
+                } else {
+                    if (OPERATOR.accessor) {
+                        OPERATOR = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]).Value;
+                    } else {
+                        // Error cannot read property foo of nil
+                        console.log("Uh, an error occured.\nremind me later to make this throw an error, thanks");
+                        return "";
+                    }
+                }
             }
 
+            console.log(OPERATOR);
             this.put( OPERATOR );
         } else {
             return "An unhandled token was encountered";
