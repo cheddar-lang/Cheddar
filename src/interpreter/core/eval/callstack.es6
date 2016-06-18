@@ -10,8 +10,7 @@ export default class CheddarCallStack {
         this.CallStack = [];
         this.Scope = scope;
 
-        this._ur = 0; // Upper-stack ref
-        this._lr = 0; // Lower-stack ref
+        this._csi = 0; // Call-stack Index
     }
 
     get stack() { return this.CallStack }
@@ -25,7 +24,7 @@ export default class CheddarCallStack {
     }
 
     next() {
-        return this.InStack.shift();
+        return this.InStack[this._csi++];
     }
 
     close() {
