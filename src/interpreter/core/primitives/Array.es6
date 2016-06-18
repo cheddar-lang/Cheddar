@@ -14,11 +14,9 @@ export default class CheddarArray extends CheddarClass {
     static Name = "Array";
 
     init(...items) {
-        console.log(items);
         this.value = [];
 
         for (let i = 0; i < items.length; i++) {
-            console.log(items[i]);
             if (items[i] instanceof CheddarClass) {
                 // Is a class
                 this.value.push(items[i]);

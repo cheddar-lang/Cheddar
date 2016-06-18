@@ -191,7 +191,6 @@ export default class CheddarEval extends CheddarCallStack {
                 }
             }
 
-            console.log(OPERATOR);
             this.put( OPERATOR );
         } else {
             return "An unhandled token was encountered";
