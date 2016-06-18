@@ -55,6 +55,9 @@ export default class CheddarScope {
     static setter(token, value) {
         this.Scope.set(token, value);
     }
+    static accessor(token) {
+        return this.Scope.get(token);
+    }
 
     // DYNAMIC
     has(token) {

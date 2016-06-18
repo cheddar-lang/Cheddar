@@ -182,8 +182,7 @@ export default class CheddarEval extends CheddarCallStack {
                     console.log("Yeah... no functions yet...\nIf you're complaining that why I haven't made them, make them yourself and make a PR\nwhy do I have to make everything?");
                 } else {
                     if (OPERATOR.accessor) {
-                        console.log(OPERATOR.accessor);
-                        console.log(Operation._Tokens[i]);
+                        OPERATOR = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]).Value;
                     } else {
                         // Error cannot read property foo of nil
                         console.log("Uh, an error occured.\nremind me later to make this throw an error, thanks");
@@ -192,6 +191,7 @@ export default class CheddarEval extends CheddarCallStack {
                 }
             }
 
+            console.log(OPERATOR);
             this.put( OPERATOR );
         } else {
             return "An unhandled token was encountered";
