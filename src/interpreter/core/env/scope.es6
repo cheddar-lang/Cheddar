@@ -40,33 +40,27 @@ export default class CheddarScope {
             return B;
     }
 
-    // ONLY Within scopes
+    // STATIC
+    static Scope = new Map();
+    static has(token) {
+        return !RESERVED_KEYWORDS.has(token) & this.Scope.has(token)
+    }
+    static manage(token, value) {
+        if (RESERVED_KEYWORDS.has(token)) {
+            return CheddarError.KEY_IS_RESERVED
+        } else {
+            return this.setter(token, value), token;
+        }
+    }
+    static setter(token, value) {
+        this.Scope.set(token, value);
+    }
+
+    // DYNAMIC
     has(token) {
         return RESERVED_KEYWORDS.has(token) ? false : this.Scope.has(token) || (
             this.inheritanceChain && this.inheritanceChain.has(token)
         );
-    }
-
-    access(path) {
-        // Access state:
-        // <ExecutionEnviorment>
-        //  |- ExecutionScope[attempt](path)
-        //  ^   |- <ExecutionEnviorment>[has](path)
-        //  |       |- <ExecutionScope>[Accessor](access)
-        //  |   +--------|
-        //  |   |- <ExecutionToken> ===> <OUTPUT>
-        //  |_________|
-
-        let access = this.accessor(path.shift());
-
-        if (path.length) {
-            if (access instanceof CheddarScope)
-                return access.access(path);
-            else
-                return CheddarError.KEY_NOT_FOUND;
-        } else {
-            return access;
-        }
     }
 
     manage(token, value) {

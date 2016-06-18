@@ -3,6 +3,9 @@ import CheddarClass from '../env/class';
 import BehaviorOperator from './op/string';
 import BehaviorCast from './cast/string';
 
+import LibStatic from '../../../stdlib/primitive/String/static';
+import LibString from '../../../stdlib/primitive/String/lib';
+
 export default class CheddarString extends CheddarClass {
     static Name = "String";
 
@@ -10,6 +13,9 @@ export default class CheddarString extends CheddarClass {
         this.value = string;
         return true;
     }
+
+    static Scope = LibStatic;
+    Scope = LibString;
 
     // String is the lowest level class
     //  meaning operators can have directly
