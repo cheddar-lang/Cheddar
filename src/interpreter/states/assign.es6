@@ -14,7 +14,7 @@ export default class CheddarAssign {
 
     exec() {
         let val = new CheddarEval(this.toks.tok(2), this.scope);
-        if (!((val = val.exec()) instanceof CheddarClass))
+        if (!((val = val.exec()) instanceof CheddarClass || val.prototype instanceof CheddarClass))
             return val;
 
         val.Scope = this.scope;
