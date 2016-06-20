@@ -28,7 +28,7 @@ REPL._setPrompt = REPL.setPrompt;
 REPL.setPrompt = (prompt, length) =>
     REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
-const REPL_ERROR = text => console.log("T_REPL:ERROR".red.underline.bold + " - ".dim + text);
+const REPL_ERROR = (text, type) => console.log(type.red.bold + ": ".dim + text);
 const REPL_HEAD = text => console.log(`━━ ${text} ━━`.bold.magenta);
 
 const CONSTANT = { Writeable: false };
@@ -52,7 +52,7 @@ REPL.on('line', function(STDIN) {
     if (Output) {
 
 		if (typeof Output === "string") {
-			REPL_ERROR(Output);
+			REPL_ERROR(Output, "Error");
 		} else if (Output instanceof NIL) {
 			// do nothing?
 		} else if (!Output) {

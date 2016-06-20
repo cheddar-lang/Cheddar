@@ -1,7 +1,7 @@
 import RuntimeError from './err';
 
 export default new Map([
-    [RuntimeError.KEY_NOT_FOUND, "Attempted to access undefined variable ($0)"],
+    [RuntimeError.KEY_NOT_FOUND, "Attempted to access undefined variable `$0`"],
     [RuntimeError.KEY_IS_RESERVED, "Attempted to access reserved keyword $0"],
 
     [RuntimeError.NO_OP_BEHAVIOR, "`$0` has no behavior for types `$2` and `$1`"],
