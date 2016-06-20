@@ -64,7 +64,7 @@ export const UNARY_PRECEDENCE = new Map([
 ]);
 
 export const PRECEDENCE = new Map([
-    [':', 15000],
+    ['::', 15000],
     ['log', 14000],
     ['root', 14000],
     ['*', 13000],
