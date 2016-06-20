@@ -205,7 +205,7 @@ export default class CheddarEval extends CheddarCallStack {
     //  stack or `InStack` is empty
     exec() {
         let step;
-        while (this.InStack.length)
+        while (!!this.InStack[this._csi])
             if ((step = this.step()) !== true)
                 return step;
         return this.close();

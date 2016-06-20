@@ -19,7 +19,6 @@ export default class CheddarFor {
 
         let pool0,
             poola, poolb, poolc, // Token caching
-            nma, nmb,
             res, bool, // Storage
             ralloc, // Pending result
             trs; // Temp
@@ -41,18 +40,12 @@ export default class CheddarFor {
 
         while (true) {
             res = new CheddarEval(poola, SCOPE);
-
-            if (nma)
-                res.InStack = nma;
-            else {
-                nma = res.InStack.slice();
-            }
-
             res = res.exec();
 
             bool = new CheddarBool(SCOPE);
-            console.log(res);
+
             if (bool.init(res) && bool.value === true) {
+                console.log(bool.value);
                 ralloc = new CheddarExec(
                     poolc._Tokens[0],
                     SCOPE
@@ -61,12 +54,6 @@ export default class CheddarFor {
                 ralloc = ralloc.exec();
 
                 trs = new CheddarEval(poolb, SCOPE);
-
-                if (nmb)
-                    trs.InStack = nmb;
-                else
-                    nmb = trs.InStack.slice();
-
                 trs.exec();
 
                 if (typeof ralloc === "string")
