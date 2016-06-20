@@ -21,7 +21,7 @@ export default function nthprime(cheddar) {
         ["n", {
             Type: cheddar.number,
         }]
-    ], function(scope, done, input) {
-        done(getPrime(input("n")));
+    ], function(scope, input) {
+        getPrime(input("n"));
     });
 }

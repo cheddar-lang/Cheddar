@@ -17,13 +17,12 @@ export default class CheddarFunction {
         };
     }
 
-    exec(input, callback, self) {
+    exec(input, self) {
         let scope = this.scope(input, self);
 
         let tmp;
-        this.body(
+        return this.body(
             scope,
-            done => callback(done),
             name => (tmp = scope.accessor(name)) && tmp.Value.value
         );
     }
@@ -49,5 +48,6 @@ export default class CheddarFunction {
                 }
             }
         }
+        return args;
     }
 }

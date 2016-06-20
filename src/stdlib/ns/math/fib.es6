@@ -12,12 +12,11 @@ export default function fib(cheddar) {
         [
             ["n", {
                 Type: cheddar.number,
-                Default: cheddar.make(cheddar.number, 10, 0, 1)
+                Default: cheddar.init(cheddar.number, 10, 0, 1)
             }]
-        ], function (scope, done, input) {
+        ], function (scope, input) {
             let n = input("n");
-            // idk, write the functions specified in the csv?
-            done(fib(n));
+            return cheddar.init(cheddar.number, 10, 0, fib(n));
         }
     )
 }

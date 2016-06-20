@@ -6,8 +6,8 @@ export default function factor(cheddar){
             ["n", {
                 Type: cheddar.number,
             }]
-        ], function(scope, done, input){
-            done(_factor(input("n")));
+        ], function(scope, input){
+            return _factor(input("n"));
         }
     );
 }

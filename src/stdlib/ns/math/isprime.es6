@@ -6,9 +6,9 @@ export default function isprime(cheddar) {
             ["n", {
                 Type: cheddar.number,
             }]
-        ], function(scope, done, input) {
+        ], function(scope, input) {
             let n = input("n");
-            done(_factor(n).length === 1);
+            return _factor(n).length === 1;
         }
     );
 }
