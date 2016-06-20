@@ -8,14 +8,7 @@ import NIL from '../interpreter/core/consts/nil';
 import cheddar from '../interpreter/exec';
 import tokenizer from '../tokenizer/tok';
 
-/*== ENVIORNMENT GENERATION DEPENDENCIES ==*/
-// TODO Externalize this
-import dep_String from '../interpreter/core/primitives/String';
-import dep_Bool from '../interpreter/core/primitives/Bool';
-import dep_Number from '../interpreter/core/primitives/Number';
-import dep_Array from '../interpreter/core/primitives/Array';
-
-import CheddarVariable from '../interpreter/core/env/var';
+import stdlib from '../stdlib/stdlib';
 
 let REPL = readline.createInterface(process.stdin, process.stdout);
 REPL.setPrompt('cheddar> '.yellow.bold);
@@ -32,12 +25,7 @@ const REPL_ERROR = (text, type) => console.log(type.red.bold + ": ".dim + text);
 const REPL_HEAD = text => console.log(`━━ ${text} ━━`.bold.magenta);
 
 const CONSTANT = { Writeable: false };
-let GLOBAL_SCOPE = new CheddarScope(null, new Map([
-	["String" , new CheddarVariable(dep_String, CONSTANT)],
-	["Number" , new CheddarVariable(dep_Number, CONSTANT)],
-	["Array"  , new CheddarVariable(dep_Array , CONSTANT)],
-	["Boolean", new CheddarVariable(dep_Bool  , CONSTANT)]
-]));
+let GLOBAL_SCOPE = new CheddarScope(null, stdlib);
 
 REPL.on('line', function(STDIN) {
 

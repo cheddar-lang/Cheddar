@@ -7,8 +7,10 @@ import CheddarFunc from '../interpreter/core/env/func';
 import * as CheddarError from '../interpreter/core/consts/err';
 
 import CheddarVariable from '../interpreter/core/env/var';
+import CheddarScope from '../interpreter/core/env/scope';
+import CheddarClass from '../interpreter/core/env/class';
 
-import HelperInit from '../helpers/init'
+import HelperInit from '../helpers/init';
 
 export default {
     string: CheddarString,
@@ -27,5 +29,7 @@ export default {
         return new CheddarVariable(val, { Writeable: false });
     },
 
-    variable: CheddarVariable
+    variable: CheddarVariable,
+    class: CheddarClass,
+    scope: CheddarScope
 };
