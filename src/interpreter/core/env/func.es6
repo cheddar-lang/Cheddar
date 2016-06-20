@@ -1,3 +1,4 @@
+import CheddarClass from './class';
 import CheddarVariable from './var';
 import CheddarScope from './scope';
 
@@ -16,16 +17,22 @@ export default class CheddarFunction {
         };
     }
 
-    exec(input, callback) {
-        let res = this.body(
-            this.scope(input)
-        );
+    exec(input, callback, self) {
+        let scope = this.scope(input, self);
 
-        callback(res);
+        let tmp;
+        this.body(
+            scope,
+            done => callback(done),
+            name => (tmp = scope.accessor(name)) && tmp.Value.value
+        );
     }
 
-    scope(input) {
+    scope(input, self) {
         var args = new CheddarScope();
+        if (self) {
+            args.setter("self", new CheddarVariable(self));
+        }
         let tmp;
         for (let i = 0; i < this.args.length; i++) {
             if (input[i]) {
