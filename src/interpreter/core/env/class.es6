@@ -61,7 +61,7 @@ export default class CheddarClass extends CheddarScope {
         //  for higher-level classes.
 
         // Provide scope construction interface
-        this.Scope = Scope;
+        this.scope = Scope;
         this.Reference = Reference;
     }
 

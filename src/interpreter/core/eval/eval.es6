@@ -63,7 +63,7 @@ export default class CheddarEval extends CheddarCallStack {
                 DATA = this.shift();
 
                 if ((
-                    !(DATA.Scope instanceof this.Scope.constructor) ||
+                    !(DATA.scope instanceof this.Scope.constructor) ||
                     DATA.Reference === null
                 ) || Operation.tok(1) === OP_TYPE.UNARY) {
                     return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
@@ -73,10 +73,10 @@ export default class CheddarEval extends CheddarCallStack {
 
                 // Check if variable needs to be wrapped
                 if ((TOKEN.Reference === null || !TOKEN.Reference)) {
-                    TOKEN.Scope = DATA.Scope;
+                    TOKEN.scope = DATA.scope;
                     TOKEN.Reference = DATA.Reference;
 
-                    DATA.Scope.manage(
+                    DATA.scope.manage(
                         DATA.Reference,
                         new CheddarVariable(TOKEN, {
                             Writeable: !DATA.const,
@@ -84,7 +84,7 @@ export default class CheddarEval extends CheddarCallStack {
                         })
                     );
                 } else {
-                    DATA.Scope.manage(DATA.Reference, TOKEN.Scope.Scope.get(TOKEN.Reference));
+                    DATA.scope.manage(DATA.Reference, TOKEN.scope.Scope.get(TOKEN.Reference));
                 }
 
 
@@ -178,10 +178,17 @@ export default class CheddarEval extends CheddarCallStack {
             // i dunno how to do this shit so ill do it later
             for (let i = 1; i < Operation._Tokens.length; i++) {
                 // if it is a function call, call the function
-                if (Operation._Tokens[i] instanceof CheddarArrayToken)
+                if (Operation._Tokens[i] instanceof CheddarArrayToken) {
                     console.log("Yeah... no functions yet...\nIf you're complaining that why I haven't made them, make them yourself and make a PR\nwhy do I have to make everything?");
-                else
-                    console.log(":/ this is also not finished... will get to after a bit");
+                } else {
+                    if (OPERATOR.accessor) {
+                        OPERATOR = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]).Value;
+                    } else {
+                        // Error cannot read property foo of nil
+                        console.log("Uh, an error occured.\nremind me later to make this throw an error, thanks");
+                        return "";
+                    }
+                }
             }
 
             this.put( OPERATOR );
@@ -197,7 +204,7 @@ export default class CheddarEval extends CheddarCallStack {
     //  stack or `InStack` is empty
     exec() {
         let step;
-        while (this.InStack.length)
+        while (!!this.InStack[this._csi])
             if ((step = this.step()) !== true)
                 return step;
         return this.close();

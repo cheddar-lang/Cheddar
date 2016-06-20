@@ -4,6 +4,7 @@ import NIL from './core/consts/nil';
 export default class CheddarExec {
     constructor(exec_stack, scope) {
         this.Code = exec_stack._Tokens;
+        this._csi = 0;
         this.Scope = scope;
 
         this.errored = false;
@@ -11,7 +12,7 @@ export default class CheddarExec {
     }
 
     step() {
-        let item = this.Code.shift();
+        let item = this.Code[this._csi++];
         let sproc = links[item.constructor.name];
 
         let proc = new sproc(item, this.Scope);
@@ -28,7 +29,7 @@ export default class CheddarExec {
     }
 
     exec() {
-        while (this.Code.length && !this.errored)
+        while (this.Code[this._csi] && !this.errored)
             this.step();
         return this.lrep;
     }

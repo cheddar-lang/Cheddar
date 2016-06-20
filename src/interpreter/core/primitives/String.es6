@@ -18,3 +18,6 @@ export default class CheddarString extends CheddarClass {
     static Cast = BehaviorCast;
 
 }
+
+CheddarString.Scope = require('../../../stdlib/primitive/String/static');
+CheddarString.prototype.Scope = require('../../../stdlib/primitive/String/lib');
