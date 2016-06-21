@@ -3,60 +3,59 @@
 import CheddarError from '../../consts/err';
 
 import CheddarBool from '../Bool';
-import CheddarNumber from '../Number';
-import CheddarRational from '../Rational';
 
+import GCD from '../../../../helpers/gcd';
 import HelperInit from '../../../../helpers/init';
 
 const add = (num1, den1, num2, den2) => {
-    let gcd = CheddarRational.GCD(den1, den2);
-    return HelperInit(CheddarRational, den2 / gcd * num1 + den1 / gcd * num2, den1 / gcd * den2);
+    let gcd = GCD(den1, den2);
+    return [den2 / gcd * num1 + den1 / gcd * num2, den1 / gcd * den2];
 };
 
 const mul = (num1, den1, num2, den2) => {
-    let gcd = CheddarRational.GCD(num1, den2) * CheddarRational.GCD(den1, num2);
-    return HelperInit(CheddarRational, num1 * num2 / gcd, den1 * den2 / gcd);
+    let gcd = GCD(num1, den2) * GCD(den1, num2);
+    return [num1 * num2 / gcd, den1 * den2 / gcd];
 };
 
 export default new Map([
     ['+', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (LHS === null)
             return HelperInit(RHS.constructor, RHS.num, RHS.den);
         else if (RHS instanceof LHS.constructor)
-            return add(LHS.num, LHS.den, RHS.num, RHS.den);
+            return HelperInit(LHS.constructor, ...add(LHS.num, LHS.den, RHS.num, RHS.den));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['-', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (LHS === null)
             return HelperInit(RHS.constructor, -RHS.num, RHS.den);
         else if (RHS instanceof LHS.constructor)
-            return add(LHS.num, LHS.den, -RHS.num, RHS.den);
+            return HelperInit(LHS.constructor, ...add(LHS.num, LHS.den, -RHS.num, RHS.den));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['*', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor)
-            return mul(LHS.num, LHS.den, RHS.num, RHS.den);
+            return HelperInit(LHS.constructor, ...mul(LHS.num, LHS.den, RHS.num, RHS.den));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['/', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (LHS === null)
             return HelperInit(RHS.constructor, RHS.den, RHS.num);
         else if (RHS instanceof LHS.constructor)
-            return mul(LHS.num, LHS.den, RHS.den, RHS.num);
+            return HelperInit(LHS.constructor, ...mul(LHS.num, LHS.den, RHS.den, RHS.num));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -81,7 +80,7 @@ export default new Map([
             }
             else {
                 let exp = LHS.constructor.Operator.get("^")(LHS, RHS.num);
-                return HelperInit(CheddarNumber, 10, 0, Math.pow(exp.num / exp.den, 1 / RHS.den));
+                return HelperInit(require('../Number'), 10, 0, Math.pow(exp.num / exp.den, 1 / RHS.den));
             }
         }
         else
@@ -90,9 +89,9 @@ export default new Map([
 
     ['%', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor) {
-            let gcd = CheddarRational.GCD(LHS.den, RHS.den);
+            let gcd = GCD(LHS.den, RHS.den);
             return HelperInit(LHS.constructor, (gcd * LHS.num / RHS.den) % (gcd * RHS.num / LHS.den), LHS.den / gcd * RHS.den);
         }
         else
@@ -108,7 +107,7 @@ export default new Map([
 
     ['<', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor)
             return HelperInit(CheddarBool, LHS.num * RHS.den < RHS.num * LHS.den);
         else
@@ -117,7 +116,7 @@ export default new Map([
 
     ['>', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor)
             return HelperInit(CheddarBool, LHS.num * RHS.den > RHS.num * LHS.den);
         else
@@ -126,7 +125,7 @@ export default new Map([
 
     ['==', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor)
             return HelperInit(CheddarBool, LHS.num === RHS.num && LHS.den == RHS.den);
         else
@@ -135,7 +134,7 @@ export default new Map([
 
     ['!=', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor)
             return HelperInit(CheddarBool, LHS.num !== RHS.num || LHS.den !== RHS.den);
         else
@@ -144,7 +143,7 @@ export default new Map([
 
     ['<=', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor)
             return HelperInit(CheddarBool, LHS.num * RHS.den <= RHS.num * LHS.den);
         else
@@ -153,7 +152,7 @@ export default new Map([
 
     ['>=', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor)
             return HelperInit(CheddarBool, LHS.num * RHS.den >= RHS.num * LHS.den);
         else
@@ -162,7 +161,7 @@ export default new Map([
 
     ['&', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, LHS.num & RHS.num, LHS.den & RHS.den);
         else
@@ -171,7 +170,7 @@ export default new Map([
 
     ['|', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
         if (RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, LHS.num | RHS.num, LHS.den | RHS.den);
         else
@@ -180,7 +179,8 @@ export default new Map([
 
     ['sign', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
+        let CheddarNumber = require('../Number');
         if (LHS === null)
             return HelperInit(CheddarNumber, 10, 0, Math.sign(RHS.num));
         else if (RHS instanceof LHS.constructor)
@@ -203,12 +203,19 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
-    ['root', (LHS, RHS) =>
-        CheddarRational.Operator.get("^", LHS, CheddarRational.Operator.get("/")(null, RHS))],
+    ['root', (LHS, RHS) => {
+        if (RHS.constructor.Name === "Number")
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
+        if (RHS instanceof LHS.constructor)
+            return LHS.constructor.Operator('^')(LHS, HelperInit(LHS.constructor, RHS.num, RHS.den));
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
 
     ['log', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
-            RHS = RHS.constructor.Cast.get("Rational")(RHS);
+            RHS = HelperInit(LHS.constructor, RHS.value, 1);
+        let CheddarNumber = require('../Number');
         if (LHS === null)
             return HelperInit(CheddarNumber, 10, 0, Math.log(RHS.num / RHS.den));
         else if (RHS instanceof LHS.constructor)
@@ -218,27 +225,27 @@ export default new Map([
     }],
 
     ['sin', (LHS, RHS) => LHS === null
-        ? HelperInit(CheddarNumber, 10, 0, Math.sin(RHS.num / RHS.den))
+        ? HelperInit(require('../Number'), 10, 0, Math.sin(RHS.num / RHS.den))
         : CheddarError.NO_OP_BEHAVIOR],
 
     ['cos', (LHS, RHS) => LHS === null
-        ? HelperInit(CheddarNumber, 10, 0, Math.cos(RHS.num / RHS.den))
+        ? HelperInit(require('../Number'), 10, 0, Math.cos(RHS.num / RHS.den))
         : CheddarError.NO_OP_BEHAVIOR],
 
     ['tan', (LHS, RHS) => LHS === null
-        ? HelperInit(CheddarNumber, 10, 0, Math.tan(RHS.num / RHS.den))
+        ? HelperInit(require('../Number'), 10, 0, Math.tan(RHS.num / RHS.den))
         : CheddarError.NO_OP_BEHAVIOR],
 
     ['asin', (LHS, RHS) => LHS === null
-        ? HelperInit(CheddarNumber, 10, 0, Math.asin(RHS.num / RHS.den))
+        ? HelperInit(require('../Number'), 10, 0, Math.asin(RHS.num / RHS.den))
         : CheddarError.NO_OP_BEHAVIOR],
 
     ['acos', (LHS, RHS) => LHS === null
-        ? HelperInit(CheddarNumber, 10, 0, Math.acos(RHS.num / RHS.den))
+        ? HelperInit(require('../Number'), 10, 0, Math.acos(RHS.num / RHS.den))
         : CheddarError.NO_OP_BEHAVIOR],
 
     ['atan', (LHS, RHS) => LHS === null
-        ? HelperInit(CheddarNumber, 10, 0, Math.atan(RHS.num / RHS.den))
+        ? HelperInit(require('../Number'), 10, 0, Math.atan(RHS.num / RHS.den))
         : CheddarError.NO_OP_BEHAVIOR],
 
     ['ceil', (LHS, RHS) => LHS === null

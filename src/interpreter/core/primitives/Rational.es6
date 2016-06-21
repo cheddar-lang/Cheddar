@@ -25,10 +25,5 @@ export default class CheddarRational extends CheddarClass {
 
 }
 
-CheddarRational.GCD = (a, b) => {
-    while (b !== 0)
-        [a, b] = [b, a % b];
-    return a;
-};
 CheddarRational.Scope = require('../../../stdlib/primitive/Rational/static');
 CheddarRational.prototype.Scope = require('../../../stdlib/primitive/Rational/lib');
