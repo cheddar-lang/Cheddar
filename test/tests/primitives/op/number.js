@@ -34,6 +34,12 @@ describe('Numbers', () => {
             `print "3*3=" + String::(3*3)`,
             '3*3=9'
         ))
+        
+//        it('should repeat', TestCheddarFrom.Code(
+//            `print "3*'foo'=" + String::(3*3)`,
+//            '3*3=9'
+//        ))
+
 //        it('should break', TestCheddarFrom.Code(
 //            `print String::(*)`
 //        ))
