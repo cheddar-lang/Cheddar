@@ -12,18 +12,30 @@ if (!module.parent) {
         child_process.fork(__dirname + (tty.isatty(0) ? '/repl.js' : '/prog.js'));
     }
 
-    program
-        .version(pjson.version)
-        .usage('[files ...] [options]')
-        .option('-e, --eval [code]', 'executes code, passed inline. implicit return')
-        .option('-E, --exec [code]', 'executes code, passed inline')
-        .option('-f, --file [path]', 'executes file')
-        .option('-i, --repl', 'Enters repl')
-        .parse(process.argv);
+    if (process.argv[2] === "--update") {
+        let update = child_process.exec('bash <(curl -fsSL http://cheddar.vihan.org/i/nix/cheddar)', { shell: '/bin/bash' });
+        update.stdout.on('data',function(data){
+            process.stdout.write(data);
+        });
+        update.stderr.on('data',function(data){
+            process.stdout.write(data);
+        });
+    } else {
 
-    program.args.forEach(file => child_process.exec(
-        `${__dirname}/prog.js < ${file}`
-    ));
+        program
+            .version(pjson.version)
+            .usage('[files ...] [options]')
+            .option('-e, --eval [code]', 'executes code, passed inline. implicit return');
+
+        if (program.update) {
+            child_process.exec("bash <(curl -fsSL cheddar.vihan.org/i/nix/cheddar)");
+            process.exit(0);
+        }
+
+        program.parse(process.argv);
+
+        program.args.forEach(file => child_process.exec(`${__dirname}/prog.js < ${file}`));
+    }
 } else {
     module.exports = require('./prog');
 }
