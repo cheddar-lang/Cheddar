@@ -204,7 +204,7 @@ export default new Map([
     }],
 
     ['root', (LHS, RHS) =>
-        CheddarRational.Operator.get("^", LHS, CheddarRational.Operator.get("/")(null, RHS)],
+        CheddarRational.Operator.get("^", LHS, CheddarRational.Operator.get("/")(null, RHS))],
 
     ['log', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number")
