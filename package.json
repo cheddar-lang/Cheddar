@@ -7,8 +7,8 @@
     "readline": "^1.3.0"
   },
   "scripts": {
-    "prepublish": "./node_modules/.bin/grunt build --minify",
-    "build": "./node_modules/.bin/grunt build",
+    "prepublish": "make",
+    "build": "make build",
     "test": "make test",
     "coveralls": "make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
@@ -22,12 +22,7 @@
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
     "coveralls": "^2.11.9",
-    "grunt": "^1.0.1",
-    "grunt-babel": "^6.0.0",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-copy": "^1.0.0",
     "istanbul": "^0.4.3",
-    "load-grunt-tasks": "^3.5.0",
     "mocha": "^2.5.3"
   },
   "description": "<p align=\"center\">   <a href=\"https://github.com/vihanb/Cheddar\">     <img src=\"https://raw.githubusercontent.com/vihanb/Cheddar/master/misc/logo_wide.png\" alt=\"Cheddar\" width=\"846\">   </a> </p>",

@@ -150,9 +150,6 @@ export default class CheddarEval extends CheddarCallStack {
             // If it's a property
             //  this includes functions
 
-            // Lookup in cuurrent scope
-            TOKEN = [];
-
             // Is a primitive
             // this includes `"foo".bar`
             if (Operation._Tokens[0] instanceof CheddarPrimitive) {
@@ -179,15 +176,33 @@ export default class CheddarEval extends CheddarCallStack {
             for (let i = 1; i < Operation._Tokens.length; i++) {
                 // if it is a function call, call the function
                 if (Operation._Tokens[i] instanceof CheddarArrayToken) {
-                    console.log("Yeah... no functions yet...\nIf you're complaining that why I haven't made them, make them yourself and make a PR\nwhy do I have to make everything?");
+                    DATA = [];
+                    TOKEN = Operation._Tokens[i]._Tokens;
+                    let evalres; // Evaluation result
+                    for (let i = 0; i < TOKEN.length; i++) {
+                        evalres = new CheddarEval(
+                            TOKEN[i],
+                            this.Scope
+                        );
+                        evalres = evalres.exec();
+                        if (typeof evalres === "string") {
+                            return evalres;
+                        } else {
+                            DATA.push(evalres);
+                        }
+                    }
+
+                    OPERATOR = OPERATOR.exec(
+                        DATA,
+                        this.Scope
+                    );
                 } else {
-                    if (OPERATOR.accessor) {
-                        OPERATOR = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]).Value;
-                    } else {
-                        // Error cannot read property foo of nil
-                        console.log("Uh, an error occured.\nremind me later to make this throw an error, thanks");
+                    if (!OPERATOR.accessor) {
+                        console.log("Uh, an error occured.\n"+
+                        "remind me later to make this throw an error, thanks");
                         return "";
                     }
+                    OPERATOR = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]).Value;
                 }
             }
 
