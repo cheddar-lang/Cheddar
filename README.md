@@ -5,10 +5,6 @@
 </p>
 
 <p align="center">
-  The language that works for you
-</p>
-
-<p align="center">
   <a href="https://travis-ci.org/cheddar-lang/Cheddar"><img alt="Travis Status" src="https://travis-ci.org/cheddar-lang/Cheddar.svg?branch=master"></a>
   <a href="https://gitter.im/cheddar-lang/Cheddar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/cheddar-lang/Cheddar" src="https://badges.gitter.im/cheddar-lang/Cheddar.svg"></a>
   <a href="https://codeclimate.com/github/cheddar-lang/Cheddar"><img src="https://codeclimate.com/github/cheddar-lang/Cheddar/badges/gpa.svg" /></a>
@@ -19,63 +15,49 @@
   <img src='https://david-dm.org/cheddar-lang/Cheddar.svg' alt='Dependency Status' />
 </p>
 
-## Installation
+<p align="center">
+  <p align="center">
+    <a href="http://cheddar.vihan.org/">Website</a> &mdash;
+    <a href="http://cheddar.vihan.org/#download">Download</a> &mdash;
+    <a href="http://docs.cheddar.vihan.org/">Documentation</a>
+  </p>
+  <p align="center">
+    The language that works for you
+  </p>
+</p>
 
-Simply paste this in your bash console:
-```bash
-bash <(curl -s cheddar.vihan.org/bashinstall.sh)
-```
+## Manual Installation
 
-Ensure you have `node` and `npm` installed. Everything else should be automatically installed.
+Manual installation is simple. The only dependencies you must have are [git](https://git-scm.com) and [nodejs + npm](https://nodejs.org/en/). Additionally you should have [make](https://www.gnu.org/software/make/) (preferably GNU), but this comes by default on almost every *nix system.
 
----
-
-
-Contributors:
-
- - @vihanb
- - @somebody
- - @CᴏɴᴏʀO'Bʀɪᴇɴ
-
-### Design Philosophy 
-
-A language should work for you.
-You shouldn't work for the language.
-
-## Building
-
-Building is rather simple. After cloning or installing the files, once in the directory simple run `npm install`. The rest should automatically happen.
+1. The first step is the clone from GitHub:
 
 ```bash
-npm install
-npm WARN prefer global coffee-script@1.10.0 should be installed with -g
-
-> Cheddar@0.2.0 postinstall ./Cheddar
-> grunt
-
-Running "babel:dist" (babel) task
-
-Done.
+$ git clone https://github.com/cheddar-lang/Cheddar.git && cd Cheddar
 ```
 
-Now, when you check the contents of the folder you should notice a `dist/` folder containing the transpiled code. The next section will contain information on running Cheddar (make sure to `cd dist`)
-
-## Using Cheddar
-
-At the moment, only the REPL exists. They are a few REPLs, some for debugging, some for use. They are two REPLs, the main one which you can access using:
+**Note:** If you want to clone a specific branch (e.g. develop for development). Use the following command:
 
 ```bash
-$ node ./interpreter/tests/repl
-Cheddar:T_REPL> 
+$ git clone -b <branch> https://github.com/cheddar-lang/Cheddar.git && cd Cheddar
 ```
 
-Additionally, you can access the scope testing/assignment REPL by calling a slightly different file:
+2. The next step is to install the dependencies with npm. An automatic build should trigger if dependencies are install succesfully. Once this command is finished you should see a `dist/` directory created. If you don't look for any errors in the install.
+
 ```bash
-$ node ./interpreter/tests/t_repl
-Cheddar:T_REPL> 
+$ npm install
 ```
 
-# === Development Info ===
+3. Manually building / testing
+
+You can use `make` to run the build, test, and install tasks
+```bash
+$ make         # Production Build
+$ make build   # Development Build
+$ make test    # Run tests
+```
+
+ 4. Installing. If you want to install the Cheddar CLI. You have some options. If you are doing a production install. Use `make install`. For all other cases use `./bin/install`; with this you can pass a `--method` argument to specify whether you'd like to install for yourself (`--method=alias`) or for everyone on your computer (`--method=path`, the default) whicb may require eleveated privledges. With `--method=alias`, provide the location of your bash rc or equivilent with the `--rcloc` flag (usually for *nix systems this is `~/.bashrc` for Mac this is `~/.bash_profile`). With `--method=path`, you may specify the install path, Cheddar installs the binary in `<path>/bin/cheddar` and `<path>/share/cheddar`, this defaults to `/usr/local`
 
 ## Roadmap
 
@@ -94,21 +76,20 @@ Cheddar:T_REPL>
   - [x] Number
   - [x] Boolean
   - [x] Nil
- - [ ] Expression evaluation integration
+ - [x] Expression evaluation integration
   - [x] Linking
   - [x] Call stack configuration
   - [x] Scope linking
-  - [ ] Explicit Casting
-  - [ ] Constructing
- - [ ] Conditional expression handling
- - [ ] Loop expression handling
- - [ ] Functions
+  - [x] Explicit Casting
+ - [x] Conditional expression handling
+ - [x] Loop expression handling
+ - [x] Functions
   - [ ] Syntax definition
   - [x] Functional design
   - [x] Function scope
-  - [ ] Function handling
-  - [ ] Function lookup
-  - [ ] Function execution
+  - [x] Function handling
+  - [x] Function lookup
+  - [x] Function execution
   - [ ] Token linking
  - [ ] Class handling
   - [x] Syntax definition
@@ -117,11 +98,12 @@ Cheddar:T_REPL>
   - [x] Class lookup
   - [x] Class Execution
   - [ ] Token linking
- - [ ] I/O Interfacing
- - [ ] Statement handling
- - [ ] Interpretation
- - [ ] Call stack optimization
- - [ ] Congrats! Cheddar is done!
+ - [x] I/O Interfacing
+ - [x] Statement handling
+ - [x] Interpretation
+ - [x] Call stack optimization
+ 
+Congrats! Cheddar is done!
 
 Critical Running Bugs:
 
@@ -139,28 +121,3 @@ Further Development
 
  - [ ] JS Interfacing
  - [ ] A bunch of libraries
-
-## Example Programs
-
-To get an idea of how the syntax is going to look, here are examples:
-
-```ruby
-class Animal(String: Name, Int: Age) {
-   /* variable initialization is implicit
-    *  but you can explicitly declare a
-    * main {} block to initialize your variables
-    */
-
-   speak => "Hello, my name is #{self.Name}, I am #{self.Age} years old"
-}
-
-
-class Dog(String: Name, Int:Age, String:Breed) extends Animal {
-    /* super is implicit, but you can
-     * explicitly call super using:
-     */
-    super Name, Age
-
-    speak => "Woof! I am a #{self.Breed} dog, I am #{self.Age} years old and am called #{self.Name}"
-}
-```
