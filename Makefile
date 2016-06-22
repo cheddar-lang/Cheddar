@@ -10,8 +10,7 @@ JCFLAGS=$(SRC) -d $(OUT)
 # The binary files to copy
 BIN=cli/cheddar
 EXE=cheddar
-BIN_MAKE=$(foreach BIN_FILE,$(BIN),chmod 755 $(SRC)$(BIN_FILE) && cp $(SRC)$(BIN_FILE) $(OUT)$(BIN_FILE)${\n});\
-		 ln -s $(OUT)cli/$(EXE) ./$(EXE)
+BIN_MAKE=$(foreach BIN_FILE,$(BIN),chmod 755 $(SRC)$(BIN_FILE) && cp $(SRC)$(BIN_FILE) $(OUT)$(BIN_FILE)${\n})
 
 ## Tests
 TESTRUNNER=$(PREFIX)/babel-node
@@ -27,6 +26,7 @@ all: default
 default: $(JC) $(SRC)
 	$(JC) $(JCFLAGS) --minified
 	$(BIN_MAKE)
+
 # Development build task
 # This builds and includes source maps
 build: $(JC) $(SRC)

@@ -29,7 +29,8 @@ let GLOBAL_SCOPE = new CheddarScope(null, stdlib);
 
 REPL.on('line', function(STDIN) {
 
-    if (STDIN === 'quit') REPL.close();
+    if (STDIN === 'exit') REPL.close();
+    if (STDIN === 'help') { /* Helpful text */ }
 
     let Tokenizer = new tokenizer(STDIN, 0);
     let Result = Tokenizer.exec();
@@ -64,4 +65,10 @@ REPL.on('line', function(STDIN) {
 
     REPL.prompt();
 
-}).on('close', () => process.exit(0));
+})
+
+REPL.on('close', () => process.exit(0));
+REPL.on('SIGINT', () => {
+  console.log();
+  REPL.pause();
+});
