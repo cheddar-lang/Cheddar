@@ -12,7 +12,7 @@ fi
 
 if [ ! -d "$($rp "$cpath/../dist")" ]; then
     echo "No existing build, building..."
-    "$($rp "$cpath/../node_modules/.bin/grunt")" build
+    make -f "$($rp "$cpath/../Makefile")"
 fi
 
 echo

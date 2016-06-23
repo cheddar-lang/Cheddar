@@ -11,7 +11,5 @@ else
     rp="readlink -f"
 fi
 
-"$($rp "$cpath/../node_modules/.bin/grunt")" install \
-    --method=path --rpath=/usr/local \
-    --rc=`bash < "$cpath/locrc"` \
-    --minify
+
+"$($rp "$cpath/path")" /usr/local
