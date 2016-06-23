@@ -45,7 +45,6 @@ export default class CheddarFor {
             bool = new CheddarBool(SCOPE);
 
             if (bool.init(res) && bool.value === true) {
-                console.log(bool.value);
                 ralloc = new CheddarExec(
                     poolc._Tokens[0],
                     SCOPE

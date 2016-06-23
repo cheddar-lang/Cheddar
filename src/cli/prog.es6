@@ -10,15 +10,12 @@ import dep_Bool from '../interpreter/core/primitives/Bool';
 import dep_Number from '../interpreter/core/primitives/Number';
 import dep_Array from '../interpreter/core/primitives/Array';
 
+import stdlib from '../stdlib/stdlib';
+
 import CheddarVariable from '../interpreter/core/env/var';
 
 const CONSTANT = { Writeable: false };
-let GLOBAL_SCOPE = new CheddarScope(null, new Map([
-	["String" , new CheddarVariable(dep_String, CONSTANT)],
-	["Number" , new CheddarVariable(dep_Number, CONSTANT)],
-	["Array"  , new CheddarVariable(dep_Array , CONSTANT)],
-	["Boolean", new CheddarVariable(dep_Bool  , CONSTANT)]
-]));
+let GLOBAL_SCOPE = new CheddarScope(null, stdlib);
 
 if (!module.parent) {
     let STDIN = "";

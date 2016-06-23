@@ -200,20 +200,25 @@ describe('Numbers', () => {
 //            `print String::(round)`
 //        ))
     })
+    
     describe('abs', () => {
         it('should work', TestCheddarFrom.Code(
             `print "abs -1=" + String::(abs -1)`,
             `abs -1=1`
         ))
-//        it('should break', TestCheddarFrom.Code(
-//            `print String::(abs)`
-//        ))
     })
-    // range is borked
-    // describe('range', () => {
-    //     it('should work', TestCheddarFrom.Code(
-    //         `print "2:4=" + String::(2:4)`,
-    //         '2:4='
-    //     ))
-    // })
+    
+    describe('range', () => {
+        it('should work', TestCheddarFrom.Code(
+            `print "1:5=" + String::(1:5)`,
+            '1:5=[1, 2, 3, 4, 5]'
+        ))
+    })
+    
+    describe('char', () => {
+        it('should work', TestCheddarFrom.Code(
+            `print '@"65=' + @" 65`,
+            '@"65=A'
+        ))
+    })
 });
