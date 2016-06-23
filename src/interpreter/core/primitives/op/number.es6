@@ -177,31 +177,28 @@ export default new Map([
     ['sqrt', (LHS, RHS) => {
         if (LHS === null)
             return HelperInit(RHS.constructor, 10, 0, Math.sqrt(RHS.value));
-        else
-            return CheddarError.NO_OP_BEHAVIOR;
+        return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['cbrt', (LHS, RHS) => {
         if (LHS === null)
             return HelperInit(RHS.constructor, 10, 0, Math.cbrt(RHS.value));
-        else
-            return CheddarError.NO_OP_BEHAVIOR;
+        return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['root', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, 10, 0, Math.pow(LHS.value, 1 / RHS.value));
-        else
-            return CheddarError.NO_OP_BEHAVIOR;
+        return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['log', (LHS, RHS) => {
-        if(RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, Math.log(LHS.value) / Math.log(RHS.value));
-        if(LHS === null)
+        if (LHS === null)
             return HelperInit(RHS.constructor, 10, 0, Math.log(RHS.value));
-        else
-            return CheddarError.NO_OP_BEHAVIOR;
+        else if (RHS instanceof LHS.constructor)
+            return HelperInit(LHS.constructor, 10, 0, Math.log(LHS.value) / Math.log(RHS.value));
+        
+        return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     // == Trig Functions ==
