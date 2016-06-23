@@ -28,7 +28,7 @@ export default new Map([
     ['*', (LHS, RHS) => {
 
         if (RHS.constructor.Name === "Number")
-            return HelperInit(this.constructor, LHS.value.repeat(RHS.value));
+            return HelperInit(LHS.constructor, LHS.value.repeat(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
 
@@ -38,7 +38,7 @@ export default new Map([
     ['@"', (LHS, RHS) => {
         let CheddarArray = require("../Array");
         if(LHS === null)
-            return new CheddarArray(...[...RHS.value].map(x => HelperInit(CheddarNumber, 10, 0, x.charCodeAt())));
+            return HelperInit(CheddarArray, ...[...RHS.value].map(x => HelperInit(CheddarNumber, 10, 0, x.charCodeAt())));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }]
