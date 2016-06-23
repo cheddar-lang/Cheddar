@@ -24,9 +24,7 @@ export default class CheddarLexer {
     }
 
     open(forceNot) {
-        if (this.Code === null || this.Index === null)
-            throw new TypeError('CheddarLexer: uninitialized code, index.');
-        else if (forceNot !== false)
+        if (forceNot !== false)
             this.newToken();
     }
 
@@ -47,26 +45,6 @@ export default class CheddarLexer {
     }
 
     get isLast() { return this.Index === this.Code.length }
-
-    parse(parseClass, ...args) {
-        if (parseClass.prototype instanceof CheddarLexer) {
-            // Run provided parser
-            let Parser = new parseClass(this.Code, this.Index);
-            let ParserResult = Parser.exec(...args);
-
-            // Add new tokens
-            // this does NOT override old tokens
-            // this is because `this.Tokens` has
-            // a custom setter
-            this.Tokens = Parser;
-            this.Index = Parser.Index;
-
-            return ParserResult;
-        } else {
-            throw new TypeError('CheddarLexer: provided parser is not a CheddarLexer');
-        }
-
-    }
 
     attempt(...parsers) {
         let attempt;

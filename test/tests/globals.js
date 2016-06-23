@@ -3,7 +3,7 @@ var path = require('path');
 var chai = require('chai');
 chai.should();
 var expect = chai.expect;
-var cheddar = require('../../src/cli/cheddar.es6');
+var cheddar = require('../../src/cli/prog.es6');
 function test(code, result) {
     return () => {
         var c = console.log;

@@ -18,6 +18,11 @@ describe('Assignment', () => {
             `var a = 1; print a + 1`,
             '2'
         ))
+        
+        it('should work with vars', TestCheddarFrom.Code(
+            `var a = 1; var b = a; print b`,
+            '1'
+        ))
     })
     
     describe('reassignment', () => {

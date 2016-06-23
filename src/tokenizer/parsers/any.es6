@@ -4,7 +4,7 @@ import CheddarBooleanToken from '../literals/boolean';
 import CheddarStringToken from '../literals/string';
 import CheddarNumberToken from '../literals/number';
 import CheddarArrayToken from './array';
-import CheddarBlockToken from './block';
+// import CheddarBlockToken from './block';
 import CheddarFunctionToken from './function';
 
 export default class CheddarAnyLiteral extends CheddarLexer {
