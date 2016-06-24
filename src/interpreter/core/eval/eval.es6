@@ -28,6 +28,7 @@ import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
 
+import CheddarScope from '../env/scope';
 
 import CheddarVariable from '../env/var';
 import CheddarClass from '../env/class';
@@ -57,12 +58,12 @@ export default class CheddarEval extends CheddarCallStack {
 
             TOKEN = this.shift(); // Get the value to operate upon
 
-            // SPECIAL BEHAVIOR FOR ASSIGNMENT
+            // SPECIAL BEHAVIOR FOR REsASSIGNMENT
             if (Operation.tok(0) === "=") {
                 DATA = this.shift();
 
                 if ((
-                    !(DATA.scope instanceof this.Scope.constructor) ||
+                    !(DATA.scope instanceof CheddarScope) ||
                     DATA.Reference === null
                 ) || Operation.tok(1) === OP_TYPE.UNARY) {
                     return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
@@ -163,9 +164,7 @@ export default class CheddarEval extends CheddarCallStack {
                 if (OPERATOR) {
                     OPERATOR = new OPERATOR(this.Scope);
 
-                    if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) === true) {
-                        this.put( OPERATOR );
-                    } else {
+                    if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) !== true) {
                         return TOKEN;
                     }
                 } else {

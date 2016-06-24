@@ -90,7 +90,7 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
 
         return this.grammar(true,
             ['(', E, ')'],
-            [CheddarCustomLexer(O, true), E], // Prefix
+            [UNARY, E], // Prefix
             [P],
             [B]
         );
