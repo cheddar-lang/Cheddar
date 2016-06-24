@@ -18,12 +18,13 @@ export default class CheddarIf {
             evalf; // Evaluation frame
 
         let tok;
+        let cs = 0;
 
-        while ((tok = this.toks.shift()) !== undefined) {
+        while ((tok = this.toks._Tokens[cs++]) !== undefined) {
             switch (tok) {
                 case "":     // If-statement
                 case "elif": // Else-if statement
-                    expr = this.toks.shift();
+                    expr = this.toks._Tokens[cs++];
                     expr = new CheddarEval(expr, this.Scope).exec();
 
                     // Check if expression is true
@@ -31,18 +32,18 @@ export default class CheddarIf {
                     // Ensure: a. Succesful cast; b. evals to true
                     if (val.init(expr) && val.value === true) {
                         evalf = new CheddarExec(
-                            this.toks.shift()._Tokens[0], // Code Block
+                            this.toks._Tokens[cs++]._Tokens[0], // Code Block
                             new CheddarScope(this.Scope)  // New scope inheriting
                         );
 
                         return evalf.exec();
                     } else {
-                        this.toks.shift();
+                        cs++;
                         break;
                     }
                 case "else": // Else statement
                     evalf = new CheddarExec(
-                        this.toks.shift()._Tokens[0],
+                        this.toks._Tokens[cs++]._Tokens[0],
                         new CheddarScope(this.Scope)
                     );
 

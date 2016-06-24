@@ -23,7 +23,7 @@ export const OP = [
 ':', '::',
 '@"',
 'and', 'or', 'xor',
-'log',
+'log', 'sign',
 'root'
 ];
 
@@ -35,9 +35,10 @@ export const UOP = [
 'acos', 'asin', 'atan',
 'floor', 'ceil', 'round',
 'len', 'reverse', 'abs', 'repr',
-'sign',
 'print',
-'new'
+'log', 'sign',
+'new',
+'@"'
 ];
 
 // TODO: how will the user modify this? no idea

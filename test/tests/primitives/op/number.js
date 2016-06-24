@@ -145,7 +145,7 @@ describe('Numbers', () => {
             `print "sign 3=" + String::(sign 3)`,
             `sign 3=${Math.sign(3)}`
         ))
-        
+
         it('binary should work', TestCheddarFrom.Code(
             `print "1 sign 3=" + String::(1 sign 3)`,
             `1 sign 3=-1`
@@ -181,19 +181,19 @@ describe('Numbers', () => {
 //            `print String::(root)`
 //        ))
     })
-    
+
     describe('log', () => {
         it('unary should work', TestCheddarFrom.Code(
             `print "log Math.E=" + String::(log Math.E)`,
             `log Math.E=1`
         ))
-        
+
         it('binary should work', TestCheddarFrom.Code(
             `print "16 log 2=" + String::(16 log 2)`,
             `16 log 2=4`
         ))
     })
-    
+
     describe('ceil', () => {
         it('should work', TestCheddarFrom.Code(
             `print "ceil 1.6=" + String::(ceil 1.6)`,
@@ -221,26 +221,26 @@ describe('Numbers', () => {
 //            `print String::(round)`
 //        ))
     })
-    
+
     describe('abs', () => {
         it('should work', TestCheddarFrom.Code(
             `print "abs -1=" + String::(abs -1)`,
             `abs -1=1`
         ))
     })
-    
+
     describe('range', () => {
         it('should work', TestCheddarFrom.Code(
             `print "1:5=" + String::(1:5)`,
             '1:5=[1, 2, 3, 4, 5]'
         ))
-        
+
         it('should work reversed', TestCheddarFrom.Code(
             `print "5:1=" + String::(5:1)`,
             '5:1=[5, 4, 3, 2, 1]'
         ))
     })
-    
+
     describe('char', () => {
         it('should work', TestCheddarFrom.Code(
             `print '@"65=' + @" 65`,
