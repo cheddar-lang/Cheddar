@@ -1,9 +1,11 @@
 import * as CheddarError from '../consts/err';
 import CheddarLexer from '../tok/lex';
-import {OP} from '../consts/ops';
+import {UOP, OP} from '../consts/ops';
 
 export default class CheddarOperatorToken extends CheddarLexer {
-    exec(ops = OP) {
+    // Chatse
+    exec(UNARY) {
+        let ops = UNARY ? UOP : OP;
         // this.Code is the code
         // this.Index is the index
         this.open(false);

@@ -5,6 +5,7 @@ import L from './any';
 import F from './function';
 import CheddarLexer from '../tok/lex';
 import {OP, UOP, EXPR_OPEN, EXPR_CLOSE} from '../consts/ops';
+import CheddarCustomLexer from './custom';
 
 // Special Exceptions
 import B from '../literals/boolean';
@@ -77,6 +78,7 @@ B -> op expr?
 
 expr -> A B*/
 
+let UNARY = CheddarCustomLexer(O, true);
 
 class CheddarExpressionTokenAlpha extends CheddarLexer {
     exec() {
@@ -88,10 +90,9 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
 
         return this.grammar(true,
             ['(', E, ')'],
-            [O, E], // Prefix
-            [L],
-            [B],
-            [P]
+            [CheddarCustomLexer(O, true), E], // Prefix
+            [P],
+            [B]
         );
     }
 
@@ -108,7 +109,7 @@ class CheddarExpressionTokenBeta extends CheddarLexer {
 
         return this.grammar(true,
             [O, E], //infix
-            [O],
+            [O], // postfix
             [] // ε
         );
     }

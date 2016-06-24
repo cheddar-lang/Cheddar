@@ -23,17 +23,22 @@ export const OP = [
 ':', '::',
 '@"',
 'and', 'or', 'xor',
+'log',
+'root'
+];
+
 // Unary operators
+export const UOP = [
 '-', '+',
-'sqrt', 'cbrt', 'root',
+'sqrt', 'cbrt',
 'sin', 'cos', 'tan',
 'acos', 'asin', 'atan',
-'log',
 'floor', 'ceil', 'round',
 'len', 'reverse', 'abs', 'repr',
 'sign',
 'print',
-'new'];
+'new'
+];
 
 // TODO: how will the user modify this? no idea
 //TODO: fix precedence

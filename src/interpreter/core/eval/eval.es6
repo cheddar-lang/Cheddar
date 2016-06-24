@@ -23,7 +23,6 @@ import {TYPE as OP_TYPE} from '../../../tokenizer/consts/ops';
 
 // Reference tokens
 import CheddarPropertyToken from '../../../tokenizer/parsers/property';
-import CheddarPrimitive from '../../../tokenizer/literals/primitive';
 import CheddarLiteral from '../../../tokenizer/parsers/any';
 import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
@@ -158,10 +157,17 @@ export default class CheddarEval extends CheddarCallStack {
 
             // Is a primitive
             // this includes `"foo".bar`
-            if (Operation._Tokens[0] instanceof CheddarPrimitive) {
-                OPERATOR = PRIMITIVE_LINKS.get(Operation._Tokens[0].constructor.name);
+            if (Operation._Tokens[0] instanceof CheddarLiteral) {
+                TOKEN = Operation._Tokens[0]._Tokens[0];
+                OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name);
                 if (OPERATOR) {
-                    OPERATOR = new OPERATOR(...Operation._Tokens[0].Tokens);
+                    OPERATOR = new OPERATOR(this.Scope);
+
+                    if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) === true) {
+                        this.put( OPERATOR );
+                    } else {
+                        return TOKEN;
+                    }
                 } else {
                     return CheddarError.UNLINKED_CLASS;
                 }

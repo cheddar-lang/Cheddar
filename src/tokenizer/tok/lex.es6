@@ -112,7 +112,7 @@ export default class CheddarLexer {
                     else if (!(result instanceof CheddarLexer))
                         return this.error(result);
 
-                    index = parser.Index;
+                    index = result.Index;
 
                     tokens.push(result);
                 } else if (defs[i][j].prototype instanceof CheddarLexer) {
