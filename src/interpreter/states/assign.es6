@@ -13,6 +13,10 @@ export default class CheddarAssign {
     }
 
     exec() {
+        if (this.scope.has(this.assignl.tok(0))) {
+            return `${this.assignl.tok(0)} has already been defined`;
+        }
+
         let val = new CheddarEval(this.toks.tok(2), this.scope);
         if (!((val = val.exec()) instanceof CheddarClass || val.prototype instanceof CheddarClass))
             return val;
@@ -26,7 +30,5 @@ export default class CheddarAssign {
                 StrictType: this.assignl.tok(1) || null
             })
         );
-
-        return new NIL;
     }
 }
