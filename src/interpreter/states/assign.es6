@@ -14,6 +14,7 @@ export default class CheddarAssign {
 
     exec() {
         if (this.scope.has(this.assignl.tok(0))) {
+            // ERROR INTEGRATE
             return `${this.assignl.tok(0)} has already been defined`;
         }
 

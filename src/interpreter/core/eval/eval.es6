@@ -69,6 +69,11 @@ export default class CheddarEval extends CheddarCallStack {
                     return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
                 }
 
+                if (DATA.scope.accessor(DATA.Reference).Writeable === false) {
+                    // ERROR INTEGRATE
+                    return `Cannot override constant ${DATA.Reference}`;
+                }
+
                 // NAVIGATE TOKEN AND DATA
 
                 // Check if variable needs to be wrapped
