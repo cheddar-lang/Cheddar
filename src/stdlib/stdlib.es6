@@ -1,11 +1,12 @@
 import API from './api';
 
 let STDLIB = new Map();
-STDLIB.Item = (Name, NS) => STDLIB.set(Name, API.var(require(NS)(API)));
+STDLIB.Item = (Name, NS) => STDLIB.set(Name, API.var(NS(API)));
 
 /** Standard Library entries go here **/
 // Preset namespaces
-STDLIB.Item("Math", './ns/math');
+import LIBMath from './ns/math';
+STDLIB.Item("Math", LIBMath);
 
 // Default classes
 STDLIB.set("String", API.var(API.string));

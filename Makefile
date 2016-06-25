@@ -38,6 +38,11 @@ build: $(JC) $(SRC)
 install: ./bin/install
 	./bin/install --method=path
 
+# Runs browser_repl build for web REPL
+# Uses browserify to compiled babelified code
+browser_build: default
+	$(PREFIX)/browserify dist/cli/browser_repl.js -o Cheddar.js
+
 # Performs testing, including coverage
 # At the moment uses mocha for testing
 # and babel-istanbul for coverage
@@ -45,4 +50,5 @@ test: $(TESTRUNNER) $(COVERAGE) $(TEST)
 	$(TESTRUNNER) $(COVERAGE) $(TFLAGS)
 clean:
 	rm -rf ./dist/
- .PHONY: test
+
+.PHONY: test
