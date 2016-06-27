@@ -19,6 +19,7 @@ export const DEFAULT_OP = new Map([
                 ? LHS.constructor.Cast.get('String')(LHS)
                 : LHS;
 
+        // Stream
         if (VAL.constructor.Name === "String")
             console.log(VAL.value);
         else

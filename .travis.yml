@@ -21,9 +21,9 @@ addons:
   codeclimate:
     repo_token:
       - secure: CODECLIMATE_REPO_TOKEN
-cache:
-  directories:
-    - node_modules
+# cache:
+#   directories:
+#     - node_modules
 deploy:
   provider: heroku
   api_key:

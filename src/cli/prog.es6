@@ -5,19 +5,11 @@ import CheddarScope from '../interpreter/core/env/scope';
 import cheddar from '../interpreter/exec';
 import tokenizer from '../tokenizer/tok';
 
-import dep_String from '../interpreter/core/primitives/String';
-import dep_Bool from '../interpreter/core/primitives/Bool';
-import dep_Number from '../interpreter/core/primitives/Number';
-import dep_Array from '../interpreter/core/primitives/Array';
-
 import stdlib from '../stdlib/stdlib';
 
-import CheddarVariable from '../interpreter/core/env/var';
-
-const CONSTANT = { Writeable: false };
-let GLOBAL_SCOPE = new CheddarScope(null, stdlib);
-
 if (!module.parent) {
+    let GLOBAL_SCOPE = new CheddarScope(null, stdlib);
+
     let STDIN = "";
     let chunk;
     process.stdin.setEncoding('utf8');
@@ -35,12 +27,14 @@ if (!module.parent) {
     });
 } else {
     module.exports = function(code, done, scope) {
+        let GLOBAL_SCOPE = new CheddarScope(null, new Map(stdlib));
+
         let Tokenizer = new tokenizer(code, 0);
         let Result = Tokenizer.exec();
-        
+
         let Executor = new cheddar(Result, scope || GLOBAL_SCOPE);
         Executor.exec();
-        
+
         if (done) done(Executor);
     }
 }

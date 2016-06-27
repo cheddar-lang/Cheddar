@@ -1,33 +1,33 @@
-import { TestCheddarFrom } from '../../globals';
+var TestCheddarFrom = require('../../globals').TestCheddarFrom;
 var chai = require('chai');
 var expect = chai.expect;
 chai.should();
 
-describe('Numbers', () => {
-    describe('concatenation', () => {
+describe('Numbers', function() {
+    describe('concatenation', function() {
         it('should work', TestCheddarFrom.Code(
-            `print "a" + "b"`,
+            'print "a" + "b"',
             'ab'
         ))
     })
-    
-    describe('repetition', () => {
+
+    describe('repetition', function() {
         it('should work', TestCheddarFrom.Code(
-            `print "foo" * 3`,
+            'print "foo" * 3',
             'foofoofoo'
         ))
     })
-    
-    describe('repetition', () => {
+
+    describe('repetition', function() {
         it('should work', TestCheddarFrom.Code(
-            `print "foo" * 3`,
+            'print "foo" * 3',
             'foofoofoo'
         ))
     })
-    
-    describe('char', () => {
+
+    describe('char', function() {
         it('should work', TestCheddarFrom.Code(
-            `print @" "foo"`,
+            'print @" "foo"',
             '[102, 111, 111]'
         ))
     })

@@ -1,17 +1,17 @@
-import { TestCheddarFrom } from '../globals';
+var TestCheddarFrom = require('../globals').TestCheddarFrom;
 var chai = require('chai');
 chai.should();
 
-describe('Casts', () => {
-    describe('String', () => {
-        describe('Number', () => {
+describe('Casts', function() {
+    describe('String', function() {
+        describe('Number', function() {
             it('should not error', TestCheddarFrom.Code(
                 `String::123`,
                 ''
             ))
         })
-        
-        describe('Array', () => {
+
+        describe('Array', function() {
             it('should not error', TestCheddarFrom.Code(
                 `String::[1, 2, 3]`,
                 ''

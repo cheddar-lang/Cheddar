@@ -34,7 +34,7 @@ if (!module.parent) {
 
         program.parse(process.argv);
 
-        program.args.forEach(file => child_process.exec(`${__dirname}/prog.js < ${file}`));
+        program.args.forEach(file => child_process.exec(__dirname+"/prog.js < "+file));
     }
 } else {
     module.exports = require('./prog');

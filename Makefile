@@ -1,4 +1,5 @@
 PREFIX=./node_modules/.bin
+SELF=$(lastword $(MAKEFILE_LIST))
 ## Compiler
 # The compiler to use for the ES7 -> ES5 transformation
 JC=$(PREFIX)/babel
@@ -13,8 +14,9 @@ EXE=cheddar
 BIN_MAKE=$(foreach BIN_FILE,$(BIN),chmod 755 $(SRC)$(BIN_FILE) && cp $(SRC)$(BIN_FILE) $(OUT)$(BIN_FILE)${\n})
 
 ## Tests
-TESTRUNNER=$(PREFIX)/babel-node
-COVERAGE=$(PREFIX)/babel-istanbul
+TESTRUNNER=node
+COVERAGEPATH=coverage
+COVERAGE=$(PREFIX)/istanbul
 TEST=$(PREFIX)/_mocha
 TFLAGS=cover $(TEST)
 
@@ -30,7 +32,7 @@ default: $(JC) $(SRC)
 # Development build task
 # This builds and includes source maps
 build: $(JC) $(SRC)
-	$(JC) $(JCFLAGS) --sourceMaps="inline"
+	$(JC) $(JCFLAGS) --source-maps
 	$(BIN_MAKE)
 
 # Runs install with default method
@@ -40,14 +42,16 @@ install: ./bin/install
 
 # Runs browser_repl build for web REPL
 # Uses browserify to compiled babelified code
-browser_build: default
+browser_build: $(JC) $(SRC)
 	$(PREFIX)/browserify dist/cli/browser_repl.js -o Cheddar.js
 
 # Performs testing, including coverage
 # At the moment uses mocha for testing
 # and babel-istanbul for coverage
-test: $(TESTRUNNER) $(COVERAGE) $(TEST)
+test:
+	@$(MAKE) -f $(SELF) build
 	$(TESTRUNNER) $(COVERAGE) $(TFLAGS)
+	$(PREFIX)/remap-istanbul -i $(COVERAGEPATH)/coverage.json -o $(COVERAGEPATH)/lcov-report -t html
 clean:
 	rm -rf ./dist/
 

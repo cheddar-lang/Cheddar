@@ -8,8 +8,6 @@ export default function(cheddar) {
         ["AVOGADRO", cheddar.make(cheddar.number, 10, 0, 6.02214086)],
 
         ["fib", cheddar.var(require("./math/fib")(cheddar))],
-        ["isprime", cheddar.var(require("./math/isprime")(cheddar))],
-        ["nthprime", cheddar.var(require("./math/nthprime")(cheddar))]
-        /**/
+        ["isprime", cheddar.var(require("./math/isprime")(cheddar))]
     ]));
 }
