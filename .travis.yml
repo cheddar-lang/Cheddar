@@ -12,6 +12,7 @@ addons:
     packages:
       - g++-4.8
 install:
+  - npm install
   - npm install -g codeclimate-test-reporter
 after_success:
   - npm run coveralls
