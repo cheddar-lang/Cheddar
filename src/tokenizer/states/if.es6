@@ -10,13 +10,14 @@ export default class StatementIf extends CheddarLexer {
         if (!this.lookAhead("if"))
             return CheddarError.EXIT_NOTFOUND;
 
+        this.jumpLiteral("if");
+
         // Match the `expr { block }` format
-        let FORMAT = [CheddarExpressionToken, CheddarCodeblock];
+        let FORMAT = [CheddarExpressionToken, CheddarCodeblock, CheddarError.EXPECTED_BLOCK];
 
         // Match initial `if`
-        let IF = this.grammar(true, ['if', ...FORMAT]);
-
-        if (!IF instanceof CheddarLexer)
+        let IF = this.grammar(true, FORMAT);
+        if (!(IF instanceof CheddarLexer))
             return this.error(IF);
 
         while (this.lookAhead("else")) {

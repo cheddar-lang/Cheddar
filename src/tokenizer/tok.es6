@@ -5,6 +5,8 @@ import CheddarLexer from './tok/lex';
 import CheddarEXPLICIT from './patterns/EXPLICIT';
 
 import * as CheddarError from './consts/err';
+import CheddarErrorMessage from './consts/err_msg';
+import HelperLoc from '../helpers/loc';
 
 import S1_ASSIGN from './states/assign';
 import S2_IF from './states/if';
@@ -16,6 +18,10 @@ var CLOSES = '\n;';
 const VALID_END = chr =>
     (CLOSES.indexOf(chr) > -1) || !chr;
 
+const FORMAT_ERROR = (TOK, LEXER) => TOK
+    .replace(/\$LOC/, HelperLoc(LEXER.Code, LEXER.Index).slice(0, 2).join(":"));
+    .replace(/\$1/, this.Code[this.Index])
+
 export default class CheddarTokenize extends CheddarLexer {
     exec(ENDS = "") {
 
@@ -26,12 +32,12 @@ export default class CheddarTokenize extends CheddarLexer {
             S3_EXPR
         );
 
-        this.Tokens = MATCH;
-        this.Index = MATCH.Index;
+        if (MATCH instanceof CheddarLexer && MATCH.Errored !== true) {
 
-        if (MATCH instanceof CheddarLexer) {
+            this.Tokens = MATCH;
+            this.Index = MATCH.Index;
 
-            while (this.Code[this.Index] && /[\r\t\f ]/.test(this.Code[this.Index]) || this._jumpComment()) {
+            while (this.Code[this.Index] && /[\t\f ]/.test(this.Code[this.Index]) || this._jumpComment()) {
                 this.Index++;
             }
 
@@ -39,8 +45,15 @@ export default class CheddarTokenize extends CheddarLexer {
                 return this.close();
             }
 
-            if (!MATCH instanceof CheddarEXPLICIT && !VALID_END(this.Code[this.Index]))
-                return CheddarError.UNEXPECTED_TOKEN;
+            if (!(MATCH instanceof CheddarEXPLICIT) && !(VALID_END(this.Code[this.Index]))) {
+                return this.error(
+                    FORMAT_ERROR(
+                        CheddarErrorMessage.get(
+                            CheddarError.UNEXPECTED_TOKEN
+                        )
+                    , this)
+                );
+            }
 
             this.Index++;
 
@@ -64,7 +77,23 @@ export default class CheddarTokenize extends CheddarLexer {
             return this.close();
         }
         else {
-            return this.error(MATCH);
+            if (MATCH instanceof CheddarLexer) {
+                return this.error(
+                    FORMAT_ERROR(
+                        CheddarErrorMessage.get(
+                            CheddarError.UNEXPECTED_TOKEN
+                        )
+                    , this)
+                );
+            } else {
+                return this.error(
+                    FORMAT_ERROR(
+                        typeof MATCH === 'symbol'
+                        ? CheddarErrorMessage.get( MATCH )
+                        : MATCH.toString()
+                    , this)
+                );
+            }
         }
     }
 

@@ -8,6 +8,8 @@ import NIL from '../interpreter/core/consts/nil';
 import cheddar from '../interpreter/exec';
 import tokenizer from '../tokenizer/tok';
 
+import HelperCaret from '../helpers/caret';
+
 import stdlib from '../stdlib/stdlib';
 
 let REPL = readline.createInterface(process.stdin, process.stdout);
@@ -21,7 +23,7 @@ REPL._setPrompt = REPL.setPrompt;
 REPL.setPrompt = (prompt, length) =>
     REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
-const REPL_ERROR = (text, type) => console.log(type.red.bold + ": ".dim + text);
+const REPL_ERROR = (text, type) => console.log(type.red.bold + ": ".dim + text.toString());
 const REPL_HEAD = text => console.log(`━━ ${text} ━━`.bold.magenta);
 
 const CONSTANT = { Writeable: false };
@@ -35,13 +37,21 @@ REPL.on('line', function(STDIN) {
     let Tokenizer = new tokenizer(STDIN, 0);
     let Result = Tokenizer.exec();
 
+    if (!(Result instanceof tokenizer)) {
+    	REPL_ERROR(Result, "Syntax Error");
+    	// Draw error pointer
+    	console.log(HelperCaret(STDIN, Tokenizer.Index, true));
+
+    	return REPL.prompt();
+    }
+
     let Executor = new cheddar(Result, GLOBAL_SCOPE);
     let Output = Executor.exec();
 
     if (Output) {
 
 		if (typeof Output === "string") {
-			REPL_ERROR(Output, "Error");
+			REPL_ERROR(Output, "Runtime Error");
 		} else if (Output instanceof NIL) {
 			// do nothing?
 		} else if (!Output) {

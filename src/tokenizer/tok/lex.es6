@@ -54,12 +54,19 @@ export default class CheddarLexer {
                 parsers[i].Index = this.Index;
                 attempt = parsers[i].exec();
             } else {
-                attempt = this.initParser(parsers[i]).exec();
+                parsers[i] = this.initParser(parsers[i]);
+                attempt = parsers[i].exec();
             }
-            if (attempt instanceof CheddarLexer)
+            if (attempt instanceof CheddarLexer && attempt.Errored !== true) {
                 return attempt;
-            else if (attempt !== CheddarError.EXIT_NOTFOUND)
-                return this.error(attempt);
+            } else if (attempt !== CheddarError.EXIT_NOTFOUND) {
+                this.Index = parsers[i].Index;
+                if (attempt instanceof CheddarLexer) {
+                    return this.error(CheddarError.UNEXPECTED_TOKEN);
+                } else {
+                    return this.error(attempt);
+                }
+            }
         }
 
         return this.error(CheddarError.EXIT_NOTFOUND);
@@ -101,7 +108,10 @@ export default class CheddarLexer {
                     WDIFF = this.Index - deltaIndex > 0;
                     this.Index = oldIndex;
                 }
-                if (defs[i][j] instanceof CheddarLexer) {
+
+                if (typeof defs[i][j] === 'symbol') {
+                    continue sub;
+                } else if (defs[i][j] instanceof CheddarLexer) {
                     parser = defs[i][j];
                     parser.Code = this.Code;
                     parser.Index = index;
@@ -119,10 +129,19 @@ export default class CheddarLexer {
                     parser = new (defs[i][j])(this.Code, index);
                     result = parser.exec();
 
-                    if (result === CheddarError.EXIT_NOTFOUND)
+                    if (
+                        !(result instanceof CheddarLexer) &&
+                        typeof defs[i][j + 1] === 'symbol'
+                    )  {
+                        this.Index = Math.max(parser.Index, index);
+                        return this.error(defs[i][j + 1]);
+                    }
+
+                    if (result === CheddarError.EXIT_NOTFOUND) {
                         continue main;
-                    else if (!(result instanceof CheddarLexer))
+                    } else if (!(result instanceof CheddarLexer)) {
                         return this.error(result);
+                    }
 
                     index = parser.Index;
 

@@ -12,6 +12,6 @@ STDLIB.Item("Math", LIBMath);
 STDLIB.set("String", API.var(API.string));
 STDLIB.set("Number", API.var(API.number));
 STDLIB.set("Array", API.var(API.array));
-STDLIB.set("Bool", API.var(API.bool));
+STDLIB.set("Boolean", API.var(API.bool));
 
 export default STDLIB;
