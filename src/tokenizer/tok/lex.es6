@@ -57,10 +57,13 @@ export default class CheddarLexer {
                 parsers[i] = this.initParser(parsers[i]);
                 attempt = parsers[i].exec();
             }
+
             if (attempt instanceof CheddarLexer && attempt.Errored !== true) {
+                this.Index = parsers[i].Index;
                 return attempt;
             } else if (attempt !== CheddarError.EXIT_NOTFOUND) {
                 this.Index = parsers[i].Index;
+
                 if (attempt instanceof CheddarLexer) {
                     return this.error(CheddarError.UNEXPECTED_TOKEN);
                 } else {
@@ -117,10 +120,12 @@ export default class CheddarLexer {
                     parser.Index = index;
                     result = parser.exec();
 
-                    if (result === CheddarError.EXIT_NOTFOUND)
+                    if (result === CheddarError.EXIT_NOTFOUND) {
                         continue main;
-                    else if (!(result instanceof CheddarLexer))
+                    } else if (!(result instanceof CheddarLexer)) {
+                        this.Index = parser.Index;
                         return this.error(result);
+                    }
 
                     index = result.Index;
 
@@ -140,6 +145,7 @@ export default class CheddarLexer {
                     if (result === CheddarError.EXIT_NOTFOUND) {
                         continue main;
                     } else if (!(result instanceof CheddarLexer)) {
+                        this.Index = parser.Index;
                         return this.error(result);
                     }
 

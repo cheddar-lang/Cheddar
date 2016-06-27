@@ -30,8 +30,9 @@ export default class CheddarPropertyToken extends CheddarLexer {
 
             Initial = true;
 
-            if (!(attempt instanceof CheddarLexer))
+            if (!(attempt instanceof CheddarLexer) || attempt.Errored === true) {
                 return this.error(attempt);
+            }
 
             this.Index = attempt.Index;
             this.Tokens = attempt;

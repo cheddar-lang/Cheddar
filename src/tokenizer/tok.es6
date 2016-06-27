@@ -19,8 +19,8 @@ const VALID_END = chr =>
     (CLOSES.indexOf(chr) > -1) || !chr;
 
 const FORMAT_ERROR = (TOK, LEXER) => TOK
-    .replace(/\$LOC/, HelperLoc(LEXER.Code, LEXER.Index).slice(0, 2).join(":"));
-    .replace(/\$1/, this.Code[this.Index])
+    .replace(/\$LOC/, HelperLoc(LEXER.Code, LEXER.Index).slice(0, 2).join(":"))
+    .replace(/\$1/, LEXER.Code[LEXER.Index]);
 
 export default class CheddarTokenize extends CheddarLexer {
     exec(ENDS = "") {

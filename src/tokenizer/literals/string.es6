@@ -11,19 +11,23 @@ export default class CheddarStringToken extends CheddarPrimitive {
 
         let chr = this.getChar();
         if (STRING_DELIMITERS.indexOf(chr) > -1) {
+            let loc = this.Index - 1;
             // in a string
 
             let qt = chr; // store quote
 
-            while (chr = this.getChar())
-                if (chr === qt)
+            while ((chr = this.getChar())) {
+                if (chr === qt) {
                     break;
-                else if (this.isLast)
+                } else if (this.isLast) {
+                    this.Index = loc;
                     return this.error(CheddarError.UNMATCHED_DELIMITER);
-                else if (chr === STRING_ESCAPE)
+                } else if (chr === STRING_ESCAPE) {
                     this.addToken(this.getChar());
-                else
+                } else {
                     this.addToken(chr);
+                }
+            }
 
             return this.close();
 
