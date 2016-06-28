@@ -4,13 +4,14 @@
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "prompt-sync": "^4.1.4",
     "readline": "^1.3.0"
   },
   "scripts": {
     "prepublish": "make",
     "build": "make build",
-    "test": "make build && make test",
-    "coveralls": "make build && make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "test": "make test",
+    "coveralls": "make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "browser_build": "make browser_build"
   },
   "devDependencies": {

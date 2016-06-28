@@ -1,5 +1,6 @@
 import CheddarVariable from './var';
 import CheddarScope from './scope';
+import nil from '../primitives/nil';
 
 // I have the details, planing, structure,
 // and design of functions all on my
@@ -30,18 +31,34 @@ export default class CheddarFunction {
     }
 
     scope(input, self) {
-        var args = new CheddarScope();
-        if (self) {
-            args.setter("self", new CheddarVariable(self, { Writeable: false }));
-        }
+        let args = new CheddarScope();
+        let CheddarArray = require('../primitives/Array');
         let tmp;
+
+        if (self)
+            args.setter("self", new CheddarVariable(self, { Writeable: false }));
+
         for (let i = 0; i < this.args.length; i++) {
-            if (input[i]) {
+            tmp = this.args[i][1];
+            if (tmp.Splat === true) {
+                let splat = new CheddarArray();
+                splat.init(...input.slice(i));
+
+                args.setter(this.args[i][0], new CheddarVariable(
+                    splat
+                ));
+
+                break;
+            } else if (input[i]) {
                 args.setter(this.args[i][0], new CheddarVariable(
                     input[i]
                 ));
             } else {
-                if ((tmp = this.args[i][1]) && tmp.Default) {
+                if (tmp.Optional === true) {
+                    args.setter(this.args[i][0], new CheddarVariable(
+                        new nil
+                    ));
+                } else if (tmp.Default) {
                      args.setter(this.args[i][0], new CheddarVariable(
                         tmp.Default
                     ));

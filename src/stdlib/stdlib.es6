@@ -8,6 +8,9 @@ STDLIB.Item = (Name, NS) => STDLIB.set(Name, API.var(NS(API)));
 import LIBMath from './ns/math';
 STDLIB.Item("Math", LIBMath);
 
+import LIBIO from './ns/IO';
+STDLIB.Item("IO", LIBIO);
+
 // Default classes
 STDLIB.set("String",  API.var(API.string));
 STDLIB.set("Number",  API.var(API.number));

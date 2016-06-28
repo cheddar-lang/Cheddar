@@ -2,6 +2,7 @@ import CheddarString from '../interpreter/core/primitives/String';
 import CheddarNumber from '../interpreter/core/primitives/Number';
 import CheddarArray from '../interpreter/core/primitives/Array';
 import CheddarBool from '../interpreter/core/primitives/Bool';
+import nil from '../interpreter/core/primitives/nil';
 import CheddarFunc from '../interpreter/core/env/func';
 
 import * as CheddarError from '../interpreter/core/consts/err';
@@ -18,6 +19,7 @@ export default {
     array: CheddarArray,
     bool: CheddarBool,
     func: CheddarFunc,
+    nil: nil,
 
     error: CheddarError,
 
@@ -37,7 +39,7 @@ export default {
     // Make a namespace given a map
     namespace: function(val) {
         let Scope = new CheddarScope(null);
-        Scope.Scope = val;
+        Scope.Scope = new Map(val);
         return Scope;
     },
 
