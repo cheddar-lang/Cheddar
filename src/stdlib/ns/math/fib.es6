@@ -15,7 +15,7 @@ export default function fib(cheddar) {
                 Default: cheddar.init(cheddar.number, 10, 0, 1)
             }]
         ], function (scope, input) {
-            let n = input("n");
+            let n = input("n").value;
             return cheddar.init(cheddar.number, 10, 0, fib(n));
         }
     )
