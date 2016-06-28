@@ -1,4 +1,5 @@
 import CheddarClass from '../env/class';
+import CheddarScope from '../env/scope';
 
 import BehaviorOperator from './op/string';
 import BehaviorCast from './cast/string';
@@ -20,4 +21,4 @@ export default class CheddarString extends CheddarClass {
 }
 
 CheddarString.Scope = require('../../../stdlib/primitive/String/static');
-CheddarString.prototype.Scope = require('../../../stdlib/primitive/String/lib');
+CheddarString.prototype.Scope = require('../../../stdlib/primitive/String/lib');;

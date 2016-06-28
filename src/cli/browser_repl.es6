@@ -12,7 +12,8 @@ import stdlib from '../stdlib/stdlib';
 let USI = 0;
 
 const CONSTANT = { Writeable: false };
-let GLOBAL_SCOPE = new CheddarScope(null, stdlib);
+let GLOBAL_SCOPE = new CheddarScope(null);
+GLOBAL_SCOPE.Scope = stdlib;
 var windw = Function('return this')();
 windw.Chedz = function input(STDIN) {
 

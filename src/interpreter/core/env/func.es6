@@ -1,4 +1,3 @@
-import CheddarClass from './class';
 import CheddarVariable from './var';
 import CheddarScope from './scope';
 
@@ -20,6 +19,11 @@ export default class CheddarFunction {
     exec(input, self) {
         let scope = this.scope(input, self);
 
+        if (!(scope instanceof CheddarScope))
+            return scope;
+
+        console.log(scope.Scope);
+
         let tmp;
         return this.body(
             scope,
@@ -39,12 +43,12 @@ export default class CheddarFunction {
                     input[i]
                 ));
             } else {
-                if ((tmp = args[i][1]) && tmp.Default) {
-                    args.setter(this.args[i][0], new CheddarVariable(
+                if ((tmp = this.args[i][1]) && tmp.Default) {
+                     args.setter(this.args[i][0], new CheddarVariable(
                         tmp.Default
                     ));
                 } else {
-                    return `Missing argument for ${args[i][0]}`
+                    return `Missing argument for ${this.args[i][0]}`
                 }
             }
         }

@@ -28,6 +28,11 @@ export default {
     var: function(val) {
         return new CheddarVariable(val, { Writeable: false });
     },
+    namespace: function(val) {
+        let Scope = new CheddarScope(null);
+        Scope.Scope = val;
+        return Scope;
+    },
 
     variable: CheddarVariable,
     class: CheddarClass,

@@ -38,7 +38,7 @@ import * as CheddarError from '../consts/err';
 import { DEFAULT_OP, DEFAULT_CAST, IS_CLASS } from './defaults';
 
 export default class CheddarClass extends CheddarScope {
-    static Name = "UNDEFINED";
+    static Name = "Class";
 
     // Define operators. Each item in the
     //  hash-map, defines behavior for the
@@ -57,6 +57,7 @@ export default class CheddarClass extends CheddarScope {
     //  being discussed.
     constructor(Scope = null, Reference = null) {
         super();
+
         // CheddarClass serves as an interface
         //  for higher-level classes.
 

@@ -27,7 +27,8 @@ const REPL_ERROR = (text, type) => console.log(type.red.bold + ": ".dim + text.t
 const REPL_HEAD = text => console.log(`━━ ${text} ━━`.bold.magenta);
 
 const CONSTANT = { Writeable: false };
-let GLOBAL_SCOPE = new CheddarScope(null, stdlib);
+let GLOBAL_SCOPE = new CheddarScope(null);
+GLOBAL_SCOPE.Scope = stdlib;
 
 REPL.on('line', function(STDIN) {
 

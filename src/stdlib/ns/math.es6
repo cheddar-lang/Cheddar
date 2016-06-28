@@ -1,5 +1,5 @@
 export default function(cheddar) {
-    return new cheddar.scope(null, new Map([
+    return cheddar.namespace(new Map([
         ["E", cheddar.make(cheddar.number, 10, 0, 2.718281828459045)],
         ["PI", cheddar.make(cheddar.number, 10, 0, 3.141592653589793)],
         ["PHI", cheddar.make(cheddar.number, 10, 0, 1.618033988749894)],

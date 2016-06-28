@@ -30,6 +30,8 @@ import CheddarVariableToken from '../../../tokenizer/literals/var';
 
 import CheddarScope from '../env/scope';
 
+import CheddarFunction from '../env/func';
+
 import CheddarVariable from '../env/var';
 import CheddarClass from '../env/class';
 import NIL from '../consts/nil';
@@ -51,7 +53,8 @@ export default class CheddarEval extends CheddarCallStack {
 
         let OPERATOR,
             TOKEN,
-            DATA;
+            DATA,
+            REFERENCE = null;
 
         // Handle Operator
         if (Operation instanceof CheddarOperatorToken) {
@@ -177,12 +180,14 @@ export default class CheddarEval extends CheddarCallStack {
                 }
             } else if (Operation._Tokens[0] instanceof CheddarVariableToken) {
                 // Lookup variable -> initial variable name
-                OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]).Value;
+                OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]);
 
-                if (OPERATOR === CheddarError.KEY_NOT_FOUND || !OPERATOR) {
+                if (!OPERATOR || OPERATOR === CheddarError.KEY_NOT_FOUND) {
                     return CheddarErrorDesc.get(CheddarError.KEY_NOT_FOUND)
                     .replace('$0', Operation._Tokens[0]._Tokens[0]);
                 }
+
+                OPERATOR = OPERATOR.Value;
             } else {
                 return CheddarError.MALFORMED_TOKEN;
             }
@@ -192,6 +197,12 @@ export default class CheddarEval extends CheddarCallStack {
             for (let i = 1; i < Operation._Tokens.length; i++) {
                 // if it is a function call, call the function
                 if (Operation._Tokens[i] instanceof CheddarArrayToken) {
+
+                    if (!(OPERATOR instanceof CheddarFunction)) {
+                        // ERROR INTEGRATE
+                        return "THATS NOT A FUNCTION YOU IDIOT";
+                    }
+
                     DATA = [];
                     TOKEN = Operation._Tokens[i]._Tokens;
                     let evalres; // Evaluation result
@@ -210,15 +221,22 @@ export default class CheddarEval extends CheddarCallStack {
 
                     OPERATOR = OPERATOR.exec(
                         DATA,
-                        this.Scope
+                        REFERENCE
                     );
                 } else {
-                    if (!OPERATOR.accessor) {
-                        console.log("Uh, an error occured.\n"+
-                        "remind me later to make this throw an error, thanks");
-                        return "";
+                    if (!OPERATOR.accessor || !(DATA = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]))) {
+                        // ERROR INTEGRATE
+                        return `${
+                            Operation._Tokens[i - 1]._Tokens[0]
+                        } has no property ${
+                            Operation._Tokens[i]._Tokens[0]
+                        }`;
                     }
-                    OPERATOR = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]).Value;
+
+                    if (DATA instanceof CheddarFunction)
+                        REFERENCE = OPERATOR;
+
+                    OPERATOR = DATA.Value;
                 }
             }
 

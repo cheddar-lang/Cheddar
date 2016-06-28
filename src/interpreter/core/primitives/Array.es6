@@ -5,15 +5,11 @@ import {MALFORMED_TOKEN} from '../consts/err';
 import BehaviorOperator from './op/array';
 import BehaviorCast from './cast/array';
 
-import CheddarScope from '../env/scope';
-
-import CheddarEval from '../eval/eval';
-import CheddarShuntingYard from '../../../tokenizer/tok/shunting_yard';
-
 export default class CheddarArray extends CheddarClass {
     static Name = "Array";
 
     init(...items) {
+        let CheddarEval = require('../eval/eval');
         this.value = [];
 
         for (let i = 0; i < items.length; i++) {

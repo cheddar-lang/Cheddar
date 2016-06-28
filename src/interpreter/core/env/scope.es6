@@ -16,10 +16,9 @@ import {RESERVED_KEYWORDS} from '../../../tokenizer/consts/ops';
 import CheddarVariable from './var';
 
 export default class CheddarScope {
-    constructor(inherit = null, preset = new Map()) {
-        // Initialize the hash
-        this.Scope = preset;
+    static Name = "Namespace"
 
+    constructor(inherit = null) {
         // Global scope
         // Make sure to move preset items
         // Avoid duplicating scopes
@@ -27,7 +26,6 @@ export default class CheddarScope {
         //  a seperate hash which is linked
         //  by overriding a properties get
         this.inheritanceChain = inherit;
-
     }
 
     make(Name, Type, Value, Arguments) {
@@ -84,10 +82,10 @@ export default class CheddarScope {
     // Property accessors
     accessor(token) {
         if (!this.has(token))
-            return CheddarError.KEY_NOT_FOUND;
+            return null;
 
         return this.Scope.get(token) || (this.inheritanceChain ?
-            this.inheritanceChain.accessor(token) : CheddarError.KEY_NOT_FOUND
+            this.inheritanceChain.accessor(token) : null
         );
 
     }
@@ -96,3 +94,5 @@ export default class CheddarScope {
         this.Scope.set(path, setter);
     }
 }
+
+CheddarScope.prototype.Scope = new Map();

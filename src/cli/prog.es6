@@ -8,7 +8,8 @@ import tokenizer from '../tokenizer/tok';
 import stdlib from '../stdlib/stdlib';
 
 if (!module.parent) {
-    let GLOBAL_SCOPE = new CheddarScope(null, stdlib);
+    let GLOBAL_SCOPE = new CheddarScope(null);
+    GLOBAL_SCOPE.Scope = stdlib;
 
     let STDIN = "";
     let chunk;
@@ -27,7 +28,8 @@ if (!module.parent) {
     });
 } else {
     module.exports = function(code, done, scope) {
-        let GLOBAL_SCOPE = new CheddarScope(null, new Map(stdlib));
+        let GLOBAL_SCOPE = new CheddarScope(null);
+        GLOBAL_SCOPE.Scope = new Map(stdlib);
 
         let Tokenizer = new tokenizer(code, 0);
         let Result = Tokenizer.exec();

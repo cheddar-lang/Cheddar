@@ -9,9 +9,9 @@ import LIBMath from './ns/math';
 STDLIB.Item("Math", LIBMath);
 
 // Default classes
-STDLIB.set("String", API.var(API.string));
-STDLIB.set("Number", API.var(API.number));
-STDLIB.set("Array", API.var(API.array));
+STDLIB.set("String",  API.var(API.string));
+STDLIB.set("Number",  API.var(API.number));
+STDLIB.set("Array",   API.var(API.array));
 STDLIB.set("Boolean", API.var(API.bool));
 
 export default STDLIB;
