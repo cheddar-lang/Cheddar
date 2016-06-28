@@ -21,13 +21,20 @@ export default {
 
     error: CheddarError,
 
+    // Make a literal
     init: HelperInit,
+
+    // Make a variable AND literal
     make: function() {
         return new CheddarVariable(HelperInit(...arguments), { Writeable: false });
     },
+
+    // Make a variable
     var: function(val) {
         return new CheddarVariable(val, { Writeable: false });
     },
+
+    // Make a namespace given a map
     namespace: function(val) {
         let Scope = new CheddarScope(null);
         Scope.Scope = val;

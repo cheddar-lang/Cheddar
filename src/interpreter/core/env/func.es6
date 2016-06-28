@@ -22,19 +22,17 @@ export default class CheddarFunction {
         if (!(scope instanceof CheddarScope))
             return scope;
 
-        console.log(scope.Scope);
-
         let tmp;
         return this.body(
             scope,
-            name => (tmp = scope.accessor(name)) && tmp.Value.value
+            name => (tmp = scope.accessor(name)) && tmp.Value
         );
     }
 
     scope(input, self) {
         var args = new CheddarScope();
         if (self) {
-            args.setter("self", new CheddarVariable(self));
+            args.setter("self", new CheddarVariable(self, { Writeable: false }));
         }
         let tmp;
         for (let i = 0; i < this.args.length; i++) {

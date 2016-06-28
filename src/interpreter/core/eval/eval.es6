@@ -200,7 +200,7 @@ export default class CheddarEval extends CheddarCallStack {
 
                     if (!(OPERATOR instanceof CheddarFunction)) {
                         // ERROR INTEGRATE
-                        return "THATS NOT A FUNCTION YOU IDIOT";
+                        return "THATS NOT A FUNCTION YOU IDIOT"; // A little harsh?
                     }
 
                     DATA = [];
@@ -224,6 +224,10 @@ export default class CheddarEval extends CheddarCallStack {
                         REFERENCE
                     );
                 } else {
+                    // Else it is a property
+
+                    // Attempt to access the accessor
+                    // then use the accessor to get the token
                     if (!OPERATOR.accessor || !(DATA = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]))) {
                         // ERROR INTEGRATE
                         return `${
@@ -233,7 +237,8 @@ export default class CheddarEval extends CheddarCallStack {
                         }`;
                     }
 
-                    if (DATA instanceof CheddarFunction)
+                    // If it's a function. Set the previous item to the REFERENCE
+                    if (DATA.Value instanceof CheddarFunction)
                         REFERENCE = OPERATOR;
 
                     OPERATOR = DATA.Value;

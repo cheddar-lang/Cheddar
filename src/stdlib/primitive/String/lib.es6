@@ -6,12 +6,11 @@ export default new Map([
             ["A", { Type: api.number }],
             ["B", { Type: api.number }]
         ], function(scope, input) {
-            return new api.init(api.string,
-                input("self").slice(
-                    input("A"),
-                    input("B")
-                )
-            )
+            let item = input("self").value;
+            return api.init(api.string, item.slice(
+                input("A").value,
+                input("B").value
+            ));
         }
     ))]
 ]);
