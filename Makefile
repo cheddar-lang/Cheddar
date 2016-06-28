@@ -51,7 +51,7 @@ browser_build: $(JC) $(SRC)
 test:
 	@$(MAKE) -f $(SELF) build
 	$(TESTRUNNER) $(COVERAGE) $(TFLAGS)
-	#$(PREFIX)/remap-istanbul -b Cheddar/$(SRC) -i $(COVERAGEPATH)/coverage.json -o $(COVERAGEPATH)/lcov-report -t html
+	$(PREFIX)/remap-istanbul -i $(COVERAGEPATH)/coverage.json -o $(COVERAGEPATH)/lcov-report -t html
 clean:
 	rm -rf ./dist/
 

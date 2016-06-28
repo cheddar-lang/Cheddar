@@ -1,5 +1,5 @@
 /**
- * Cheddar, IO.printf(<format>, [args ...])
+ * Cheddar, IO.sprintf(<format>, [args ...])
  *
  * Format specification:
  * %[flag][width][.precision]specifier]

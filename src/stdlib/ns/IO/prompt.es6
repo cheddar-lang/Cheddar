@@ -1,4 +1,4 @@
-const prompt = require('prompt-sync')();
+const read = require('./lib/prompt')({ sigint: true });
 
 export default function(cheddar) {
     return new cheddar.func(
@@ -15,12 +15,12 @@ export default function(cheddar) {
             let val = input("prompt").value;
             let retry = input("required");
 
-            let res = prompt(val);
+            let res = read(val);
 
             if (retry instanceof cheddar.string) {
                 // Keep trying to get input
                 while (!res) {
-                    res = prompt(retry.value);
+                    res = read(retry);
                 }
             }
 
