@@ -14,9 +14,8 @@ EXE=cheddar
 BIN_MAKE=$(foreach BIN_FILE,$(BIN),chmod 755 $(SRC)$(BIN_FILE) && cp $(SRC)$(BIN_FILE) $(OUT)$(BIN_FILE)${\n})
 
 ## Tests
-TESTRUNNER=node
-COVERAGEPATH=coverage
-COVERAGE=$(PREFIX)/istanbul
+TESTRUNNER=$(PREFIX)/babel-node
+COVERAGE=$(PREFIX)/babel-istanbul
 TEST=$(PREFIX)/_mocha
 TFLAGS=cover $(TEST)
 
@@ -48,10 +47,8 @@ browser_build: $(JC) $(SRC)
 # Performs testing, including coverage
 # At the moment uses mocha for testing
 # and babel-istanbul for coverage
-test:
-	@$(MAKE) -f $(SELF) build
+test:$(TESTRUNNER) $(COVERAGE) $(TEST)
 	$(TESTRUNNER) $(COVERAGE) $(TFLAGS)
-	$(PREFIX)/remap-istanbul -i $(COVERAGEPATH)/coverage.json -o $(COVERAGEPATH)/lcov-report -t html
 clean:
 	rm -rf ./dist/
 

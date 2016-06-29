@@ -1,5 +1,6 @@
 var chai    = require('chai');
-var cheddar = require('../../dist/cli/prog.js');
+var cheddar = require('../../src/cli/prog');
+var api     = require('../../src/stdlib/api')
 var fs      = require('fs');
 var path    = require('path');
 
@@ -58,5 +59,6 @@ var TestCheddarFrom = {
 }
 
 module.exports = {
-    TestCheddarFrom: TestCheddarFrom
+    TestCheddarFrom: TestCheddarFrom,
+    api: api
 };
