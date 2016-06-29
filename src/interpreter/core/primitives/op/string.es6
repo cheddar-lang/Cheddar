@@ -5,6 +5,15 @@ import HelperInit from '../../../../helpers/init';
 
 // == STRING ==
 export default new Map([
+    // Replace " with \"
+    //  and replace \
+    //  with \\s
+    ['repr', (LHS) => {
+        return HelperInit(LHS.constructor, '"' + LHS.value.replace(
+            /"|\\/g, "\\$&"
+        ) + '"');
+    }],
+
     // String concatenation
     //  using +, attempt to
     //  implicitly cast

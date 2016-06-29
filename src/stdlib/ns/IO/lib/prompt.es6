@@ -266,7 +266,6 @@ function create(config) {
             process.stdin.setRawMode(wasRaw);
         }
 
-        console.log(str, value);
         return str || value || '';
     }
 };

@@ -9,11 +9,12 @@ export default new Map([
         let Stringified = "",
             Cast;
         for (let i = 0; i < self.value.length; i++) {
-            Cast = self.value[i].constructor.Cast.get('String');
+            Cast = self.value[i].constructor.Cast.get('String') ||
+                self.value[i].constructor.Operator.get('repr');
             if (Cast)
                 Stringified += (i ? ", " : "") + Cast(self.value[i]).value;
             else
-                Stringified += `<${self.value[i].constructor.Name}>`;
+                Stringified += (i ? ", " : "") + `<${self.value[i].constructor.Name}>`;
         }
         return HelperInit(CheddarString, "[" + Stringified + "]");
     }]
