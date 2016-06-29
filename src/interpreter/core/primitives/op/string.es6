@@ -8,7 +8,7 @@ export default new Map([
     // Replace " with \"
     //  and replace \
     //  with \\s
-    ['repr', (LHS) => {
+    ['repr', (_, LHS) => {
         return HelperInit(LHS.constructor, '"' + LHS.value.replace(
             /"|\\/g, "\\$&"
         ) + '"');

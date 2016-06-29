@@ -65,12 +65,14 @@ REPL.on('line', function(STDIN) {
 		else if (Output && Output.constructor.Cast && (
 				Output.constructor.Operator.has('repr') ||
 				Output.constructor.Cast.has('String'))) {
-			console.log(
-				`${(
-					Output.constructor.Operator.get('repr') ||
-					Output.constructor.Cast.get('String')
-				)(Output).value}`.magenta
-			);
+
+			let txt;
+			if (Output.constructor.Operator.has('repr')) {
+				txt = Output.constructor.Operator.get('repr')(null, Output).value;
+			} else {
+				txt = Output.constructor.Cast.get('String')(Output).value;
+			}
+			console.log(txt.magenta);
 		}
 		else if (Output instanceof CheddarScope) {
 			console.log(`< Instance of "${Output.constructor.Name}" >`);

@@ -13,14 +13,15 @@ export const DEFAULT_OP = new Map([
     // print: Definition
     ['print', (_, LHS) => {
         // Attempt to call `repr`, else, cast to string
-        let VAL = LHS.constructor.Operator.has('repr')
-                ? LHS.constructor.Operator.get('repr')(null, LHS)
+        let VAL = LHS.constructor.Name === 'String' ? LHS
                 : LHS.constructor.Cast.has('String')
                 ? LHS.constructor.Cast.get('String')(LHS)
+                : LHS.constructor.Operator.has('repr')
+                ? LHS.constructor.Operator.get('repr')(null, LHS)
                 : LHS;
 
         // Stream
-        if (VAL.constructor.Name === "String")
+        if (VAL.constructor.Name === 'String')
             console.log(VAL.value);
         else
             return CheddarError.NO_OP_BEHAVIOR;
