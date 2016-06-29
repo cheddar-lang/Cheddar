@@ -39,3 +39,6 @@ export default class CheddarArray extends CheddarClass {
     static Cast = BehaviorCast;
 
 }
+
+CheddarArray.Scope = require('../../../stdlib/primitive/Array/static');
+CheddarArray.prototype.Scope = require('../../../stdlib/primitive/Array/lib');

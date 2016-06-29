@@ -36,6 +36,15 @@ export default {
         return new CheddarVariable(val, { Writeable: false });
     },
 
+    // Make a property (getters & setters)
+    prop: function(getter = null, setter = null) {
+        return new CheddarVariable(null, {
+            Writeable: false,
+            getter: getter,
+            setter: setter
+        });
+    },
+
     // Make a namespace given a map
     namespace: function(val) {
         let Scope = new CheddarScope(null);

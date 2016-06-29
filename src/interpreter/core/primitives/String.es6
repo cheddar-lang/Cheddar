@@ -21,4 +21,4 @@ export default class CheddarString extends CheddarClass {
 }
 
 CheddarString.Scope = require('../../../stdlib/primitive/String/static');
-CheddarString.prototype.Scope = require('../../../stdlib/primitive/String/lib');;
+CheddarString.prototype.Scope = require('../../../stdlib/primitive/String/lib');

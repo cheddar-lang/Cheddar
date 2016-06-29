@@ -12,12 +12,18 @@ export default class CheddarVariable {
 
     constructor(Value, {
         Writeable = true,
-        StrictType = null
+        StrictType = null,
+
+        getter = null,
+        setter = null
     } = {}) {
         this.Value = Value;
 
         this.Writeable = Writeable;
         this.StrictType = StrictType;
+
+        this.getter = getter;
+        this.setter = setter;
     }
 
     Mutate(nval) {

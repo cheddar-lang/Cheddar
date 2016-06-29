@@ -43,6 +43,51 @@ import CheddarCallStack from './callstack';
 import CheddarError from '../consts/err';
 import CheddarErrorDesc from '../consts/err_msg';
 
+function to_value(variable, parent) {
+    // Check if getter
+    if (variable.Value) {
+        return variable.Value;
+    } else if (variable.getter) {
+        return variable.getter.exec([], parent);
+    } else {
+        // ERROR INTEGRATE
+        return `Attempted to accesses variable without value`;
+    }
+}
+
+function set_value(value, child) {
+    // The CheddarVariable() wrapping the value
+    let variable = value.scope.accessor(value.Reference);
+
+    // If the result is being set to a variable
+    if (child instanceof CheddarVariable) {
+        child = child.Value; // extract it's literal value
+    }
+
+    // If there's a setter
+    if (variable.setter !== null) {
+        // Run the setter.
+        // Pass the target value (child) as an arg
+        // Run in context of value (`self`)
+        child = variable.setter.exec([child], value);
+    }
+
+    // Set the correct reference on the scope
+    child.scope = value.scope;
+    child.Reference = value.Reference;
+
+    // Get the scope the LHS is in.
+    value.scope.manage(
+        // Change the var name
+        value.Reference,
+        // to the resulting value
+        new CheddarVariable(child, {
+            Writeable: true,
+            StrictType: variable.StrictType
+        })
+    );
+}
+
 export default class CheddarEval extends CheddarCallStack {
     // To iterativaley evaluate the expression
     //  individual repeated steps would be taken
@@ -79,8 +124,9 @@ export default class CheddarEval extends CheddarCallStack {
 
                 // NAVIGATE TOKEN AND DATA
 
+                set_value(DATA, TOKEN);
                 // Check if variable needs to be wrapped
-                if ((TOKEN.Reference === null || !TOKEN.Reference)) {
+                /*if ((TOKEN.Reference === null || !TOKEN.Reference)) {
                     TOKEN.scope = DATA.scope;
                     TOKEN.Reference = DATA.Reference;
 
@@ -93,7 +139,7 @@ export default class CheddarEval extends CheddarCallStack {
                     );
                 } else {
                     DATA.scope.manage(DATA.Reference, TOKEN.scope.Scope.get(TOKEN.Reference));
-                }
+                }*/
 
 
                 OPERATOR = TOKEN;
@@ -187,7 +233,9 @@ export default class CheddarEval extends CheddarCallStack {
                     .replace('$0', Operation._Tokens[0]._Tokens[0]);
                 }
 
-                OPERATOR = OPERATOR.Value;
+                OPERATOR = to_value(OPERATOR);
+                if (typeof OPERATOR === "string")
+                    return OPERATOR;
             } else {
                 return CheddarError.MALFORMED_TOKEN;
             }
@@ -237,11 +285,13 @@ export default class CheddarEval extends CheddarCallStack {
                         }`;
                     }
 
-                    // If it's a function. Set the previous item to the REFERENCE
-                    if (DATA.Value instanceof CheddarFunction)
-                        REFERENCE = OPERATOR;
+                    // Set the previous item to the REFERENCE
+                    REFERENCE = OPERATOR;
 
-                    OPERATOR = DATA.Value;
+                    OPERATOR = to_value(DATA, REFERENCE);
+
+                    if (typeof OPERATOR === "string")
+                        return OPERATOR;
                 }
             }
 
