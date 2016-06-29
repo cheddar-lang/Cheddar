@@ -8,6 +8,8 @@ import NIL from '../interpreter/core/consts/nil';
 import cheddar from '../interpreter/exec';
 import tokenizer from '../tokenizer/tok';
 
+import HelperCaret from '../helpers/caret';
+
 import stdlib from '../stdlib/stdlib';
 let USI = 0;
 
@@ -22,6 +24,11 @@ windw.Chedz = function input(STDIN) {
 
     let Tokenizer = new tokenizer(STDIN, 0);
     let Result = Tokenizer.exec();
+
+    if (!(Result instanceof tokenizer)) {
+		// Draw error pointer
+		console.log(HelperCaret(STDIN, Tokenizer.Index, true));
+	}
 
     let Executor = new cheddar(Result, GLOBAL_SCOPE);
     let Output = Executor.exec();

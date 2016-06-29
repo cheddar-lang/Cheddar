@@ -35,7 +35,25 @@ GLOBAL_SCOPE.Scope = stdlib;
 REPL.on('line', function(STDIN) {
 
 	if (STDIN === 'exit') REPL.close();
-	if (STDIN === 'help') { /* Helpful text */ }
+	if (STDIN === 'help') {
+		console.log(`
+Welcome to Cheddar!
+
+If you are using Cheddar for the first time, we reccomend following
+the getting started guide at: http://cheddar.vihan.org/quickstart
+
+The following commands are available:
+
+   exit  - exits the REPL
+   help  - outputs this
+   clear - clears the screen
+`)
+		return REPL.prompt();
+	}
+	if (STDIN === 'clear') {
+		process.stdout.write('\u001B[0f');
+		return REPL.prompt();
+	}
 
 	let Tokenizer = new tokenizer(STDIN, 0);
 	let Result = Tokenizer.exec();
