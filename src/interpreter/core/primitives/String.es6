@@ -8,7 +8,7 @@ export default class CheddarString extends CheddarClass {
     static Name = "String";
 
     init(string) {
-        this.value = string;
+        this.value = string.toString();
         return true;
     }
 
