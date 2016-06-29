@@ -78,7 +78,7 @@ The following commands are available:
 			// do nothing?
 		}
 		else if (!Output) {
-			console.log(Output);
+			console.log(String(Output).red);
 		}
 		else if (Output && Output.constructor.Cast && (
 				Output.constructor.Operator.has('repr') ||
@@ -93,16 +93,16 @@ The following commands are available:
 			console.log(txt.magenta);
 		}
 		else if (Output instanceof CheddarScope) {
-			console.log(`< Instance of "${Output.constructor.Name}" >`);
+			console.log(`< Instance of "${Output.constructor.Name}" >`.cyan);
 		}
 		else if (Output.prototype instanceof CheddarScope) {
-			console.log(`< Class "${Output.Name}" >`);
+			console.log(`< Class "${Output.Name}" >`.cyan);
 		}
 		else if (typeof Output === "symbol") {
-			console.log(Output.toString().magenta);
+			console.log(Output.toString().red);
 		}
 		else {
-			console.log(`< Unprintable object of class "${Output.constructor.name.magenta}" with literal value ${Output.magenta} >`);
+			console.log(`< Unprintable object of class "${Output.constructor.name.magenta}" with literal value ${Output.magenta} >`.cyan);
 		}
 	}
 
