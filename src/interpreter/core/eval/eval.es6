@@ -77,7 +77,7 @@ function set_value(value, child) {
     child.Reference = value.Reference;
 
     // Get the scope the LHS is in.
-    value.scope.manage(
+    let rep = value.scope.manage(
         // Change the var name
         value.Reference,
         // to the resulting value
@@ -86,6 +86,11 @@ function set_value(value, child) {
             StrictType: variable.StrictType
         })
     );
+
+    if (rep !== true) {
+        // ERROR INTEGRATE
+        return `\`${value.Reference}\` is a reserved keyword`;
+    }
 }
 
 export default class CheddarEval extends CheddarCallStack {
@@ -99,6 +104,7 @@ export default class CheddarEval extends CheddarCallStack {
         let OPERATOR,
             TOKEN,
             DATA,
+            NAME,
             REFERENCE = null;
 
         // Handle Operator
@@ -122,25 +128,13 @@ export default class CheddarEval extends CheddarCallStack {
                     return `Cannot override constant ${DATA.Reference}`;
                 }
 
-                // NAVIGATE TOKEN AND DATA
+                // Call `set_value` function
+                DATA = set_value(DATA, TOKEN);
 
-                set_value(DATA, TOKEN);
-                // Check if variable needs to be wrapped
-                /*if ((TOKEN.Reference === null || !TOKEN.Reference)) {
-                    TOKEN.scope = DATA.scope;
-                    TOKEN.Reference = DATA.Reference;
-
-                    DATA.scope.manage(
-                        DATA.Reference,
-                        new CheddarVariable(TOKEN, {
-                            Writeable: !DATA.const,
-                            StrictType: null
-                        })
-                    );
-                } else {
-                    DATA.scope.manage(DATA.Reference, TOKEN.scope.Scope.get(TOKEN.Reference));
-                }*/
-
+                // If it errored
+                if (DATA !== true) {
+                    return DATA;
+                }
 
                 OPERATOR = TOKEN;
 
@@ -213,9 +207,15 @@ export default class CheddarEval extends CheddarCallStack {
             // Is a primitive
             // this includes `"foo".bar`
             if (Operation._Tokens[0] instanceof CheddarLiteral) {
+                // Get the token's value
                 TOKEN = Operation._Tokens[0]._Tokens[0];
+
+                // Get the class associated with the token
                 OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name);
                 if (OPERATOR) {
+                    // Set the name to be used in errors
+                    NAME = OPERATOR.Name || "object";
+
                     OPERATOR = new OPERATOR(this.Scope);
 
                     if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) !== true) {
@@ -228,9 +228,11 @@ export default class CheddarEval extends CheddarCallStack {
                 // Lookup variable -> initial variable name
                 OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]);
 
+                // Set the name to be used in errors, extracted from token
+                NAME = Operation._Tokens[0]._Tokens[0];
                 if (!OPERATOR || OPERATOR === CheddarError.KEY_NOT_FOUND) {
                     return CheddarErrorDesc.get(CheddarError.KEY_NOT_FOUND)
-                    .replace('$0', Operation._Tokens[0]._Tokens[0]);
+                    .replace('$0', NAME);
                 }
 
                 OPERATOR = to_value(OPERATOR);
@@ -248,10 +250,12 @@ export default class CheddarEval extends CheddarCallStack {
 
                     if (!(OPERATOR instanceof CheddarFunction)) {
                         // ERROR INTEGRATE
-                        return "THATS NOT A FUNCTION YOU IDIOT"; // A little harsh?
+                        return `\`${NAME}\` is not a function`;
                     }
 
                     DATA = [];
+
+                    // Get the array of args from the token
                     TOKEN = Operation._Tokens[i]._Tokens;
                     let evalres; // Evaluation result
                     for (let i = 0; i < TOKEN.length; i++) {
@@ -279,11 +283,13 @@ export default class CheddarEval extends CheddarCallStack {
                     if (!OPERATOR.accessor || !(DATA = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]))) {
                         // ERROR INTEGRATE
                         return `${
-                            Operation._Tokens[i - 1]._Tokens[0]
+                            NAME
                         } has no property ${
                             Operation._Tokens[i]._Tokens[0]
                         }`;
                     }
+
+                    NAME = Operation._Tokens[i]._Tokens[0];
 
                     // Set the previous item to the REFERENCE
                     REFERENCE = OPERATOR;

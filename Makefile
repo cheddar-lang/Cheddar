@@ -24,13 +24,13 @@ all: default
 
 # The default task
 # The **production** build
-default: $(JC) $(SRC)
+default: $(JC)
 	$(JC) $(JCFLAGS) --minified
 	$(BIN_MAKE)
 
 # Development build task
 # This builds and includes source maps
-build: $(JC) $(SRC)
+build: $(JC)
 	$(JC) $(JCFLAGS) --source-maps
 	$(BIN_MAKE)
 
@@ -41,7 +41,7 @@ install: ./bin/install
 
 # Runs browser_repl build for web REPL
 # Uses browserify to compiled babelified code
-browser_build: $(JC) $(SRC)
+browser_build: $(JC)
 	$(PREFIX)/browserify dist/cli/browser_repl.js -o Cheddar.js
 
 # Performs testing, including coverage

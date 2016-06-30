@@ -8,14 +8,20 @@
 // yes, it'll impact shunting-yard parsing
 // but we don't have postfix yet (e.g. i++)
 export const RESERVED_KEYWORDS = new Set([
-    'cbrt', 'root',
+    'sqrt', 'cbrt', 'root',
     'sin', 'cos', 'tan',
     'acos', 'asin', 'atan',
     'log',
     'floor', 'ceil', 'round',
     'len', 'reverse', 'abs', 'repr',
     'sign', 'print',
-    'and', 'or', 'xor'
+    'and', 'or', 'xor',
+    // States
+    'var', 'const',
+    'if', 'for', 'while',
+    'func', 'class',
+    // Literals
+    'true', 'false', 'nil'
 ]);
 
 export const OP = [

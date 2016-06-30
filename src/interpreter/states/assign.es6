@@ -25,11 +25,15 @@ export default class CheddarAssign {
         val.scope = this.scope;
         val.Reference = this.assignl.tok(0);
 
-        this.scope.manage(this.assignl.tok(0),
+        let res = this.scope.manage(this.assignl.tok(0),
             new CheddarVariable(val, {
                 Writeable: this.assignt !== "const",
                 StrictType: this.assignl.tok(1) || null
             })
         );
+
+        if (res !== true) {
+            return `\`${this.assignl.tok(0)}\` is a reserved keyword`;
+        }
     }
 }

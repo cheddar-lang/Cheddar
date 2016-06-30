@@ -71,10 +71,12 @@ export default class CheddarScope {
             return this.inheritanceChain.manage(token, value);
 
         } else {
-            if (RESERVED_KEYWORDS.has(token))
+            if (RESERVED_KEYWORDS.has(token)) {
                 return CheddarError.KEY_IS_RESERVED;
-            else
-                return this.setter(token, value), token;
+            } else {
+                this.setter(token, value);
+                return true;
+            }
         }
 
     }
