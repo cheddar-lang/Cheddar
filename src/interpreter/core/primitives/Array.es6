@@ -1,5 +1,7 @@
 import CheddarClass from '../env/class';
 
+import NIL from '../consts/nil';
+
 import {MALFORMED_TOKEN} from '../consts/err';
 
 import BehaviorOperator from './op/array';
@@ -18,7 +20,16 @@ export default class CheddarArray extends CheddarClass {
                 this.value.push(items[i]);
             } else if (items[i].constructor.name === "CheddarExpressionToken") {
                 // Is an expression
-                this.value.push(new CheddarEval(items[i], this.Scope).exec());
+                let res = new CheddarEval(items[i], this.Scope).exec();
+                if (typeof res === "string") {
+                    return res
+                } else if (!res) {
+                    if (i && i !== items.length - 1) {
+                        this.value.push(new NIL);
+                    }
+                } else {
+                    this.value.push(res);
+                }
             } else {
                 return MALFORMED_TOKEN;
             }
@@ -41,4 +52,5 @@ export default class CheddarArray extends CheddarClass {
 }
 
 CheddarArray.Scope = require('../../../stdlib/primitive/Array/static');
-CheddarArray.prototype.Scope = require('../../../stdlib/primitive/Array/lib');
+console.log(require('../../../stdlib/api'));
+//CheddarArray.prototype.Scope = require('../../../stdlib/primitive/Array/lib');

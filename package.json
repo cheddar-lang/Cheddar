@@ -41,5 +41,8 @@
   "bugs": {
     "url": "https://github.com/cheddar-lang/Cheddar/issues"
   },
+  "config": {
+    "unsafe-perm": true
+  },
   "homepage": "https://github.com/cheddar-lang/Cheddar#readme"
 }

@@ -5,9 +5,9 @@ import HelperInit from '../../../helpers/init';
 export default class NIL extends CheddarClass {
     static Name = "Nil";
 
-    init() {
-        return true;
-    }
+    init = () => true;
 
-    static Cast = new Map([...CheddarClass.Operator, ['String', () => HelperInit(CheddarString, "Nil")]]);
+    static Cast = new Map([...CheddarClass.Operator,
+        ['String', () => HelperInit(CheddarString, "nil")]
+    ]);
 }

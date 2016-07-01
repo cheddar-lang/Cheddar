@@ -1,14 +1,11 @@
 // Cheddar Expression Parser
 import O from '../literals/op';
 import P from './property';
-import L from './any';
-import F from './function';
 import CheddarLexer from '../tok/lex';
 import {OP, UOP, EXPR_OPEN, EXPR_CLOSE} from '../consts/ops';
 import CheddarCustomLexer from './custom';
 
 // Special Exceptions
-import B from '../literals/boolean';
 
 /*
 For Reference, the orginal grammar is:
