@@ -249,7 +249,6 @@ export default class CheddarEval extends CheddarCallStack {
             }
 
             // Advance variable tree
-            // i dunno how to do this shit so ill do it later
             for (let i = 1; i < Operation._Tokens.length; i++) {
                 // if it is a function call, call the function
                 if (Operation._Tokens[i] instanceof CheddarArrayToken) {

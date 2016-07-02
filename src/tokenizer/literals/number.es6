@@ -65,7 +65,11 @@ export default class CheddarNumberToken extends CheddarPrimitive {
                 // Is a digit seperator e.g. _
                 else if (NUMBER_GROUPING.indexOf(chr) > -1)
                     // Not the first or last integer digit
-                    if (this.last && digit_set.indexOf(this.Code[this.Index].toUpperCase()) > -1)
+                    if (this.last && (
+                        digit_set.indexOf(this.Code[this.Index].toUpperCase()) > -1 ||
+                        NUMBER_GROUPING.indexOf(this.Code[this.Index]) > -1
+                        )
+                    )
                         continue;
                     else
                         return this.error(CheddarError.UNEXPECTED_TOKEN);
