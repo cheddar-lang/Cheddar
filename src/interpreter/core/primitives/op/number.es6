@@ -156,6 +156,14 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
+    ['xor', (LHS, RHS) => {
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(LHS.constructor, 10, 0, LHS.value ^ RHS.value);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
+    // Special Operators
     [':', (LHS, RHS) => {
         let CheddarArray = require("../Array");
         if (LHS && RHS instanceof LHS.constructor)
@@ -197,7 +205,7 @@ export default new Map([
             return HelperInit(RHS.constructor, 10, 0, Math.log(RHS.value));
         else if (RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, 10, 0, Math.log(LHS.value) / Math.log(RHS.value));
-        
+
         return CheddarError.NO_OP_BEHAVIOR;
     }],
 

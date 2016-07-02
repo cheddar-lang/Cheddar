@@ -139,12 +139,11 @@ export default class CheddarEval extends CheddarCallStack {
                 OPERATOR = TOKEN;
 
             } else if (Operation.Tokens[1] === OP_TYPE.UNARY) {
+                NAME = TOKEN.constructor.Operator ||
+                       TOKEN.Operator;
                 // It is an Unary operator use TOKEN as RHS, null as LHS
-                if (TOKEN.constructor.Operator.has(Operation.Tokens[0])) {
-                    OPERATOR = (
-                        TOKEN.constructor.Operator ||
-                        TOKEN.Operator
-                    ).get(Operation.Tokens[0])(null, TOKEN);
+                if (NAME.has(Operation.Tokens[0])) {
+                    OPERATOR = NAME.get(Operation.Tokens[0])(null, TOKEN);
                 } else {
                     OPERATOR = CheddarError.NO_OP_BEHAVIOR;
                 }
@@ -152,11 +151,11 @@ export default class CheddarEval extends CheddarCallStack {
                 // Binary operator. DATA is RHS, TOKEN is LHS
                 DATA = this.shift(); // Get the other arg
 
-                if (DATA.constructor.Operator.has(Operation.Tokens[0])) {
-                    OPERATOR = (
-                        DATA.constructor.Operator ||
-                        DATA.Operator
-                    ).get(Operation.Tokens[0])(DATA, TOKEN);
+                NAME = DATA.constructor.Operator ||
+                       DATA.Operator;
+
+                if (NAME.has(Operation.Tokens[0])) {
+                    OPERATOR = NAME.get(Operation.Tokens[0])(DATA, TOKEN);
                 } else {
                     OPERATOR = CheddarError.NO_OP_BEHAVIOR;
                 }
