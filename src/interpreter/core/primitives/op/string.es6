@@ -29,6 +29,17 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
+    // Logical NOT
+    //  if the string is
+    //  empty
+    ['!', (LHS, RHS) => {
+        let CheddarBool = require('../Bool');
+        if (LHS === null)
+            return HelperInit(CheddarBool, RHS.value.length === 0);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
     // String repetition
     //  when either Operator<*>.Behavior
     //  is (String, Number)

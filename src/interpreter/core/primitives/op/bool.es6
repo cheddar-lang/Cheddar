@@ -1,5 +1,10 @@
 import HelperInit from '../../../../helpers/init';
 
 export default new Map([
-    ['Number', (RHS) => HelperInit(require('../Number'), +RHS.value)]
+    ['!', (LHS, RHS) => {
+        if (LHS === null)
+            return HelperInit(RHS.constructor, !RHS.value);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }]
 ]);
