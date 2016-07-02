@@ -140,6 +140,37 @@ describe('Numbers', function(){
 //            'print String::(|)'
 //        ))
     })
+
+    describe('xor', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print "4 xor 3=" + String::(4 xor 3)',
+            '4 xor 3=' + (4 ^ 3)
+        ))
+//        it('should break', TestCheddarFrom.Code(
+//            'print String::(|)'
+//        ))
+    })
+
+    describe('right shift', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print "4>>3=" + String::(4>>3)',
+            '4>>3=' + (4 >> 3)
+        ))
+//        it('should break', TestCheddarFrom.Code(
+//            'print String::(|)'
+//        ))
+    })
+
+    describe('left shift', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print "4<<3=" + String::(4<<3)',
+            '4<<3=' + (4<<3)
+        ))
+//        it('should break', TestCheddarFrom.Code(
+//            'print String::(|)'
+//        ))
+    })
+
     describe('sign', function(){
         it('unary should work', TestCheddarFrom.Code(
             'print "sign 3=" + String::(sign 3)',
