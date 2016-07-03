@@ -2,7 +2,7 @@ import CheddarString from '../interpreter/core/primitives/String';
 import CheddarNumber from '../interpreter/core/primitives/Number';
 import CheddarArray from '../interpreter/core/primitives/Array';
 import CheddarBool from '../interpreter/core/primitives/Bool';
-import nil from '../interpreter/core/primitives/nil';
+import nil from '../interpreter/core/consts/nil';
 import CheddarFunc from '../interpreter/core/env/func';
 
 import * as CheddarError from '../interpreter/core/consts/err';
@@ -13,7 +13,7 @@ import CheddarClass from '../interpreter/core/env/class';
 
 import HelperInit from '../helpers/init';
 
-export default {
+var API = {
     string: CheddarString,
     number: CheddarNumber,
     array: CheddarArray,
@@ -36,6 +36,11 @@ export default {
         return new CheddarVariable(val, { Writeable: false });
     },
 
+    // Make a variable from an implementation
+    from: function(val) {
+        return new CheddarVariable(val(API), { Writeable: false });
+    },
+
     // Make a property (getters & setters)
     prop: function(getter = null, setter = null) {
         return new CheddarVariable(null, {
@@ -56,3 +61,5 @@ export default {
     class: CheddarClass,
     scope: CheddarScope
 };
+
+export default API;

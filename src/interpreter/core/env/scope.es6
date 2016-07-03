@@ -28,16 +28,6 @@ export default class CheddarScope {
         this.inheritanceChain = inherit;
     }
 
-    make(Name, Type, Value, Arguments) {
-        let A = new Type(this, Name),
-            B;
-
-        if ((B = A.init(...Value)) === true)
-            return this.Scope.set(Name, new CheddarVariable(A, Arguments));
-        else
-            return B;
-    }
-
     // STATIC
     static Scope = new Map();
     static has(token) {

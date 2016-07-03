@@ -27,6 +27,9 @@ export default class CheddarIf {
                     expr = this.toks._Tokens[cs++];
                     expr = new CheddarEval(expr, this.Scope).exec();
 
+                    if (typeof expr === 'string')
+                        return expr;
+
                     // Check if expression is true
                     val = new CheddarBool(this.Scope);
                     // Ensure: a. Succesful cast; b. evals to true

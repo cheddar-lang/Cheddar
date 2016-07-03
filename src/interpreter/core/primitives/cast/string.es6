@@ -30,7 +30,7 @@ class A {
 
 CLASS ::= class <identifier> <idlist> {
               <ITEM> (\n<ITEM> | })
-ITEM  ::= main <codeblock> |
+ITEM  ::= init <codeblock> |
           (cast (from|to)|(get|set))? <indentifier> <arglist> <codeblock> |
           (assignby (copy|reference))|
 */

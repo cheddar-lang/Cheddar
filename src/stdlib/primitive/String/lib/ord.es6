@@ -2,7 +2,7 @@ export default (api) => ["ord", api.var(new api.func(
     [
         ["index", {
             Type: api.number,
-            Default: api.init(api.number, 10, 0, 1)
+            Default: api.init(api.number, 10, 0, 0)
         }]
     ],
     function(scope, input) {
@@ -15,7 +15,7 @@ export default (api) => ["ord", api.var(new api.func(
         let code;
 
         if (!target) {
-            return api.init(api.nil);
+            return new api.nil;
         }
 
         if (target[1]) {

@@ -182,30 +182,6 @@ export default class CheddarEval extends CheddarCallStack {
                 this.put(OPERATOR);
             }
 
-        } else if (Operation instanceof CheddarLiteral) {
-            // If it is a token, pass tokens to the associated class constructor
-            TOKEN = Operation._Tokens[0]; // Get token
-
-            // Do a lookup in the PRIMITIVE_LINKS class and get the link class
-            if ((OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name))) {
-                // OPERATOR has the class to construct upon
-
-                // Operator Construction
-                OPERATOR = new OPERATOR(this.Scope);
-
-                // Initialize operator class
-                //  check if successful (true)
-                if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) === true) {
-                    // place on stack
-                    this.put( OPERATOR );
-                } else {
-                    // return error
-                    return TOKEN;
-                }
-
-            } else {
-                return CheddarError.UNLINKED_CLASS;
-            }
         } else if (Operation instanceof CheddarPropertyToken) {
             // If it's a property
             //  this includes functions

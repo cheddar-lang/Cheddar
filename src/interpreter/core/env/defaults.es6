@@ -57,7 +57,7 @@ export const DEFAULT_OP = new Map([
 
     // Defaults
     ['!', (LHS, RHS) => {
-        if (LHS === null && RHS && RHS.constructor.Cast.has('Bool'))
+        if (LHS === null && RHS && RHS.constructor.Cast && RHS.constructor.Cast.has('Bool'))
             return HelperInit(
                 require("../primitives/Bool"),
                 !RHS.constructor.Cast.get('Bool')(RHS).value
@@ -70,6 +70,6 @@ export const DEFAULT_OP = new Map([
 
 export const DEFAULT_CAST = new Map([
     ['Bool', (self) => {
-        self0
+        self
     }]
 ]);

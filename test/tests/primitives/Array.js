@@ -14,5 +14,15 @@ describe('Array', function(){
             '[ 1 , 2 , 3]',
             ''
         ))
+
+        it('should allow trailing commas', TestCheddarFrom.Code(
+            'print [ 1, ]',
+            '[1]'
+        ))
+
+        it('commas should be nil', TestCheddarFrom.Code(
+            'print [ 1,, 2 ]',
+            '[1, nil, 2]'
+        ))
     })
 });

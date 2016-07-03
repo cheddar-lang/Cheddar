@@ -52,5 +52,4 @@ export default class CheddarArray extends CheddarClass {
 }
 
 CheddarArray.Scope = require('../../../stdlib/primitive/Array/static');
-console.log(require('../../../stdlib/api'));
 //CheddarArray.prototype.Scope = require('../../../stdlib/primitive/Array/lib');
