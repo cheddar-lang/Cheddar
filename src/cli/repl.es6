@@ -3,6 +3,9 @@ import colors from 'colors';
 
 import CheddarScope from '../interpreter/core/env/scope';
 
+import CheddarVariable from '../interpreter/core/env/var';
+import CheddarString from '../interpreter/core/primitives/String';
+
 import NIL from '../interpreter/core/consts/nil';
 
 import cheddar from '../interpreter/exec';
@@ -31,6 +34,14 @@ const CONSTANT = {
 };
 let GLOBAL_SCOPE = new CheddarScope(null);
 GLOBAL_SCOPE.Scope = stdlib;
+
+process.argv.forEach((val, i) => {
+	if (i > 0) {
+		let v = new CheddarString(null, null);
+		v.init(val);
+		GLOBAL_SCOPE.Scope.set('$' + (i - 1), new CheddarVariable(v));
+	}
+});
 
 REPL.on('line', function(STDIN) {
 

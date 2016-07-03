@@ -2,6 +2,9 @@
 
 import CheddarScope from '../interpreter/core/env/scope';
 
+import CheddarVariable from '../interpreter/core/env/var';
+import CheddarString from '../interpreter/core/primitives/String';
+
 import cheddar from '../interpreter/exec';
 import tokenizer from '../tokenizer/tok';
 
