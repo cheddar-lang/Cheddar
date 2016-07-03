@@ -4,5 +4,6 @@ export default new Map([
     require('./lib/split')(api),
     require('./lib/ord')(api),
     require('./lib/length')(api),
+    require('./lib/rev')(api),
     require('./lib/chars')(api)
 ]);
