@@ -2,14 +2,14 @@ var TestCheddarFrom = require('../globals').TestCheddarFrom;
 var chai = require('chai');
 
 describe('String.', function(){
-    describe('length', function(){
+    describe('len', function(){
         it('should work', TestCheddarFrom.Code(
-            `print "1234".length`,
+            `print "1234".len`,
             `4`
         ))
 
         it('should not error', TestCheddarFrom.Code(
-            `"".length`,
+            `"".len`,
             ``
         ))
     });

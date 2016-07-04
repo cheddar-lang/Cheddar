@@ -2,10 +2,7 @@
 //  preset casing for operator
 //  handling
 import CheddarError from '../consts/err';
-
 import HelperInit from '../../../helpers/init';
-
-import CheddarClass from './class'; // I really hope this works >_>
 
 export const IS_CLASS = Symbol("IS_CLASS");
 export const DEFAULT_OP = new Map([
@@ -30,11 +27,16 @@ export const DEFAULT_OP = new Map([
     }],
 
     ['::', (LHS, RHS) => {
-        if (!LHS.prototype instanceof CheddarClass)
+        let CheddarClass = require('./class');
+        let CAST_ALIAS = require('../config/alias');
+
+        if (!(LHS.prototype instanceof CheddarClass))
             return CheddarError.CAST_FAILED;
 
         let res;
-        if ((res = RHS.constructor.Cast.get(LHS.Name) || RHS.constructor.Cast.get(LHS))) {
+        if ((res = RHS.constructor.Cast.get(LHS.Name) ||
+                   RHS.constructor.Cast.get(LHS) ||
+                   RHS.constructor.Cast.get(CAST_ALIAS.get(LHS)))) {
             return res(RHS);
         } else {
             return CheddarError.NO_OP_BEHAVIOR;
