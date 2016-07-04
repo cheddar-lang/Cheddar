@@ -1,10 +1,14 @@
 import CheddarClass from '../env/class';
 import CheddarVariable from '../env/var';
 
+import NIL from '../consts/nil';
+
 import BehaviorOperator from './op/string';
 import BehaviorCast from './cast/string';
 
 function InitalizeSubstring(source) {
+    if (!source)
+        return new NIL;
     var str = new CheddarString(null, null);
     str.init(source);
     return str;

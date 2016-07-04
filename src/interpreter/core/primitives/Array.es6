@@ -49,7 +49,7 @@ export default class CheddarArray extends CheddarClass {
     accessor(target) {
         return this.Scope.get(target) || (
             Number.isInteger(+target) ?
-            new CheddarVariable(this.value[target]) :
+            new CheddarVariable(this.value[target] || new NIL) :
             null
         );
     }
