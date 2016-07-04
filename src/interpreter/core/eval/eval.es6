@@ -105,6 +105,7 @@ export default class CheddarEval extends CheddarCallStack {
             TOKEN,
             DATA,
             NAME,
+            TARGET,
             REFERENCE = null;
 
         // Handle Operator
@@ -257,20 +258,52 @@ export default class CheddarEval extends CheddarCallStack {
                         REFERENCE
                     );
                 } else {
+                    if (Operation._Tokens[i] === "[]") {
+                        // it is [ ... ]
+                        ++i; // Go to expression
+
+                        // Execute the expression
+                        let res = new CheddarEval(
+                            Operation._Tokens[i],
+                            this.Scope
+                        ).exec();
+
+                        // If response is a string, it's errored
+                        if (typeof res === "string") {
+                            return res;
+                        }
+
+                        // The response should be:
+                        //  A) number
+                        //  B) string
+
+                        if (res.constructor.Name === "String" || (
+                                res.constructor.Name === "Number" &&
+                                Number.isInteger(res.value)
+                            )) {
+                            TARGET = res.value + "";
+                        } else {
+                            return `Evaluated accessors must evaluate to a string or integer`;
+                        }
+
+                    } else {
+                        TARGET = Operation._Tokens[i]._Tokens[0];
+                    }
+
                     // Else it is a property
 
                     // Attempt to access the accessor
                     // then use the accessor to get the token
-                    if (!OPERATOR.accessor || !(DATA = OPERATOR.accessor(Operation._Tokens[i]._Tokens[0]))) {
+                    if (!OPERATOR.accessor || !(DATA = OPERATOR.accessor(TARGET))) {
                         // ERROR INTEGRATE
                         return `${
                             NAME
                         } has no property ${
-                            Operation._Tokens[i]._Tokens[0]
+                            TARGET
                         }`;
                     }
 
-                    NAME = Operation._Tokens[i]._Tokens[0];
+                    NAME = TARGET;
 
                     // Set the previous item to the REFERENCE
                     REFERENCE = OPERATOR;

@@ -1,8 +1,10 @@
 import CheddarClass from '../env/class';
+import CheddarVariable from '../env/var';
 
 import NIL from '../consts/nil';
 
 import {MALFORMED_TOKEN} from '../consts/err';
+
 
 import BehaviorOperator from './op/array';
 import BehaviorCast from './cast/array';
@@ -41,6 +43,15 @@ export default class CheddarArray extends CheddarClass {
     reverse() {
         this.value.reverse();
         return this;
+    }
+
+    // Accessor to redirect [n]
+    accessor(target) {
+        return this.Scope.get(target) || (
+            Number.isInteger(+target) ?
+            new CheddarVariable(this.value[target]) :
+            null
+        );
     }
 
     // String is the lowest level class
