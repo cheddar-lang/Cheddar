@@ -1,30 +1,30 @@
-import CheddarExpressionToken from './expr';
-import CheddarExpressionsToken from './exprs';
-import {LAMBDA_ASSIGNMENT, LAMBDA_NO_ARGS} from '../consts/lambda';
-import CheddarLexer from '../tok/lex';
+import CheddarExpressionToken from '../states/expr';
+import CheddarCodeblock from '../patterns/block';
 import CheddarArrayToken from './array';
 import CheddarArgumentToken from './argument';
 import CheddarCustomLexer from './custom';
+import CheddarPrimitive from '../literals/primitive';
 
-export default class CheddarFunctionToken extends CheddarLexer {
+export default class CheddarFunctionToken extends CheddarPrimitive {
     exec() {
         this.open(false);
 
         this.jumpWhite();
 
         const E = CheddarExpressionToken;
-        const S = CheddarExpressionsToken;
-        const L = LAMBDA_ASSIGNMENT;
-        const N = LAMBDA_NO_ARGS;
-        const A = CheddarCustomLexer(CheddarArrayToken, '(', ')', CheddarArgumentToken);
+        const A = CheddarCustomLexer(CheddarArrayToken, '(', ')', CheddarArgumentToken, true);
+
+        /**
+         This basically runs the following:
+
+         "->" ARG_LIST? (CODE BLOCK | EXPRESSION)
+
+         */
 
         let grammar = this.grammar(true,
-            [L, A, '{', S, '}'],
-            [L, A, E],
-            //[N, '{', S, '}'],
-            [N, E]
+            [[A], "->", [CheddarCodeblock, CheddarExpressionToken]]
         );
-        //console.log(grammar);
+
         return grammar;
     }
 }

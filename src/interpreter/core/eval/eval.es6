@@ -23,7 +23,7 @@ import {TYPE as OP_TYPE} from '../../../tokenizer/consts/ops';
 
 // Reference tokens
 import CheddarPropertyToken from '../../../tokenizer/parsers/property';
-import CheddarLiteral from '../../../tokenizer/parsers/any';
+import CheddarLiteral from '../../../tokenizer/literals/literal';
 import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
@@ -183,15 +183,21 @@ export default class CheddarEval extends CheddarCallStack {
                 this.put(OPERATOR);
             }
 
-        } else if (Operation instanceof CheddarPropertyToken) {
+        } else if (Operation instanceof CheddarPropertyToken || Operation instanceof CheddarLiteral) {
             // If it's a property
             //  this includes functions
 
             // Is a primitive
             // this includes `"foo".bar`
-            if (Operation._Tokens[0] instanceof CheddarLiteral) {
-                // Get the token's value
-                TOKEN = Operation._Tokens[0]._Tokens[0];
+            if ((Operation._Tokens[0] instanceof CheddarLiteral) ||
+                (Operation instanceof CheddarLiteral)) {
+
+                if (Operation instanceof CheddarLiteral) {
+                    TOKEN = Operation;
+                } else {
+                    // Get the token's value
+                    TOKEN = Operation._Tokens[0]._Tokens[0];
+                }
 
                 // Get the class associated with the token
                 OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name);
@@ -203,6 +209,12 @@ export default class CheddarEval extends CheddarCallStack {
 
                     if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) !== true) {
                         return TOKEN;
+                    }
+
+                    // Exit if it's a raw literal
+                    if (Operation instanceof CheddarLiteral) {
+                        this.put(OPERATOR);
+                        return true;
                     }
                 } else {
                     return CheddarError.UNLINKED_CLASS;

@@ -1,4 +1,4 @@
-import CheddarLexer from '../tok/lex';
+import CheddarLexer from '../literals/literal';
 
 import CheddarBooleanToken from '../literals/boolean';
 import CheddarNilToken from '../literals/nil';
@@ -6,8 +6,6 @@ import CheddarNilToken from '../literals/nil';
 import CheddarStringToken from '../literals/string';
 import CheddarNumberToken from '../literals/number';
 import CheddarArrayToken from './array';
-// import CheddarBlockToken from './block';
-import CheddarFunctionToken from './function';
 
 export default class CheddarAnyLiteral extends CheddarLexer {
     exec() {
@@ -18,8 +16,7 @@ export default class CheddarAnyLiteral extends CheddarLexer {
             CheddarNumberToken,
             CheddarBooleanToken,
             CheddarNilToken,
-            CheddarArrayToken,
-            CheddarFunctionToken
+            CheddarArrayToken
         );
 
         if (attempt instanceof CheddarLexer) {

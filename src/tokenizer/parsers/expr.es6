@@ -1,6 +1,7 @@
 // Cheddar Expression Parser
 import O from '../literals/op';
 import P from './property';
+import F from './function';
 import CheddarLexer from '../tok/lex';
 import {OP, UOP, EXPR_OPEN, EXPR_CLOSE} from '../consts/ops';
 import CheddarCustomLexer from './custom';
@@ -86,6 +87,7 @@ class CheddarExpressionTokenAlpha extends CheddarLexer {
         const E = CheddarExpressionToken;
 
         return this.grammar(true,
+            [F],
             ['(', E, ')'],
             [UNARY, E], // Prefix
             [P]
