@@ -1,20 +1,10 @@
-<!-- NOTE: If you have a PROPOSAL, then
-           this does not apply to you. 
-           In that case, include a clear
-           definiton, a formal grammar for
-           your proposal, examples, and why
-           that feature would be helpful.
--->
-
-**Version:** the version you're runnning. Found through `cheddar -V`
+**Version:** Found through `cheddar -V`
 
 ### Problem
-
-Describe what exactly the problem you've found is.
-Try not to just specify your particular instance.
-Additionally, attempt to be as detailed as possible.
+Describe in detail the problem you've found.
 
 ### Desired Behavior
+What instead should happen?
 
 ### How to Reproduce
 
