@@ -75,13 +75,13 @@ export default class CheddarLexer {
         return this.error(CheddarError.EXIT_NOTFOUND);
     }
 
-    initParser(parseClass) {
+    initParser(parseClass, i = this.Index) {
         if (parseClass instanceof CheddarLexer) {
             parseClass.Code = this.Code;
-            parseClass.Index = this.Index;
+            parseClass.Index = i;
             return parseClass;
         } else if (parseClass.prototype instanceof CheddarLexer) {
-            return new parseClass(this.Code, this.Index);
+            return new parseClass(this.Code, i);
         }
     }
 
@@ -185,23 +185,33 @@ export default class CheddarLexer {
                             i--;
                             continue main;
                         }
-                        // Optional
-                        parser = this.initParser(defs[i][j][0]);
-                        result = parser.exec();
-                        if (result !== CheddarError.EXIT_NOTFOUND) {
-                            if (!(result instanceof CheddarLexer)) {
-                                return this.error(result);
-                            } else {
-                                index = parser.Index;
 
-                                // Filter
-                                if (!(
-                                    (
-                                        result.constructor.name.endsWith('Alpha') ||
-                                        result.constructor.name.endsWith('Beta')
-                                    ) &&
-                                    result._Tokens.length === 0))
-                                    tokens.push(result);
+                        // Optional
+                        if (typeof defs[i][j][0] === 'string') {
+                            // If it matches
+                            if (this.Code.indexOf(defs[i][j][0], index) === index) {
+                                index += defs[i][j][0].length;
+                                tokens.push(defs[i][j][0]);
+                            }
+                        } else {
+                            parser = this.initParser(defs[i][j][0], index);
+                            result = parser.exec();
+
+                            if (result !== CheddarError.EXIT_NOTFOUND) {
+                                if (!(result instanceof CheddarLexer)) {
+                                    return this.error(result);
+                                } else {
+                                    index = result.Index;
+
+                                    // Filter
+                                    if (!(
+                                        (
+                                            result.constructor.name.endsWith('Alpha') ||
+                                            result.constructor.name.endsWith('Beta')
+                                        ) &&
+                                        result._Tokens.length === 0))
+                                        tokens.push(result);
+                                }
                             }
                         }
                     } else {
@@ -245,6 +255,7 @@ export default class CheddarLexer {
                         }
                     }
                 } else {
+                    // It must be a string
                     let oldIndex = this.Index;
                     this.Index = index;
                     result = this.jumpLiteral(defs[i][j]);
