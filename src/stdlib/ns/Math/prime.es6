@@ -1,6 +1,6 @@
 import _factor from "./helpers/factor";
 
-export default function isprime(cheddar) {
+export default function(cheddar) {
     return new cheddar.func(
         [
             ["n", {

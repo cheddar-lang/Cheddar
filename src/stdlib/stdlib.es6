@@ -1,14 +1,11 @@
 import API from './api';
 
 let STDLIB = new Map();
-STDLIB.Item = (Name, NS) => STDLIB.set(Name, API.var(NS(API)));
+STDLIB.Item = (Name) => STDLIB.set(Name, API.var(require(`./ns/${Name}`)(API)));
 
 /** Global Libraries **/
-import LIBMath from './ns/math';
-STDLIB.Item("Math", LIBMath);
-
-import LIBIO from './ns/IO';
-STDLIB.Item("IO", LIBIO);
+STDLIB.Item("Math");
+STDLIB.Item("IO");
 
 /** Primitives **/
 STDLIB.set("String",  API.var(API.string));

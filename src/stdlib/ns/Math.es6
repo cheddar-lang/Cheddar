@@ -7,7 +7,8 @@ export default function(cheddar) {
         ["GAMMA", cheddar.make(cheddar.number, 10, 0, 0.577215664901532)],
         ["AVOGADRO", cheddar.make(cheddar.number, 10, 0, 6.02214086)],
 
-        ["fib", cheddar.var(require("./math/fib")(cheddar))],
-        ["isprime", cheddar.var(require("./math/isprime")(cheddar))]
+        ["fib", cheddar.from(require("./Math/fib"))],
+        ["factor", cheddar.from(require("./Math/factor"))],
+        ["prime", cheddar.from(require("./Math/prime"))]
     ]);
 }
