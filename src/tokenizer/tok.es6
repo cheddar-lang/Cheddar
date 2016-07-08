@@ -46,6 +46,7 @@ export default class CheddarTokenize extends CheddarLexer {
             }
 
             if (!(MATCH instanceof CheddarEXPLICIT) && !(VALID_END(this.Code[this.Index]))) {
+                console.log("hahahahahahahahsidfuahsdodcbuav riulcas")
                 return this.error(
                     FORMAT_ERROR(
                         CheddarErrorMessage.get(
@@ -61,7 +62,7 @@ export default class CheddarTokenize extends CheddarLexer {
 
             if (this.Code[this.Index]) {
                 let M2 = new CheddarTokenize(this.Code, this.Index);
-                let response = M2.exec();
+                let response = M2.exec(...arguments);
 
                 if (response instanceof CheddarLexer) {
                     this._Tokens.push(...M2._Tokens);
@@ -77,6 +78,7 @@ export default class CheddarTokenize extends CheddarLexer {
             return this.close();
         }
         else {
+            console.log("ERROR");
             if (MATCH instanceof CheddarLexer) {
                 return this.error(
                     FORMAT_ERROR(

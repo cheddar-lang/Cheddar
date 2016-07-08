@@ -48,7 +48,7 @@ if (!module.parent) {
         }
 
         let Executor = new cheddar(Result, GLOBAL_SCOPE);
-        Executor.exec();
+        let Output = Executor.exec();
 
         if (typeof Output === "string") {
             DRAW_ERROR(Output, "Runtime Error");
