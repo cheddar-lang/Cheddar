@@ -22,6 +22,9 @@ const FORMAT_ERROR = (TOK, LEXER) => TOK
     .replace(/\$LOC/, HelperLoc(LEXER.Code, LEXER.Index).slice(0, 2).join(":"))
     .replace(/\$1/, LEXER.Code[LEXER.Index]);
 
+const SINGLELINE_WHITESPACE = /[\t\f ]/;
+const NEWLINE = /[\r\n]/;
+
 export default class CheddarTokenize extends CheddarLexer {
     exec(ENDS = "") {
 
@@ -37,16 +40,24 @@ export default class CheddarTokenize extends CheddarLexer {
             this.Tokens = MATCH;
             this.Index = MATCH.Index;
 
-            while (this.Code[this.Index] && /[\t\f ]/.test(this.Code[this.Index]) || this._jumpComment()) {
+            while (SINGLELINE_WHITESPACE.test(this.Code[this.Index])) {
+                this.Index--;
+            }
+            if (NEWLINE.test(this.Code[this.Index - 1])) {
+                this.Index--;
+            }
+
+            while (this.Code[this.Index] && SINGLELINE_WHITESPACE.test(this.Code[this.Index]) || this._jumpComment()) {
                 this.Index++;
             }
+
+
 
             if (ENDS.indexOf(this.Code[this.Index]) > -1) {
                 return this.close();
             }
 
             if (!(MATCH instanceof CheddarEXPLICIT) && !(VALID_END(this.Code[this.Index]))) {
-                console.log("hahahahahahahahsidfuahsdodcbuav riulcas")
                 return this.error(
                     FORMAT_ERROR(
                         CheddarErrorMessage.get(
@@ -78,7 +89,6 @@ export default class CheddarTokenize extends CheddarLexer {
             return this.close();
         }
         else {
-            console.log("ERROR");
             if (MATCH instanceof CheddarLexer) {
                 return this.error(
                     FORMAT_ERROR(
