@@ -26,7 +26,7 @@ REPL._setPrompt = REPL.setPrompt;
 REPL.setPrompt = (prompt, length) =>
 	REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
-const REPL_ERROR = (text, type) => console.log(type.red.bold + ": ".dim + text.toString());
+const REPL_ERROR = (text, type) => console.error(type.red.bold + ": ".dim + text.toString());
 const REPL_HEAD = text => console.log(`━━ ${text} ━━`.bold.magenta);
 
 const CONSTANT = {
@@ -36,10 +36,10 @@ let GLOBAL_SCOPE = new CheddarScope(null);
 GLOBAL_SCOPE.Scope = stdlib;
 
 process.argv.forEach((val, i) => {
-	if (i > 0) {
+	if (i > 1) {
 		let v = new CheddarString(null, null);
 		v.init(val);
-		GLOBAL_SCOPE.Scope.set('$' + (i - 1), new CheddarVariable(v));
+		GLOBAL_SCOPE.Scope.set('$' + (i - 2), new CheddarVariable(v));
 	}
 });
 
@@ -72,7 +72,7 @@ The following commands are available:
 	if (!(Result instanceof tokenizer)) {
 		REPL_ERROR(Result, "Syntax Error");
 		// Draw error pointer
-		console.log(HelperCaret(STDIN, Tokenizer.Index, true));
+		console.error(HelperCaret(STDIN, Tokenizer.Index, true));
 
 		return REPL.prompt();
 	}
