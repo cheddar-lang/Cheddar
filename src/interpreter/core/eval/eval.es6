@@ -19,7 +19,7 @@
 
 // Primitive <-> Class Links
 import {PRIMITIVE_LINKS} from '../config/link';
-import {TYPE as OP_TYPE} from '../../../tokenizer/consts/ops';
+import {TYPE as OP_TYPE, EXCLUDE_META_ASSIGNMENT as REG_OPS} from '../../../tokenizer/consts/ops';
 
 // Reference tokens
 import CheddarPropertyToken from '../../../tokenizer/parsers/property';
@@ -91,6 +91,8 @@ function set_value(value, child) {
         // ERROR INTEGRATE
         return `\`${value.Reference}\` is a reserved keyword`;
     }
+
+    return true;
 }
 
 export default class CheddarEval extends CheddarCallStack {
@@ -110,6 +112,8 @@ export default class CheddarEval extends CheddarCallStack {
 
         // Handle Operator
         if (Operation instanceof CheddarOperatorToken) {
+
+            let SETSELF = false; // If the operator is a self-asignning operator
 
             TOKEN = this.shift(); // Get the value to operate upon
 
@@ -155,8 +159,19 @@ export default class CheddarEval extends CheddarCallStack {
                 NAME = DATA.constructor.Operator ||
                        DATA.Operator;
 
-                if (NAME.has(Operation.Tokens[0])) {
-                    OPERATOR = NAME.get(Operation.Tokens[0])(DATA, TOKEN);
+                TARGET = Operation.Tokens[0]; // The operator
+
+                // Set LHS to LHS * RHS
+
+                // if it ends with `=`, given `a *= b` do `a = a * b`
+                // given if the above is true, set the `SETSELF` to true
+                if (TARGET.endsWith('=') && !REG_OPS.has(TARGET)) {
+                    SETSELF = true;
+                    TARGET = TARGET.slice(0,-1);
+                }
+
+                if (NAME.has(TARGET)) {
+                    OPERATOR = NAME.get(TARGET)(DATA, TOKEN);
                 } else {
                     OPERATOR = CheddarError.NO_OP_BEHAVIOR;
                 }
@@ -180,6 +195,30 @@ export default class CheddarEval extends CheddarCallStack {
                     )
                 ) : "nil");
             } else {
+                // Perform re-assignment
+                if (SETSELF) {
+                    // DATA, TOKEN
+                    if ((
+                        !(DATA.scope instanceof CheddarScope) ||
+                        DATA.Reference === null
+                    ) || Operation.tok(1) === OP_TYPE.UNARY) {
+                        return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
+                    }
+
+                    if (DATA.scope.accessor(DATA.Reference).Writeable === false) {
+                        // ERROR INTEGRATE
+                        return `Cannot override constant ${DATA.Reference}`;
+                    }
+
+                    // Call `set_value` function
+                    DATA = set_value(DATA, OPERATOR);
+
+                    // If it errored
+                    if (DATA !== true) {
+                        return DATA;
+                    }
+                }
+
                 this.put(OPERATOR);
             }
 

@@ -107,7 +107,7 @@ class CheddarExpressionTokenBeta extends CheddarLexer {
 
         return this.grammar(true,
             [O, E], //infix
-            [O], // postfix
+            // [O], // postfix
             [] // ε
         );
     }
