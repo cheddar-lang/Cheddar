@@ -3,15 +3,13 @@
  * OP - Operators
  * UOP - Unary operators
 **/
-// TODO: should these be split into pre/postfix?
-// I'm not sure. Does it matter?
-// yes, it'll impact shunting-yard parsing
-// but we don't have postfix yet (e.g. i++)
+
 export const RESERVED_KEYWORDS = new Set([
     'sqrt', 'cbrt', 'root',
     'sin', 'cos', 'tan',
     'acos', 'asin', 'atan',
     'log',
+    'has',
     'floor', 'ceil', 'round',
     'len', 'reverse', 'abs', 'repr',
     'sign', 'print',
@@ -24,11 +22,13 @@ export const RESERVED_KEYWORDS = new Set([
     'true', 'false', 'nil'
 ]);
 
+export const EXCLUDE_META_ASSIGNMENT = new Set(['==', '!=', '<=', '>=' ]);
+
 export const OP = [
 '^', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '==', '&', '|',
 '!=', '=', '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
 ':', '::',
-'@"',
+'@"', 'has',
 'and', 'or', 'xor',
 'log', 'sign',
 'root'
@@ -94,13 +94,17 @@ export const PRECEDENCE = new Map([
     ['<=', 10000],
     ['>=', 10000],
     ['sign', 10000],
+
+    ['has', 90000],
     ['==', 9000],
     ['!=', 9000],
+
     ['&', 8000],
     ['xor', 7000],
     ['|', 6000],
     ['and', 5000],
     ['or', 4000],
+
     ['+=', 1000],
     ['-=', 1000],
     ['*=', 1000],

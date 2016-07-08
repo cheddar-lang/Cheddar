@@ -53,7 +53,7 @@ export default class CheddarFunction extends CheddarClass {
 
         // Move the scope argument to correct prop
         this.preset = this.args;
-        this.scope  = this.args;
+        this.inherited = this.args;
         this.Reference = this.body;
 
         this.args = args;
@@ -76,18 +76,25 @@ export default class CheddarFunction extends CheddarClass {
             );
         } else {
             let executor = require(
-                this.body.constructor.name === "CheddarExpressionToken" ?
+                this.body.constructor.name === "StatementExpression" ?
                 '../eval/eval' :
                 '../../exec'
             );
 
-            let res = new executor(this.body, scope).exec();
-            console.log(res);
+            let res = new executor(
+                this.body.constructor.name === "StatementExpression" ?
+                this.body :
+                this.body._Tokens[0],
+                scope
+            ).exec();
+
+            return res;
         }
     }
 
     generateScope(input, self) {
-        let args = new CheddarScope(this.scope || null);
+        let args = new CheddarScope(this.inherited || null);
+
         let CheddarArray = require('../primitives/Array');
         let tmp;
 
@@ -129,6 +136,7 @@ export default class CheddarFunction extends CheddarClass {
                 }
             }
         }
+
         return args;
     }
 }

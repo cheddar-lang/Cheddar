@@ -9,6 +9,9 @@ export const DEFAULT_OP = new Map([
 
     // print: Definition
     ['print', (_, LHS) => {
+        if (!LHS || !LHS.constructor.Cast)
+            return CheddarError.NO_OP_BEHAVIOR;
+
         // Attempt to call `repr`, else, cast to string
         let VAL = LHS.constructor.Name === 'String' ? LHS
                 : LHS.constructor.Cast.has('String')

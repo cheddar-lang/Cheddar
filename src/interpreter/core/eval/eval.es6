@@ -19,11 +19,12 @@
 
 // Primitive <-> Class Links
 import {PRIMITIVE_LINKS} from '../config/link';
-import {TYPE as OP_TYPE} from '../../../tokenizer/consts/ops';
+import {TYPE as OP_TYPE, EXCLUDE_META_ASSIGNMENT as REG_OPS} from '../../../tokenizer/consts/ops';
 
 // Reference tokens
 import CheddarPropertyToken from '../../../tokenizer/parsers/property';
-import CheddarLiteral from '../../../tokenizer/parsers/any';
+import CheddarLiteral from '../../../tokenizer/literals/literal';
+import CheddarParenthesizedExpressionToken from '../../../tokenizer/parsers/paren_expr';
 import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
@@ -91,6 +92,8 @@ function set_value(value, child) {
         // ERROR INTEGRATE
         return `\`${value.Reference}\` is a reserved keyword`;
     }
+
+    return true;
 }
 
 export default class CheddarEval extends CheddarCallStack {
@@ -110,6 +113,8 @@ export default class CheddarEval extends CheddarCallStack {
 
         // Handle Operator
         if (Operation instanceof CheddarOperatorToken) {
+
+            let SETSELF = false; // If the operator is a self-asignning operator
 
             TOKEN = this.shift(); // Get the value to operate upon
 
@@ -155,8 +160,19 @@ export default class CheddarEval extends CheddarCallStack {
                 NAME = DATA.constructor.Operator ||
                        DATA.Operator;
 
-                if (NAME.has(Operation.Tokens[0])) {
-                    OPERATOR = NAME.get(Operation.Tokens[0])(DATA, TOKEN);
+                TARGET = Operation.Tokens[0]; // The operator
+
+                // Set LHS to LHS * RHS
+
+                // if it ends with `=`, given `a *= b` do `a = a * b`
+                // given if the above is true, set the `SETSELF` to true
+                if (TARGET.endsWith('=') && !REG_OPS.has(TARGET)) {
+                    SETSELF = true;
+                    TARGET = TARGET.slice(0,-1);
+                }
+
+                if (NAME.has(TARGET)) {
+                    OPERATOR = NAME.get(TARGET)(DATA, TOKEN);
                 } else {
                     OPERATOR = CheddarError.NO_OP_BEHAVIOR;
                 }
@@ -179,19 +195,51 @@ export default class CheddarEval extends CheddarCallStack {
                         : "nil"
                     )
                 ) : "nil");
+            } else if (typeof OPERATOR === 'string') {
+                return OPERATOR;
             } else {
+                // Perform re-assignment
+                if (SETSELF) {
+                    // DATA, TOKEN
+                    if ((
+                        !(DATA.scope instanceof CheddarScope) ||
+                        DATA.Reference === null
+                    ) || Operation.tok(1) === OP_TYPE.UNARY) {
+                        return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
+                    }
+
+                    if (DATA.scope.accessor(DATA.Reference).Writeable === false) {
+                        // ERROR INTEGRATE
+                        return `Cannot override constant ${DATA.Reference}`;
+                    }
+
+                    // Call `set_value` function
+                    DATA = set_value(DATA, OPERATOR);
+
+                    // If it errored
+                    if (DATA !== true) {
+                        return DATA;
+                    }
+                }
+
                 this.put(OPERATOR);
             }
 
-        } else if (Operation instanceof CheddarPropertyToken) {
+        } else if (Operation instanceof CheddarPropertyToken || Operation instanceof CheddarLiteral) {
             // If it's a property
             //  this includes functions
 
             // Is a primitive
             // this includes `"foo".bar`
-            if (Operation._Tokens[0] instanceof CheddarLiteral) {
-                // Get the token's value
-                TOKEN = Operation._Tokens[0]._Tokens[0];
+            if ((Operation._Tokens[0] instanceof CheddarLiteral) ||
+                (Operation instanceof CheddarLiteral)) {
+
+                if (Operation instanceof CheddarLiteral) {
+                    TOKEN = Operation;
+                } else {
+                    // Get the token's value
+                    TOKEN = Operation._Tokens[0]._Tokens[0];
+                }
 
                 // Get the class associated with the token
                 OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name);
@@ -204,9 +252,32 @@ export default class CheddarEval extends CheddarCallStack {
                     if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) !== true) {
                         return TOKEN;
                     }
+
+                    // Exit if it's a raw literal
+                    if (Operation instanceof CheddarLiteral) {
+                        this.put(OPERATOR);
+                        return true;
+                    }
                 } else {
                     return CheddarError.UNLINKED_CLASS;
                 }
+            } else if (Operation._Tokens[0] instanceof CheddarParenthesizedExpressionToken) {
+                // Evaluate
+                OPERATOR = new CheddarEval(
+                    Operation._Tokens[0],
+                    this.Scope
+                );
+
+                OPERATOR = OPERATOR.exec();
+
+                if (typeof OPERATOR === "string") {
+                    return OPERATOR;
+                }
+
+                NAME = OPERATOR.constructor.Name
+                    || OPERATOR.Name
+                    || "object";
+
             } else if (Operation._Tokens[0] instanceof CheddarVariableToken) {
                 // Lookup variable -> initial variable name
                 OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]);
@@ -242,7 +313,7 @@ export default class CheddarEval extends CheddarCallStack {
                     let evalres; // Evaluation result
                     for (let i = 0; i < TOKEN.length; i++) {
                         evalres = new CheddarEval(
-                            TOKEN[i],
+                            { _Tokens:[TOKEN[i]] },
                             this.Scope
                         );
                         evalres = evalres.exec();
@@ -264,7 +335,7 @@ export default class CheddarEval extends CheddarCallStack {
 
                         // Execute the expression
                         let res = new CheddarEval(
-                            Operation._Tokens[i],
+                            { _Tokens: [ Operation._Tokens[i] ] },
                             this.Scope
                         ).exec();
 

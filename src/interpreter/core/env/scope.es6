@@ -44,7 +44,12 @@ export default class CheddarScope {
         this.Scope.set(token, value);
     }
     static accessor(token) {
-        return this.Scope.get(token);
+        let value = this.Scope.get(token);
+        if (value && value.Value) {
+            value.Value.Reference = token;
+            value.Value.scope     = this;
+        }
+        return value;
     }
 
     // DYNAMIC
@@ -76,10 +81,16 @@ export default class CheddarScope {
         if (!this.has(token))
             return null;
 
-        return this.Scope.get(token) || (this.inheritanceChain ?
+        let value = this.Scope.get(token) || (this.inheritanceChain ?
             this.inheritanceChain.accessor(token) : null
         );
 
+        if (value && value.Value) {
+            value.Value.Reference = token;
+            value.Value.scope     = this;
+        }
+
+        return value;
     }
 
     setter(path, setter) {

@@ -22,9 +22,9 @@ export default class CheddarArray extends CheddarClass {
                 this.value.push(items[i]);
             } else if (items[i].constructor.name === "CheddarExpressionToken") {
                 // Is an expression
-                let res = new CheddarEval(items[i], this.Scope).exec();
+                let res = new CheddarEval({ _Tokens: [items[i]] }, this.scope).exec();
                 if (typeof res === "string") {
-                    return res
+                    return res;
                 } else if (!res) {
                     if (i && i !== items.length - 1) {
                         this.value.push(new NIL);
@@ -45,6 +45,10 @@ export default class CheddarArray extends CheddarClass {
         return this;
     }
 
+    get Scope() {
+        return require('../../../stdlib/primitive/Array/lib');
+    }
+
     // Accessor to redirect [n]
     accessor(target) {
         return this.Scope.get(target) || (
@@ -59,8 +63,6 @@ export default class CheddarArray extends CheddarClass {
     //  defined behavior
     static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
     static Cast = BehaviorCast;
-
 }
 
 CheddarArray.Scope = require('../../../stdlib/primitive/Array/static');
-//CheddarArray.prototype.Scope = require('../../../stdlib/primitive/Array/lib');

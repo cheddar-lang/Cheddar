@@ -1,6 +1,7 @@
 // Cheddar Expression Parser
 import O from '../literals/op';
 import P from './property';
+import F from './function';
 import CheddarLexer from '../tok/lex';
 import {OP, UOP, EXPR_OPEN, EXPR_CLOSE} from '../consts/ops';
 import CheddarCustomLexer from './custom';
@@ -77,18 +78,23 @@ expr -> A B*/
 
 let UNARY = CheddarCustomLexer(O, true);
 
+class CheddarExpressionToken extends CheddarLexer {
+    get isExpression() { return true; }
+}
+
+let E = CheddarCustomLexer(CheddarExpressionToken, true);
+
 class CheddarExpressionTokenAlpha extends CheddarLexer {
     exec() {
         this.open(false);
 
         this.jumpWhite();
 
-        const E = CheddarExpressionToken;
-
         return this.grammar(true,
-            [P],
-            ['(', E, ')'],
-            [UNARY, E] // Prefix
+            [F],
+            // ['(', E, ')'],
+            [UNARY, E], // Prefix
+            [P]
         );
     }
 
@@ -105,7 +111,7 @@ class CheddarExpressionTokenBeta extends CheddarLexer {
 
         return this.grammar(true,
             [O, E], //infix
-            [O], // postfix
+            // [O], // postfix
             [] // ε
         );
     }
@@ -113,17 +119,17 @@ class CheddarExpressionTokenBeta extends CheddarLexer {
     get isExpression() { return true; }
 }
 
-export default class CheddarExpressionToken extends CheddarLexer {
-    exec() {
-        this.open(false);
+CheddarExpressionToken.prototype.exec = function(empty) {
+    this.open(false);
 
-        this.jumpWhite();
+    this.jumpWhite();
 
-        return this.grammar(true,
-            [CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta],
-            [] // ε
-        );
+    let GRAMMAR = [CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta];
+    if (empty) {
+        return this.grammar(true, GRAMMAR);
+    } else {
+        return this.grammar(true, GRAMMAR, [/* ε */]);
     }
+};
 
-    get isExpression() { return true; }
-}
+export default CheddarExpressionToken;

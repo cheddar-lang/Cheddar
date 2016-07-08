@@ -59,7 +59,7 @@ export default class CheddarLexer {
             }
 
             if (attempt instanceof CheddarLexer && attempt.Errored !== true) {
-                this.Index = parsers[i].Index;
+                this.Index = attempt.Index;
                 return attempt;
             } else if (attempt !== CheddarError.EXIT_NOTFOUND) {
                 this.Index = parsers[i].Index;

@@ -8,8 +8,8 @@ const fs = require('fs');
 
 if (!module.parent) {
     /*== Handle REPL Seperately ==*/
-    if (!process.argv[2]) {
-        child_process.fork(__dirname + (tty.isatty(0) ? '/repl.js' : '/prog.js'));
+    if (!process.argv[3]) {
+        child_process.fork(__dirname + (tty.isatty(0) ? '/repl.js' : '/prog.js'), process.argv.slice(2));
     }
 
     if (process.argv[2] === "--update") {

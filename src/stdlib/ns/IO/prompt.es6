@@ -15,7 +15,9 @@ export default function(cheddar) {
             let val = input("prompt").value;
             let retry = input("required");
 
+            process.stdin.pause();
             let res = read(val);
+            process.stdin.pause();
 
             if (retry instanceof cheddar.string) {
                 // Keep trying to get input

@@ -7,7 +7,7 @@ import CheddarPrimitive from '../literals/primitive';
 import {ClassType} from '../consts/types';
 
 export default class CheddarArrayToken extends CheddarPrimitive {
-    exec(OPEN = ARRAY_OPEN, CLOSE = ARRAY_CLOSE, PARSER = CheddarExpressionToken) {
+    exec(OPEN = ARRAY_OPEN, CLOSE = ARRAY_CLOSE, PARSER = CheddarExpressionToken, LOOSE = false) {
         var c = this.getChar();
         if (c !== OPEN)
             return this.error(CheddarError.EXIT_NOTFOUND);
@@ -38,7 +38,11 @@ export default class CheddarArrayToken extends CheddarPrimitive {
                 case ARRAY_SEPARATOR:
                     break;
                 default:
-                    return this.error(CheddarError.UNEXPECTED_TOKEN);
+                    if (LOOSE === false) {
+                        return this.error(CheddarError.UNEXPECTED_TOKEN);
+                    } else {
+                        return this.close(CheddarError.EXIT_NOTFOUND);
+                    }
             }
         }
     }

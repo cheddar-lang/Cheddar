@@ -16,7 +16,8 @@ import HelperCaret from '../helpers/caret';
 import stdlib from '../stdlib/stdlib';
 
 let REPL = readline.createInterface(process.stdin, process.stdout);
-REPL.setPrompt('cheddar> '.yellow.bold);
+let PROMPT = 'cheddar> '.yellow.bold;
+REPL.setPrompt(PROMPT);
 REPL.prompt();
 
 let USI = 0;
@@ -26,7 +27,7 @@ REPL._setPrompt = REPL.setPrompt;
 REPL.setPrompt = (prompt, length) =>
 	REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
 
-const REPL_ERROR = (text, type) => console.log(type.red.bold + ": ".dim + text.toString());
+const REPL_ERROR = (text, type) => console.error(type.red.bold + ": ".dim + text.toString());
 const REPL_HEAD = text => console.log(`━━ ${text} ━━`.bold.magenta);
 
 const CONSTANT = {
@@ -36,17 +37,20 @@ let GLOBAL_SCOPE = new CheddarScope(null);
 GLOBAL_SCOPE.Scope = stdlib;
 
 process.argv.forEach((val, i) => {
-	if (i > 0) {
+	if (i > 1) {
 		let v = new CheddarString(null, null);
 		v.init(val);
-		GLOBAL_SCOPE.Scope.set('$' + (i - 1), new CheddarVariable(v));
+		GLOBAL_SCOPE.Scope.set('$' + (i - 2), new CheddarVariable(v));
 	}
 });
 
-REPL.on('line', function(STDIN) {
+let STDIN;
+let resume;
 
-	if (STDIN === 'exit') REPL.close();
-	if (STDIN === 'help') {
+REPL.on('line', function(input) {
+
+	if (input === 'exit') REPL.close();
+	if (input === 'help') {
 		console.log(`
 Welcome to Cheddar!
 
@@ -61,21 +65,35 @@ The following commands are available:
 `)
 		return REPL.prompt();
 	}
-	if (STDIN === 'clear') {
+	if (input === 'clear') {
 		process.stdout.write('\u001B[0f');
 		return REPL.prompt();
+	}
+
+	if (resume) {
+		STDIN += input;
+	} else {
+		STDIN = input;
 	}
 
 	let Tokenizer = new tokenizer(STDIN, 0);
 	let Result = Tokenizer.exec();
 
+
 	if (!(Result instanceof tokenizer)) {
+		resume = true;
+		REPL.setPrompt("     ... ".yellow)
+		return REPL.prompt();
+		/*
 		REPL_ERROR(Result, "Syntax Error");
 		// Draw error pointer
-		console.log(HelperCaret(STDIN, Tokenizer.Index, true));
+		console.error(HelperCaret(STDIN, Tokenizer.Index, true));
 
-		return REPL.prompt();
+		return REPL.prompt();*/
 	}
+
+	resume = false;
+	REPL.setPrompt(PROMPT)
 
 	let Executor = new cheddar(Result, GLOBAL_SCOPE);
 	let Output = Executor.exec();
@@ -118,11 +136,18 @@ The following commands are available:
 	}
 
 	REPL.prompt();
-
-})
-
-REPL.on('close', () => process.exit(0));
-REPL.on('SIGINT', () => {
-	console.log();
-	REPL.pause();
+	process.stdin.resume();
 });
+
+const CLOSING = () => {
+	console.log();
+	if (resume) {
+		REPL.setPrompt(PROMPT);
+		resume = false;
+		return REPL.prompt();
+	}
+	REPL.pause();
+};
+
+REPL.on('close', () => CLOSING);
+REPL.on('SIGINT', CLOSING);

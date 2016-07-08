@@ -1,9 +1,9 @@
 // Very similar to literal.es6 but with numbers
 import * as CheddarError from '../consts/err';
 import {TOKEN_START, TOKEN_END} from '../consts/chars';
-import CheddarLiteral from './literal';
+import CheddarLexer from '../tok/lex';
 
-export default class CheddarVariableToken extends CheddarLiteral {
+export default class CheddarVariableToken extends CheddarLexer {
     exec() {
 
         this.open();

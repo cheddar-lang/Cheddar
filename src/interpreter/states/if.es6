@@ -52,10 +52,6 @@ export default class CheddarIf {
 
                     return evalf.exec();
                 default:
-                    console.log("== START STACK DUMP ==");
-                    console.log(this.toks);
-                    console.log(tok);
-                    console.log("== END STACK DUMP ==");
                     return CheddarErrorMessage.get(CheddarError.MALFORMED_TOKEN).replace(/\$0/, this.toks._Tokens.length);
             }
         }

@@ -1,5 +1,6 @@
 import CheddarExpressionToken from './expr';
 import CheddarCodeblock from '../patterns/block';
+import CheddarCustomLexer from '../parsers/custom';
 import CheddarLexer from '../patterns/EXPLICIT';
 import * as CheddarError from '../consts/err';
 
@@ -12,8 +13,10 @@ export default class StatementIf extends CheddarLexer {
 
         this.jumpLiteral("if");
 
+        let EXPRESSION = CheddarCustomLexer(CheddarExpressionToken, true);
+
         // Match the `expr { block }` format
-        let FORMAT = [CheddarExpressionToken, CheddarCodeblock, CheddarError.EXPECTED_BLOCK];
+        let FORMAT = [EXPRESSION, CheddarCodeblock, CheddarError.EXPECTED_BLOCK];
 
         // Match initial `if`
         let IF = this.grammar(true, FORMAT);

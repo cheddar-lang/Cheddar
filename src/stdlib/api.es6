@@ -13,6 +13,14 @@ import CheddarClass from '../interpreter/core/env/class';
 
 import HelperInit from '../helpers/init';
 
+CheddarClass.merge = {
+    accessor(override) {
+        return function(target) {
+            this.Scope.get(target) || override(target) || null;
+        };
+    }
+};
+
 var API = {
     string: CheddarString,
     number: CheddarNumber,
@@ -37,8 +45,8 @@ var API = {
     },
 
     // Make a variable from an implementation
-    from: function(val) {
-        return new CheddarVariable(val(API), { Writeable: false });
+    from: function(val, ...args) {
+        return new CheddarVariable(val(API, ...args), { Writeable: false });
     },
 
     // Make a property (getters & setters)

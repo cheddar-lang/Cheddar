@@ -11,4 +11,4 @@ fi
 cpath="$(dirname $($rp $0))"
 CHEDDAR_EXE="`$rp $([[ -f "$rel" ]] && echo "$rel" || echo "$cpath/../share/cheddar/dist/cli/cheddar.js")`"
 NODE_EXE=`which node`
-"$NODE_EXE" "$CHEDDAR_EXE" "$@"
+"$NODE_EXE" "$CHEDDAR_EXE" "$0" "$@"

@@ -23,7 +23,7 @@ export default new Map([
         //if (RHS.Cast.has(CheddarString))
         //    RHS = RHS.Cast.get(CheddarString)();
 
-        if (RHS instanceof LHS.constructor)
+        if (LHS && RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, LHS.value + RHS.value);
         else
             return CheddarError.NO_OP_BEHAVIOR;
@@ -36,6 +36,36 @@ export default new Map([
         let CheddarBool = require('../Bool');
         if (LHS === null)
             return HelperInit(CheddarBool, RHS.value.length === 0);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
+    // Comparisons
+    //  compares the char
+    //  codes of the strings
+    ['<', (LHS, RHS) => {
+        let CheddarBool = require('../Bool');
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(CheddarBool, LHS.value < RHS.value);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
+    ['>', (LHS, RHS) => {
+        let CheddarBool = require('../Bool');
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(CheddarBool, LHS.value > RHS.value);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
+    // has operator
+    //  checks if substring
+    //  is empty
+    ['has', (LHS, RHS) => {
+        let CheddarBool = require('../Bool');
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(CheddarBool, LHS.value.includes(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
