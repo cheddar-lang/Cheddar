@@ -118,8 +118,8 @@ The following commands are available:
 	}
 
 	REPL.prompt();
-
-})
+	process.stdin.resume();
+});
 
 REPL.on('close', () => process.exit(0));
 REPL.on('SIGINT', () => {

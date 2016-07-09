@@ -60,7 +60,10 @@ export default class CheddarArray extends CheddarClass {
     static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
     static Cast = BehaviorCast;
 
+    get Scope() {
+        return require('../../../stdlib/primitive/Array/lib');
+    }
 }
 
 CheddarArray.Scope = require('../../../stdlib/primitive/Array/static');
-//CheddarArray.prototype.Scope = require('../../../stdlib/primitive/Array/lib');
+// CheddarArray.prototype.Scope = require('../../../stdlib/primitive/Array/lib');

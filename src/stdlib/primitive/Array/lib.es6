@@ -1,5 +1,6 @@
 import api from '../../api';
 
 export default new Map([
-    require('./lib/length')(api)
+    require('./lib/len')(api),
+    require('./lib/push')(api)
 ]);
