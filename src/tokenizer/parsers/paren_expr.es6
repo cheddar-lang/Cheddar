@@ -30,7 +30,6 @@ export default class CheddarParenthesizedExpression extends CheddarLexer {
         if (this.getChar() !== ')')
             this.error(CheddarError.UNMATCHED_DELIMITER);
 
-        this.close();
-        // TODO: shouldn't these be returns? (also, is this even needed anymore?)
+        return this.close(attempt);
     }
 }

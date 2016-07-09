@@ -40,18 +40,22 @@ export default class CheddarTokenize extends CheddarLexer {
             this.Tokens = MATCH;
             this.Index = MATCH.Index;
 
+            // Whether or not it backtracked for a newline
+            let backtracked = false;
+
             while (SINGLELINE_WHITESPACE.test(this.Code[this.Index])) {
+                backtracked = true;
                 this.Index--;
-            }
-            if (NEWLINE.test(this.Code[this.Index - 1])) {
-                this.Index--;
+            } /* then { */
+            if (backtracked) {
+                if (NEWLINE.test(this.Code[this.Index - 1])) {
+                    this.Index--;
+                }
             }
 
             while (this.Code[this.Index] && SINGLELINE_WHITESPACE.test(this.Code[this.Index]) || this._jumpComment()) {
                 this.Index++;
             }
-
-
 
             if (ENDS.indexOf(this.Code[this.Index]) > -1) {
                 return this.close();
