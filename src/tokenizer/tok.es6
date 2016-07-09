@@ -57,8 +57,6 @@ export default class CheddarTokenize extends CheddarLexer {
                 this.Index++;
             }
 
-
-
             if (ENDS.indexOf(this.Code[this.Index]) > -1) {
                 return this.close();
             }
