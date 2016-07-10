@@ -9,6 +9,7 @@ export default function(cheddar) {
 
         ["fib", cheddar.from(require("./Math/fib"))],
         ["factor", cheddar.from(require("./Math/factor"))],
-        ["prime", cheddar.from(require("./Math/prime"))]
+        ["prime", cheddar.from(require("./Math/prime"))],
+        ["rand", cheddar.from(require("./Math/rand"))]
     ]);
 }
