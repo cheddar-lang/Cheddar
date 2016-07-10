@@ -84,13 +84,13 @@ $ make test    # Run tests
  - [x] Conditional expression handling
  - [x] Loop expression handling
  - [x] Functions
-  - [ ] Syntax definition
+  - [x] Syntax definition
   - [x] Functional design
   - [x] Function scope
   - [x] Function handling
   - [x] Function lookup
   - [x] Function execution
-  - [ ] Token linking
+  - [x] Token linking
  - [ ] Class handling
   - [x] Syntax definition
   - [x] Class design, and implementation
@@ -102,7 +102,7 @@ $ make test    # Run tests
  - [x] Statement handling
  - [x] Interpretation
  - [x] Call stack optimization
- 
+
 Congrats! Cheddar is done!
 
 Critical Running Bugs:
@@ -113,8 +113,8 @@ Critical Running Bugs:
 Bugs:
 
  - [x] Stack overflowing during various invalid expression syntax
- - [ ] Error handling is completely borked.
-  - [ ] Syntax Errors (index & prop data is lost)
+ - [x] Error handling is completely borked.
+  - [x] Syntax Errors (index & prop data is lost)
   - [x] Runtime Errors
 
 Further Development

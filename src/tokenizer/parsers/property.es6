@@ -1,4 +1,4 @@
-// import CheddarParenthesizedExpression from './paren_expr';
+import CheddarParenthesizedExpression from './paren_expr';
 import CheddarVariableToken from '../literals/var';
 import {PropertyType} from '../consts/types';
 import * as CheddarError from '../consts/err';
@@ -25,7 +25,7 @@ export default class CheddarPropertyToken extends CheddarLexer {
 
             let attempt;
             if (Initial === false)
-                attempt = this.attempt(CheddarAnyLiteral, CheddarVariableToken/*, CheddarParenthesizedExpression*/);
+                attempt = this.attempt(CheddarAnyLiteral, CheddarVariableToken, CheddarParenthesizedExpression);
             else
                 attempt = this.initParser(CheddarVariableToken).exec();
 
@@ -86,7 +86,10 @@ export default class CheddarPropertyToken extends CheddarLexer {
 
             this.Index = marker;
 
-            if (this._Tokens.length === 1 && this._Tokens[0] instanceof CheddarPrimitive)
+            if (this._Tokens.length === 1 && (
+                    this._Tokens[0] instanceof CheddarPrimitive ||
+                    this._Tokens[0].isExpression
+                ))
                 return this.close(this._Tokens[0]);
             else
                 return this.close();

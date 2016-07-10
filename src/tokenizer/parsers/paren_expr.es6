@@ -1,18 +1,24 @@
-import * as CheddarError from '../consts/err';
+// import * as CheddarError from '../consts/err';
 import CheddarExpressionToken from './expr';
 import CheddarLexer from '../tok/lex';
 
-//TODO
 export default class CheddarParenthesizedExpression extends CheddarLexer {
     exec() {
         this.open(false);
 
-        /*
-        This may be shorter:
-        return this.grammar(true, ['(', CheddarExpressionToken , ')']);
-        */
-        // @Downgoat you change it if it works
+        let resp = this.grammar(true,
+            ['(', CheddarExpressionToken , ')']
+        );
 
+        if (resp instanceof CheddarLexer) {
+            resp._Tokens[0].Index = resp.Index;
+            return this.close(resp._Tokens[0]);
+        } else {
+            return this.error(resp);
+        }
+
+        /*
+        // @Downgoat you change it if it works
         if (this.getChar() !== '(')
             this.error(CheddarError.EXIT_NOTFOUND);
 
@@ -30,6 +36,6 @@ export default class CheddarParenthesizedExpression extends CheddarLexer {
         if (this.getChar() !== ')')
             this.error(CheddarError.UNMATCHED_DELIMITER);
 
-        return this.close(attempt);
+        return this.close(attempt);*/
     }
 }
