@@ -40,6 +40,25 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
+    // Comparisons
+    //  compares the char
+    //  codes of the strings
+    ['<', (LHS, RHS) => {
+        let CheddarBool = require('../Bool');
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(CheddarBool, LHS.value < RHS.value);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
+    ['>', (LHS, RHS) => {
+        let CheddarBool = require('../Bool');
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(CheddarBool, LHS.value > RHS.value);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
     // has operator
     //  checks if substring
     //  is empty
