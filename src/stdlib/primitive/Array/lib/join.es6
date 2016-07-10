@@ -30,6 +30,5 @@ export default (api) => ["join", api.var(new api.func(
         }
 
         return api.init(api.string, stringified);
-
     }
 ))];

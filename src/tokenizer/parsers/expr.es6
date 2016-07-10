@@ -78,13 +78,17 @@ expr -> A B*/
 
 let UNARY = CheddarCustomLexer(O, true);
 
+class CheddarExpressionToken extends CheddarLexer {
+    get isExpression() { return true; }
+}
+
+let E = CheddarCustomLexer(CheddarExpressionToken, true);
+
 class CheddarExpressionTokenAlpha extends CheddarLexer {
     exec() {
         this.open(false);
 
         this.jumpWhite();
-
-        const E = CheddarExpressionToken;
 
         return this.grammar(true,
             [F],
@@ -115,17 +119,17 @@ class CheddarExpressionTokenBeta extends CheddarLexer {
     get isExpression() { return true; }
 }
 
-export default class CheddarExpressionToken extends CheddarLexer {
-    exec() {
-        this.open(false);
+CheddarExpressionToken.prototype.exec = function(empty) {
+    this.open(false);
 
-        this.jumpWhite();
+    this.jumpWhite();
 
-        return this.grammar(true,
-            [CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta],
-            [] // ε
-        );
+    let GRAMMAR = [CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta];
+    if (empty) {
+        return this.grammar(true, GRAMMAR);
+    } else {
+        return this.grammar(true, GRAMMAR, [/* ε */]);
     }
+};
 
-    get isExpression() { return true; }
-}
+export default CheddarExpressionToken;
