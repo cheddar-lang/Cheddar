@@ -53,7 +53,7 @@ export default class CheddarFunction extends CheddarClass {
 
         // Move the scope argument to correct prop
         this.preset = this.args;
-        this.scope  = this.args;
+        this.inherited = this.args;
         this.Reference = this.body;
 
         this.args = args;
@@ -93,7 +93,8 @@ export default class CheddarFunction extends CheddarClass {
     }
 
     generateScope(input, self) {
-        let args = new CheddarScope(this.scope || null);
+        let args = new CheddarScope(this.inherited || null);
+
         let CheddarArray = require('../primitives/Array');
         let tmp;
 
@@ -135,6 +136,7 @@ export default class CheddarFunction extends CheddarClass {
                 }
             }
         }
+
         return args;
     }
 }

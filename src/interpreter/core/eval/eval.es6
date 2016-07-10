@@ -194,6 +194,8 @@ export default class CheddarEval extends CheddarCallStack {
                         : "nil"
                     )
                 ) : "nil");
+            } else if (typeof OPERATOR === 'string') {
+                return OPERATOR;
             } else {
                 // Perform re-assignment
                 if (SETSELF) {

@@ -40,6 +40,17 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
+    // has operator
+    //  checks if substring
+    //  is empty
+    ['has', (LHS, RHS) => {
+        let CheddarBool = require('../Bool');
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(CheddarBool, LHS.value.includes(RHS.value));
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
     // String repetition
     //  when either Operator<*>.Behavior
     //  is (String, Number)
