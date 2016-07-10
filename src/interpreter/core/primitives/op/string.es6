@@ -23,7 +23,7 @@ export default new Map([
         //if (RHS.Cast.has(CheddarString))
         //    RHS = RHS.Cast.get(CheddarString)();
 
-        if (RHS instanceof LHS.constructor)
+        if (LHS && RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, LHS.value + RHS.value);
         else
             return CheddarError.NO_OP_BEHAVIOR;
