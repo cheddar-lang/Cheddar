@@ -80,7 +80,7 @@ export default class CheddarLexer {
             parseClass.Code = this.Code;
             parseClass.Index = i;
             return parseClass;
-        } else if (parseClass.prototype instanceof CheddarLexer) {
+        } else {
             return new parseClass(this.Code, i);
         }
     }
@@ -98,6 +98,7 @@ export default class CheddarLexer {
             WDIFF;
 
         main: for (i = 0; i < defs.length; i++) {
+
             index = this.Index;
             tokens = [];
 
@@ -369,7 +370,7 @@ export default class CheddarLexer {
         return this.Code.indexOf(seq, this.Index) === this.Index;
     }
 
-    get isExpression() { return false; }
+    isExpression = false;
 
     get isPrimitive() { return false; }
 }
