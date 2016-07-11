@@ -86,10 +86,7 @@ export default class CheddarPropertyToken extends CheddarLexer {
 
             this.Index = marker;
 
-            if (this._Tokens.length === 1 && (
-                    this._Tokens[0] instanceof CheddarPrimitive ||
-                    this._Tokens[0].isExpression
-                ))
+            if (this._Tokens.length === 1 && this._Tokens[0] instanceof CheddarPrimitive)
                 return this.close(this._Tokens[0]);
             else
                 return this.close();

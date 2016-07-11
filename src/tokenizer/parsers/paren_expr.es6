@@ -12,7 +12,7 @@ export default class CheddarParenthesizedExpression extends CheddarLexer {
 
         if (resp instanceof CheddarLexer) {
             resp._Tokens[0].Index = resp.Index;
-            return this.close(resp._Tokens[0]);
+            return this.close();
         } else {
             return this.error(resp);
         }

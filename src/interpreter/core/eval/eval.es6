@@ -24,6 +24,7 @@ import {TYPE as OP_TYPE, EXCLUDE_META_ASSIGNMENT as REG_OPS} from '../../../toke
 // Reference tokens
 import CheddarPropertyToken from '../../../tokenizer/parsers/property';
 import CheddarLiteral from '../../../tokenizer/literals/literal';
+import CheddarParenthesizedExpressionToken from '../../../tokenizer/parsers/paren_expr';
 import CheddarOperatorToken from '../../../tokenizer/literals/op';
 import CheddarArrayToken from '../../../tokenizer/parsers/array';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
@@ -260,6 +261,23 @@ export default class CheddarEval extends CheddarCallStack {
                 } else {
                     return CheddarError.UNLINKED_CLASS;
                 }
+            } else if (Operation._Tokens[0] instanceof CheddarParenthesizedExpressionToken) {
+                // Evaluate
+                OPERATOR = new CheddarEval(
+                    Operation._Tokens[0],
+                    this.Scope
+                );
+
+                OPERATOR = OPERATOR.exec();
+
+                if (typeof OPERATOR === "string") {
+                    return OPERATOR;
+                }
+
+                NAME = OPERATOR.constructor.Name
+                    || OPERATOR.Name
+                    || "object";
+
             } else if (Operation._Tokens[0] instanceof CheddarVariableToken) {
                 // Lookup variable -> initial variable name
                 OPERATOR = this.Scope.accessor(Operation._Tokens[0]._Tokens[0]);
@@ -295,7 +313,7 @@ export default class CheddarEval extends CheddarCallStack {
                     let evalres; // Evaluation result
                     for (let i = 0; i < TOKEN.length; i++) {
                         evalres = new CheddarEval(
-                            TOKEN[i],
+                            { _Tokens:[TOKEN[i]] },
                             this.Scope
                         );
                         evalres = evalres.exec();
@@ -317,7 +335,7 @@ export default class CheddarEval extends CheddarCallStack {
 
                         // Execute the expression
                         let res = new CheddarEval(
-                            Operation._Tokens[i],
+                            { _Tokens: [ Operation._Tokens[i] ] },
                             this.Scope
                         ).exec();
 
