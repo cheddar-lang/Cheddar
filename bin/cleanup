@@ -1,4 +1,5 @@
 rm -rf "$1/src/"
-rm -rf "$1/Cheddar/coverage/"
-rm -rf "$1/Cheddar/misc/"
-rm -rf "$1/Cheddar/tests/"
+rm -rf "$1/coverage/"
+rm -rf "$1/misc/"
+rm -rf "$1/test/"
+rm -rf "$1/bin/"
