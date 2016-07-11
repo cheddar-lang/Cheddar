@@ -22,9 +22,9 @@ export default class CheddarArray extends CheddarClass {
                 this.value.push(items[i]);
             } else if (items[i].constructor.name === "CheddarExpressionToken") {
                 // Is an expression
-                let res = new CheddarEval(items[i], this.scope).exec();
+                let res = new CheddarEval({ _Tokens: [items[i]] }, this.scope).exec();
                 if (typeof res === "string") {
-                    return res
+                    return res;
                 } else if (!res) {
                     if (i && i !== items.length - 1) {
                         this.value.push(new NIL);
