@@ -4,6 +4,7 @@ import P from './property';
 import F from './function';
 import CheddarLexer from '../tok/lex';
 import {OP, UOP, EXPR_OPEN, EXPR_CLOSE} from '../consts/ops';
+import * as CheddarError from '../consts/err';
 import CheddarCustomLexer from './custom';
 
 // Special Exceptions
@@ -38,10 +39,9 @@ E -> (OE|(E)|P|L|B)[OE|O]
 where groups are only nested to a depth of one
 
 === Forget the above ===
-With thanks to [@orlp](http://chat.stackexchange.com/transcript/message/29080854#29080854),
- errors in the above have been fixed and now the following grammar should work
+The following grammar should work
 
-Obfuscated because I'm an idiot
+ternary -> α β ? E : E
 expr -> α β
 start -> ( E )     // parenthesis
      L         // number
@@ -68,68 +68,96 @@ E -> α β
 
 */
 
-/*A -> '(' expr ')'
-A -> op expr
-A -> (indentifier | bool | literal)
-
-B -> op expr?
-
-expr -> A B*/
-
 let UNARY = CheddarCustomLexer(O, true);
 
-class CheddarExpressionToken extends CheddarLexer {
-    get isExpression() { return true; }
-}
+// Class Prototypes
+class CheddarExpressionToken extends CheddarLexer { isExpression = true }
+class CheddarExpressionTokenAlpha extends CheddarLexer { isExpression = true }
+class CheddarExpressionTokenBeta extends CheddarLexer { isExpression = true}
 
 let E = CheddarCustomLexer(CheddarExpressionToken, true);
 
-class CheddarExpressionTokenAlpha extends CheddarLexer {
-    exec() {
-        this.open(false);
+// Ternary
+class CheddarExpressionTernary extends CheddarLexer {}
 
-        this.jumpWhite();
+// ALPHA
+CheddarExpressionTokenAlpha.prototype.exec = function() {
+    this.open(false);
 
-        return this.grammar(true,
-            [F],
-            // ['(', E, ')'],
-            [UNARY, E], // Prefix
-            [P]
-        );
-    }
+    this.jumpWhite();
 
-    get isExpression() { return true; }
-}
+    return this.grammar(true,
+        [F],
+        // ['(', E, ')'],
+        [UNARY, E], // Prefix
+        [P]
+    );
+};
 
-class CheddarExpressionTokenBeta extends CheddarLexer {
-    exec() {
-        this.open(false);
+// BETA
+CheddarExpressionTokenBeta.prototype.exec = function() {
+    this.open(false);
 
-        this.jumpWhite();
+    this.jumpWhite();
 
-        const E = CheddarExpressionToken;
+    const E = CheddarExpressionToken;
 
-        return this.grammar(true,
-            [O, E], //infix
-            // [O], // postfix
-            [] // ε
-        );
-    }
+    return this.grammar(true,
+        [O, E], //infix
+        // [O], // postfix
+        [] // ε
+    );
+};
 
-    get isExpression() { return true; }
-}
-
+// MASTER
 CheddarExpressionToken.prototype.exec = function(empty) {
     this.open(false);
 
     this.jumpWhite();
 
-    let GRAMMAR = [CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta];
-    if (empty) {
-        return this.grammar(true, GRAMMAR);
-    } else {
-        return this.grammar(true, GRAMMAR, [/* ε */]);
+    let expression = this.grammar(true, [
+        CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta
+    ]);
+
+    /** == Ternary Handling == **/
+
+    // Lookahead for ternary `?`
+    if (!this.lookAhead("?")) {
+        // If it doesn't exist, just exit
+        return expression;
     }
+    // Increase index past the `?`
+    this.Index++;
+
+    // Now we know it's a ternary
+    // parse the tail, `E : E`
+
+    // Parse the first expression
+    let TAIL_TRUE = this.initParser(CheddarExpressionToken);
+    let IFT = TAIL_TRUE.exec();
+
+    // Set the index of the expression
+    this.Index = IFT.Index || TAIL_TRUE.Index;
+
+    // Error if applicable
+    if (!(IFT instanceof CheddarLexer))
+        return IFT;
+
+    console.log(this.Index);
+    // IF True
+    if (!this.lookAhead(":")) {
+        // Expected a `:`
+        return CheddarError.UNEXPECTED_TOKEN;
+    }
+    // Increase past the `:`
+    this.Index++;
+    console.log(this.Index);
+
+    // Parse the second expression
+    let TAIL_FALSE = this.initParser(CheddarExpressionToken);
+    let IFF = TAIL_FALSE.exec()
+
+    console.log(this._Tokens);
 };
 
 export default CheddarExpressionToken;
