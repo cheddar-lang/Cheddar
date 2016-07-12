@@ -35,7 +35,6 @@ echo "Successfully clones $REPO"
 
 echo "Setting Git user..."
 git config --global user.name "Travis CI"
-# git config --global user.email $COMMIT_AUTHOR_EMAIL
 
 # Create the build
 echo "Preparing deploy build..."
