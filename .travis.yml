@@ -25,6 +25,7 @@ addons:
 # cache:
 #   directories:
 #     - node_modules
+script: bash ./misc/deploy.sh
 deploy:
   provider: heroku
   api_key:
