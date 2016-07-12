@@ -33,8 +33,13 @@ export const DEFAULT_OP = new Map([
         let CheddarClass = require('./class');
         let CAST_ALIAS = require('../config/alias');
 
-        if (!(LHS.prototype instanceof CheddarClass))
-            return CheddarError.CAST_FAILED;
+        if (!(LHS.prototype instanceof CheddarClass)) {
+            // ERROR INTEGRATE
+            return 'Cast target must be class';
+        }
+
+        if (RHS.constructor === LHS)
+            return RHS;
 
         let res;
         if ((res = RHS.constructor.Cast.get(LHS.Name) ||
@@ -42,7 +47,7 @@ export const DEFAULT_OP = new Map([
                    RHS.constructor.Cast.get(CAST_ALIAS.get(LHS)))) {
             return res(RHS);
         } else {
-            return CheddarError.NO_OP_BEHAVIOR;
+            return `Cannot cast to given target \`${LHS.Name || "object"}\``;
         }
     }],
 
