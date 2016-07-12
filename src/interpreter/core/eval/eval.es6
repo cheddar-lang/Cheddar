@@ -299,7 +299,9 @@ export default class CheddarEval extends CheddarCallStack {
             // Advance variable tree
             for (let i = 1; i < Operation._Tokens.length; i++) {
                 // if it is a function call, call the function
-                if (Operation._Tokens[i] instanceof CheddarArrayToken) {
+                // we know this if the marker is a (
+                if (Operation._Tokens[i] === "(") {
+                    ++i; // Go to the actual function token
 
                     if (!(OPERATOR instanceof CheddarFunction)) {
                         // ERROR INTEGRATE
@@ -328,6 +330,50 @@ export default class CheddarEval extends CheddarCallStack {
                         DATA,
                         REFERENCE
                     );
+                }
+                // if it is a class call, initalize it
+                // we know this if the marker is a {
+                else if (Operation._Tokens[i] === "{") {
+                    // Go to the token...
+                    ++i;
+
+                    // Make sure it's a class
+                    if (!(OPERATOR.prototype instanceof CheddarClass)) {
+                        // ERROR INTEGRATE
+                        return `${NAME} is not a class`;
+                    }
+
+                    // Create the JS version of it
+                    let bg = new OPERATOR(
+                        this.Scope // Pass current scope
+                    );
+
+                    // Evaluate each argument
+                    DATA = []; // Stores the results
+
+                    // Get the array of args from the token
+                    TOKEN = Operation._Tokens[i]._Tokens;
+                    let evalres; // Evaluation result
+                    for (let i = 0; i < TOKEN.length; i++) {
+                        evalres = new CheddarEval(
+                            { _Tokens:[TOKEN[i]] },
+                            this.Scope
+                        );
+                        evalres = evalres.exec();
+                        if (typeof evalres === "string") {
+                            return evalres;
+                        } else {
+                            DATA.push(evalres);
+                        }
+                    }
+
+                    // Construct the item
+                    OPERATOR = bg.init(...DATA);
+
+                    // If it's sucessful, set it to the calss
+                    if (OPERATOR === true)
+                        OPERATOR = bg;
+
                 } else {
                     if (Operation._Tokens[i] === "[]") {
                         // it is [ ... ]
