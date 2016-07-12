@@ -82,7 +82,7 @@ The following commands are available:
 
 	if (!(Result instanceof tokenizer)) {
 		resume = true;
-		REPL.setPrompt("... ".yellow)
+		REPL.setPrompt("     ... ".yellow)
 		return REPL.prompt();
 		/*
 		REPL_ERROR(Result, "Syntax Error");
