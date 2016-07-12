@@ -16,7 +16,8 @@ import HelperCaret from '../helpers/caret';
 import stdlib from '../stdlib/stdlib';
 
 let REPL = readline.createInterface(process.stdin, process.stdout);
-REPL.setPrompt('cheddar> '.yellow.bold);
+let PROMPT = 'cheddar> '.yellow.bold;
+REPL.setPrompt(PROMPT);
 REPL.prompt();
 
 let USI = 0;
@@ -43,10 +44,13 @@ process.argv.forEach((val, i) => {
 	}
 });
 
-REPL.on('line', function(STDIN) {
+let STDIN;
+let resume;
 
-	if (STDIN === 'exit') REPL.close();
-	if (STDIN === 'help') {
+REPL.on('line', function(input) {
+
+	if (input === 'exit') REPL.close();
+	if (input === 'help') {
 		console.log(`
 Welcome to Cheddar!
 
@@ -61,21 +65,35 @@ The following commands are available:
 `)
 		return REPL.prompt();
 	}
-	if (STDIN === 'clear') {
+	if (input === 'clear') {
 		process.stdout.write('\u001B[0f');
 		return REPL.prompt();
+	}
+
+	if (resume) {
+		STDIN += input;
+	} else {
+		STDIN = input;
 	}
 
 	let Tokenizer = new tokenizer(STDIN, 0);
 	let Result = Tokenizer.exec();
 
+
 	if (!(Result instanceof tokenizer)) {
+		resume = true;
+		REPL.setPrompt("... ".yellow)
+		return REPL.prompt();
+		/*
 		REPL_ERROR(Result, "Syntax Error");
 		// Draw error pointer
 		console.error(HelperCaret(STDIN, Tokenizer.Index, true));
 
-		return REPL.prompt();
+		return REPL.prompt();*/
 	}
+
+	resume = false;
+	REPL.setPrompt(PROMPT)
 
 	let Executor = new cheddar(Result, GLOBAL_SCOPE);
 	let Output = Executor.exec();
@@ -121,8 +139,15 @@ The following commands are available:
 	process.stdin.resume();
 });
 
-REPL.on('close', () => process.exit(0));
-REPL.on('SIGINT', () => {
+const CLOSING = () => {
 	console.log();
+	if (resume) {
+		REPL.setPrompt(PROMPT);
+		resume = false;
+		return REPL.prompt();
+	}
 	REPL.pause();
-});
+};
+
+REPL.on('close', () => CLOSING);
+REPL.on('SIGINT', CLOSING);
