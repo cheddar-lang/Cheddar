@@ -7,6 +7,11 @@ import CheddarAnyLiteral from './any';
 import CheddarLexer from '../tok/lex';
 import CheddarPrimitive from '../literals/primitive';
 
+let ARGLISTS = new Map([
+    ['(', ')'],
+    ['{', '}']
+]);
+
 export default class CheddarPropertyToken extends CheddarLexer {
     exec() {
         this.open(false);
@@ -62,12 +67,17 @@ export default class CheddarPropertyToken extends CheddarLexer {
                 this.Tokens = expr;
             }
 
-            if (this.curchar === '(') {
-                this.jumpWhite();
+            this.jumpWhite();
+
+            let argd; // Argument list delimiter
+            if (ARGLISTS.has(argd = this.curchar)) {
+                this.Tokens = argd; // Specify what arg type this is
+
                 this.Type = PropertyType.Method;
 
+
                 let expr = this.initParser(CheddarArrayToken);
-                let res = expr.exec('(', ')');
+                let res = expr.exec(argd, ARGLISTS.get(argd));
 
                 this.Index = expr.Index;
 
