@@ -1,5 +1,3 @@
-set -o errexit # error if anything errors
-
 echo "Verifing enviornment"
 if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != $DEPLOY_BRANCH ]; then
     echo "Not a deploy enviornment. Exiting..."
@@ -46,10 +44,19 @@ make build
 echo "Compiling to target"
 make browser_build
 
+echo "Getting Version"
+CHEDDAR_VERSION="$(node -pe "require('./package.json').version")"
+
 # Copy to the destination
 cd ../$REPO
 echo "Moving to destination"
 cp ../$CURRENT_PATH/Cheddar.js ./repl/Cheddar.js
+
+echo "Starting template generation..."
+cp ./repl/console.template.js ./repl/console.js
+
+echo "Setting version..."
+sed -i -e "s/@VERSION/$CHEDDAR_VERSION/g" ./repl/console.js
 
 echo "Prepating changes..."
 git add -A
