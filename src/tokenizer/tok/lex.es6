@@ -220,7 +220,7 @@ export default class CheddarLexer {
                         let oldIndex = this.Index;
                         for (let k = 0; k < defs[i][j].length; k++) {
                             this.Index = index;
-                            if (defs[i][j][k].prototype instanceof CheddarLexer) {
+                            if (defs[i][j][k].prototype instanceof CheddarLexer || defs[i][j][k] instanceof CheddarLexer) {
                                 result = this.initParser(defs[i][j][k]).exec();
                                 if (result instanceof CheddarLexer) {
                                     match = result;
