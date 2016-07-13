@@ -16,7 +16,7 @@ export default class StatementIf extends CheddarLexer {
         let EXPRESSION = CheddarCustomLexer(CheddarExpressionToken, true);
 
         // Match the `expr { block }` format
-        let FORMAT = [EXPRESSION, CheddarCodeblock, CheddarError.EXPECTED_BLOCK];
+        let FORMAT = ['(', EXPRESSION, ')', CheddarCodeblock, CheddarError.EXPECTED_BLOCK];
 
         // Match initial `if`
         let IF = this.grammar(true, FORMAT);

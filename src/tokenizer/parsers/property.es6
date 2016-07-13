@@ -67,9 +67,9 @@ export default class CheddarPropertyToken extends CheddarLexer {
                 this.Tokens = expr;
             }
 
-            this.jumpWhite();
-
             let argd; // Argument list delimiter
+            let id = this.Index; // delta-index
+            this.jumpWhite();
             if (ARGLISTS.has(argd = this.curchar)) {
                 this.Tokens = argd; // Specify what arg type this is
 
@@ -85,6 +85,8 @@ export default class CheddarPropertyToken extends CheddarLexer {
                     return this.error(res);
 
                 this.Tokens = expr;
+            } else {
+                this.Index = id;
             }
 
             var marker = this.Index;
