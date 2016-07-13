@@ -71,7 +71,7 @@ The following commands are available:
 	}
 
 	if (resume) {
-		STDIN += input;
+		STDIN += '\n' + input;
 	} else {
 		STDIN = input;
 	}
