@@ -5,7 +5,7 @@ describe('Scoping', function(){
         it('should work', TestCheddarFrom.Code(
             `
 var a = 5;
-if true {
+if (true) {
     print a
 }`,
             '5'
