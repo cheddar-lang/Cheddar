@@ -72,7 +72,8 @@ The following commands are available:
 
 	if (resume) {
 		STDIN += '\n' + input;
-	} else {
+	}
+	else {
 		STDIN = input;
 	}
 
@@ -81,15 +82,20 @@ The following commands are available:
 
 
 	if (!(Result instanceof tokenizer)) {
-		resume = true;
-		REPL.setPrompt("     ... ".yellow)
-		return REPL.prompt();
-		/*
-		REPL_ERROR(Result, "Syntax Error");
-		// Draw error pointer
-		console.error(HelperCaret(STDIN, Tokenizer.Index, true));
+		if (Tokenizer.Index >= STDIN.length - 1) {
+			resume = true;
+			REPL.setPrompt("     ... ".yellow)
+			return REPL.prompt();
+		}
+		else {
+			resume = false;
+			REPL_ERROR(Result, "Syntax Error");
+			// Draw error pointer
+			console.error(HelperCaret(STDIN, Tokenizer.Index, true));
 
-		return REPL.prompt();*/
+			REPL.setPrompt(PROMPT)
+			return REPL.prompt();
+		}
 	}
 
 	resume = false;
@@ -116,7 +122,8 @@ The following commands are available:
 			let txt;
 			if (Output.constructor.Operator.has('repr')) {
 				txt = Output.constructor.Operator.get('repr')(null, Output).value;
-			} else {
+			}
+			else {
 				txt = Output.constructor.Cast.get('String')(Output).value;
 			}
 			console.log(txt.magenta);
