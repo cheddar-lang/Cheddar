@@ -1,9 +1,11 @@
 // Functionized operators
 import {OP} from '../consts/ops';
-import CheddarLexer from '../tok/lex';
+import CheddarPrimitive from './primitive';
 
-export default class CheddarFunctionizedOperatorToken extends CheddarLexer {
-    // Chatse
-    exec(UNARY) {
+export default class CheddarFunctionizedOperatorToken extends CheddarPrimitive {
+    exec() {
+        return this.grammar(true, [
+            '(', OP, ')'
+        ]);
     }
 }
