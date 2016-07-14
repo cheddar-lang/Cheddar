@@ -434,6 +434,36 @@ export default class CheddarEval extends CheddarCallStack {
             }
 
             this.put( OPERATOR );
+        } else if (Operation.constructor.name === "CheddarExpressionTernary") {
+            let condition = Operation._Tokens[0];
+            let if_true = Operation._Tokens[1];
+            let if_false = Operation._Tokens[2];
+
+            condition = new CheddarEval(
+                { _Tokens: condition },
+                this.Scope
+            ).exec();
+
+            if (typeof condition === 'string')
+                return condition;
+
+            let condition_result = new (
+                PRIMITIVE_LINKS.get("CheddarBooleanToken")
+            )(this.Scope);
+
+            let to_run = condition_result.init(condition) && condition_result.value === true ?
+                if_true :
+                if_false;
+
+            to_run = new CheddarEval(
+                { _Tokens: [ to_run ] },
+                this.Scope
+            ).exec();
+
+            if (typeof to_run === 'string')
+                return to_run;
+
+            this.put(to_run);
         } else {
             return "An unhandled token was encountered";
         }
