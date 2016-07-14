@@ -20,7 +20,9 @@ export default class StatementIf extends CheddarLexer {
 
         // Match initial `if`
         let IF = this.grammar(true, FORMAT);
-        if (!(IF instanceof CheddarLexer))
+        if (IF === CheddarError.EXIT_NOTFOUND)
+            return IF;
+        else if (!(IF instanceof CheddarLexer))
             return this.error(IF);
 
         while (this.lookAhead("else")) {

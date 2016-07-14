@@ -5,8 +5,8 @@ STDLIB.Item = (Name, LIB) => STDLIB.set(Name, API.var(LIB(API)));
 
 /** Global Libraries **/
 STDLIB.Item("Math", require('./ns/Math'));
-STDLIB.Item("Encoding", require('./ns/Encoding'));
-STDLIB.Item("Buffer", require('./ns/Buffer'));
+//STDLIB.Item("Encoding", require('./ns/Encoding'));
+//STDLIB.Item("Buffer", require('./ns/Buffer'));
 STDLIB.Item("IO", require('./ns/IO'));
 STDLIB.Item("HTTP", require('./ns/HTTP'));
 

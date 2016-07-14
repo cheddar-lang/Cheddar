@@ -34,10 +34,6 @@ export default class StatementFor extends CheddarLexer {
             ]
         );
 
-        if (FOR === CheddarError.EXIT_NOTFOUND) {
-            return CheddarError.UNEXPECTED_TOKEN;
-        } else {
-            return FOR;
-        }
+        return FOR;
     }
 }
