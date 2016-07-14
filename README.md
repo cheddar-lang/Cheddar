@@ -58,7 +58,7 @@ Running "babel:dist" (babel) task
 Done.
 ```
 
-Now, when you check the contents of the folder you should notice a `dist/` folder containing the transpiled code. The next section will contain information on running Cheddar (make sure to `cd dist`)
+Now, when you check the contents of the folder you should notice a `dist/` folder containing the transpiled code. The next section will contain information on running Cheddar (make sure to `cd dist`).
 
 ## Using Cheddar
 
@@ -69,7 +69,7 @@ $ node ./interpreter/tests/repl
 Cheddar:T_REPL> 
 ```
 
-Additionally, you can access the scope testing/assignment REPL by calling a slightly different file:
+Additionally, you can access the scope testing/assignment REPL by running a slightly different file:
 ```bash
 $ node ./interpreter/tests/t_repl
 Cheddar:T_REPL> 
