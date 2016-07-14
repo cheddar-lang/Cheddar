@@ -8,7 +8,7 @@ import HelperInit from '../../../../helpers/init';
 // from Cyoce the almighty platypus, modified quite heavily.
 // http://chat.stackexchange.com/transcript/message/27392766#27392766
 const range = (a, b) => {
-let CheddarNumber = require('../Number');
+    let CheddarNumber = require('../Number');
     let out = [];
     let i = 0;
     if(b < a){
@@ -77,7 +77,7 @@ export default new Map([
 
     }],
 
-    ['^', (LHS, RHS) => {
+    ['**', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, 10, 0, Math.pow(LHS.value, RHS.value));
         else
@@ -142,7 +142,7 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
-    ['xor', (LHS, RHS) => {
+    ['^', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, 10, 0, LHS.value ^ RHS.value);
         else
