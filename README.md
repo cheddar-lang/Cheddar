@@ -44,7 +44,7 @@ You shouldn't work for the language.
 
 ## Building
 
-Building is rather simple. After cloning or installing the files, once in the directory simple run `npm install`. The rest should automatically happen.
+Building is rather simple. After cloning or installing the files, navigate to the directory and simply run `npm install`. The rest should automatically happen.
 
 ```bash
 npm install
