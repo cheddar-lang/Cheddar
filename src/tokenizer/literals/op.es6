@@ -3,7 +3,6 @@ import CheddarLexer from '../tok/lex';
 import {UOP, OP} from '../consts/ops';
 
 export default class CheddarOperatorToken extends CheddarLexer {
-    // Chatse
     exec(UNARY) {
         let ops = UNARY ? UOP : OP;
         // this.Code is the code

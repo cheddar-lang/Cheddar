@@ -18,7 +18,7 @@
 //   itself
 
 // Primitive <-> Class Links
-import {PRIMITIVE_LINKS} from '../config/link';
+import {PRIMITIVE_LINKS, EVALUATED_LINKS} from '../config/link';
 import {TYPE as OP_TYPE, EXCLUDE_META_ASSIGNMENT as REG_OPS} from '../../../tokenizer/consts/ops';
 
 // Reference tokens
@@ -154,7 +154,7 @@ export default class CheddarEval extends CheddarCallStack {
                     OPERATOR = CheddarError.NO_OP_BEHAVIOR;
                 }
             } else {
-                // Binary operator. DATA is RHS, TOKEN is LHS
+                // Binary operator. DATA is LHS, TOKEN is RHS
                 DATA = this.shift(); // Get the other arg
 
                 NAME = DATA.constructor.Operator ||
@@ -242,8 +242,7 @@ export default class CheddarEval extends CheddarCallStack {
                 }
 
                 // Get the class associated with the token
-                OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name);
-                if (OPERATOR) {
+                if ((OPERATOR = PRIMITIVE_LINKS.get(TOKEN.constructor.name))) {
                     // Set the name to be used in errors
                     NAME = OPERATOR.Name || "object";
 
@@ -258,6 +257,8 @@ export default class CheddarEval extends CheddarCallStack {
                         this.put(OPERATOR);
                         return true;
                     }
+                } else if ((OPERATOR = EVALUATED_LINKS.get(TOKEN.constructor.name))) {
+                    OPERATOR = OPERATOR(...TOKEN.Tokens);
                 } else {
                     return CheddarError.UNLINKED_CLASS;
                 }
