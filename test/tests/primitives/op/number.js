@@ -52,11 +52,11 @@ describe('Numbers', function(){
     })
     describe('powers', function(){
         it('should work', TestCheddarFrom.Code(
-            'print "2^2=" + String::(2^2)',
-            '2^2=4'
+            'print "2**2=" + String::(2**2)',
+            '2**2=4'
         ))
 //        it('should break', TestCheddarFrom.Code(
-//            'print String::(^)'
+//            'print String::(**)'
 //        ))
     })
     describe('modulo', function(){
@@ -143,11 +143,11 @@ describe('Numbers', function(){
 
     describe('xor', function(){
         it('should work', TestCheddarFrom.Code(
-            'print "4 xor 3=" + String::(4 xor 3)',
-            '4 xor 3=' + (4 ^ 3)
+            'print "4^3=" + String::(4^3)',
+            '4^3=' + (4 ^ 3)
         ))
 //        it('should break', TestCheddarFrom.Code(
-//            'print String::(|)'
+//            'print String::(^)'
 //        ))
     })
 
