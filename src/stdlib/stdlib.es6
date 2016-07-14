@@ -1,7 +1,7 @@
 import API from './api';
 
 let STDLIB = new Map();
-STDLIB.Item = (Name) => STDLIB.set(Name, API.var(require(`./ns/${Name}`)(API)));
+STDLIB.Item = (Name, LIB) => STDLIB.set(Name, API.var(LIB(API)));
 
 /** Global Libraries **/
 STDLIB.Item("Math");
