@@ -9,6 +9,7 @@ STDLIB.Item("Math", require('./ns/Math'));
 //STDLIB.Item("Buffer", require('./ns/Buffer'));
 STDLIB.Item("IO", require('./ns/IO'));
 STDLIB.Item("HTTP", require('./ns/HTTP'));
+STDLIB.Item("fn", require("./ns/fn"));
 
 /** Primitives **/
 STDLIB.set("String",  API.var(API.string));
