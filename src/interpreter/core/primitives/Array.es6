@@ -40,6 +40,12 @@ export default class CheddarArray extends CheddarClass {
         return true;
     }
 
+    // TODO: replace with Cheddar generator
+    // send a `yield` signal probably
+    iterator() {
+
+    }
+
     reverse() {
         this.value.reverse();
         return this;

@@ -18,19 +18,30 @@ export default class CheddarAssign {
             return `${this.assignl.tok(0)} has already been defined`;
         }
 
-        let val = new CheddarEval(this.toks.tok(2), this.scope);
-        if (!((val = val.exec()) instanceof CheddarClass || val.prototype instanceof CheddarClass))
-            return val;
+        let res;
 
-        val.scope = this.scope;
-        val.Reference = this.assignl.tok(0);
+        if (this.toks.tok(2)) {
+            let val = new CheddarEval(this.toks.tok(2), this.scope);
+            if (!((val = val.exec()) instanceof CheddarClass || val.prototype instanceof CheddarClass))
+                return val;
 
-        let res = this.scope.manage(this.assignl.tok(0),
-            new CheddarVariable(val, {
-                Writeable: this.assignt !== "const",
-                StrictType: this.assignl.tok(1) || null
-            })
-        );
+            val.scope = this.scope;
+            val.Reference = this.assignl.tok(0);
+
+            res = this.scope.manage(this.assignl.tok(0),
+                new CheddarVariable(val, {
+                    Writeable: this.assignt !== "const",
+                    StrictType: this.assignl.tok(1) || null
+                })
+            );
+        } else {
+            res = this.scope.manage(this.assignl.tok(0),
+                new CheddarVariable(new NIL, {
+                    Writeable: this.assignt !== "const",
+                    StrictType: this.assignl.tok(1) || null
+                })
+            );
+        }
 
         if (res !== true) {
             return `\`${this.assignl.tok(0)}\` is a reserved keyword`;

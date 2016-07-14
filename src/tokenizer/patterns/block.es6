@@ -21,7 +21,9 @@ export default class CheddarCodeblock extends CheddarLexer {
         this.Tokens = RES;
 
         this.jumpWhite();
-        this.jumpLiteral("}");
+        if (this.jumpLiteral("}") === false) {
+            return this.error(CheddarError.UNEXPECTED_TOKEN);
+        }
 
         return this.close();
     }

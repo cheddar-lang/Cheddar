@@ -18,6 +18,7 @@ after_success:
   - npm run coveralls
   - bash <(curl -s https://codecov.io/bash)
   - codeclimate-test-reporter < ./coverage/lcov.info
+  - bash ./misc/deploy.sh
 addons:
   codeclimate:
     repo_token:

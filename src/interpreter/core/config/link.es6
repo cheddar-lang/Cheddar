@@ -13,3 +13,9 @@ export const PRIMITIVE_LINKS = new Map([
     ["CheddarArrayToken"   , CheddarArray],
     ["CheddarFunctionToken", CheddarFunc]
 ]);
+
+import CheddarFunctionizedOperator from '../evaluated/fop';
+
+export const EVALUATED_LINKS = new Map([
+    ["CheddarFunctionizedOperatorToken", CheddarFunctionizedOperator]
+]);

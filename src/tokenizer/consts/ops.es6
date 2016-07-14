@@ -27,7 +27,7 @@ export const EXCLUDE_META_ASSIGNMENT = new Set(['==', '!=', '<=', '>=' ]);
 export const OP = [
 '^', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '==', '&', '|',
 '!=', '=', '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
-':', '::',
+'|>', '::',
 '@"', 'has',
 'and', 'or', 'xor',
 'log', 'sign',
@@ -38,6 +38,7 @@ export const OP = [
 export const UOP = [
 '-', '+',
 '!',
+'|>',
 'sqrt', 'cbrt',
 'sin', 'cos', 'tan',
 'acos', 'asin', 'atan',
