@@ -12,7 +12,8 @@ addons:
     packages:
       - g++-4.8
 install:
-  - npm install -g codeclimate-test-reporter
+  - npm install -g codeclimate-test-reporter babel-cli mocha
+  - npm install
 after_success:
   - npm run coveralls
   - bash <(curl -s https://codecov.io/bash)
