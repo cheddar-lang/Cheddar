@@ -1,5 +1,5 @@
 import CheddarPrimitive from './primitive';
-import {STRING_DELIMITERS, STRING_ESCAPE} from '../consts/chars';
+import {STRING_ESCAPES, STRING_DELIMITERS, STRING_ESCAPE} from '../consts/chars';
 import * as CheddarError from '../consts/err';
 
 import {ClassType} from '../consts/types';
@@ -15,6 +15,7 @@ export default class CheddarStringToken extends CheddarPrimitive {
             // in a string
 
             let qt = chr; // store quote
+            let esc;
 
             while ((chr = this.getChar())) {
                 if (chr === qt) {
@@ -23,7 +24,11 @@ export default class CheddarStringToken extends CheddarPrimitive {
                     this.Index = loc;
                     return this.error(CheddarError.UNMATCHED_DELIMITER);
                 } else if (chr === STRING_ESCAPE) {
-                    this.addToken(this.getChar());
+                    this.addToken(
+                        STRING_ESCAPES.has(esc = this.getChar()) ?
+                        STRING_ESCAPES.get(esc) :
+                        esc
+                    );
                 } else {
                     this.addToken(chr);
                 }
