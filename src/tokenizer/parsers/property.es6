@@ -12,6 +12,8 @@ let ARGLISTS = new Map([
     ['{', '}']
 ]);
 
+let MATCHBODY = new Set("([");
+
 export default class CheddarPropertyToken extends CheddarLexer {
     exec() {
         this.open(false);
@@ -19,6 +21,7 @@ export default class CheddarPropertyToken extends CheddarLexer {
         this.Type = PropertyType.Property;
 
         let Initial = false;
+        let NOVAR = false;
 
         // Plans for property parsing:
         //  1. Match <variable> ("." | end)
@@ -34,14 +37,18 @@ export default class CheddarPropertyToken extends CheddarLexer {
             else
                 attempt = this.initParser(CheddarVariableToken).exec();
 
-            Initial = true;
 
-            if (!(attempt instanceof CheddarLexer) || attempt.Errored === true) {
+            if (NOVAR === true && attempt === CheddarError.EXIT_NOTFOUND) {
+                // Do nothing?
+            } else if (!(attempt instanceof CheddarLexer) || attempt.Errored === true) {
                 return this.error(attempt);
+            } else {
+                this.Index = attempt.Index;
+                this.Tokens = attempt;
             }
 
-            this.Index = attempt.Index;
-            this.Tokens = attempt;
+            Initial = true;
+            NOVAR = false;
 
             if (this.curchar === '[') {
                 ++this.Index;
@@ -93,6 +100,9 @@ export default class CheddarPropertyToken extends CheddarLexer {
             this.jumpWhite();
             if (this.curchar === '.') {
                 ++this.Index;
+                continue;
+            } else if (MATCHBODY.has(this.curchar)) {
+                NOVAR = true;
                 continue;
             }
 
