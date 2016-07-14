@@ -1,5 +1,5 @@
 export default function(cheddar){
     return cheddar.namespace([
-        ["hook", cheddar.from(require("./fn/hook.es6"))]
+        ["hook", cheddar.from(require("./fn/hook"))]
     ]);
 }

@@ -15,8 +15,8 @@ export default function hook(cheddar) {
 
                     let f = input("f");
                     let g = input("g");
-
-                    return f.exec(s, [args[0], g.exec(s, [args.length === 1 ? args[0] : args[1]])])
+                    
+                    return f.exec([args[0], g.exec([args.length === 1 ? args[0] : args[1]], null)], null);
                 }
             )
         }
