@@ -26,7 +26,7 @@ import CheddarPropertyToken from '../../../tokenizer/parsers/property';
 import CheddarLiteral from '../../../tokenizer/literals/literal';
 import CheddarParenthesizedExpressionToken from '../../../tokenizer/parsers/paren_expr';
 import CheddarOperatorToken from '../../../tokenizer/literals/op';
-import CheddarArrayToken from '../../../tokenizer/parsers/array';
+import CheddarExpressionToken from '../../../tokenizer/parsers/expr';
 import CheddarVariableToken from '../../../tokenizer/literals/var';
 
 import CheddarScope from '../env/scope';
@@ -435,12 +435,13 @@ export default class CheddarEval extends CheddarCallStack {
 
             this.put( OPERATOR );
         } else if (Operation.constructor.name === "CheddarExpressionTernary") {
-            let condition = Operation._Tokens[0];
+            let condition = new CheddarExpressionToken();
+            condition._Tokens = Operation._Tokens[0];
             let if_true = Operation._Tokens[1];
             let if_false = Operation._Tokens[2];
 
             condition = new CheddarEval(
-                { _Tokens: condition },
+                { _Tokens: [condition] },
                 this.Scope
             ).exec();
 

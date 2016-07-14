@@ -1,3 +1,4 @@
+import NIL from '../consts/nil';
 import CheddarFunction from '../env/func';
 import CheddarError from '../consts/err';
 import CheddarClass from '../env/class';
@@ -6,7 +7,9 @@ import CheddarErrorDesc from '../consts/err_msg';
 export default function(operator) {
     return new CheddarFunction([
         ["a", {}],
-        ["b", {}]
+        ["b", {
+            Optional: true
+        }]
     ], function(scope, input) {
         let LHS = input("a");
         let RHS = input("b");
@@ -18,7 +21,10 @@ export default function(operator) {
         ).get(operator);
 
         if (opfunc) {
-            resp = opfunc(LHS, RHS);
+            if (RHS instanceof NIL)
+                resp = opfunc(null, LHS);
+            else
+                resp = opfunc(LHS, RHS);
         }
         else {
             resp = CheddarError.NO_OP_BEHAVIOR;

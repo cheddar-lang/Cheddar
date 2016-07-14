@@ -68,14 +68,14 @@ E -> α β
 
 */
 
-let UNARY = CheddarCustomLexer(O, true, true);
+let UNARY = CheddarCustomLexer(O, true);
 
 // Class Prototypes
 class CheddarExpressionToken extends CheddarLexer { isExpression = true }
 class CheddarExpressionTokenAlpha extends CheddarLexer { isExpression = true }
 class CheddarExpressionTokenBeta extends CheddarLexer { isExpression = true }
 
-let E = CheddarCustomLexer(CheddarExpressionToken, false);
+let E = CheddarCustomLexer(CheddarExpressionToken, true, false);
 
 // Ternary
 // Solely for reference
@@ -126,7 +126,7 @@ CheddarExpressionToken.prototype.exec = function(DISALLOW_EMPTY = false, ALLOW_T
     /** == Ternary Handling == **/
     if (ALLOW_TERNARY) {
         // Lookahead for ternary `?`
-        if (!this.lookAhead("?")) { 
+        if (!this.lookAhead("?")) {
             // If it doesn't exist, just exit
             return expression;
         }
@@ -164,7 +164,7 @@ CheddarExpressionToken.prototype.exec = function(DISALLOW_EMPTY = false, ALLOW_T
             return this.error(IFF);
 
         let Ternary = new CheddarExpressionTernary();
-        console.log(require('util').inspect(this._Tokens, {depth: Infinity}));
+
         Ternary.Index = this.Index;
         Ternary._Tokens = [
             this._Tokens.slice(0), // Token from this.grammar
