@@ -262,7 +262,7 @@ describe('Numbers', function(){
 
     describe('range', function(){
         it('should work', TestCheddarFrom.Code(
-            'print "1|>5=" + String::(1:5)',
+            'print "1|>5=" + String::(1|>5)',
             '1|>5=[1, 2, 3, 4, 5]'
         ))
 
