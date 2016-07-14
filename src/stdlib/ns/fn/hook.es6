@@ -13,12 +13,10 @@ export default function hook(cheddar) {
                     if(args.length > 2 || !args.length)
                         return `Expected 1 or 2 args, received ${args.length || "none"}`;
 
-
-                    let [a, b] = args;
                     let f = input("f");
                     let g = input("g");
 
-                    return f.exec(null, [a, g.exec(null, [args.length === 1 ? a : b])]);
+                    return f.exec(s, [args[0], g.exec(s, [args.length === 1 ? args[0] : args[1]])])
                 }
             )
         }
