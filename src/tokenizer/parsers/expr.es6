@@ -68,7 +68,7 @@ E -> α β
 
 */
 
-let UNARY = CheddarCustomLexer(O, true);
+let UNARY = CheddarCustomLexer(O, true, true);
 
 // Class Prototypes
 class CheddarExpressionToken extends CheddarLexer { isExpression = true }
@@ -107,14 +107,21 @@ CheddarExpressionTokenBeta.prototype.exec = function() {
 };
 
 // MASTER
-CheddarExpressionToken.prototype.exec = function(ALLOW_TERNARY = true) {
+CheddarExpressionToken.prototype.exec = function(DISALLOW_EMPTY = false, ALLOW_TERNARY = true) {
     this.open(false);
 
     this.jumpWhite();
 
-    let expression = this.grammar(true, [
-        CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta
-    ]);
+    let expression;
+    if (DISALLOW_EMPTY) {
+        expression = this.grammar(true, [
+            CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta
+        ]);
+    } else {
+        expression = this.grammar(true, [
+            CheddarExpressionTokenAlpha, CheddarExpressionTokenBeta
+        ], [ /** epsilon */ ]);
+    }
 
     /** == Ternary Handling == **/
     if (ALLOW_TERNARY) {
