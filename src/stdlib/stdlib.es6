@@ -1,14 +1,14 @@
 import API from './api';
 
 let STDLIB = new Map();
-STDLIB.Item = (Name) => STDLIB.set(Name, API.var(require(`./ns/${Name}`)(API)));
+STDLIB.Item = (Name, LIB) => STDLIB.set(Name, API.var(LIB(API)));
 
 /** Global Libraries **/
-STDLIB.Item("Math");
-STDLIB.Item("Encoding");
-STDLIB.Item("Buffer");
-STDLIB.Item("IO");
-STDLIB.Item("HTTP");
+STDLIB.Item("Math", require('./ns/Math'));
+STDLIB.Item("Encoding", require('./ns/Encoding'));
+STDLIB.Item("Buffer", require('./ns/Buffer'));
+STDLIB.Item("IO", require('./ns/IO'));
+STDLIB.Item("HTTP", require('./ns/HTTP'));
 
 /** Primitives **/
 STDLIB.set("String",  API.var(API.string));
