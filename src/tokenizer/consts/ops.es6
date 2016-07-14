@@ -25,7 +25,9 @@ export const RESERVED_KEYWORDS = new Set([
 export const EXCLUDE_META_ASSIGNMENT = new Set(['==', '!=', '<=', '>=' ]);
 
 export const OP = [
-'^', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '==', '&', '|',
+'**', '*', '/', '%', '+', '-', '<=', '>=', '<', '>', '==',
+'&', '|', '^',
+'&&', '||',
 '!=', '=', '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
 '|>', '::',
 '@"', 'has',
@@ -119,7 +121,7 @@ export const PRECEDENCE = new Map([
 ]);
 
 export const RA_PRECEDENCE = new Map([
-    ['^', 14000],
+    ['**', 14000],
     ['=', 1000]
 ]);
 

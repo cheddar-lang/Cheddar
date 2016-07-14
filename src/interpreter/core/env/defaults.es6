@@ -74,7 +74,31 @@ export const DEFAULT_OP = new Map([
             );
         else
             return CheddarError.NO_OP_BEHAVIOR;
-    }]
+    }],
+
+    // TODO: short-circuiting
+    ['&&', (LHS, RHS) => {
+        let bool = require("../primitives/Bool");
+        if (LHS && RHS)
+            return HelperInit(
+                bool,
+                HelperInit(bool, LHS).value && HelperInit(bool, RHS).value
+            );
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
+    // TODO: short-circuiting
+    ['||', (LHS, RHS) => {
+        let bool = require("../primitives/Bool");
+        if (LHS && RHS)
+            return HelperInit(
+                bool,
+                HelperInit(bool, LHS).value || HelperInit(bool, RHS).value
+            );
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
 
 ]);
 
