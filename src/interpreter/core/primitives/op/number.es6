@@ -5,17 +5,17 @@ import CheddarBool from '../Bool';
 
 import HelperInit from '../../../../helpers/init';
 
-// from Cyoce the almighty platypus modified;
+// from Cyoce the almighty platypus, modified quite heavily.
 // http://chat.stackexchange.com/transcript/message/27392766#27392766
 const range = (a, b) => {
-    let CheddarNumber = require('../Number');
-    if (a > b) return range(b, a).reverse();
-    b = ~~b;
-    var iPart = a - ~~a;
-    a = ~~a;
-    var out = Array(b - a + 1);
-    while (b + iPart >= a) out[b - a] = HelperInit(CheddarNumber, 10, 0, b-- + iPart);
-    if(iPart) out.pop();
+let CheddarNumber = require('../Number');
+    let out = [];
+    let i = 0;
+    if(b < a){
+        while(a >= b) out[i++] = HelperInit(CheddarNumber, 10, 0, a--);
+    } else {
+        while(a <= b) out[i++] = HelperInit(CheddarNumber, 10, 0, a++);
+    }
     return out;
 };
 
@@ -164,10 +164,12 @@ export default new Map([
     }],
 
     // Special Operators
-    [':', (LHS, RHS) => {
+    ['|>', (LHS, RHS) => {
         let CheddarArray = require("../Array");
         if (LHS && RHS instanceof LHS.constructor)
             return HelperInit(CheddarArray, ...range(LHS.value, RHS.value));
+        else if(LHS === null)
+            return HelperInit(CheddarArray, ...range(0, RHS.value - 1));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -261,7 +263,6 @@ export default new Map([
 
 /*
 TODO:
-'&', '|', // will do later
 '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
 
 'and', 'or', 'xor',
