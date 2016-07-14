@@ -48,14 +48,12 @@ export const UOP = [
 'len', 'reverse', 'abs', 'repr',
 'print',
 'log', 'sign',
-'new',
 '@"'
 ];
 
 // TODO: how will the user modify this? no idea
 //TODO: fix precedence
 export const UNARY_PRECEDENCE = new Map([
-    ['new', 21000],
     ['!', 20000],
     ['-', 20000],
     ['+', 20000],
