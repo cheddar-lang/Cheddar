@@ -23,6 +23,7 @@ const FORMAT_ERROR = (TOK, LEXER) => TOK
     .replace(/\$1/, LEXER.Code[LEXER.Index]);
 
 const SINGLELINE_WHITESPACE = /[\t\f ]/;
+const WHITESPACE = /\s/;
 const NEWLINE = /[\r\n]/;
 
 export default class CheddarTokenize extends CheddarLexer {
@@ -46,7 +47,8 @@ export default class CheddarTokenize extends CheddarLexer {
             while (SINGLELINE_WHITESPACE.test(this.Code[this.Index])) {
                 backtracked = true;
                 this.Index--;
-            } /* then { */
+            }
+
             if (backtracked) {
                 if (NEWLINE.test(this.Code[this.Index - 1])) {
                     this.Index--;
