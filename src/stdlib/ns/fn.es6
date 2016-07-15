@@ -4,7 +4,9 @@ export default function(cheddar){
         ["fork", cheddar.from(require("./fn/fork"))],
         ["reflexive", cheddar.from(require("./fn/reflexive"))],
         ["rflx", cheddar.from(require("./fn/reflexive"))],
+        ["pref", cheddar.from(require("./fn/pref"))],
         ["insert", cheddar.from(require("./fn/insert"))],
-        ["prefixes", cheddar.from(require("./fn/prefixes"))]
+        ["prefix", cheddar.from(require("./fn/prefix"))],
+        ["id", cheddar.from(require("./fn/id"))]
     ]);
 }
