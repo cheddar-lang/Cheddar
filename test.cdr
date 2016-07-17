@@ -1,0 +1,3 @@
+var fib = (n) -> {
+    print n
+}
