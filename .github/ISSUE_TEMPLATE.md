@@ -1,11 +1,3 @@
-<!-- NOTE: If you have a PROPOSAL, then
-           this does not apply to you. 
-           In that case, include a clear
-           definiton, a formal grammar for
-           your proposal, examples, and why
-           that feature would be helpful.
--->
-
 **Version:** the version you're runnning. Found through `cheddar -V`
 
 ### Problem
