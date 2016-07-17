@@ -20,14 +20,6 @@ if (!module.parent) {
     let GLOBAL_SCOPE = new CheddarScope(null);
     GLOBAL_SCOPE.Scope = stdlib;
 
-    process.argv.forEach((val, i) => {
-        if (i > 1) {
-            let v = new CheddarString(null, null);
-            v.init(val);
-            GLOBAL_SCOPE.Scope.set('$' + (i - 2), new CheddarVariable(v));
-        }
-    });
-
     let STDIN = "";
     let chunk;
     process.stdin.setEncoding('utf8');
