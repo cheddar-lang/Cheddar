@@ -16,6 +16,8 @@ export default function(cheddar) {
             return cheddar.nstoclass(cheddar.namespace([
                 ["require", cheddar.from(require('./internal/require'))],
                 ["translate", cheddar.from(require('./internal/translate'))],
+                ["json", cheddar.from(require('./internal/json'))],
+                ["call", cheddar.from(require('./internal/call'))],
             ]));
         }
     });
