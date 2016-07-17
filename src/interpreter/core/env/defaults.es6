@@ -20,9 +20,10 @@ export const DEFAULT_OP = new Map([
                 ? LHS.constructor.Operator.get('repr')(null, LHS)
                 : LHS;
 
+
         // Stream
         if (VAL.constructor.Name === 'String')
-            console.log(VAL.value);
+            global.CHEDDAR_OPTS.PRINT(VAL.value + "\n");
         else
             return CheddarError.NO_OP_BEHAVIOR;
 

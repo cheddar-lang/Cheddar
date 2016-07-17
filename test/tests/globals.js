@@ -8,27 +8,18 @@ var expect = chai.expect;
 chai.should();
 function test(code, result) {
     return function() {
-        var c = console.log;
         var STDOUT = "";
-        console.log = function(str) {
-            STDOUT += str + '\n';
-        };
         // cheddar() is sync
         try {
-            cheddar(code);
+            cheddar([code], [function stdoutstream(text) {
+                STDOUT += text;
+            }]);
         } catch (error){
             console.log("AN ERROR OCCURRED, U DONE MESSED UP. FIX IT NOW NOW NOW NOW NOW NOW FIXED IT NOW! " + error)
             throw error;
         }
 
-        var newLineRemovedSTDOUT = STDOUT.endsWith('\n')
-            ?  STDOUT.substring(0, STDOUT.lastIndexOf('\n'))
-            :  STDOUT;
-        newLineRemovedSTDOUT != result ? c(
-            'YOU MESSED UP! THE RESULT IS "' + newLineRemovedSTDOUT + '" AND THE DESIRED RESULT WAS "' + result + '"'
-        ) : ""
-        newLineRemovedSTDOUT.should.equal(result || "");
-        console.log = c;
+        STDOUT.replace(/\n$/, "").should.equal(result || "");
     }
 }
 function readFileContents(file){

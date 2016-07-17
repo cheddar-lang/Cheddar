@@ -48,7 +48,7 @@ if (!module.parent) {
         }
 
         let Executor = new cheddar(Result, GLOBAL_SCOPE);
-        let Output = Executor.exec();
+        let Output = Executor.exec(process.stdout.write.bind(process.stdout));
 
         if (typeof Output === "string") {
             DRAW_ERROR(Output, "Runtime Error");
@@ -56,7 +56,8 @@ if (!module.parent) {
     });
 }
 else {
-    module.exports = function(code, done, scope) {
+    module.exports = function(input, args) {
+        let [code, done, scope] = input;
         let GLOBAL_SCOPE = new CheddarScope(null);
         GLOBAL_SCOPE.Scope = new Map(stdlib);
 
@@ -64,8 +65,8 @@ else {
         let Result = Tokenizer.exec();
 
         let Executor = new cheddar(Result, scope || GLOBAL_SCOPE);
-        Executor.exec();
+        Executor.exec(...args);
 
-        if (done) done(Executor);
-    }
+        //if (done) done(Executor);
+    };
 }
