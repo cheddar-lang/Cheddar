@@ -1,5 +1,7 @@
+var v;
 export default function(cheddar) {
-    return class ModuleInterface extends cheddar.class {
+    if (v) return v;
+    v = class ModuleInterface extends cheddar.class {
         static Name = "ModuleInterface";
 
         init(val) {
@@ -7,4 +9,5 @@ export default function(cheddar) {
             return true;
         }
     }
+    return v;
 }
