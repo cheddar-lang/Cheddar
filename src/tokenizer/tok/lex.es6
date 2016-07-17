@@ -8,6 +8,28 @@ export default class CheddarLexer {
         this._Tokens = [];
     }
 
+    toString() {
+        let node = this,
+            tokens = this._Tokens;
+
+        while (tokens.length === 1 && tokens[0].isExpression) {
+            node = tokens[0];
+            tokens = tokens[0]._Tokens;
+        }
+
+        if (tokens.length === 1 && tokens[0] instanceof CheddarLexer) {
+            node = tokens[0];
+            tokens = tokens[0]._Tokens;
+        }
+
+        return node.constructor.name.replace(/^Cheddar/g, '') + '\n' + tokens.map(t => typeof t === 'string'  ? "'" + t + "'" : t)
+            .map(t => t.toString())
+            .join(tokens.every(o => !(o instanceof CheddarLexer)) ? ' ' : '\n')
+            .replace(/^/gm, ' │')
+            .replace(/^ │(?! [└├│┬])/gm, ' ├');
+            //.replace(/^((?: [^└├│┬])*)├/gm, '└'); //wait only the last one
+    }
+
     getChar() {
         return this.Code[this.Index++];
     }
