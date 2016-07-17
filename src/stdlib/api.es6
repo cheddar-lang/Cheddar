@@ -65,6 +65,13 @@ var API = {
         return Scope;
     },
 
+    nstoclass: function(input) {
+        let ns = new CheddarClass(null);
+        ns.Name = "Namespace";
+        ns.Scope = input.Scope;
+        return ns;
+    },
+
     variable: CheddarVariable,
     class: CheddarClass,
     scope: CheddarScope
