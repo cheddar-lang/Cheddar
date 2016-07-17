@@ -1,7 +1,7 @@
 node_modules
-dist
+/dist
 coverage
-update
 npm-debug.log
-cheddar
+/cheddar
 TODO.md
+/*.cdr
