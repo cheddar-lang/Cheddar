@@ -63,6 +63,7 @@ export default class CheddarFunction extends CheddarClass {
     }
 
     exec(input, self) {
+        debugger;
         let scope = this.generateScope(input, self);
 
         if (!(scope instanceof CheddarScope))

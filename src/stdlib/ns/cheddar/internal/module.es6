@@ -1,13 +1,8 @@
 var v;
 export default function(cheddar) {
     if (v) return v;
-    v = class ModuleInterface extends cheddar.class {
+    v = class ModuleInterface extends require('./interface')(cheddar) {
         static Name = "ModuleInterface";
-
-        init(val) {
-            this.internal = val;
-            return true;
-        }
     }
     return v;
 }
