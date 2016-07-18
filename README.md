@@ -119,5 +119,5 @@ Bugs:
 
 Further Development
 
- - [ ] JS Interfacing
+ - [x] JS Interfacing
  - [ ] A bunch of libraries
