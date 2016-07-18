@@ -1,7 +1,7 @@
 import CheddarExpressionToken from '../states/expr';
 import CheddarCodeblock from '../patterns/block';
 import CheddarArrayToken from './array';
-import CheddarArgumentToken from './argument';
+import CheddarArgumentToken from './args/argument';
 import CheddarCustomLexer from './custom';
 import CheddarPrimitive from '../literals/primitive';
 
