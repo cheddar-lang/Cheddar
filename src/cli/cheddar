@@ -8,9 +8,8 @@ else
 fi
 cpath="$(dirname $($rp $0))"
 CHEDDAR_EXE="`$rp $(
-    [[ -f "$cpath/cheddar.js" ]] && echo "cpath/cheddar.js" ||
-    [[ -f "$cpath/../share/cheddar/dist/cli/cheddar.js" ]] && echo "$cpath/../share/cheddar/dist/cli/cheddar.js" ||
-    [[ -f "$cpath/cheddar.js" ]] && echo "$cpath/cheddar.js"
+    [[ -f "$cpath/cheddar.js" ]] && echo "$cpath/cheddar.js" ||
+    [[ -f "$cpath/../share/cheddar/dist/cli/cheddar.js" ]] && echo "$cpath/../share/cheddar/dist/cli/cheddar.js"
 )`"
 NODE_EXE=`which node`
 "$NODE_EXE" "$CHEDDAR_EXE" "$0" "$@"
