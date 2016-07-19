@@ -12,7 +12,8 @@ import HelperInit from '../../../../helpers/init';
 
 export default new Map([
     ['Number', (LHS) => {
-        let Attempt = new CheddarNumberToken(LHS, 0).exec();
+        let Attempt = new CheddarNumberToken(LHS.value, 0).exec();
+
         if (Attempt instanceof CheddarLexer)
             return HelperInit(CheddarNumber, ...Attempt._Tokens);
         else
