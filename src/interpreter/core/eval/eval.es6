@@ -78,22 +78,14 @@ function set_value(value, child) {
     child.Reference = value.Reference;
 
     // Get the scope the LHS is in.
-    let rep = value.scope.manage(
+    let rep = value.scope.enforceset(
         // Change the var name
         value.Reference,
         // to the resulting value
-        new CheddarVariable(child, {
-            Writeable: true,
-            StrictType: variable.StrictType
-        })
+        child
     );
 
-    if (rep !== true) {
-        // ERROR INTEGRATE
-        return `\`${value.Reference}\` is a reserved keyword`;
-    }
-
-    return true;
+    return rep;
 }
 
 export default class CheddarEval extends CheddarCallStack {
@@ -127,11 +119,6 @@ export default class CheddarEval extends CheddarCallStack {
                     DATA.Reference === null
                 ) || Operation.tok(1) === OP_TYPE.UNARY) {
                     return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
-                }
-
-                if (DATA.scope.accessor(DATA.Reference).Writeable === false) {
-                    // ERROR INTEGRATE
-                    return `Cannot override constant ${DATA.Reference}`;
                 }
 
                 // Call `set_value` function
@@ -206,11 +193,6 @@ export default class CheddarEval extends CheddarCallStack {
                         DATA.Reference === null
                     ) || Operation.tok(1) === OP_TYPE.UNARY) {
                         return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
-                    }
-
-                    if (DATA.scope.accessor(DATA.Reference).Writeable === false) {
-                        // ERROR INTEGRATE
-                        return `Cannot override constant ${DATA.Reference}`;
                     }
 
                     // Call `set_value` function

@@ -15,6 +15,38 @@ import {RESERVED_KEYWORDS} from '../../../tokenizer/consts/ops';
 
 import CheddarVariable from './var';
 
+function enforceset(token, value) {
+    let self;
+
+    if (this.has(token)) {
+        self = this.accessor(token);
+
+        if (self.Writeable === false) {
+            return `Cannot override constant ${token}`;
+        }
+
+        if (self.StrictType && !(value instanceof self.StrictType)) {
+            return `Attempted to set \`${token}\` to a \`${
+                    value.Name ||
+                    value.constructor.Name ||
+                    "object"
+                }\`, expected \`${
+                    self.StrictType.Name ||
+                    self.StrictType.constructor.Name ||
+                    "object"
+                }\``;
+        }
+    }
+
+    return this.manage(
+        token,
+        new CheddarVariable(value, {
+            Writeable: true,
+            StrictType: self ? self.StrictType : null
+        })
+    );
+}
+
 export default class CheddarScope {
     static Name = "Namespace"
 
@@ -75,6 +107,10 @@ export default class CheddarScope {
         }
 
     }
+
+    static enforceset = enforceset;
+    // Enforces typing
+    enforceset = enforceset;
 
     // Property accessors
     accessor(token) {
