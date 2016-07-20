@@ -1,7 +1,7 @@
 import CheddarVariable from './var';
 import CheddarScope from './scope';
 import CheddarClass from './class';
-import nil from '../primitives/nil';
+import NIL from '../consts/nil';
 
 // I have the details, planing, structure,
 // and design of functions all on my
@@ -155,7 +155,7 @@ export default class CheddarFunction extends CheddarClass {
             else {
                 if (tmp.Optional === true) {
                     args.setter(this.args[i][0], new CheddarVariable(
-                        new nil
+                        new NIL
                     ));
                 }
                 else if (tmp.Default) {
