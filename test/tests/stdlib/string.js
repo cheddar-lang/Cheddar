@@ -61,4 +61,58 @@ describe('String.', function(){
             `["...."]`
         ))
     });
+
+    describe('bytes', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "123".bytes`,
+            `[49, 50, 51]`
+        ))
+    });
+
+    describe('bytes', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "123".bytes`,
+            `[49, 50, 51]`
+        ))
+    });
+
+    describe('count', function(){
+        it('should work on len 1', TestCheddarFrom.Code(
+            `print "a".count("a") == 1`,
+            `true`
+        ))
+
+        it('should work with overlap', TestCheddarFrom.Code(
+            `print "ababa".count("aba") == 2`,
+            `true`
+        ))
+    });
+
+    describe('lines', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "a\\nb".lines`,
+            `["a", "b"]`
+        ))
+    });
+
+    describe('lower', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "ABC".lower`,
+            `abc`
+        ))
+    });
+
+    describe('upper', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "abc".upper`,
+            `ABC`
+        ))
+    });
+
+    describe('rev', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "abc".rev`,
+            `cba`
+        ))
+    });
 });
