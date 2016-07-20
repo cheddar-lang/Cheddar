@@ -5,6 +5,6 @@ export default function(cheddar) {
         ['version', cheddar.from(require('./cheddar/version'))],
         ['internal', cheddar.from(require('./cheddar/internal'))],
 
-        ['uid', cheddar.var(require('./cheddar/uid')(cheddar))]
+        ['uid', new cheddar.variable(require('./cheddar/uid')(cheddar), { Writeable: true })]
     ]);
 }

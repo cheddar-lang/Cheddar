@@ -108,6 +108,9 @@ export default class CheddarScope {
 
     }
 
+    static Cast = new Map();
+    static Operator = new Map();
+
     static enforceset = enforceset;
     // Enforces typing
     enforceset = enforceset;
