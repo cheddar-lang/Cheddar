@@ -23,6 +23,11 @@ describe('Assignment', function() {
             'var a = 1; var b = a; print b',
             '1'
         ))
+
+        it('should work with types', TestCheddarFrom.Code(
+            'var a: Number = 1; print a',
+            '1'
+        ))
     })
 
     describe('reassignment', function() {
@@ -33,6 +38,11 @@ describe('Assignment', function() {
 
         it('should set', TestCheddarFrom.Code(
             'var a = 1; a = 2; print a',
+            '2'
+        ))
+
+        it('should set with a type', TestCheddarFrom.Code(
+            'var a: Number = 1; a = 2; print a',
             '2'
         ))
 
