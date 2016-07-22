@@ -8,12 +8,10 @@ var fs = require('fs');
 
 if (!module.parent) {
     /*== Handle REPL Seperately ==*/
-    if (!process.argv[3]) {
+    if (!process.argv[1]) {
         child_process.fork(__dirname + (tty.isatty(0) ? '/repl.js' : '/prog.js'), process.argv.slice(2));
-    }
-
-    if (process.argv[2] === "--update") {
-        let update = child_process.exec('bash <(curl -fsSL http://cheddar.vihan.org/i/nix/cheddar)', { shell: '/bin/bash' });
+    } else if (process.argv[1] === "--update") {
+        var update = child_process.exec('bash <(curl -fsSL http://cheddar.vihan.org/i/nix/cheddar)', { shell: '/bin/bash' });
         update.stdout.on('data',function(data){
             process.stdout.write(data);
         });

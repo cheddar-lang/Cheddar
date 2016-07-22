@@ -15,7 +15,7 @@
     "prepublish": "make",
     "build": "make build",
     "test": "make test",
-    "start": "node ./dist/cli/cheddar",
+    "start": "./dist/cli/cheddar",
     "coveralls": "make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "browser_build": "make browser_build"
   },
