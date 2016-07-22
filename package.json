@@ -1,7 +1,7 @@
 {
   "name": "cheddar-lang",
   "description": "The language that works for you",
-  "version": "1.0.0-beta.18.2",
+  "version": "1.0.0-beta.18.3",
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
@@ -12,6 +12,7 @@
     "prepublish": "make",
     "build": "make build",
     "test": "make test",
+    "start": "bash ./dist/cli/cheddars",
     "coveralls": "make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "browser_build": "make browser_build"
   },
@@ -31,9 +32,6 @@
   },
   "description": "<p align=\"center\">   <a href=\"https://github.com/vihanb/Cheddar\">     <img src=\"https://raw.githubusercontent.com/vihanb/Cheddar/master/misc/logo_wide.png\" alt=\"Cheddar\" width=\"846\">   </a> </p>",
   "main": "dist/cli/cheddar.js",
-  "bin": {
-    "cheddar": "./dist/cli/cheddar"
-  },
   "directories": {
     "test": "test"
   },
