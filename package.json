@@ -35,17 +35,11 @@
   "directories": {
     "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cheddar-lang/Cheddar.git"
-  },
-  "author": "Vihan",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cheddar-lang/Cheddar/issues"
   },
   "config": {
     "unsafe-perm": true
-  },
-  "homepage": "https://github.com/cheddar-lang/Cheddar#readme"
+  }
 }
