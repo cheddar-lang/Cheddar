@@ -1,37 +1,30 @@
 language: node_js
 node_js:
-  - 4.4.0
-  - 5.5.0
-  - node
+- 4.4.0
+- 5.5.0
+- node
 env:
-  - CXX=g++-4.8
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
-install:
-  - npm install
-  - npm install -g codeclimate-test-reporter
-after_success:
-  - npm run coveralls
-  - bash <(curl -s https://codecov.io/bash)
-  - codeclimate-test-reporter < ./coverage/lcov.info
-  - bash ./misc/deploy.sh
+- CXX=g++-4.8
 addons:
   codeclimate:
     repo_token:
-      - secure: CODECLIMATE_REPO_TOKEN
-# cache:
-#   directories:
-#     - node_modules
-deploy:
-  provider: heroku
-  api_key:
-    secure: hVwUlOJASC9DxSP5ztIu8O6I5ApJd5SapHmGW4YDNlQjFNrmA4/dh+hrLTnJ2ninMwk7jfQRvqa3PdmjzEFsXqaiLocVu5bFyBAtiidzTcgs9/t0glaY17uVGY5dAaSh4dXjk3JCGC0P3Z/7WF8CravUeq3s9sn4ZufMarWJAugRq5Z1yIPFk+FgSe/Ex8+qSzx6XxcGnGD4UxwopWcYqegnSVB2ajEffxS0KFYyFPhMbhLJrh05fVl1cRH580oBZbuGxvu3AvcD8IFGZI8tNI9pS4S08s2w0WRqWXLsDwwZTVN6IqD/X/7LtHllOQ2Bd5g/mTSB5fzK6qB5N2WuRVn3m1DtUWXxasQwN4omHuv3EHCaX9/gQxhbV7sgWV/NH8wNe8WCsHj9qN5MPztgeOR3XL+FQI6Ow0oVk5n2B5SUdsNtwCLjp4xKVN8zs1KL9bQBclzWEsDup9jU7wwm65l3MxzwHYX8SlDUv7SUnwfKazBj4qJ6JpcYA+RTdkgrlZ6pGz60WQas3nr98x8rGGVi4GCSOELDaYBQSAbvFTK7bzrmgQL0nspiozEcWxpIDIlj+5T74kg65qEjB8PJ52bF3SDdH2V4cpHI7cQYrYQmXfj0F+pWW4ozs+d4lkVHxBXhDfJ3c3E/t75w0Pkjg82vZjkE/+eCiG/9S7LK8qI=
-  app: cheddar-lang
-  on:
-    repo: cheddar-lang/Cheddar
+    - secure: CODECLIMATE_REPO_TOKEN
+install:
+- npm install
+- npm install -g codeclimate-test-reporter
+after_success:
+- npm run coveralls
+- bash <(curl -s https://codecov.io/bash)
+- codeclimate-test-reporter < ./coverage/lcov.info
+- bash ./misc/deploy.sh
 notifications:
   slack: cheddarlang:9RXf81jwP9LXRVyrcPPXX1vO
+deploy:
+  provider: npm
+  email: contact@vihan.org
+  api_key:
+    secure: mim2vRx2fXEhN07PmuTn4aZQ6EaDh4Ji0riZZIIXvgeUVYvYoY4MJSezjTRcZIHb+gyuFvEQmLE7ILWvNzykGuv/h9c55kNPjnVgCJS8hqyNiSj3e51+d3xBLHLbemNbuvxyg1loWYL0+y8Fy2nwYBZpud3TUhZs1367W5+BLy1YVg2azYWbrVIpaXwwZH7MHFdkXYbdUxm7qaQ0dTtsGY1XgWVSAjqwFLtgVnDoTX5R7SICgnrHH+/bUynkkr/H4zHAFcu5axegFh0nIDRTXZiYxuCnNqsEu3+5ZJKWrvn2DLrEQks4/ueTqR5QgCR+rC+H7lmMacfeKH7c26p1RQuvg7Q+TCk22iFJLsJDQugoqxYKRhooMik7Cu0mVA1Tt0RWmjvVTUQEIDjNQ7h7P6R2XrAfa+sKTOZ/MfCCBICw0W0JfAao8am3IJZs7cTo+Aoqwrhw6/w+KQ+OU+KNoq18hJThyy4J6FtC+4jqJqVj6Hrr0Z6YRDooAOMY+1r/TYy8QPn0luya/RRHNelFteBzygYirbyUQRddpeju0ekwEGsRrdaa54QgPxG06YUCBo8M/A/NDFX9Kyj4d3UZMTINfIX9iv9yGrb/716z9Vr6aubqwzzfmHei23gbUimzV3OHnDphqPqOXJdNOE22TFCxQ2boiZrKtFv/L3wID7I=
+  on:
+    tags: true
+    repo: cheddar-lang/Cheddar
+    branch: release-1.0.0
