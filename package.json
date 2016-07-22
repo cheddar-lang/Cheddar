@@ -1,7 +1,21 @@
 {
   "name": "cheddar-lang",
   "description": "The language that works for you",
-  "version": "1.0.0-beta.18.3",
+  "homepage": "http://cheddar.vihan.org/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheddar-lang/Cheddar.git"
+  },
+  "author": "Vihan <contact@vihan.org> (http://vihan.org/)",
+  "tags": [
+    "javascript",
+    "language",
+    "interpreter",
+    "cheddar",
+    "cheese",
+    "food"
+  ],
+  "version": "1.0.0-beta.18.4",
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
@@ -35,17 +49,11 @@
   "directories": {
     "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cheddar-lang/Cheddar.git"
-  },
-  "author": "Vihan",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cheddar-lang/Cheddar/issues"
   },
   "config": {
     "unsafe-perm": true
-  },
-  "homepage": "https://github.com/cheddar-lang/Cheddar#readme"
+  }
 }
