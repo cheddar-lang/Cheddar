@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+which realpath &> /dev/null
+if [ $? -eq 0 ]; then
+    rp="realpath"
+else
+    rp="readlink -f"
+fi
+cpath="$(dirname $($rp $0))"
+CHEDDAR_EXE="`$rp $(
+    [[ -f "$cpath/cheddar.js" ]] && echo "$cpath/cheddar.js" ||
+    [[ -f "$cpath/../share/cheddar/dist/cli/cheddar.js" ]] && echo "$cpath/../share/cheddar/dist/cli/cheddar.js"
+) &> /dev/null`"
+NODE_EXE=`which node`
+"$NODE_EXE" "$CHEDDAR_EXE" "$0" "$@"
