@@ -8,11 +8,14 @@
     "crypto": "0.0.3",
     "readline": "^1.3.0"
   },
+  "bin": {
+    "cheddar": "dist/cli/cheddar"
+  },
   "scripts": {
     "prepublish": "make",
     "build": "make build",
     "test": "make test",
-    "start": "bash ./dist/cli/cheddars",
+    "start": "bash ./dist/cli/cheddar",
     "coveralls": "make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "browser_build": "make browser_build"
   },
