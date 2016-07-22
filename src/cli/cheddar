@@ -3,7 +3,7 @@
 var pjson = require('../../package.json');
 var program = require('commander');
 var child_process = require('child_process');
-var = require('tty');
+var tty = require('tty');
 var fs = require('fs');
 
 if (!module.parent) {
