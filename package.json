@@ -1,6 +1,7 @@
 {
-  "name": "cheddar",
-  "version": "1.0.0-beta.18",
+  "name": "cheddar-lang",
+  "description": "The language that works for you",
+  "version": "1.0.0-beta.18.1",
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
@@ -29,7 +30,10 @@
     "remap-istanbul": "^0.6.4"
   },
   "description": "<p align=\"center\">   <a href=\"https://github.com/vihanb/Cheddar\">     <img src=\"https://raw.githubusercontent.com/vihanb/Cheddar/master/misc/logo_wide.png\" alt=\"Cheddar\" width=\"846\">   </a> </p>",
-  "main": "dist/interpreter/tests/repl",
+  "main": "dist/cli/cheddar.js",
+  "bin": {
+    "cheddar": "./dist/cli/cheddar"
+  },
   "directories": {
     "test": "test"
   },
