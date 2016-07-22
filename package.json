@@ -15,7 +15,7 @@
     "prepublish": "make",
     "build": "make build",
     "test": "make test",
-    "start": "bash ./dist/cli/cheddar",
+    "start": "node ./dist/cli/cheddar",
     "coveralls": "make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "browser_build": "make browser_build"
   },
@@ -34,7 +34,7 @@
     "remap-istanbul": "^0.6.4"
   },
   "description": "<p align=\"center\">   <a href=\"https://github.com/vihanb/Cheddar\">     <img src=\"https://raw.githubusercontent.com/vihanb/Cheddar/master/misc/logo_wide.png\" alt=\"Cheddar\" width=\"846\">   </a> </p>",
-  "main": "dist/cli/cheddar.js",
+  "main": "dist/cli/cheddar",
   "directories": {
     "test": "test"
   },
