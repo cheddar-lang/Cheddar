@@ -8,7 +8,7 @@ export default class CheddarLexer {
         this._Tokens = [];
     }
 
-    toString() {
+    toAST() {
         let node = this,
             tokens = this._Tokens;
 
@@ -23,7 +23,7 @@ export default class CheddarLexer {
         }
 
         return node.constructor.name.replace(/^Cheddar/g, '') + '\n' + tokens.map(t => typeof t === 'string'  ? "'" + t + "'" : t)
-            .map(t => t.toString())
+            .map(t => t.toAST ? t.toAST() : t.toString())
             .join(tokens.every(o => !(o instanceof CheddarLexer)) ? ' ' : '\n')
             .replace(/^/gm, ' │')
             .replace(/^ │(?! [└├│┬])/gm, ' ├');
@@ -69,15 +69,23 @@ export default class CheddarLexer {
     get isLast() { return this.Index === this.Code.length }
 
     attempt(...parsers) {
+        let global_tokenizer;
+        if (Array.isArray(parsers[0])) {
+            [
+                parsers,
+                global_tokenizer
+            ] = parsers;
+        }
+
         let attempt;
         for (let i = 0; i < parsers.length; i++) {
             if (parsers[i] instanceof CheddarLexer) {
                 parsers[i].Code = this.Code;
                 parsers[i].Index = this.Index;
-                attempt = parsers[i].exec();
+                attempt = parsers[i].exec(global_tokenizer);
             } else {
                 parsers[i] = this.initParser(parsers[i]);
-                attempt = parsers[i].exec();
+                attempt = parsers[i].exec(global_tokenizer);
             }
 
             if (attempt instanceof CheddarLexer && attempt.Errored !== true) {

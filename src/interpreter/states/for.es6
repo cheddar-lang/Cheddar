@@ -4,8 +4,7 @@ import CheddarEval from '../core/eval/eval';
 import CheddarBool from '../core/primitives/Bool';
 import CheddarScope from '../core/env/scope';
 import CheddarAssign from './assign';
-import * as CheddarError from '../core/consts/err';
-import CheddarErrorMessage from '../core/consts/err_msg';
+import Signal from '../signal';
 
 export default class CheddarFor {
     constructor(toks, scope) {
@@ -153,6 +152,13 @@ export default class CheddarFor {
 
                     if (typeof ralloc === "string")
                         break;
+
+                    if (ralloc instanceof Signal) {
+                        if (ralloc.is(Signal.BREAK)) {
+                            ralloc = ralloc.res;
+                            break;
+                        }
+                    }
 
                     trs = new CheddarEval(poolb, SCOPE);
                     trs.exec();

@@ -2,6 +2,7 @@
 //  tokenizes expressions and all that great stuff
 
 import CheddarLexer from './tok/lex';
+import CheddarCustomLexer from './parsers/custom';
 import CheddarEXPLICIT from './patterns/EXPLICIT';
 
 import * as CheddarError from './consts/err';
@@ -27,14 +28,17 @@ const WHITESPACE = /\s/;
 const NEWLINE = /[\r\n]/;
 
 export default class CheddarTokenize extends CheddarLexer {
-    exec(ENDS = "") {
+    exec(ENDS = "", PARSERS = []) {
 
-        let MATCH = this.attempt(
+        let MATCH = this.attempt(PARSERS.concat([
             S1_ASSIGN,
             S2_IF,
             S2_FOR,
             S3_EXPR
-        );
+        ]), {
+            tok: this.constructor,
+            args: { ENDS, PARSERS }
+        });
 
         if (MATCH instanceof CheddarLexer && MATCH.Errored !== true) {
 
@@ -52,12 +56,15 @@ export default class CheddarTokenize extends CheddarLexer {
             if (backtracked) {
                 if (NEWLINE.test(this.Code[this.Index - 1])) {
                     this.Index--;
+                } else if (SINGLELINE_WHITESPACE.test(this.Code[this.Index + 1])) {
+                    this.Index++;
                 }
             }
 
             while (this.Code[this.Index] && SINGLELINE_WHITESPACE.test(this.Code[this.Index]) || this._jumpComment()) {
                 this.Index++;
             }
+
 
             if (ENDS.indexOf(this.Code[this.Index]) > -1) {
                 return this.close();
