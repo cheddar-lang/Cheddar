@@ -15,7 +15,7 @@
     "cheese",
     "food"
   ],
-  "version": "1.0.0-beta.20",
+  "version": "1.0.0-beta.21",
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
