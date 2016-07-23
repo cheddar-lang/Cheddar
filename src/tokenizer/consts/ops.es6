@@ -34,7 +34,7 @@ export const OP = [
 'and', 'or', 'xor',
 'log', 'sign',
 'root'
-];
+].sort((a, b) => b.length - a.length);
 
 // Unary operators
 export const UOP = [
