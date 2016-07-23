@@ -27,11 +27,14 @@ export default class CheddarFunction extends CheddarClass {
         this.inherited = this.args;
         this.Reference = this.body;
 
-        if (!body) {
-            body = args;
+        if (args === "") {
             args = [];
-        }
-        else {
+        } else {
+
+            if (args.constructor.name !== "CheddarArrayToken") {
+                args = { _Tokens: [ args ] };
+            }
+
             let argument, res = Array(args._Tokens.length);
             for (var i = 0; i < args._Tokens.length; i++) {
                 argument = args._Tokens[i];

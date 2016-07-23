@@ -249,6 +249,7 @@ export default class CheddarLexer {
                         // OR
                         let match;
                         let oldIndex = this.Index;
+                        let success = false;
                         for (let k = 0; k < defs[i][j].length; k++) {
                             this.Index = index;
                             if (defs[i][j][k].prototype instanceof CheddarLexer || defs[i][j][k] instanceof CheddarLexer) {
@@ -263,6 +264,7 @@ export default class CheddarLexer {
                             } else {
                                 result = this.jumpLiteral(defs[i][j][k]);
                                 if (result) {
+                                    success = true;
                                     match = defs[i][j][k];
                                     index = this.Index;
                                     break;
@@ -270,7 +272,7 @@ export default class CheddarLexer {
                             }
                         }
                         this.Index = oldIndex;
-                        if (match) {
+                        if (match || success) {
                             if (!(
                                 (
                                     result.constructor.name.endsWith('Alpha') ||

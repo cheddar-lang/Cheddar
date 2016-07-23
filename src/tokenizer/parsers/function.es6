@@ -5,6 +5,8 @@ import CheddarArgumentToken from './args/argument';
 import CheddarCustomLexer from './custom';
 import CheddarPrimitive from '../literals/primitive';
 
+const A = CheddarCustomLexer(CheddarArrayToken, '(', ')', CheddarArgumentToken, true);
+const ExpressionToken = CheddarCustomLexer(CheddarExpressionToken, true);
 export default class CheddarFunctionToken extends CheddarPrimitive {
     exec() {
         this.open(false);
@@ -12,7 +14,6 @@ export default class CheddarFunctionToken extends CheddarPrimitive {
         this.jumpWhite();
 
         const E = CheddarExpressionToken;
-        const A = CheddarCustomLexer(CheddarArrayToken, '(', ')', CheddarArgumentToken, true);
 
         /**
          This basically runs the following:
@@ -22,7 +23,7 @@ export default class CheddarFunctionToken extends CheddarPrimitive {
          */
 
         let grammar = this.grammar(true,
-            [[A], "->", [CheddarCodeblock, CheddarExpressionToken]]
+            [[A, CheddarArgumentToken, ""], "->", [CheddarCodeblock, ExpressionToken]]
         );
 
         return grammar;
