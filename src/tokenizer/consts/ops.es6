@@ -17,6 +17,7 @@ export const RESERVED_KEYWORDS = new Set([
     // States
     'var', 'const',
     'if', 'for', 'while',
+    'break',
     'func', 'class',
     // Literals
     'true', 'false', 'nil'
