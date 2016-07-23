@@ -1,17 +1,25 @@
 import CheddarLexer from '../tok/lex';
-import CheddarTokenize from '../tok';
 import CheddarCustomParser from '../parsers/custom';
 import * as CheddarError from '../consts/err';
 
 export default class CheddarCodeblock extends CheddarLexer {
-    exec() {
+    exec({
+        tok: tokenizer,
+        args: {
+            ENDS,
+            PARSERS
+        }
+    } = {
+        tok: require('../tok'),
+        args: {}
+    }) {
         if (!this.lookAhead("{"))
             return CheddarError.EXIT_NOTFOUND;
 
         this.jumpLiteral("{");
 
-        let RUN = this.initParser(CheddarCustomParser(CheddarTokenize, '}'));
-        let RES = RUN.exec();
+        let RUN = this.initParser(tokenizer);
+        let RES = RUN.exec("}", PARSERS);
 
         this.Index = RES.Index || RUN.Index;
         if (RUN.Errored || !(RES instanceof CheddarLexer))
