@@ -7,6 +7,7 @@ export default function(cheddar){
         ["pref", cheddar.from(require("./fn/pref"))],
         ["insert", cheddar.from(require("./fn/insert"))],
         ["prefix", cheddar.from(require("./fn/prefix"))],
-        ["id", cheddar.from(require("./fn/id"))]
+        ["id", cheddar.from(require("./fn/id"))],
+        ["curry", cheddar.from(require("./fn/curry"))]
     ]);
 }
