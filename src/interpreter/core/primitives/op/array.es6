@@ -1,4 +1,5 @@
 import CheddarError from '../../consts/err';
+import CheddarString from '../String';
 import HelperInit from '../../../../helpers/init';
 
 export default new Map([
@@ -32,5 +33,14 @@ export default new Map([
         }
 
         return res;
+    }],
+
+    ['@"', (LHS, RHS) => {
+        let CheddarArray = require("../Array");
+        if(LHS === null)
+            return HelperInit(CheddarString,
+                RHS.value.map(x => String.fromCharCode(x.value)).join(""));
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
     }]
 ]);
