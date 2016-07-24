@@ -32,7 +32,7 @@
 export default function(cheddar) {
 
     const FORMAT_REGEX =
-        /%(-?\+?#?0?)(\d+|\*)?(\.\d+|\.\*)?([dixXrs])/gi;
+        /%(-?\+?#?0?)(\d+|\*)?(\.\d+|\.\*)?([dixXbBoOrsc])/gi;
 
     // Format of method:
     // [type, cast]
