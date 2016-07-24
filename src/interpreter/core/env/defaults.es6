@@ -31,9 +31,9 @@ export const DEFAULT_OP = new Map([
     }],
 
     ['is', (LHS, RHS) => {
+        let c = require('./class');
         if (LHS === null) {
             let f = require('./func');
-            let c = require('./class');
             var comp = (RHS.constructor || RHS).Operator.get('==');
             if (!comp) {
                 return `\`${RHS.constructor.Name || RHS.Name || "object"}\` has no behavior for \`==\``;
@@ -51,6 +51,9 @@ export const DEFAULT_OP = new Map([
                 return `\`${RHS.constructor.Name || RHS.Name || "object"}\` is not an instance of anything.`;
             }
         } else {
+            if (!(RHS.prototype instanceof c)) {
+                return CheddarError.NO_OP_BEHAVIOR;
+            }
             let b = require('../primitives/Bool');
             return HelperInit(b, LHS instanceof RHS);
         }

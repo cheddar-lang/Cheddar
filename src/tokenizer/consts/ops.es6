@@ -14,6 +14,7 @@ export const RESERVED_KEYWORDS = new Set([
     'len', 'reverse', 'abs', 'repr',
     'sign', 'print',
     'and', 'or', 'xor',
+    'what', 'is',
     // States
     'var', 'const',
     'if', 'for', 'while',
@@ -34,7 +35,8 @@ export const OP = [
 '@"', 'has',
 'and', 'or', 'xor',
 'log', 'sign',
-'root'
+'root',
+'is'
 ].sort((a, b) => b.length - a.length);
 
 // Unary operators
@@ -49,7 +51,8 @@ export const UOP = [
 'len', 'reverse', 'abs', 'repr',
 'print',
 'log', 'sign',
-'@"'
+'@"',
+'what', 'is'
 ];
 
 // TODO: how will the user modify this? no idea
@@ -60,6 +63,8 @@ export const UNARY_PRECEDENCE = new Map([
     ['+', 20000],
     ['|>', 18000],
     ['@"', 17000],
+    ['what', 16000],
+    ['is', 15000],
     ['sqrt', 15000],
     ['cbrt', 15000],
     ['cos', 15000],
@@ -84,6 +89,7 @@ export const PRECEDENCE = new Map([
     ['::', 16000],
     ['@"', 15000],
     ['log', 14000],
+    ['is', 14000],
     ['root', 14000],
     ['*', 13000],
     ['/', 13000],
@@ -98,7 +104,7 @@ export const PRECEDENCE = new Map([
     ['>=', 10000],
     ['sign', 10000],
 
-    ['has', 90000],
+    ['has', 9000],
     ['==', 9000],
     ['!=', 9000],
 
