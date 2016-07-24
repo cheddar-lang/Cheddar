@@ -9,10 +9,10 @@ STDLIB.Item("cheddar", require('./ns/cheddar'));
 STDLIB.Item("Math", require('./ns/Math'));
 
 // Interface Libraries
-//STDLIB.Item("Encoding", require('./ns/Encoding'));
-//STDLIB.Item("Buffer", require('./ns/Buffer'));
+STDLIB.Item("Encoding", require('./ns/Encoding'));
+STDLIB.Item("Buffer", require('./ns/Buffer'));
 STDLIB.Item("IO", require('./ns/IO'));
-STDLIB.Item("HTTP", require('./ns/HTTP'));
+//STDLIB.Item("HTTP", require('./ns/HTTP'));
 
 /** Primitives **/
 STDLIB.set("String",  API.var(API.string));

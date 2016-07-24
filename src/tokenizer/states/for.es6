@@ -1,6 +1,7 @@
 import StatementAssign from './assign';
 import CheddarExpressionToken from './expr';
 import CheddarCodeblock from '../patterns/block';
+import StatementBreak from './break';
 import CheddarLexer from '../patterns/EXPLICIT';
 import * as CheddarError from '../consts/err';
 
@@ -11,8 +12,14 @@ import CheddarArrayToken from '../parsers/array';
 let DECONSTRUCT = CheddarCustomLexer(CheddarArrayToken, '[', ']', CheddarVariableToken, true);
 
 export default class StatementFor extends CheddarLexer {
-    exec() {
+    exec(tokenizer) {
         this.open();
+
+        if (tokenizer) {
+            tokenizer.args.PARSERS.push(StatementBreak);
+        }
+
+        let codeblock = CheddarCustomLexer(CheddarCodeblock, tokenizer);
 
         if (!this.lookAhead("for"))
             return CheddarError.EXIT_NOTFOUND;
@@ -23,14 +30,14 @@ export default class StatementFor extends CheddarLexer {
             [
                 '(',
                     [DECONSTRUCT, CheddarVariableToken],'in', CheddarExpressionToken,
-                ')', CheddarCodeblock
+                ')', codeblock
             ],
             [
                 '(',
                     [StatementAssign, CheddarExpressionToken], ';',
                     CheddarExpressionToken, ';',
                     CheddarExpressionToken,
-                ')', CheddarCodeblock
+                ')', codeblock
             ]
         );
 

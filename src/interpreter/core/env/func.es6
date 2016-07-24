@@ -1,7 +1,7 @@
 import CheddarVariable from './var';
 import CheddarScope from './scope';
 import CheddarClass from './class';
-import nil from '../primitives/nil';
+import NIL from '../consts/nil';
 
 // I have the details, planing, structure,
 // and design of functions all on my
@@ -23,38 +23,61 @@ export default class CheddarFunction extends CheddarClass {
 
     // Initalizes from primitive arguments
     init(args, body) {
-        if (!body) {
-            body = args;
+        // Move the scope argument to correct prop
+        this.inherited = this.args;
+        this.Reference = this.body;
+
+        if (args === "") {
             args = [];
-        }
-        else {
-            args = args._Tokens.map(argument => {
+        } else {
+
+            if (args.constructor.name !== "CheddarArrayToken") {
+                args = { _Tokens: [ args ] };
+            }
+
+            let argument, res = Array(args._Tokens.length);
+            for (var i = 0; i < args._Tokens.length; i++) {
+                argument = args._Tokens[i];
+
                 // Argument is a arg object
                 let props = {};
                 let name;
 
                 // Store the argument tokens
-                let args = argument._Tokens;
-                let nameargs = args[0]._Tokens;
+                let arg = argument._Tokens;
+                let nameargs = arg[0]._Tokens;
 
-                props.Optional = args[1] === '?';
-                props.Default = args[2] ||
-                    args[1] &&
-                    args[1].constructor.name === "CheddarExpressionToken" &&
-                    args[1];
+                props.Optional = arg[1] === '?';
+                props.Default = arg[2] ||
+                    arg[1] &&
+                    arg[1].constructor.name === "CheddarExpressionToken" &&
+                    arg[1];
 
-                props.Type = nameargs.length > 1 && nameargs[0];
+                props.Type = nameargs.length > 1 && nameargs[1];
 
-                name = (nameargs[1] || nameargs[0])._Tokens[0];
+                if (props.Type) {
+                    let type = this.inherited.accessor(props.Type._Tokens[0]);
+                    if (!type) {
+                        return `${props.Type._Tokens[0]} is not defined`;
+                    }
 
-                return [name, props];
-            });
+                    type = type.Value;
+
+                    if (!(type.prototype instanceof CheddarClass)) {
+                        return `${props.Type._Tokens[0]} is not a class`;
+                    }
+
+                    props.Type = type;
+                }
+
+                name = nameargs[0]._Tokens[0];
+
+                res[i] = [name, props];
+            }
+
+            args = res;
         }
 
-        // Move the scope argument to correct prop
-        this.preset = this.args;
-        this.inherited = this.args;
-        this.Reference = this.body;
 
         this.args = args;
         this.body = body;
@@ -63,6 +86,7 @@ export default class CheddarFunction extends CheddarClass {
     }
 
     exec(input, self) {
+        debugger;
         let scope = this.generateScope(input, self);
 
         if (!(scope instanceof CheddarScope))
@@ -116,6 +140,17 @@ export default class CheddarFunction extends CheddarClass {
                 break;
             }
             else if (input[i]) {
+                if (tmp.Type && !(input[i] instanceof tmp.Type)) {
+                    return `${this.Reference || "function"} expected arg @${i} to be ${
+                        tmp.Type.Name ||
+                        tmp.Type.constructor.Name ||
+                        "object"
+                    }, recieved ${
+                        input[i].Name ||
+                        input[i].constructor.Name ||
+                        "object"
+                    }`;
+                }
                 args.setter(this.args[i][0], new CheddarVariable(
                     input[i]
                 ));
@@ -123,7 +158,7 @@ export default class CheddarFunction extends CheddarClass {
             else {
                 if (tmp.Optional === true) {
                     args.setter(this.args[i][0], new CheddarVariable(
-                        new nil
+                        new NIL
                     ));
                 }
                 else if (tmp.Default) {

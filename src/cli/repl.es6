@@ -48,13 +48,14 @@ Welcome to Cheddar!
 
 If you are using Cheddar for the first time, we reccomend following
 the getting started guide at: http://cheddar.vihan.org/quickstart
+Documentation is availale at: http://docs.cheddar.vihan.org/
 
 The following commands are available:
 
    exit  - exits the REPL
    help  - outputs this
    clear - clears the screen
-`)
+`);
 		return REPL.prompt();
 	}
 	if (input === 'clear') {
@@ -74,7 +75,7 @@ The following commands are available:
 
 
 	if (!(Result instanceof tokenizer)) {
-		if (Tokenizer.Index >= STDIN.length - 1) {
+		if ('({'.indexOf(Tokenizer.Code[Tokenizer.Index]) > -1) {
 			resume = true;
 			REPL.setPrompt("     ... ".yellow)
 			return REPL.prompt();
@@ -148,5 +149,5 @@ const CLOSING = () => {
 	REPL.pause();
 };
 
-REPL.on('close', () => CLOSING);
+REPL.on('close', CLOSING);
 REPL.on('SIGINT', CLOSING);

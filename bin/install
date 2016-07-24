@@ -11,5 +11,4 @@ else
     rp="readlink -f"
 fi
 
-
 "$($rp "$cpath/path")" /usr/local

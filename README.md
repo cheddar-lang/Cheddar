@@ -30,34 +30,36 @@
 
 Manual installation is simple. The only dependencies you must have are [git](https://git-scm.com) and [nodejs + npm](https://nodejs.org/en/). Additionally you should have [make](https://www.gnu.org/software/make/) (preferably GNU), but this comes by default on almost every *nix system.
 
-1. The first step is the clone from GitHub:
+1. The first step is to clone the repository from GitHub:
 
-```bash
+  ```bash
 $ git clone https://github.com/cheddar-lang/Cheddar.git && cd Cheddar
 ```
 
-**Note:** If you want to clone a specific branch (e.g. develop for development). Use the following command:
+  **Note:** If you want to clone a specific branch (e.g. develop for development), use the following command:
 
-```bash
+  ```bash
 $ git clone -b <branch> https://github.com/cheddar-lang/Cheddar.git && cd Cheddar
 ```
 
-2. The next step is to install the dependencies with npm. An automatic build should trigger if dependencies are install succesfully. Once this command is finished you should see a `dist/` directory created. If you don't look for any errors in the install.
+1. The next step is to install the dependencies with npm. An automatic build should trigger if dependencies are installed succesfully. Once this command is finished you should see a `dist/` directory created. If you don't, look for any errors in the installation.
 
-```bash
+  ```bash
 $ npm install
 ```
 
-3. Manually building / testing
+1. Manually building / testing
 
-You can use `make` to run the build, test, and install tasks
-```bash
+  You can use `make` to run the build, test, and install tasks:
+  ```bash
 $ make         # Production Build
 $ make build   # Development Build
 $ make test    # Run tests
 ```
 
- 4. Installing. If you want to install the Cheddar CLI. You have some options. If you are doing a production install. Use `make install`. For all other cases use `./bin/install`; with this you can pass a `--method` argument to specify whether you'd like to install for yourself (`--method=alias`) or for everyone on your computer (`--method=path`, the default) whicb may require eleveated privledges. With `--method=alias`, provide the location of your bash rc or equivilent with the `--rcloc` flag (usually for *nix systems this is `~/.bashrc` for Mac this is `~/.bash_profile`). With `--method=path`, you may specify the install path, Cheddar installs the binary in `<path>/bin/cheddar` and `<path>/share/cheddar`, this defaults to `/usr/local`
+1. Installing.
+
+  If you want to install the Cheddar CLI, you have some options. If you are doing a production installation, use `make install`. For all other cases use `./bin/install`; with this you can pass a `--method` argument to specify whether you'd like to install for yourself (`--method=alias`) or for everyone on your computer (`--method=path`, the default) which may require elevated privileges. With `--method=alias`, provide the location of your bashrc file or equivalent with the `--rcloc` flag (usually for *nix systems this is `~/.bashrc`, and for Mac this is `~/.bash_profile`). You may specify the installation path with `--method=path`, Cheddar installs the binary in `<path>/bin/cheddar` and `<path>/share/cheddar`; this defaults to `/usr/local`.
 
 ## Roadmap
 
@@ -119,5 +121,5 @@ Bugs:
 
 Further Development
 
- - [ ] JS Interfacing
+ - [x] JS Interfacing
  - [ ] A bunch of libraries

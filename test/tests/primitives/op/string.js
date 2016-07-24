@@ -37,6 +37,18 @@ describe('Numbers', function() {
         ))
     })
 
+    describe('comparison', function() {
+        it('< should work', TestCheddarFrom.Code(
+            'print "a" < "z"',
+            'true'
+        ))
+
+        it('> should work', TestCheddarFrom.Code(
+            'print "z" > "a"',
+            'true'
+        ))
+    })
+
     describe('char', function() {
         it('should work', TestCheddarFrom.Code(
             'print @" "foo"',

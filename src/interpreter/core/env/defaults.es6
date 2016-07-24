@@ -30,6 +30,39 @@ export const DEFAULT_OP = new Map([
         return LHS;
     }],
 
+    ['is', (LHS, RHS) => {
+        let c = require('./class');
+        if (LHS === null) {
+            let f = require('./func');
+            var comp = (RHS.constructor || RHS).Operator.get('==');
+            if (!comp) {
+                return `\`${RHS.constructor.Name || RHS.Name || "object"}\` has no behavior for \`==\``;
+            }
+            var fn = new f([
+                ["item", {}]
+            ], function(scope, input) {
+                return comp(RHS, input("item"));
+            });
+
+            if (RHS instanceof c) {
+                fn.WHICH_CLASS = RHS.constructor;
+                return fn;
+            } else {
+                return `\`${RHS.constructor.Name || RHS.Name || "object"}\` is not an instance of anything.`;
+            }
+        } else {
+            if (!(RHS.prototype instanceof c)) {
+                return CheddarError.NO_OP_BEHAVIOR;
+            }
+            let b = require('../primitives/Bool');
+            return HelperInit(b, LHS instanceof RHS);
+        }
+    }],
+
+    ['what', (LHS, RHS) => {
+        return RHS.WHICH_CLASS || CheddarError.NO_OP_BEHAVIOR;
+    }],
+
     ['::', (LHS, RHS) => {
         let CheddarClass = require('./class');
         let CAST_ALIAS = require('../config/alias');

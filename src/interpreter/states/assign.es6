@@ -13,9 +13,21 @@ export default class CheddarAssign {
     }
 
     exec() {
-        if (this.scope.has(this.assignl.tok(0))) {
+        let varname = this.assignl.tok(0)._Tokens[0];
+        if (this.scope.has(varname)) {
             // ERROR INTEGRATE
-            return `${this.assignl.tok(0)} has already been defined`;
+            return `${varname} has already been defined`;
+        }
+
+        // Strict typing
+        let stricttype = this.assignl.tok(1) ?
+            this.assignl.tok(1)._Tokens[0] :
+            null;
+
+        if (stricttype && this.scope.has(stricttype) && !((
+                stricttype = this.scope.accessor(stricttype).Value
+            ).prototype instanceof CheddarClass)) {
+                return `${stricttype} is not a class`;
         }
 
         let res;
@@ -25,20 +37,33 @@ export default class CheddarAssign {
             if (!((val = val.exec()) instanceof CheddarClass || val.prototype instanceof CheddarClass))
                 return val;
 
-            val.scope = this.scope;
-            val.Reference = this.assignl.tok(0);
+            if (stricttype && !(val instanceof stricttype)) {
+                return `Attempted to set \`${varname}\` to a \`${
+                    val.Name ||
+                    val.constructor.Name ||
+                    "object"
+                }\`, expected \`${
+                    stricttype.Name ||
+                    stricttype.constructor.Name ||
+                    "object"
+                }\``;
+            }
 
-            res = this.scope.manage(this.assignl.tok(0),
+            val.scope = this.scope;
+            val.Reference = varname;
+
+            res = this.scope.manage(varname,
                 new CheddarVariable(val, {
                     Writeable: this.assignt !== "const",
-                    StrictType: this.assignl.tok(1) || null
+                    StrictType: stricttype
                 })
             );
-        } else {
+        }
+        else {
             res = this.scope.manage(this.assignl.tok(0),
                 new CheddarVariable(new NIL, {
                     Writeable: this.assignt !== "const",
-                    StrictType: this.assignl.tok(1) || null
+                    StrictType: stricttype
                 })
             );
         }
