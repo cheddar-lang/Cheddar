@@ -10,7 +10,7 @@ export default function curry(cheddar) {
                 function(s, k){
                     let f = input("f");
                     let a = input("a");
-                    let b = input("b");
+                    let b = k("b");
                     return f.exec([a, b], null);
                 }
             )
