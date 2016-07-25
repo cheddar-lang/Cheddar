@@ -3,6 +3,7 @@ import CheddarError from '../../consts/err';
 import CheddarNumber from '../Number';
 import HelperInit from '../../../../helpers/init';
 
+import sprintf from '../../../../stdlib/ns/IO/sprintf';
 // == STRING ==
 export default new Map([
     // Replace " with \"
@@ -55,6 +56,17 @@ export default new Map([
         let CheddarBool = require('../Bool');
         if (RHS instanceof LHS.constructor)
             return HelperInit(CheddarBool, LHS.value > RHS.value);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
+    ['%', (LHS, RHS) => {
+        let API = require('../../../../stdlib/api');
+        if (RHS instanceof LHS.constructor)
+            return sprintf(API).exec(
+                [LHS, RHS],
+                null
+            );
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
