@@ -17,6 +17,7 @@
   ],
   "version": "1.0.0-beta.24",
   "dependencies": {
+    "babel-plugin-transform-unicode-property-regex": "^1.0.0",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "crypto": "0.0.3",
@@ -44,10 +45,11 @@
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
     "coveralls": "^2.11.9",
+    "install": "^0.8.1",
     "mocha": "^2.5.3",
+    "npm": "^3.10.5",
     "remap-istanbul": "^0.6.4"
   },
-  "description": "<p align=\"center\">   <a href=\"https://github.com/vihanb/Cheddar\">     <img src=\"https://raw.githubusercontent.com/vihanb/Cheddar/master/misc/logo_wide.png\" alt=\"Cheddar\" width=\"846\">   </a> </p>",
   "main": "dist/cli/cheddar",
   "directories": {
     "test": "test"
