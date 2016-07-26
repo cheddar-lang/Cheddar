@@ -34,9 +34,8 @@ export default class CheddarExec {
     }
 
     exec(PRINT) {
-        if (PRINT) {
+        if (PRINT)
             global.CHEDDAR_OPTS = { PRINT };
-        }
 
         while (this.Code[this._csi] && this.continue)
             this.step();

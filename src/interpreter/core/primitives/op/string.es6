@@ -62,13 +62,10 @@ export default new Map([
 
     ['%', (LHS, RHS) => {
         let API = require('../../../../stdlib/api');
-        if (RHS instanceof LHS.constructor)
-            return sprintf(API).exec(
-                [LHS, RHS],
-                null
-            );
-        else
-            return CheddarError.NO_OP_BEHAVIOR;
+        return sprintf(API).exec(
+            [LHS, RHS],
+            null
+        );
     }],
 
     // has operator
