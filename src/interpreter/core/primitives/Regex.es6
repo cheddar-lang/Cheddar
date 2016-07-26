@@ -8,6 +8,19 @@ export default class CheddarRegex extends CheddarClass {
     static Name = "Regex";
 
     init(source, flags) {
+        if (!source)
+            return "Regex source not provided";
+        else if (source.constructor.Name === 'String')
+            source = source.value;
+
+        if (!flags)
+            flags = "";
+        else if (flags.constructor.Name === 'String')
+            flags = flags.value;
+
+        if (typeof source !== 'string' || typeof flags !== 'string')
+            return "Regex source and flags must be string. Flags are optional";
+
         try {
             this.value = XRegExp(source, flags);
         } catch(e) {
