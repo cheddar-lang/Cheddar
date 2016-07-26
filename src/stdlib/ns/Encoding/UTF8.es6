@@ -1,6 +1,6 @@
-import Buffer from '../Buffer';
-
 export default function(cheddar, Encoding) {
+    let Buffer = require('../Buffer')(cheddar);
+
     let UTF8 = new Encoding();
     UTF8.init(
         // Encode
