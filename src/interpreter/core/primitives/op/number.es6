@@ -257,7 +257,10 @@ export default new Map([
         if(LHS === null)    // monadic
             return HelperInit(CheddarString, String.fromCharCode(RHS.value));
         else if(RHS instanceof LHS.constructor)
-            return HelperInit(CheddarString, [...Array(RHS.value - LHS.value)].map((_, l) => l + LHS.value).map(e => String.fromCharCode(e)).join(""));
+            return HelperInit(CheddarString,
+                [...Array(RHS.value - LHS.value)].map(
+                    (_, l) => String.fromCharCode(l + LHS.value)
+                ).join(""));
     }]
 ]);
 
