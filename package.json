@@ -15,7 +15,7 @@
     "cheese",
     "food"
   ],
-  "version": "1.0.0-beta.25",
+  "version": "1.0.0-beta.26",
   "dependencies": {
     "babel-plugin-transform-unicode-property-regex": "^1.0.0",
     "colors": "^1.1.2",
