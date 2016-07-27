@@ -1,16 +1,39 @@
-#!/usr/bin/env bash
+#!/usr/bin/env node
 
-which realpath &> /dev/null
-if [ $? -eq 0 ]; then
-    rp="realpath"
-else
-    rp="readlink -f"
-fi
-cpath="$(dirname $($rp $0))"
-CHEDDAR_EXE="`$rp $(
-    [[ -f "$cpath/cheddar.js" ]] && echo "cpath/cheddar.js" ||
-    [[ -f "$cpath/../share/cheddar/dist/cli/cheddar.js" ]] && echo "$cpath/../share/cheddar/dist/cli/cheddar.js" ||
-    [[ -f "$cpath/cheddar.js" ]] && echo "$cpath/cheddar.js"
-)`"
-NODE_EXE=`which node`
-"$NODE_EXE" "$CHEDDAR_EXE" "$0" "$@"
+var pjson = require('../../package.json');
+var program = require('commander');
+var child_process = require('child_process');
+var tty = require('tty');
+var fs = require('fs');
+
+if (!module.parent) {
+    /*== Handle REPL Seperately ==*/
+    if (!process.argv[2]) {
+        child_process.fork(__dirname + (tty.isatty(0) ? '/repl.js' : '/prog.js'), process.argv.slice(2));
+    } else if (process.argv[2] === "--update") {
+        var update = child_process.exec('bash <(curl -fsSL http://cheddar.vihan.org/i/nix/cheddar)', { shell: '/bin/bash' });
+        update.stdout.on('data',function(data){
+            process.stdout.write(data);
+        });
+        update.stderr.on('data',function(data){
+            process.stdout.write(data);
+        });
+    } else {
+
+        program
+            .version(pjson.version)
+            .usage('[files ...] [options]')
+            .option('-e, --eval [code]', 'executes code, passed inline. implicit return');
+
+        if (program.update) {
+            child_process.exec("bash <(curl -fsSL cheddar.vihan.org/i/nix/cheddar)");
+            process.exit(0);
+        }
+
+        program.parse(process.argv);
+
+        program.args.forEach(function(file) { child_process.exec(__dirname+"/prog.js < "+file) });
+    }
+} else {
+    module.exports = require('./prog');
+}

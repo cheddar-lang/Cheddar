@@ -1,7 +1,7 @@
-import CheddarLexer from '../tok/lex';
-import CheddarVariableToken from '../literals/var';
+import CheddarLexer from '../../tok/lex';
+import CheddarVariableToken from '../../literals/var';
 import CheddarTypedVariableToken from './typed_var';
-import CheddarExpressionToken from './expr';
+import CheddarExpressionToken from '../expr';
 
 export default class CheddarArgumentToken extends CheddarLexer {
     exec() { //why not just argument - array handles the rest - var

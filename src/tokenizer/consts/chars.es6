@@ -9,13 +9,13 @@
   * WHTIESPACE \s
   *
   * OP  infix operators
-  * UOP unary operators 
+  * UOP unary operators
   * SYMBOL_FILTER valid characters in operators
   *
   * STRING_DELIMITERS
   * STRING_ESCAPE
   * NUMBER_GROUPING number grouping delimiters
-  * NUMBER_DECIMALS decimal point to use 
+  * NUMBER_DECIMALS decimal point to use
   *
   * BASE_IDENTIFIERS
   *
@@ -30,7 +30,7 @@ export const NUMERALS = '0123456789ABCDEF';
 
 export const WHITESPACE = '\r\n\f '; // Add \t here to allow tabs
 
-export const TOKEN_START = MALPHA + '$_';
+export const TOKEN_START = MALPHA + '_';
 export const TOKEN_END = TOKEN_START + DIGITS;
 
 /*== Operator Constants ==*/
@@ -48,10 +48,28 @@ export const NUMBER_DECIMALS = ['.'];
 export const EXPR_OPEN  = '(';
 export const EXPR_CLOSE = ')'
 
+/*== Regex Data ==*/
+export const REGEX_DELIMITER = '/';
+export const REGEX_ESCAPE = '\\';
+export const REGEX_FLAGS = 'nsxgimuy';
+
 /*== Array Data ==*/
 export const ARRAY_OPEN  = '[';
 export const ARRAY_CLOSE = ']';
 export const ARRAY_SEPARATOR = ',';
+
+/*== String Data ==*/
+export const STRING_ESCAPES = new Map([
+    ['0', String.fromCharCode(0)],
+    ['a', String.fromCharCode(8)],
+    ['b', '\b'],
+    ['t', '\t'],
+    ['n', '\n'],
+    ['v', '\v'],
+    ['f', '\f'],
+    ['r', '\r'],
+    ['e', String.fromCharCode(27)],
+]);
 
 /*== Number Data ==*/
 export const BASE_IDENTIFIERS = [ 'b', 'o', 'x' ];

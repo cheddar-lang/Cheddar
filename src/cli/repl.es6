@@ -36,14 +36,6 @@ const CONSTANT = {
 let GLOBAL_SCOPE = new CheddarScope(null);
 GLOBAL_SCOPE.Scope = stdlib;
 
-process.argv.forEach((val, i) => {
-	if (i > 1) {
-		let v = new CheddarString(null, null);
-		v.init(val);
-		GLOBAL_SCOPE.Scope.set('$' + (i - 2), new CheddarVariable(v));
-	}
-});
-
 let STDIN;
 let resume;
 
@@ -56,13 +48,14 @@ Welcome to Cheddar!
 
 If you are using Cheddar for the first time, we reccomend following
 the getting started guide at: http://cheddar.vihan.org/quickstart
+Documentation is availale at: http://docs.cheddar.vihan.org/
 
 The following commands are available:
 
    exit  - exits the REPL
    help  - outputs this
    clear - clears the screen
-`)
+`);
 		return REPL.prompt();
 	}
 	if (input === 'clear') {
@@ -82,7 +75,7 @@ The following commands are available:
 
 
 	if (!(Result instanceof tokenizer)) {
-		if (Tokenizer.Index >= STDIN.length - 1) {
+		if ('({'.indexOf(Tokenizer.Code[Tokenizer.Index]) > -1) {
 			resume = true;
 			REPL.setPrompt("     ... ".yellow)
 			return REPL.prompt();
@@ -102,7 +95,7 @@ The following commands are available:
 	REPL.setPrompt(PROMPT)
 
 	let Executor = new cheddar(Result, GLOBAL_SCOPE);
-	let Output = Executor.exec();
+	let Output = Executor.exec(process.stdout.write.bind(process.stdout));
 
 	if (Output) {
 
@@ -156,5 +149,5 @@ const CLOSING = () => {
 	REPL.pause();
 };
 
-REPL.on('close', () => CLOSING);
+REPL.on('close', CLOSING);
 REPL.on('SIGINT', CLOSING);

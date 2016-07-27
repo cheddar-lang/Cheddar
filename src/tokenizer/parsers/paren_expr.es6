@@ -1,13 +1,14 @@
-// import * as CheddarError from '../consts/err';
 import CheddarExpressionToken from './expr';
+import CheddarCustomLexer from './custom';
 import CheddarLexer from '../tok/lex';
 
+let expr = CheddarCustomLexer(CheddarExpressionToken, true);
 export default class CheddarParenthesizedExpression extends CheddarLexer {
     exec() {
         this.open(false);
 
         let resp = this.grammar(true,
-            ['(', CheddarExpressionToken , ')']
+            ['(', expr , ')']
         );
 
         if (resp instanceof CheddarLexer) {

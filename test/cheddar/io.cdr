@@ -1,0 +1,1 @@
+print IO.sprintf("Hello %s!", IO.prompt("What's your name? "))

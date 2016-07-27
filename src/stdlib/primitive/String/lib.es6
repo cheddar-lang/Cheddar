@@ -2,6 +2,8 @@ import api from '../../api';
 
 export default new Map([
     require('./lib/slice')(api),
+    require('./lib/bytes')(api),
+    require('./lib/lines')(api),
     require('./lib/count')(api),
     require('./lib/upper')(api),
     require('./lib/lower')(api),

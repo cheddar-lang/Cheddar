@@ -1,5 +1,7 @@
 import CheddarString from '../interpreter/core/primitives/String';
+import CheddarSymbol from '../interpreter/core/primitives/Symbol';
 import CheddarNumber from '../interpreter/core/primitives/Number';
+import CheddarRegex from '../interpreter/core/primitives/Regex';
 import CheddarArray from '../interpreter/core/primitives/Array';
 import CheddarBool from '../interpreter/core/primitives/Bool';
 import nil from '../interpreter/core/consts/nil';
@@ -23,7 +25,9 @@ CheddarClass.merge = {
 
 var API = {
     string: CheddarString,
+    symbol: CheddarSymbol,
     number: CheddarNumber,
+    regex: CheddarRegex,
     array: CheddarArray,
     bool: CheddarBool,
     func: CheddarFunc,
@@ -63,6 +67,13 @@ var API = {
         let Scope = new CheddarScope(null);
         Scope.Scope = new Map(val);
         return Scope;
+    },
+
+    nstoclass: function(input) {
+        let ns = new CheddarClass(null);
+        ns.Name = "Namespace";
+        ns.Scope = input.Scope;
+        return ns;
     },
 
     variable: CheddarVariable,

@@ -8,6 +8,28 @@ export default class CheddarLexer {
         this._Tokens = [];
     }
 
+    toAST() {
+        let node = this,
+            tokens = this._Tokens;
+
+        while (tokens.length === 1 && tokens[0].isExpression) {
+            node = tokens[0];
+            tokens = tokens[0]._Tokens;
+        }
+
+        if (tokens.length === 1 && tokens[0] instanceof CheddarLexer) {
+            node = tokens[0];
+            tokens = tokens[0]._Tokens;
+        }
+
+        return node.constructor.name.replace(/^Cheddar/g, '') + '\n' + tokens.map(t => typeof t === 'string'  ? "'" + t + "'" : t)
+            .map(t => t.toAST ? t.toAST() : t.toString())
+            .join(tokens.every(o => !(o instanceof CheddarLexer)) ? ' ' : '\n')
+            .replace(/^/gm, ' │')
+            .replace(/^ │(?! [└├│┬])/gm, ' ├');
+            //.replace(/^((?: [^└├│┬])*)├/gm, '└'); //wait only the last one
+    }
+
     getChar() {
         return this.Code[this.Index++];
     }
@@ -47,15 +69,23 @@ export default class CheddarLexer {
     get isLast() { return this.Index === this.Code.length }
 
     attempt(...parsers) {
+        let global_tokenizer;
+        if (Array.isArray(parsers[0])) {
+            [
+                parsers,
+                global_tokenizer
+            ] = parsers;
+        }
+
         let attempt;
         for (let i = 0; i < parsers.length; i++) {
             if (parsers[i] instanceof CheddarLexer) {
                 parsers[i].Code = this.Code;
                 parsers[i].Index = this.Index;
-                attempt = parsers[i].exec();
+                attempt = parsers[i].exec(global_tokenizer);
             } else {
                 parsers[i] = this.initParser(parsers[i]);
-                attempt = parsers[i].exec();
+                attempt = parsers[i].exec(global_tokenizer);
             }
 
             if (attempt instanceof CheddarLexer && attempt.Errored !== true) {
@@ -219,6 +249,7 @@ export default class CheddarLexer {
                         // OR
                         let match;
                         let oldIndex = this.Index;
+                        let success = false;
                         for (let k = 0; k < defs[i][j].length; k++) {
                             this.Index = index;
                             if (defs[i][j][k].prototype instanceof CheddarLexer || defs[i][j][k] instanceof CheddarLexer) {
@@ -233,6 +264,7 @@ export default class CheddarLexer {
                             } else {
                                 result = this.jumpLiteral(defs[i][j][k]);
                                 if (result) {
+                                    success = true;
                                     match = defs[i][j][k];
                                     index = this.Index;
                                     break;
@@ -240,7 +272,7 @@ export default class CheddarLexer {
                             }
                         }
                         this.Index = oldIndex;
-                        if (match) {
+                        if (match || success) {
                             if (!(
                                 (
                                     result.constructor.name.endsWith('Alpha') ||

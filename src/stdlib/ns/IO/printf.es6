@@ -16,7 +16,7 @@ export default function(cheddar) {
             );
 
             // Stream
-            process.stdout.write(result.value);
+            global.CHEDDAR_OPTS.PRINT(result.value);
 
             return result;
         }

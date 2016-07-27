@@ -86,7 +86,7 @@ describe('IO', function() {
 
     describe('printf', function() {
         it('should work', TestCheddarFrom.Code(
-            `print IO.printf("Hello, World!")`,
+            `IO.printf("Hello, World!")`,
             `Hello, World!`
         ))
     });
