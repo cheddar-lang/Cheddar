@@ -2,11 +2,6 @@ var TestCheddarFrom = require('../globals').TestCheddarFrom;
 
 describe('Equality', function() {
     describe('==', function() {
-        it('classes should work', TestCheddarFrom.Code(
-            `print String == String`,
-            'true'
-        ))
-
         it('objects should work', TestCheddarFrom.Code(
             `print 1 == 1`,
             'true'

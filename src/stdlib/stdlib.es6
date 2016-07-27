@@ -16,6 +16,8 @@ STDLIB.Item("IO", require('./ns/IO'));
 
 /** Primitives **/
 STDLIB.set("String",  API.var(API.string));
+STDLIB.set("Symbol",  API.var(API.symbol));
+STDLIB.set("Regex",  API.var(API.regex));
 STDLIB.set("Number",  API.var(API.number));
 STDLIB.set("Array",   API.var(API.array));
 STDLIB.set("Boolean", API.var(API.bool));

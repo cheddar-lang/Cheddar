@@ -88,7 +88,7 @@ export const DEFAULT_OP = new Map([
     ['==', (LHS, RHS) => {
         return HelperInit(
             require("../primitives/Bool"),
-            RHS && LHS instanceof RHS.constructor && LHS.value === RHS.value
+            RHS && LHS instanceof RHS.constructor && (LHS.value && (LHS.value === RHS.value))
         );
     }],
 

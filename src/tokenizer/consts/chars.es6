@@ -48,6 +48,11 @@ export const NUMBER_DECIMALS = ['.'];
 export const EXPR_OPEN  = '(';
 export const EXPR_CLOSE = ')'
 
+/*== Regex Data ==*/
+export const REGEX_DELIMITER = '/';
+export const REGEX_ESCAPE = '\\';
+export const REGEX_FLAGS = 'nsxgimuy';
+
 /*== Array Data ==*/
 export const ARRAY_OPEN  = '[';
 export const ARRAY_CLOSE = ']';
