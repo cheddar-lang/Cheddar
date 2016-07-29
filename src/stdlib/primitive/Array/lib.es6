@@ -1,6 +1,7 @@
 import api from '../../api';
 
 export default new Map([
+    require('./lib/rand')(api),
     require('./lib/max')(api),
     require('./lib/min')(api),
     require('./lib/len')(api),
