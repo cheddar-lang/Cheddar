@@ -12,6 +12,7 @@ export default new Map([
     require('./lib/shift')(api),
     require('./lib/unshift')(api),
     require('./lib/slice')(api),
+    require('./lib/sum')(api),
     require('./lib/pop')(api),
     require('./lib/push')(api)
 ]);
