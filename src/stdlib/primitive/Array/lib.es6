@@ -1,6 +1,8 @@
 import api from '../../api';
 
 export default new Map([
+    require('./lib/max')(api),
+    require('./lib/min')(api),
     require('./lib/len')(api),
     require('./lib/turn')(api),
     require('./lib/fuse')(api),
