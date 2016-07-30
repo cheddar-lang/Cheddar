@@ -146,8 +146,7 @@ const CLOSING = () => {
 		resume = false;
 		return REPL.prompt();
 	}
-	REPL.pause();
+	REPL.close();
 };
 
 REPL.on('close', CLOSING);
-REPL.on('SIGINT', CLOSING);

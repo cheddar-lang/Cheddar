@@ -14,7 +14,7 @@ export const RESERVED_KEYWORDS = new Set([
     'len', 'reverse', 'abs', 'repr',
     'sign', 'print',
     'and', 'or', 'xor',
-    'what', 'is',
+    'what', 'is', 'actually',
     // States
     'var', 'const',
     'if', 'for', 'while',
@@ -36,7 +36,7 @@ export const OP = [
 'and', 'or', 'xor',
 'log', 'sign',
 'root',
-'is'
+'is', 'actually'
 ].sort((a, b) => b.length - a.length);
 
 // Unary operators
@@ -55,8 +55,6 @@ export const UOP = [
 'what', 'is'
 ];
 
-// TODO: how will the user modify this? no idea
-//TODO: fix precedence
 export const UNARY_PRECEDENCE = new Map([
     ['!', 20000],
     ['-', 20000],
@@ -90,6 +88,7 @@ export const PRECEDENCE = new Map([
     ['@"', 15000],
     ['log', 14000],
     ['is', 14000],
+    ['actually', 14000],
     ['root', 14000],
     ['*', 13000],
     ['/', 13000],
