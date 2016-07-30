@@ -44,12 +44,9 @@ export const DEFAULT_OP = new Map([
                 return comp(RHS, input("item"));
             });
 
-            if (RHS instanceof c) {
-                fn.WHICH_CLASS = RHS.constructor;
-                return fn;
-            } else {
-                return `\`${RHS.constructor.Name || RHS.Name || "object"}\` is not an instance of anything.`;
-            }
+           fn.WHICH_CLASS = RHS instanceof c ? RHS.constructor : null;
+           fn.SELF = RHS;
+           return fn;
         } else {
             if (!(RHS.prototype instanceof c)) {
                 return CheddarError.NO_OP_BEHAVIOR;
@@ -57,6 +54,11 @@ export const DEFAULT_OP = new Map([
             let b = require('../primitives/Bool');
             return HelperInit(b, LHS instanceof RHS);
         }
+    }],
+
+    ['actually', (LHS, RHS) => {
+        let CheddarBool = require('../primitives/Bool');
+        return HelperInit(CheddarBool, LHS && RHS.SELF ? LHS === RHS.SELF : CheddarError.NO_OP_BEHAVIOR);
     }],
 
     ['what', (LHS, RHS) => {
