@@ -3,10 +3,6 @@ export default (api) => ["cycle", api.var(new api.func(
         ["rotations", {
             Type: api.number,
             Default: api.init(api.number, 10, 0, 1)
-        }],
-        ["counterclockwise", {
-            Type: api.bool,
-            Default: api.init(api.bool, false)
         }]
     ],
     function(scope, input) {
@@ -17,7 +13,7 @@ export default (api) => ["cycle", api.var(new api.func(
         }
 
         let rotations = input("rotations").value;
-        let counterclockwise = input("counterclockwise").value;
+        let counterclockwise = false;
 
         if (rotations < 0) {
             rotations = -rotations;
