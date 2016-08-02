@@ -44,12 +44,15 @@ import CheddarCallStack from './callstack';
 import CheddarError from '../consts/err';
 import CheddarErrorDesc from '../consts/err_msg';
 
-function to_value(variable, parent) {
+function to_value(variable, parent, name) {
     // Check if getter
     if (variable.Value) {
         return variable.Value;
     } else if (variable.getter) {
-        return variable.getter.exec([], parent);
+        let res = variable.getter.exec([], parent);
+        res.Reference = name;
+        res.scope = parent;
+        return res;
     } else {
         // ERROR INTEGRATE
         return `Attempted to accesses variable without value`;
@@ -403,12 +406,14 @@ export default class CheddarEval extends CheddarCallStack {
                         }`;
                     }
 
-                    NAME = TARGET;
-
                     // Set the previous item to the REFERENCE
                     REFERENCE = OPERATOR;
 
-                    OPERATOR = to_value(DATA, REFERENCE);
+                    OPERATOR = to_value(DATA, REFERENCE, TARGET);
+
+                    // Set the pending name to the target
+                    NAME = TARGET;
+
 
                     if (typeof OPERATOR === "string")
                         return OPERATOR;

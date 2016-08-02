@@ -86,7 +86,6 @@ export default class CheddarFunction extends CheddarClass {
     }
 
     exec(input, self) {
-        debugger;
         let scope = this.generateScope(input, self);
 
         if (!(scope instanceof CheddarScope))
@@ -129,6 +128,10 @@ export default class CheddarFunction extends CheddarClass {
 
         for (let i = 0; i < this.args.length; i++) {
             tmp = this.args[i][1];
+
+            // Pass if undefined
+            if (!tmp) continue;
+
             if (tmp.Splat === true) {
                 let splat = new CheddarArray();
                 splat.init(...input.slice(i));
