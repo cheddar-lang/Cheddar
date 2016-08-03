@@ -20,15 +20,19 @@ export default function(cheddar) {
                 )
             }
         )],
-        // TODO: ensure isTTY before allowing
+        ["isTTY", cheddar.var(cheddar.init(cheddar.bool, process.stdin.isTTY))],
         ["raw", new cheddar.variable(
             null, {
                 Type: cheddar.bool, Writable: true,
-                getter: new cheddar.func([], () => cheddar.init(cheddar.bool, process.stdin.isRaw)),
+                getter: new cheddar.func([], () => cheddar.init(cheddar.bool, process.stdin.isRaw || false)),
                 setter: new cheddar.func(
-                    [["value", {}]], (_, input) => (process.stdin.setRawMode(
-                       input("value").value
-                    ), input("value"))
+                    [["value", {}]], (_, input) => {
+                        if (process.stdin.isTTY) {
+                            process.stdin.setRawMode(input("value").value)
+                        }
+
+                        return input("value");
+                    }
                 )
             }
         )],
