@@ -51,6 +51,45 @@ export default function(cheddar) {
                 res.init(buf);
                 // Return the resulting buffer
                 return res;
+            }))],
+
+            // Write command. which writes a
+            // string or buffer to file
+            ["write", cheddar.var(new cheddar.func([
+                ["bytes", {}],
+            ], function(scope, input) {
+                // The file descriptor object
+                let self = input("self");
+
+                // The given bytes
+                let bytes = input("bytes");
+                
+                // What is actually being written
+                // Will be set to Buffer or String
+                let writing;
+
+                // Check whether a string or buffer was given
+                if (bytes instanceof cheddar.string) {
+                    writing = bytes.value; // Write the literal string
+                } else if (bytes instanceof buffer) {
+                    writing = bytes.value; // Extract node buffer
+                } else {
+                    // If it's not a string or buffer, error
+                    return `Bytes to write must be string or buffer`;
+                }
+
+                try {
+                    // Perform the write
+                    // write `writing` to self.fd
+                    // offset 0, with length writing, 
+                    fs.writeSync(self.fd, writing, 0, writing.length);
+                } catch(e) {
+                    // TODO: handle this error better
+                    return `Could not write,  error ${e.code}`;
+                }
+
+                // Return self for chaining
+                return self;
             }))]
         ]);
     }
