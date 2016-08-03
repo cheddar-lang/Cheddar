@@ -41,7 +41,7 @@ let resume;
 
 REPL.on('line', function(input) {
 
-	if (input === 'exit') REPL.close();
+	if (input === 'exit') { REPL.close(); process.exit(0) }
 	if (input === 'help') {
 		console.log(`
 Welcome to Cheddar!
