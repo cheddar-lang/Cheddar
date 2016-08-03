@@ -254,13 +254,14 @@ export default new Map([
 
     // == Testing Operators ==
     ['@"', (LHS, RHS) => {
-        if(LHS === null)    // monadic
+        if (LHS === null) {
             return HelperInit(CheddarString, String.fromCharCode(RHS.value));
-        else if(RHS instanceof LHS.constructor)
+        } else if (RHS instanceof LHS.constructor) {
             return HelperInit(CheddarString,
-                [...Array(RHS.value - LHS.value)].map(
-                    (_, l) => String.fromCharCode(l + LHS.value)
+                range(LHS.value, RHS.value).map(
+                    l => String.fromCharCode(l.value)
                 ).join(""));
+        }
     }]
 ]);
 

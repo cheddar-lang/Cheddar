@@ -11,6 +11,29 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
+    ['+', (LHS, RHS) => {
+        if (RHS instanceof LHS.constructor) {
+            return HelperInit(LHS.constructor, ...LHS.value.concat(RHS.value));
+        } else {
+            return CheddarError.NO_OP_BEHAVIOR;
+        }
+    }],
+
+    ['*', (LHS, RHS) => {
+        let CheddarNumber = require("../Number");
+        if (RHS instanceof CheddarNumber) {
+            let ar = LHS.value;
+            let res = [];
+            let t = RHS.value;
+            for (let i = 0; i < t; i++) {
+                res.push(...ar);
+            }
+            return HelperInit(LHS.constructor, ...res);
+        } else {
+            return CheddarError.NO_OP_BEHAVIOR;
+        }
+    }],
+
     ['has', (LHS, RHS) => {
         let CheddarBool = require('../Bool');
         let self = LHS.value;
