@@ -6,5 +6,6 @@ export default function(cheddar) {
         ["sprintf", cheddar.var(require("./IO/sprintf")(cheddar))],
         ["open", cheddar.var(require("./IO/open")(cheddar))],
         ["stdin", cheddar.var(require("./IO/stdin")(cheddar))],
+        ["fd", cheddar.var(require("./IO/fd")(cheddar))],
     ]);
 }
