@@ -133,6 +133,7 @@ export default class CheddarScope {
     }
 
     setter(path, setter) {
+        //console.log(this.Scope);
         this.Scope.set(path, setter);
     }
 }

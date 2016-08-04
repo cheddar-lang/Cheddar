@@ -62,7 +62,10 @@ export default new Map([
         if (RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, 10, 0, LHS.value * RHS.value);
         else if (RHS.constructor.Name === "String")
-            return HelperInit(RHS.constructor, RHS.value.repeat(LHS.value));
+            if (LHS.value < 0)
+                return HelperInit(RHS.constructor, RHS.value.repeat(LHS.value));
+            else
+                return HelperInit(RHS.constructor, RHS.value.repeat(LHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],

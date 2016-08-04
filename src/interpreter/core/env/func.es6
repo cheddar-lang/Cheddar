@@ -117,6 +117,8 @@ export default class CheddarFunction extends CheddarClass {
 
     generateScope(input, self) {
         let args = new CheddarScope(this.inherited || null);
+        //console.log(this.inherited);
+        //console.log(args.Scope);
 
         let CheddarArray = require('../primitives/Array');
         let tmp;

@@ -87,7 +87,10 @@ export default new Map([
     ['*', (LHS, RHS) => {
 
         if (RHS.constructor.Name === "Number")
-            return HelperInit(LHS.constructor, LHS.value.repeat(RHS.value));
+            if (RHS.value < 0)
+                return HelperInit(LHS.constructor, "");
+            else
+                return HelperInit(LHS.constructor, LHS.value.repeat(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
 
