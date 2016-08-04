@@ -58,6 +58,10 @@ export default class CheddarScope {
         //  a seperate hash which is linked
         //  by overriding a properties get
         this.inheritanceChain = inherit;
+
+        if (!this.Scope) {
+            this.Scope = new Map();
+        }
     }
 
     // STATIC
@@ -137,5 +141,3 @@ export default class CheddarScope {
         this.Scope.set(path, setter);
     }
 }
-
-CheddarScope.prototype.Scope = new Map();
