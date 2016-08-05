@@ -140,6 +140,7 @@ export const DEFAULT_OP = new Map([
 
 export const DEFAULT_CAST = new Map([
     ['Bool', (self) => {
-        self
+        let bool = require("../primitives/Bool");
+        return HelperInit(bool, self);
     }]
 ]);
