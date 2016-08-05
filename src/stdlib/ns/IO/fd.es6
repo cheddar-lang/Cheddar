@@ -9,6 +9,10 @@ export default function(cheddar) {
 
     // fd class definition
     class fd extends cheddar.class {
+        // Call it fd as there's no need to
+        // have a fancy name as this is
+        // mostly under the hood things which
+        // isn't revealed ever
         static Name = "fd";
 
         init(fd) {
@@ -23,14 +27,44 @@ export default function(cheddar) {
                 return `Cannot construct file descriptor. Use \`IO.open\` instead`;
             }
 
+            // The uint refering to the fd
             this.fd = fd;
+
+            // Whether or not the file descriptor is actually closed
+            this.closed = false;
+
+            // Position within the fd.
+            // this shoud ALWAYS be
+            // incremented whenever
+            // read
+            this.pos = 0;
         }
 
         Scope = new Map([
+            // Getter for `fd` linked to `self.fd`
+            ["pos", new cheddar.variable(null, {
+                getter: new cheddar.func([], (_, i) => cheddar.init(cheddar.number, 10, 0, i("self").pos)),
+                Type: cheddar.number,
+                Writable: false
+            })],
+
+            /*== FD Functions ==*/
+
             // Read command which reads n bytes from
             // the given buffer
             ["read", cheddar.var(new cheddar.func([
-                ["bytes", { Type: cheddar.number }]
+                ["bytes", { Type: cheddar.number }],
+
+                // Specify position to read from
+                // Allow to be optional. Doesn't
+                // use a default and instead Optional
+                // so we can dynamically determine
+                // the last position read to using
+                // `self.pos`
+                ["position", {
+                    Type: cheddar.number,
+                    Optional: true
+                }]
             ], function(scope, input) {
                 // Amount of bytes to skip
                 // Default is one byte but
@@ -39,11 +73,20 @@ export default function(cheddar) {
                 let bytes = input("bytes").value;
                 let self = input("self");
 
+                // Check if fd is open
+                if (self.closed === true) {
+                    return "Cannot read a closed stream";
+                }
+
                 // Buffer to place read bytes in
                 let buf = new Buffer(bytes);
 
-                // Read, fd->buffer@buffer[0] w/ `bytes` bytes
-                fs.read(self.fd, buf, 0, bytes);
+                // Read, the fd's contents from position `self.pos`
+                // to `buf` reading `bytes` bytes.
+                let bytes_read = fs.readSync(self.fd, buf, 0, bytes, self.pos);
+
+                // Increase amount of bytes read
+                self.pos += bytes_read;
 
                 // Resulting Cheddar buffer
                 let res = new buffer(null);
@@ -57,13 +100,28 @@ export default function(cheddar) {
             // string or buffer to file
             ["write", cheddar.var(new cheddar.func([
                 ["bytes", {}],
+
+                // Position in file to write to, defaulting to one
+                ["position", {
+                    Type: cheddar.number,
+                    // Default to 0 or start of file
+                    Default: cheddar.init(cheddar.number, 10, 0, 0)
+                }]
             ], function(scope, input) {
                 // The file descriptor object
                 let self = input("self");
 
+                // Position to write to
+                let position = input("position").value;
+
+                // Check if fd is open
+                if (self.closed === true) {
+                    return "Cannot write a closed stream";
+                }
+
                 // The given bytes
                 let bytes = input("bytes");
-                
+
                 // What is actually being written
                 // Will be set to Buffer or String
                 let writing;
@@ -81,8 +139,8 @@ export default function(cheddar) {
                 try {
                     // Perform the write
                     // write `writing` to self.fd
-                    // offset 0, with length writing, 
-                    fs.writeSync(self.fd, writing, 0, writing.length);
+                    // position is at `position`, default 0
+                    fs.writeSync(self.fd, writing, position);
                 } catch(e) {
                     // TODO: handle this error better
                     return `Could not write,  error ${e.code}`;
@@ -90,6 +148,30 @@ export default function(cheddar) {
 
                 // Return self for chaining
                 return self;
+            }))],
+
+            // Close the fd and return null
+            ["close", cheddar.var(new cheddar.func([], function(scope, input) {
+                // The fd object
+                let self = input("self");
+
+                // Check if fd is open
+                if (self.closed === true) {
+                    return "File descriptor has already been closed";
+                }
+
+                // Close the file descriptor
+                // Use sync alternative to ensure
+                // it's actually closed
+                fs.closeSync(self.fd);
+
+                // Set the closed attribute to true
+                // so write and read functions don't
+                // R/W over arbitrary memory
+                self.closed = true;
+
+                // Return nil because what else to return
+                return new cheddar.nil;
             }))]
         ]);
     }
