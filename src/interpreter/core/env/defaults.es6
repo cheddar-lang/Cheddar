@@ -30,6 +30,14 @@ export const DEFAULT_OP = new Map([
         return LHS;
     }],
 
+    // + is no-op by default
+    ['+', (self) => {
+        // Destroy the references
+        delete self.scope
+        delete self.Reference
+        return self;
+    }],
+
     ['is', (LHS, RHS) => {
         let c = require('./class');
         if (LHS === null) {
