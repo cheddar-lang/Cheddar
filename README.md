@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://github.com/vihanb/Cheddar">
-    <img src="https://raw.githubusercontent.com/vihanb/Cheddar/master/misc/logo_wide.png" alt="Cheddar" width="846">
+  <a href="https://github.com/cheddar-lang/Cheddar">
+    <img src="https://raw.githubusercontent.com/cheddar-lang/Cheddar/master/misc/logo_wide.png" alt="Cheddar" width="846">
   </a>
 </p>
 
