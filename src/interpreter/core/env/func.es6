@@ -95,7 +95,8 @@ export default class CheddarFunction extends CheddarClass {
         if (typeof this.body === 'function') {
             return this.body(
                 scope,
-                name => (tmp = scope.accessor(name)) && tmp.Value
+                name => (tmp = scope.accessor(name)) && tmp.Value,
+                input
             );
         } else {
             let executor = require(
@@ -179,4 +180,14 @@ export default class CheddarFunction extends CheddarClass {
 
         return args;
     }
+
+    static Operator = new Map([...CheddarClass.Operator,
+        ['&', (self, value) => {
+            // Copy args to new function
+            let new_args = self.args.slice(1);
+            return new self.constructor(new_args, function(scope, input, rargs) {
+                return self.exec([value, ...rargs], null);
+            });
+        }]
+    ]);
 }
