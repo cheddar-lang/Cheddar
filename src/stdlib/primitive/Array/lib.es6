@@ -13,6 +13,7 @@ export default new Map([
     require('./lib/map')(api),
     require('./lib/cycle')(api),
     require('./lib/shift')(api),
+    require('./lib/all')(api),
     require('./lib/unshift')(api),
     require('./lib/slice')(api),
     require('./lib/sum')(api),
