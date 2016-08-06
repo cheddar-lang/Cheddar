@@ -1,7 +1,13 @@
 import API from './api';
 
 let STDLIB = new Map();
-STDLIB.Item = (Name, LIB) => STDLIB.set(Name, API.var(LIB(API)));
+STDLIB.Item = (Name, LIB, NOT_SAFE = false) => {
+    if (NOT_SAFE && global.SAFE_MODE) {
+        return;
+    } else {
+        STDLIB.set(Name, API.var(LIB(API)));
+    }
+};
 
 /** Global Libraries **/
 STDLIB.Item("cheddar", require('./ns/cheddar'));
@@ -11,7 +17,7 @@ STDLIB.Item("Math", require('./ns/Math'));
 // Interface Libraries
 STDLIB.Item("Encoding", require('./ns/Encoding'));
 STDLIB.Item("Buffer", require('./ns/Buffer'));
-STDLIB.Item("IO", require('./ns/IO'));
+STDLIB.Item("IO", require('./ns/IO'), true);
 //STDLIB.Item("HTTP", require('./ns/HTTP'));
 
 /** Primitives **/

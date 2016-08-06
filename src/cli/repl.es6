@@ -95,7 +95,7 @@ The following commands are available:
 	REPL.setPrompt(PROMPT)
 
 	let Executor = new cheddar(Result, GLOBAL_SCOPE);
-	let Output = Executor.exec(process.stdout.write.bind(process.stdout));
+	let Output = Executor.exec({ PRINT: process.stdout.write.bind(process.stdout) });
 
 	if (Output) {
 

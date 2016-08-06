@@ -11,9 +11,12 @@ function test(code, result) {
         var STDOUT = "";
         // cheddar() is sync
         try {
-            cheddar([code], [function stdoutstream(text) {
-                STDOUT += text;
-            }]);
+            cheddar(code, {
+                PRINT: function(text) {
+                    STDOUT += text;
+                }
+
+            });
         } catch (error){
             console.log("AN ERROR OCCURRED, U DONE MESSED UP. FIX IT NOW NOW NOW NOW NOW NOW FIXED IT NOW! " + error)
             throw error;
