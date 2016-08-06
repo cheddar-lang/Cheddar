@@ -13,7 +13,7 @@ import stdlib from '../stdlib/stdlib';
 
 const DRAW_ERROR = (text, type) => console.error(type.red.bold + ": ".dim + text.toString());
 
-module.exports = function(input, args) {
+let execcheddar = function(input, args) {
     let GLOBAL_SCOPE = new CheddarScope(null);
     GLOBAL_SCOPE.Scope = new Map(stdlib);
 
@@ -37,3 +37,6 @@ module.exports = function(input, args) {
 
     return Output;
 };
+
+execcheddar.stdlib = require('../stdlib/api');
+module.exports = execcheddar;
