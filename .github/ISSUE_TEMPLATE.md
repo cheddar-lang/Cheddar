@@ -1,4 +1,4 @@
-**Version:** the version you're runnning. Found through `cheddar -V`
+**Version:** the version you're runnning. Found through `cheddar -v`
 
 ### Problem
 

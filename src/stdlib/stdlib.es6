@@ -1,7 +1,13 @@
 import API from './api';
 
 let STDLIB = new Map();
-STDLIB.Item = (Name, LIB) => STDLIB.set(Name, API.var(LIB(API)));
+STDLIB.Item = (Name, LIB, NOT_SAFE = false) => {
+    if (NOT_SAFE && global.SAFE_MODE) {
+        return;
+    } else {
+        STDLIB.set(Name, API.var(LIB(API)));
+    }
+};
 
 /** Global Libraries **/
 STDLIB.Item("Math");

@@ -1,39 +1,69 @@
 #!/usr/bin/env node
 
 var pjson = require('../../package.json');
-var program = require('commander');
 var child_process = require('child_process');
 var tty = require('tty');
 var fs = require('fs');
 
-if (!module.parent) {
-    /*== Handle REPL Seperately ==*/
-    if (!process.argv[2]) {
-        child_process.fork(__dirname + (tty.isatty(0) ? '/repl.js' : '/prog.js'), process.argv.slice(2));
-    } else if (process.argv[2] === "--update") {
-        var update = child_process.exec('bash <(curl -fsSL http://cheddar.vihan.org/i/nix/cheddar)', { shell: '/bin/bash' });
-        update.stdout.on('data',function(data){
-            process.stdout.write(data);
-        });
-        update.stderr.on('data',function(data){
-            process.stdout.write(data);
-        });
-    } else {
-
-        program
-            .version(pjson.version)
-            .usage('[files ...] [options]')
-            .option('-e, --eval [code]', 'executes code, passed inline. implicit return');
-
-        if (program.update) {
-            child_process.exec("bash <(curl -fsSL cheddar.vihan.org/i/nix/cheddar)");
-            process.exit(0);
-        }
-
-        program.parse(process.argv);
-
-        program.args.forEach(function(file) { child_process.exec(__dirname+"/prog.js < "+file) });
+function launch() {
+    if (tty.isatty(0)) {
+        child_process.fork(__dirname + '/repl.js', process.argv.slice(2));
     }
-} else {
+    else {
+        var c = require('./prog');
+        var STDIN = "";
+        var chunk;
+        process.stdin.setEncoding('utf8');
+        process.stdin.on('readable', function() {
+            chunk = process.stdin.read();
+            if (chunk !== null)
+                STDIN += chunk;
+        });
+        process.stdin.on('end', function() {
+            c(STDIN);
+        });
+
+    }
+}
+
+var _ = {
+    version: [["v", "version"], "Prints Cheddar version"],
+    safe:    [["s", "safe"], "   Disables unsafe libraries"],
+    help:    [["h", "help"], "   Prints this help dialouge"]
+};
+
+// Handle argument
+function $(args) { args = _[args][0];
+    return ((args[1] && process.argv.indexOf("-"+args[0]) > -1)) || (process.argv.indexOf("--"+(args[1]||args[0])) > -1);
+}
+
+if (!module.parent) {
+
+    if ($('help')) {
+        var args = [];
+        Object.keys(_).map(function(i) { args.push( _[i] ) });
+        console.log("Usage: cheddar [< file.cdr] [arguments]\n\n" +
+"Options:\n" +
+args.map(function(arg) {
+    return "  " + (
+        arg[0][1] ? "-" + arg[0][0] + ", --" + arg[0][1] :
+        "--" + arg[0][0]
+    ) + " " + arg[1];
+}).join("\n"));
+        process.exit(0);
+    }
+
+    if ($('version')) {
+        console.log("v" + pjson.version);
+        process.exit(0);
+    }
+
+    if ($('safe')) {
+        global.SAFE_MODE = true;
+    }
+
+    launch();
+}
+else {
     module.exports = require('./prog');
 }
