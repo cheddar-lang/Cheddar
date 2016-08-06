@@ -12,5 +12,6 @@ export default new Map([
     require('./lib/len')(api),
     require('./lib/rev')(api),
     require('./lib/chars')(api),
+    require('./lib/chunk')(api),
     require('./lib/replace')(api)
 ]);
