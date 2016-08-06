@@ -24,9 +24,10 @@ export default class CheddarNumber extends CheddarClass {
         return true;
     }
 
-    // String is the lowest level class
-    //  meaning operators can have directly
-    //  defined behavior
     static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
     static Cast = BehaviorCast;
+
+    get Scope() {
+        return require('../../../stdlib/primitive/Number/lib');
+    }
 }

@@ -17,6 +17,7 @@
   ],
   "version": "1.0.0-beta.30",
   "dependencies": {
+    "bases": "^0.2.1",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "crypto": "0.0.3",
