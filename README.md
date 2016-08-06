@@ -11,6 +11,7 @@
   <a href="https://gitter.im/cheddar-lang/Cheddar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/cheddar-lang/Cheddar" src="https://badges.gitter.im/cheddar-lang/Cheddar.svg"></a>
   <a href="https://www.npmjs.com/package/cheddar-lang"><img alt='npm' src="https://img.shields.io/npm/dt/cheddar-lang.svg"></a>
   <img src='https://david-dm.org/cheddar-lang/Cheddar.svg' alt='Dependency Status' />
+  <a href="http://waffle.io/cheddar-lang/Cheddar"><img alt="Ready Items" src="https://badge.waffle.io/cheddar-lang/Cheddar.svg?label=ready&title=Todo"></a>
 </p>
 
 <p align="center">

@@ -172,7 +172,10 @@ export default new Map([
         if (LHS && RHS instanceof LHS.constructor)
             return HelperInit(CheddarArray, ...range(LHS.value, RHS.value));
         else if(LHS === null)
-            return HelperInit(CheddarArray, ...range(0, RHS.value - 1));
+            if (RHS.value === 0)
+                return HelperInit(CheddarArray);
+            else
+                return HelperInit(CheddarArray, ...range(0, RHS.value - Math.sign(RHS.value)));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
