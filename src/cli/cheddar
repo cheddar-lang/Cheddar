@@ -20,7 +20,9 @@ function launch() {
                 STDIN += chunk;
         });
         process.stdin.on('end', function() {
-            c(STDIN);
+            c(STDIN, {
+                PRINT: process.stdout.write.bind(process.stdout)
+            });
         });
 
     }

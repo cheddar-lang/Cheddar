@@ -34,4 +34,6 @@ module.exports = function(input, args) {
     if (typeof Output === "string") {
         DRAW_ERROR(Output, "Runtime Error");
     }
+
+    return Output;
 };
