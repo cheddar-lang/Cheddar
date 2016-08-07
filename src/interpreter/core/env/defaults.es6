@@ -43,7 +43,7 @@ export const DEFAULT_OP = new Map([
         let c = require('./class');
         if (LHS === null) {
             let f = require('./func');
-            var comp = (RHS.constructor || RHS).Operator.get('==');
+            var comp = RHS.Operator.get('==');
             if (!comp) {
                 return `\`${RHS.constructor.Name || RHS.Name || "object"}\` has no behavior for \`==\``;
             }
@@ -53,9 +53,9 @@ export const DEFAULT_OP = new Map([
                 return comp(RHS, input("item"));
             });
 
-           fn.WHICH_CLASS = RHS instanceof c ? RHS.constructor : null;
-           fn.SELF = RHS;
-           return fn;
+            fn.WHICH_CLASS = RHS instanceof c ? RHS.constructor : null;
+            fn.SELF = RHS;
+            return fn;
         } else {
             if (!(RHS.prototype instanceof c)) {
                 return CheddarError.NO_OP_BEHAVIOR;
@@ -94,6 +94,11 @@ export const DEFAULT_OP = new Map([
         } else {
             return `Cannot cast to given target \`${LHS.Name || "object"}\``;
         }
+    }],
+
+    ['as', (LHS, RHS) => {
+        var cast = RHS.Operator.get("::");
+        return cast(RHS, LHS);
     }],
 
     ['==', (LHS, RHS) => {

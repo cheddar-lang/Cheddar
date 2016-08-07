@@ -8,6 +8,10 @@ STDLIB.Item = (Name, LIB, NOT_SAFE = false) => {
         STDLIB.set(Name, API.var(LIB(API)));
     }
 };
+STDLIB.p = (Name, Item) => {
+    STDLIB.set(Name, API.var(Item));
+    STDLIB.set(Name.toLowerCase(), API.var(Item));
+};
 
 /** Global Libraries **/
 STDLIB.Item("cheddar", require('./ns/cheddar'));
@@ -21,11 +25,11 @@ STDLIB.Item("IO", require('./ns/IO'), true);
 //STDLIB.Item("HTTP", require('./ns/HTTP'));
 
 /** Primitives **/
-STDLIB.set("String",  API.var(API.string));
-STDLIB.set("Symbol",  API.var(API.symbol));
-STDLIB.set("Regex",  API.var(API.regex));
-STDLIB.set("Number",  API.var(API.number));
-STDLIB.set("Array",   API.var(API.array));
-STDLIB.set("Boolean", API.var(API.bool));
+STDLIB.p("String",  API.string);
+STDLIB.p("Symbol",  API.symbol);
+STDLIB.p("Regex",   API.regex);
+STDLIB.p("Number",  API.number);
+STDLIB.p("Array",   API.array);
+STDLIB.p("Boolean", API.bool);
 
 export default STDLIB;
