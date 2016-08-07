@@ -13,8 +13,6 @@ export default class CheddarFunctionToken extends CheddarPrimitive {
 
         this.jumpWhite();
 
-        const E = CheddarExpressionToken;
-
         /**
          This basically runs the following:
 

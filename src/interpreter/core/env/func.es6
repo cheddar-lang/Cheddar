@@ -50,7 +50,7 @@ export default class CheddarFunction extends CheddarClass {
                 props.Optional = arg[1] === '?';
                 props.Default = arg[2] ||
                     arg[1] &&
-                    arg[1].constructor.name === "CheddarExpressionToken" &&
+                    arg[1].constructor.name === "StatementExpression" &&
                     arg[1];
 
                 props.Type = nameargs.length > 1 && nameargs[1];
@@ -118,8 +118,6 @@ export default class CheddarFunction extends CheddarClass {
 
     generateScope(input, self) {
         let args = new CheddarScope(this.inherited || null);
-        //console.log(this.inherited);
-        //console.log(args.Scope);
 
         let CheddarArray = require('../primitives/Array');
         let tmp;
@@ -168,6 +166,20 @@ export default class CheddarFunction extends CheddarClass {
                     ));
                 }
                 else if (tmp.Default) {
+                    // If it's an expression
+                    if (tmp.Default.constructor.name === "StatementExpression") {
+                        let res = new (require('../eval/eval'))(
+                            tmp.Default,
+                            args
+                        ).exec();
+
+                        if (typeof res === 'string') {
+                            return res;
+                        }
+
+                        tmp.Default = res;
+                    }
+
                     args.setter(this.args[i][0], new CheddarVariable(
                         tmp.Default
                     ));
@@ -185,9 +197,7 @@ export default class CheddarFunction extends CheddarClass {
         ['&', (self, value) => {
             // Copy args to new function
             let new_args = self.args.slice(1);
-            return new self.constructor(new_args, function(scope, input, rargs) {
-                return self.exec([value, ...rargs], null);
-            });
+            return new self.constructor(new_args, (a,b, args) => self.exec([value, ...args], null));
         }]
     ]);
 }
