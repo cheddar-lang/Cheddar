@@ -6,9 +6,9 @@ export default function(cheddar) {
         ['internal', cheddar.from(require('./cheddar/internal'))],
 
         ['uid', new cheddar.variable(global.SAFE_MODE ?
-            new cheddar.nil :
-            require('./cheddar/uid')(cheddar), {
+            new cheddar.nil : require('./cheddar/uid')(cheddar), {
                 Writeable: true
-            })]
+            }
+        )]
     ]);
 }

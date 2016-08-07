@@ -67,8 +67,8 @@ export default class CheddarArray extends CheddarClass {
     // String is the lowest level class
     //  meaning operators can have directly
     //  defined behavior
-    static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
-    static Cast = BehaviorCast;
+    Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
+    Cast = BehaviorCast;
 }
 
 CheddarArray.Scope = require('../../../stdlib/primitive/Array/static');

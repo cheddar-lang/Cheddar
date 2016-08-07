@@ -20,10 +20,6 @@ export default new Map([
     //  implicitly cast
     ['+', (LHS, RHS) => {
 
-        //NOTE: IMPLICIT
-        //if (RHS.Cast.has(CheddarString))
-        //    RHS = RHS.Cast.get(CheddarString)();
-
         if (LHS && RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, LHS.value + RHS.value);
         else

@@ -27,7 +27,7 @@ export default function(cheddar) {
                 false;
         })
 
-        static Cast = new Map([
+        Cast = new Map([
             ["Array", (self) => {
                 return cheddar.init(cheddar.array, ...[...self.value].map(i =>
                     cheddar.init(cheddar.number, 10, 0, i)

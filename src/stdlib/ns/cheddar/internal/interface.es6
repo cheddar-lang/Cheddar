@@ -65,7 +65,7 @@ export default function(cheddar) {
             }))]
         ])
 
-        static Cast = new Map([
+        Cast = new Map([
             ['String', function(item) {
                 var self = item.internal;
                 if (toString.call(self) === "[object Object]") {

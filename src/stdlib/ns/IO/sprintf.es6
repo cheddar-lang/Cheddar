@@ -102,7 +102,7 @@ export default function(cheddar) {
                         // Convert to a string using given cast
                         let res = FORMAT.SPECIFIER[SPECIFIER][1](
                             tmp,
-                            tmp.constructor.Cast
+                            tmp.Cast
                         );
 
                         if (FORMAT.NUMBER.indexOf(SPECIFIER) > -1) {

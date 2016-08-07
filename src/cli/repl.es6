@@ -108,16 +108,16 @@ The following commands are available:
 		else if (!Output) {
 			console.log(String(Output).red);
 		}
-		else if (Output && Output.constructor.Cast && (
-				Output.constructor.Operator.has('repr') ||
-				Output.constructor.Cast.has('String'))) {
+		else if (Output && Output.Cast && (
+				Output.Operator.has('repr') ||
+				Output.Cast.has('String'))) {
 
 			let txt;
-			if (Output.constructor.Operator.has('repr')) {
-				txt = Output.constructor.Operator.get('repr')(null, Output).value;
+			if (Output.Operator.has('repr')) {
+				txt = Output.Operator.get('repr')(null, Output).value;
 			}
 			else {
-				txt = Output.constructor.Cast.get('String')(Output).value;
+				txt = Output.Cast.get('String')(Output).value;
 			}
 			console.log(txt.magenta);
 		}
