@@ -31,6 +31,6 @@ export default class CheddarRegex extends CheddarClass {
         return true;
     }
 
-    static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator])
-    static Cast = BehaviorCast;
+    Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator])
+    Cast = BehaviorCast;
 }

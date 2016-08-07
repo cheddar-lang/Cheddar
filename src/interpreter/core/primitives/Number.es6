@@ -24,8 +24,8 @@ export default class CheddarNumber extends CheddarClass {
         return true;
     }
 
-    static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
-    static Cast = BehaviorCast;
+    Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
+    Cast = BehaviorCast;
 
     get Scope() {
         return require('../../../stdlib/primitive/Number/lib');

@@ -19,6 +19,6 @@ export default class CheddarSymbol extends CheddarClass {
         return true;
     }
 
-    static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator])
-    static Cast = BehaviorCast;
+    Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator])
+    Cast = BehaviorCast;
 }

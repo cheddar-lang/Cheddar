@@ -35,8 +35,6 @@
 import CheddarScope from './scope';
 import * as CheddarError from '../consts/err';
 
-import { DEFAULT_OP, DEFAULT_CAST, IS_CLASS } from './defaults';
-
 export default class CheddarClass extends CheddarScope {
     static Name = "Class";
 
@@ -48,8 +46,11 @@ export default class CheddarClass extends CheddarScope {
     //  an unabstrated, native, `null` value
     //  which will require an interface in order
     //  for a Cheddar unary operator interface
-    static Operator = DEFAULT_OP;
-    static Cast = DEFAULT_CAST;
+    //
+    //     Operator = DEFAULT_OP;
+    //     Cast = DEFAULT_CAST;
+    //
+    // See CheddarScope for details
 
     // TODO: Write some superflicious and redundant
     //  explanation elaborating on the abstract

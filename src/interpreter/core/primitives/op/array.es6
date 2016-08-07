@@ -40,8 +40,8 @@ export default new Map([
         let op, res = HelperInit(CheddarBool, false);
 
         for (let i = 0; i < self.length; i++) {
-            if (self[i] && self[i].constructor.Operator &&
-                (op = self[i].constructor.Operator.get('=='))) {
+            if (self[i] && self[i].Operator &&
+                (op = self[i].Operator.get('=='))) {
                 res = op(self[i], RHS);
                 if (!(res instanceof CheddarBool)) {
                     return `\`has\` cannot compare item @${i}`;

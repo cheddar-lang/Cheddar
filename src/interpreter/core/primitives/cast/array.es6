@@ -8,15 +8,15 @@ export default new Map([
         let Stringified = "",
             Cast;
         for (let i = 0; i < self.value.length; i++) {
-            Cast = self.value[i] && self.value[i].constructor.Cast ?
-                self.value[i].constructor.Cast.has('String') ||
-                self.value[i].constructor.Operator.has('repr') : false;
+            Cast = self.value[i] && self.value[i].Cast ?
+                self.value[i].Cast.has('String') ||
+                self.value[i].Operator.has('repr') : false;
 
             if (Cast)
                 Stringified += (i ? ", " : "") + (
-                    self.value[i].constructor.Cast.has('String') ?
-                    self.value[i].constructor.Cast.get('String')(self.value[i]) :
-                    self.value[i].constructor.Operator.get('repr')(null, self.value[i])
+                    self.value[i].Cast.has('String') ?
+                    self.value[i].Cast.get('String')(self.value[i]) :
+                    self.value[i].Operator.get('repr')(null, self.value[i])
                 ).value;
             else
                 Stringified += (i ? ", " : "") + `<${self.value[i].constructor.Name || self.value[i].Name}>`;

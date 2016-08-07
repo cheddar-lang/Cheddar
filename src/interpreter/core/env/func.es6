@@ -181,7 +181,7 @@ export default class CheddarFunction extends CheddarClass {
         return args;
     }
 
-    static Operator = new Map([...CheddarClass.Operator,
+    Operator = new Map([...CheddarClass.Operator,
         ['&', (self, value) => {
             // Copy args to new function
             let new_args = self.args.slice(1);

@@ -43,7 +43,7 @@ windw.Chedz = function input(STDIN) {
 			console.log(Output);
 		} else if (Output.constructor.Name === "String") {
 			console.log(`"${Output.value}"`, '', 'magenta');
-		} else if (Output && Output.constructor.Cast && Output.constructor.Cast.has('String')) {
+		} else if (Output && Output.Cast && Output.Cast.has('String')) {
 			console.log(
 				`${Output.constructor.Cast.get('String')(Output).value}`,
 			'', 'magenta');

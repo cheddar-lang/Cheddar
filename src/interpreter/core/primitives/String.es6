@@ -25,8 +25,8 @@ export default class CheddarString extends CheddarClass {
     // String is the lowest level class
     //  meaning operators can have directly
     //  defined behavior
-    static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
-    static Cast = BehaviorCast;
+    Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
+    Cast = BehaviorCast;
 
     accessor(target) {
         return this.Scope.get(target) || (
