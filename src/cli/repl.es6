@@ -41,7 +41,10 @@ let resume;
 
 REPL.on('line', function(input) {
 
-	if (input === 'exit') { REPL.close(); process.exit(0) }
+	if (input === 'exit') {
+		REPL.close();
+		process.exit(0)
+	}
 	if (input === 'help') {
 		console.log(`
 Welcome to Cheddar!
@@ -75,27 +78,22 @@ The following commands are available:
 
 
 	if (!(Result instanceof tokenizer)) {
-		if ('({'.indexOf(Tokenizer.Code[Tokenizer.Index]) > -1) {
-			resume = true;
-			REPL.setPrompt("     ... ".yellow)
-			return REPL.prompt();
-		}
-		else {
-			resume = false;
-			REPL_ERROR(Result, "Syntax Error");
-			// Draw error pointer
-			console.error(HelperCaret(STDIN, Tokenizer.Index, true));
+		resume = false;
+		REPL_ERROR(Result, "Syntax Error");
+		// Draw error pointer
+		console.error(HelperCaret(STDIN, Tokenizer.Index, true));
 
-			REPL.setPrompt(PROMPT)
-			return REPL.prompt();
-		}
+		REPL.setPrompt(PROMPT)
+		return REPL.prompt();
 	}
 
 	resume = false;
 	REPL.setPrompt(PROMPT)
 
 	let Executor = new cheddar(Result, GLOBAL_SCOPE);
-	let Output = Executor.exec({ PRINT: process.stdout.write.bind(process.stdout) });
+	let Output = Executor.exec({
+		PRINT: process.stdout.write.bind(process.stdout)
+	});
 
 	if (Output) {
 
