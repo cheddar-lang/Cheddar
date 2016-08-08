@@ -154,16 +154,34 @@ export default class CheddarFunction extends CheddarClass {
                 break;
             }
             else if (input[i]) {
-                if (tmp.Type && !(input[i] instanceof tmp.Type)) {
-                    return `${this.Reference || "function"} expected arg @${i} to be ${
-                        tmp.Type.Name ||
-                        tmp.Type.constructor.Name ||
-                        "object"
-                    }, recieved ${
-                        input[i].Name ||
-                        input[i].constructor.Name ||
-                        "object"
-                    }`;
+                if (tmp.Type) {
+                    if (Array.isArray(tmp.Type)) {
+                        if (!tmp.Type.some(
+                            t => input[i] instanceof t
+                        )) {
+                            return `${this.Reference || "function"} expected arg @${i} to be any of: ${
+                                tmp.Type.map(t =>
+                                    tmp.Type.Name ||
+                                    tmp.Type.constructor.Name ||
+                                    "object"
+                                ).join(", ")
+                            }, recieved ${
+                                input[i].Name ||
+                                input[i].constructor.Name ||
+                                "object"
+                            }`;
+                        }
+                    } else if (!(input[i] instanceof tmp.Type)) {
+                        return `${this.Reference || "function"} expected arg @${i} to be ${
+                            tmp.Type.Name ||
+                            tmp.Type.constructor.Name ||
+                            "object"
+                        }, recieved ${
+                            input[i].Name ||
+                            input[i].constructor.Name ||
+                            "object"
+                        }`;
+                    }
                 }
                 args.setter(this.args[i][0], new CheddarVariable(
                     input[i]
