@@ -29,15 +29,15 @@ const WHITESPACE = /\s/;
 const NEWLINE = /[\r\n]/;
 
 export default class CheddarTokenize extends CheddarLexer {
-    exec(ENDS = "", PARSERS = []) {
-
-        let MATCH = this.attempt(PARSERS.concat([
+    exec(ENDS = "", PARSERS = [
             S1_ASSIGN,
             S2_IF,
             S2_FOR,
             S3_FUNC,
             S4_EXPR
-        ]), {
+        ]) {
+
+        let MATCH = this.attempt(PARSERS, {
             tok: this.constructor,
             args: { ENDS, PARSERS }
         });

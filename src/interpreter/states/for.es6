@@ -155,7 +155,7 @@ export default class CheddarFor {
 
                     if (ralloc instanceof Signal) {
                         if (ralloc.is(Signal.BREAK)) {
-                            ralloc = ralloc.res;
+                            ralloc = ralloc.data;
                             break;
                         }
                     }

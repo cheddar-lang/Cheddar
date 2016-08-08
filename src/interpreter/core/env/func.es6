@@ -1,6 +1,7 @@
 import CheddarVariable from './var';
 import CheddarScope from './scope';
 import CheddarClass from './class';
+import Signal from '../../signal';
 import NIL from '../consts/nil';
 
 import CheddarError from '../consts/err';
@@ -114,6 +115,12 @@ export default class CheddarFunction extends CheddarClass {
                 this.body._Tokens[0],
                 scope
             ).exec();
+
+            if (res instanceof Signal) {
+                if (res.is(Signal.RETURN)) {
+                    res = res.data;
+                }
+            }
 
             return res;
         }
