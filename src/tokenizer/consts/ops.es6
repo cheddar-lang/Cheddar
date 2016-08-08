@@ -13,7 +13,6 @@ export const RESERVED_KEYWORDS = new Set([
     'floor', 'ceil', 'round',
     'abs', 'repr',
     'sign', 'print',
-    'and', 'or', 'xor',
     'what', 'is', 'actually',
     'as',
     // States
@@ -34,7 +33,6 @@ export const OP = [
 '!=', '=', '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
 '|>', '::', 'as',
 '@"', 'has',
-'and', 'or', 'xor',
 'log', 'sign',
 'root',
 'is', 'actually'
@@ -110,10 +108,7 @@ export const PRECEDENCE = new Map([
 
     ['&', 8000],
     ['^', 7000],
-    ['xor', 7000],
     ['|', 6000],
-    ['and', 5000],
-    ['or', 4000],
 
     ['&&', 2001],
     ['||', 2000]

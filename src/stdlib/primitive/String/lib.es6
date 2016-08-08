@@ -14,6 +14,7 @@ export default new Map([
     require('./lib/chars')(api),
     require('./lib/head')(api),
     require('./lib/tail')(api),
+    require('./lib/sub')(api),
     require('./lib/chunk')(api),
     require('./lib/replace')(api)
 ]);
