@@ -15,7 +15,15 @@ export default new Map([
 
     ['+', (LHS, RHS) => {
         if (LHS && RHS instanceof LHS.constructor) {
-            return HelperInit(LHS.constructor, XRegExp.union([LHS.value, RHS.value]));
+            return HelperInit(LHS.constructor, XRegExp(LHS.value.xregexp.source + RHS.value.xregexp.source));
         }
-    }]
+    }],
+
+    ['-', (LHS, RHS) => {
+        if (LHS && RHS instanceof LHS.constructor) {
+            return HelperInit(LHS.constructor, XRegExp(
+                `${LHS.value.xregexp.source}(?!${RHS.value.xregexp.source})`
+            ));
+        }
+    }],
 ]);

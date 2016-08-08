@@ -51,7 +51,7 @@ export const EXPR_CLOSE = ')'
 /*== Regex Data ==*/
 export const REGEX_DELIMITER = '/';
 export const REGEX_ESCAPE = '\\';
-export const REGEX_FLAGS = 'nsxgimuy';
+export const REGEX_FLAGS = 'nsxgimc';
 
 /*== Array Data ==*/
 export const ARRAY_OPEN  = '[';

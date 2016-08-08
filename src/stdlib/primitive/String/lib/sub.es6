@@ -25,6 +25,9 @@ export default (cheddar) => ["sub", cheddar.var(new cheddar.func(
 
         // Make sure replacement is string or funcion
         if (replacement instanceof cheddar.func) {
+            // Given replacement
+            let _replacement = replacement;
+
             // If it's a function create a wrapper
             replacement = function(...args) {
                 // Check if args[0] is an object
@@ -35,10 +38,11 @@ export default (cheddar) => ["sub", cheddar.var(new cheddar.func(
                 // Cast to cheddar strings
                 let cargs = args.map(i => cheddar.init(cheddar.string, i));
 
-                let res = replacement.exec(cargs, null);
+                let res = _replacement.exec(cargs, null);
                 if (!(res instanceof cheddar.string)) {
                     throw res.Name || res.constructor.Name; // Generall error
                 } else {
+                    console.log(res);
                     return res.value;
                 }
             };
