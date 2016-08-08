@@ -7,7 +7,7 @@ export default function(cheddar, Encoding) {
         new cheddar.func([
             ["input", { Type: cheddar.string }]
         ], (s, i) => {
-
+            return new cheddar.nil;
         }),
         // Decode
         new cheddar.func([

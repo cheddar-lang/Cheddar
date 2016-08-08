@@ -17,7 +17,8 @@ export default function(cheddar) {
         }
 
         static Scope = new Map([
-            ["UTF8", cheddar.var(require('./Encoding/UTF8')(cheddar, Encoding))]
+            ["UTF8", cheddar.var(require('./Encoding/UTF8')(cheddar, Encoding))],
+            ["base64", cheddar.var(require('./Encoding/base64')(cheddar, Encoding))],
         ])
     }
 
