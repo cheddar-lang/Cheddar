@@ -3,22 +3,25 @@ import CheddarScope from './scope';
 import CheddarClass from './class';
 import NIL from '../consts/nil';
 
-// I have the details, planing, structure,
-// and design of functions all on my
-// whiteboard. I'll copy it here later
+import CheddarError from '../consts/err';
 
 export default class CheddarFunction extends CheddarClass {
     static Name = "Function";
 
-    constructor(args, body, preset = null) {
-        super();
+    constructor(args, body) {
+        super(null);
 
+        // List of arguments the
+        //  function is expecting
+        // Tokens handled by init
+        // #generateScope handles
+        //  the enforcement
         this.args = args;
-        this.body = body;
-        this.preset = preset;
 
-        // TODO: Redo optimizations lost due to git
-        this.cache = {};
+        // Function body, either a
+        //  native function or a
+        //  exec/eval pattern body
+        this.body = body;
     }
 
     // Initalizes from primitive arguments
@@ -198,6 +201,15 @@ export default class CheddarFunction extends CheddarClass {
             // Copy args to new function
             let new_args = self.args.slice(1);
             return new self.constructor(new_args, (a,b, args) => self.exec([value, ...args], null));
+        }],
+        ['+', (LHS, RHS) => {
+            if (RHS instanceof LHS.constructor) {
+                return new LHS.constructor([], function(a,b, rargs) {
+                    return LHS.exec([RHS.exec(rargs, null)], null);
+                });
+            } else {
+                return CheddarError.NO_OP_BEHAVIOR;
+            }
         }]
     ]);
 }

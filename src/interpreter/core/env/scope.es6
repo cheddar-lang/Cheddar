@@ -17,7 +17,7 @@ import CheddarVariable from './var';
 
 import { DEFAULT_OP, DEFAULT_CAST } from './defaults';
 
-function enforceset(token, value) {
+function enforceset(token, value, iv) {
     let self;
 
     if (this.has(token)) {
@@ -42,7 +42,7 @@ function enforceset(token, value) {
 
     return this.manage(
         token,
-        new CheddarVariable(value, {
+        iv ? value : new CheddarVariable(value, {
             Writeable: true,
             StrictType: self ? self.StrictType : null
         })
