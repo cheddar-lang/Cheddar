@@ -78,6 +78,7 @@ export default class CheddarLexer {
         }
 
         let attempt;
+        let furthest = this.Index;
         for (let i = 0; i < parsers.length; i++) {
             if (parsers[i] instanceof CheddarLexer) {
                 parsers[i].Code = this.Code;
@@ -99,9 +100,12 @@ export default class CheddarLexer {
                 } else {
                     return this.error(attempt);
                 }
+            } else {
+                furthest = Math.max(furthest, parsers[i].Index);
             }
         }
 
+        this.Index = furthest;
         return this.error(CheddarError.EXIT_NOTFOUND);
     }
 
