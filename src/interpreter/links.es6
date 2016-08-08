@@ -1,4 +1,5 @@
 import StatementExpression from './core/eval/eval';
+import StatementReturn     from './states/return';
 import StatementAssign     from './states/assign';
 import StatementBreak      from './states/break';
 import StatementFunc       from './states/func';
@@ -11,5 +12,6 @@ export default {
     StatementFor,
     StatementFunc,
     StatementBreak,
+    StatementReturn,
     StatementExpression
 }

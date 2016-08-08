@@ -4,6 +4,7 @@ import CheddarArrayToken from '../parsers/array';
 import CheddarArgumentToken from '../parsers/args/argument';
 import CheddarVariableToken from '../literals/var';
 import CheddarCustomLexer from '../parsers/custom';
+import StatementReturn from './return';
 
 import * as CheddarError from '../consts/err';
 
@@ -18,6 +19,10 @@ export default class StatementFunc extends CheddarLexer {
             return CheddarError.EXIT_NOTFOUND;
 
         this.jumpLiteral("func");
+
+        if (tokenizer) {
+            tokenizer.args.PARSERS.unshift(StatementReturn);
+        }
 
         let codeblock = CheddarCustomLexer(CheddarCodeblock, tokenizer);
 

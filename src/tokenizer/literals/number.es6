@@ -84,6 +84,10 @@ export default class CheddarNumberToken extends CheddarPrimitive {
                 return this.error(CheddarError.UNEXPECTED_TOKEN); // throw compile error
             }
 
+            if (this.Code[this.Index - 1] === ".") {
+                --this.Index;
+            }
+
             return this.close(); // Close the parser
 
         } else {
