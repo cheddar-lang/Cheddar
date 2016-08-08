@@ -12,6 +12,11 @@ export default class CheddarRegex extends CheddarClass {
             this.value = source;
             this.flags = source.xregexp.flags;
         } else {
+            if (flags.indexOf("c") > -1) {
+                source = XRegExp.escape(source);
+                flags = flags.replace(/c/g, "");
+            }
+
             if (!source)
                 return "Regex source not provided";
             else if (source.constructor.Name === 'String')
