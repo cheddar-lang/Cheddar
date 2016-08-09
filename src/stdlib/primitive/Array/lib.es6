@@ -19,6 +19,7 @@ export default new Map([
     require('./lib/unshift')(api),
     require('./lib/head')(api),
     require('./lib/tail')(api),
+    require('./lib/index')(api),
     require('./lib/slice')(api),
     require('./lib/sum')(api),
     require('./lib/pop')(api),
