@@ -11,8 +11,6 @@ import tokenizer from '../tokenizer/tok';
 
 import stdlib from '../stdlib/stdlib';
 
-const DRAW_ERROR = (text, type) => console.error(type.red.bold + ": ".dim + text.toString());
-
 let execcheddar = function(input, args) {
     let GLOBAL_SCOPE = new CheddarScope(null);
     GLOBAL_SCOPE.Scope = new Map(stdlib);
@@ -21,10 +19,10 @@ let execcheddar = function(input, args) {
     let Result = Tokenizer.exec();
 
     if (!(Result instanceof tokenizer)) {
-        DRAW_ERROR(Result, "Syntax Error");
+        console.error("Syntax Error: " + Result);
         // Draw error pointer
         console.error(HelperCaret(input, Tokenizer.Index, true));
-        return;
+        return "";
     }
 
 
@@ -32,7 +30,7 @@ let execcheddar = function(input, args) {
     let Output = Executor.exec(args);
 
     if (typeof Output === "string") {
-        DRAW_ERROR(Output, "Runtime Error");
+        console.error("Runtime Error: " + Output);
     }
 
     return Output;
