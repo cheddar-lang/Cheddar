@@ -7,6 +7,7 @@ import CheddarStringToken from '../literals/string';
 import CheddarNumberToken from '../literals/number';
 import CheddarArrayToken from './array';
 import CheddarRegexToken from '../literals/regex';
+import CheddarDictToken from '../literals/dict';
 import CheddarSymbolToken from '../literals/symbol';
 
 import CheddarFunctionizedOperatorToken from '../literals/fop';
@@ -17,6 +18,7 @@ export default class CheddarAnyLiteral extends CheddarLexer {
 
         let attempt = this.attempt(
             CheddarFunctionizedOperatorToken,
+            CheddarDictToken,
             CheddarStringToken,
             CheddarNumberToken,
             CheddarBooleanToken,
