@@ -28,6 +28,11 @@ export default class CheddarCallStack {
     }
 
     close() {
-        return this.CallStack[this.CallStack.length - 1];
+        let ret = this.CallStack[this.CallStack.length - 1];
+        if (ret) {
+            delete ret.Reference;
+            delete ret.scope;
+        }
+        return ret;
     }
 }
