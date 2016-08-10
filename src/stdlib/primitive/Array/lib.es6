@@ -16,6 +16,7 @@ export default new Map([
     require('./lib/all')(api),
     require('./lib/any')(api),
     require('./lib/filter')(api),
+    require('./lib/sorted')(api),
     require('./lib/chunk')(api),
     require('./lib/rev')(api),
     require('./lib/unshift')(api),
