@@ -104,14 +104,19 @@ export const DEFAULT_OP = new Map([
     ['==', (LHS, RHS) => {
         return HelperInit(
             require("../primitives/Bool"),
-            RHS && LHS instanceof RHS.constructor && (LHS.value && (LHS.value === RHS.value))
+            RHS && (
+                LHS === RHS ||
+                LHS instanceof RHS.constructor && (LHS.value && (LHS.value === RHS.value))
+            )
         );
     }],
 
     ['!=', (LHS, RHS) => {
+        let eq = LHS.Operator.get('==');
+        if (!eq) return CheddarError.NO_OP_BEHAVIOR;
         return HelperInit(
             require("../primitives/Bool"),
-            RHS && LHS instanceof RHS.constructor && LHS.value !== RHS.value
+            !eq(LHS, RHS).value
         );
     }],
 

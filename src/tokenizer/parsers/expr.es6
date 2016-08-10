@@ -112,8 +112,6 @@ CheddarExpressionToken.prototype.exec = function(DISALLOW_EMPTY = false, ALLOW_T
 
     this.jumpWhite();
 
-    let start_index = this.Index;
-
     let expression;
     if (DISALLOW_EMPTY) {
         expression = this.grammar(true, [
@@ -137,18 +135,6 @@ CheddarExpressionToken.prototype.exec = function(DISALLOW_EMPTY = false, ALLOW_T
             this.Index = current_index;
 
             // Backtrack single whitespace
-            let didbacktack = false;
-            this.Index--;
-            while ("\t\f ".indexOf(this.Code[this.Index]) > -1) {
-                this.Index--;
-                if (this.Code[this.Index] === "\n") {
-                    didbacktack = true;
-                    break;
-                }
-            }
-            if (didbacktack !== true && this.Code[this.Index] !== "\n" || this.Index < start_index) {
-                this.Index = current_index;
-            }
             return expression;
         }
         // Increase index past the `?`

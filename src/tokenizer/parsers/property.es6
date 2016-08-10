@@ -37,7 +37,6 @@ export default class CheddarPropertyToken extends CheddarLexer {
             else
                 attempt = this.initParser(CheddarVariableToken).exec();
 
-
             if (NOVAR === true && attempt === CheddarError.EXIT_NOTFOUND) {
                 // Do nothing?
             } else if (!(attempt instanceof CheddarLexer) || attempt.Errored === true) {
