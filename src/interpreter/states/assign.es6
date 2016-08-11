@@ -60,7 +60,7 @@ export default class CheddarAssign {
             );
         }
         else {
-            res = this.scope.manage(this.assignl.tok(0),
+            res = this.scope.manage(varname,
                 new CheddarVariable(new NIL, {
                     Writeable: this.assignt !== "const",
                     StrictType: stricttype
