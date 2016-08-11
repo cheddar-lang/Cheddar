@@ -38,12 +38,17 @@ GLOBAL_SCOPE.Scope = stdlib;
 
 let STDIN;
 let resume;
+let printed = false;
+
+function print(text) {
+	process.stdout.write(text);
+	printed = true;
+}
 
 REPL.on('line', function(input) {
-
+	printed = false;
 	if (input === 'exit') {
 		REPL.close();
-		process.exit(0)
 	}
 	if (input === 'help') {
 		console.log(`
@@ -92,11 +97,10 @@ The following commands are available:
 
 	let Executor = new cheddar(Result, GLOBAL_SCOPE);
 	let Output = Executor.exec({
-		PRINT: process.stdout.write.bind(process.stdout)
+		PRINT: print
 	});
 
 	if (Output) {
-
 		if (typeof Output === "string") {
 			REPL_ERROR(Output, "Runtime Error");
 		}
@@ -105,31 +109,32 @@ The following commands are available:
 		}
 		else if (!Output) {
 			console.log(String(Output).red);
-		}
-		else if (Output && Output.Cast && (
-				Output.Operator.has('repr') ||
-				Output.Cast.has('String'))) {
+		} else if (!printed) {
+			if (Output && Output.Cast && (
+					Output.Operator.has('repr') ||
+					Output.Cast.has('String'))) {
 
-			let txt;
-			if (Output.Operator.has('repr')) {
-				txt = Output.Operator.get('repr')(null, Output).value;
+				let txt;
+				if (Output.Operator.has('repr')) {
+					txt = Output.Operator.get('repr')(null, Output).value;
+				}
+				else {
+					txt = Output.Cast.get('String')(Output).value;
+				}
+				console.log(txt.magenta);
+			}
+			else if (Output instanceof CheddarScope) {
+				console.log(`< Instance of "${Output.constructor.Name}" >`.cyan);
+			}
+			else if (Output.prototype instanceof CheddarScope) {
+				console.log(`< Class "${Output.Name}" >`.cyan);
+			}
+			else if (typeof Output === "symbol") {
+				console.log(Output.toString().red);
 			}
 			else {
-				txt = Output.Cast.get('String')(Output).value;
+				console.log(`< Unprintable object of class "${Output.constructor.name.magenta}" with literal value ${Output.magenta} >`.cyan);
 			}
-			console.log(txt.magenta);
-		}
-		else if (Output instanceof CheddarScope) {
-			console.log(`< Instance of "${Output.constructor.Name}" >`.cyan);
-		}
-		else if (Output.prototype instanceof CheddarScope) {
-			console.log(`< Class "${Output.Name}" >`.cyan);
-		}
-		else if (typeof Output === "symbol") {
-			console.log(Output.toString().red);
-		}
-		else {
-			console.log(`< Unprintable object of class "${Output.constructor.name.magenta}" with literal value ${Output.magenta} >`.cyan);
 		}
 	}
 
