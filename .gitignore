@@ -1,8 +1,15 @@
-node_modules
+node_modules/*
+!node_modules/atob/
 /dist
-coverage
+
+# junk
 npm-debug.log
+coverage
+
+# Left overs
 /cheddar
+
+# Local test files
 TODO.md
 /*.cdr
 /*.bf
