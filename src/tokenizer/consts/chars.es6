@@ -30,7 +30,7 @@ export const NUMERALS = '0123456789ABCDEF';
 
 export const WHITESPACE = '\r\n\f '; // Add \t here to allow tabs
 
-export const TOKEN_START = MALPHA + '_';
+export const TOKEN_START = MALPHA + '_$';
 export const TOKEN_END = TOKEN_START + DIGITS;
 
 /*== Operator Constants ==*/

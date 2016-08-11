@@ -15,12 +15,11 @@ let ARGLISTS = new Map([
 let MATCHBODY = new Set("([");
 
 export default class CheddarPropertyToken extends CheddarLexer {
-    exec() {
+    exec(Initial = false) {
         this.open(false);
 
         this.Type = PropertyType.Property;
 
-        let Initial = false;
         let NOVAR = false;
 
         // Plans for property parsing:
