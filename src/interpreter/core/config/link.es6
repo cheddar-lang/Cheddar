@@ -21,7 +21,9 @@ export const PRIMITIVE_LINKS = new Map([
 ]);
 
 import CheddarFunctionizedOperator from '../evaluated/fop';
+import CheddarFunctionizedProperty from '../evaluated/fprop';
 
 export const EVALUATED_LINKS = new Map([
-    ["CheddarFunctionizedOperatorToken", CheddarFunctionizedOperator]
+    ["CheddarFunctionizedOperatorToken", CheddarFunctionizedOperator],
+    ["CheddarFunctionizedPropertyToken", CheddarFunctionizedProperty],
 ]);

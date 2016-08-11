@@ -11,12 +11,14 @@ import CheddarDictToken from '../literals/dict';
 import CheddarSymbolToken from '../literals/symbol';
 
 import CheddarFunctionizedOperatorToken from '../literals/fop';
+import CheddarFunctionizedPropertyToken from '../literals/fprop';
 
 export default class CheddarAnyLiteral extends CheddarLexer {
     exec() {
         this.open(false);
 
         let attempt = this.attempt(
+            CheddarFunctionizedPropertyToken,
             CheddarFunctionizedOperatorToken,
             CheddarDictToken,
             CheddarStringToken,
