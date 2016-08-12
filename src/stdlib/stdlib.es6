@@ -1,11 +1,11 @@
 import API from './api';
 
 let STDLIB = new Map();
-STDLIB.Item = (Name, LIB, NOT_SAFE = false) => {
+STDLIB.Item = (Name, NOT_SAFE = false) => {
     if (NOT_SAFE && global.SAFE_MODE) {
         return;
     } else {
-        STDLIB.set(Name, API.var(LIB(API)));
+        STDLIB.set(Name, API.var(require(`./ns/${Name}`)(API)));
     }
 };
 STDLIB.p = (Name, Item) => {
@@ -14,12 +14,15 @@ STDLIB.p = (Name, Item) => {
 };
 
 /** Global Libraries **/
+STDLIB.Item("cheddar");
+
 STDLIB.Item("Math");
+STDLIB.Item("Rational");
+
+// Interface Libraries
 STDLIB.Item("Encoding");
 STDLIB.Item("Buffer");
-STDLIB.Item("IO");
-STDLIB.Item("HTTP");
-STDLIB.Item("Rational"); // Rational extension written by LegionMammal978
+STDLIB.Item("IO", true);
 
 /** Primitives **/
 STDLIB.p("String",  API.string);
