@@ -42,7 +42,6 @@ export default (cheddar) => ["sub", cheddar.var(new cheddar.func(
                 if (!(res instanceof cheddar.string)) {
                     throw res.Name || res.constructor.Name; // Generall error
                 } else {
-                    console.log(res);
                     return res.value;
                 }
             };
