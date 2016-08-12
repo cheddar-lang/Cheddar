@@ -14,7 +14,7 @@ export default function(cheddar, CheddarRational) {
             if (input("self") instanceof CheddarRational)
                 val = input("self");
             else if (input("val").constructor.Name === "nil")
-                return "Rational.floor expects 1 argument";
+                return "Rational.rfloor expects 1 argument";
             else
                 val = of(input("val"), cheddar, CheddarRational);
             return cheddar.init(cheddar.number, 10, 0, Math.floor(val.num /

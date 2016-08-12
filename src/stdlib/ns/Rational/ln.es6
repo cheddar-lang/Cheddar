@@ -18,8 +18,6 @@ export default function(cheddar, CheddarRational) {
             else
                 val = of(input("val"), cheddar, CheddarRational);
             let tmp = Math.log(val.num) - Math.log(val.den);
-            if (tmp === ~~tmp)
-                return cheddar.init(CheddarRational, tmp, 1);
             return cheddar.init(cheddar.number, 10, 0, tmp);
         }
     );

@@ -14,7 +14,7 @@ export default function(cheddar, CheddarRational) {
             if (input("self") instanceof CheddarRational)
                 val = input("self");
             else if (input("val").constructor.Name === "nil")
-                return "Rational.abs expects 1 argument";
+                return "Rational.rabs expects 1 argument";
             else
                 val = of(input("val"), cheddar, CheddarRational);
             return cheddar.init(CheddarRational, Math.abs(val.num), val.den);

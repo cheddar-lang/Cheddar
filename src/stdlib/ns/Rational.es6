@@ -47,23 +47,23 @@ export default function(cheddar) {
         // Sign function
         ["sgn", cheddar.from(require("./Rational/sgn"), CheddarRational)],
         // Square root
-        ["sqrt", cheddar.from(require("./Rational/sqrt"), CheddarRational)],
+        ["rsqrt", cheddar.from(require("./Rational/sqrt"), CheddarRational)],
         // Cube root
-        ["cbrt", cheddar.from(require("./Rational/cbrt"), CheddarRational)],
+        ["rcbrt", cheddar.from(require("./Rational/cbrt"), CheddarRational)],
         // n'th root
-        ["root", cheddar.from(require("./Rational/root"), CheddarRational)],
+        ["rroot", cheddar.from(require("./Rational/root"), CheddarRational)],
         // Natural exponential inversion (i.e., the natural logarithm)
         ["ln", cheddar.from(require("./Rational/ln"), CheddarRational)],
         // Generalized exponential inversion (i.e., other logarithms)
-        ["log", cheddar.from(require("./Rational/log"), CheddarRational)],
+        ["rlog", cheddar.from(require("./Rational/log"), CheddarRational)],
         // Rounding towards +inf
-        ["ceil", cheddar.from(require("./Rational/ceil"), CheddarRational)],
+        ["rceil", cheddar.from(require("./Rational/ceil"), CheddarRational)],
         // Rounding towards -inf
-        ["floor", cheddar.from(require("./Rational/floor"), CheddarRational)],
+        ["rfloor", cheddar.from(require("./Rational/floor"), CheddarRational)],
         // Rounding half towards +inf
-        ["round", cheddar.from(require("./Rational/round"), CheddarRational)],
+        ["rround", cheddar.from(require("./Rational/round"), CheddarRational)],
         // Absolute value function
-        ["abs", cheddar.from(require("./Rational/abs"), CheddarRational)]
+        ["rabs", cheddar.from(require("./Rational/abs"), CheddarRational)]
     ]);
     CheddarRational.Cast = new Map([
         ["String", (val) => cheddar.init(cheddar.string, val.num + " / " +

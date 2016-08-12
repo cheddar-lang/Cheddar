@@ -22,8 +22,8 @@ export default function(cheddar, CheddarRational) {
                     input("rhs")];
             rhs = of(rhs, cheddar, CheddarRational);
             let gcd = GCD(lhs.den, rhs.den);
-            return cheddar.init(CheddarRational, (gcd * lhs.num / rhs.den) %
-                (gcd * rhs.num / lhs.den), lhs.den / gcd * rhs.den);
+            return cheddar.init(CheddarRational, (rhs.den / gcd * lhs.num) %
+                (lhs.den / gcd * rhs.num), lhs.den / gcd * rhs.den);
         }
     );
 }

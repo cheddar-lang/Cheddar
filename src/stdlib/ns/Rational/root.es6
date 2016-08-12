@@ -16,12 +16,12 @@ export default function(cheddar, CheddarRational) {
             if (input("self") instanceof CheddarRational)
                 [lhs, rhs] = [input("self"), input("lhs")];
             else if (input("rhs").constructor.Name === "nil")
-                return "Rational.root expects 2 arguments";
+                return "Rational.rroot expects 2 arguments";
             else
                 [lhs, rhs] = [of(input("lhs"), cheddar, CheddarRational),
                     input("rhs")];
             rhs = of(rhs, cheddar, CheddarRational);
-            return pow(rhs.num, rhs.den, lhs.den, lhs.num, cheddar,
+            return pow(lhs.num, lhs.den, rhs.den, rhs.num, cheddar,
                 CheddarRational);
         }
     );
