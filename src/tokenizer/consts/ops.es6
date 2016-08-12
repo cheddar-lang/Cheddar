@@ -116,7 +116,6 @@ export const PRECEDENCE = new Map([
 
 export const RA_PRECEDENCE = new Map([
     ['**', 14000],
-    ['=', 1000],
     ['+=', 1000],
     ['-=', 1000],
     ['*=', 1000],
@@ -126,7 +125,8 @@ export const RA_PRECEDENCE = new Map([
     ['|=', 1000],
     ['^=', 1000],
     ['<<=', 1000],
-    ['>>=', 1000]
+    ['>>=', 1000],
+    ['=', 1000],
 ]);
 
 export const TYPE = {

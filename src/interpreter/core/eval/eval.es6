@@ -192,7 +192,7 @@ export default class CheddarEval extends CheddarCallStack {
             }
 
         } else if (Operation instanceof CheddarPropertyToken || Operation instanceof CheddarLiteral) {
-            let res = eval_prop(Operation, this.Scope, CheddarEval);
+            let res = eval_prop(Operation, this.Scope, this.constructor);
             if (typeof res === 'string' || typeof res === 'boolean' || typeof res === 'symbol')
                 return res;
 

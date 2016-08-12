@@ -1,10 +1,11 @@
-const read = require('./lib/prompt')({ sigint: true });
+const read = require('prompt-sync')({ sigint: true });
 
 export default function(cheddar) {
     return new cheddar.func(
         [
             ["prompt", {
-                Type: cheddar.string
+                Type: cheddar.string,
+                Default: cheddar.init(cheddar.string, ""),
             }],
             ["required", {
                 Type: cheddar.string,
