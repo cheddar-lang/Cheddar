@@ -20,6 +20,10 @@ export default function(cheddar) {
                     return "AHHH DIVISION BY ZERO WE'RE ALL GONNA DIIIIIEEEEE";
                 return true;
             }
+
+            Cast = new Map([
+                ["String", (val) => cheddar.init(cheddar.string, val.num + " / " + val.den)]
+            ])
     };
     CheddarRational.Scope = CheddarRational.prototype.Scope = new Map([
         // Casts objects to rationals
@@ -65,9 +69,6 @@ export default function(cheddar) {
         // Absolute value function
         ["rabs", cheddar.from(require("./Rational/abs"), CheddarRational)]
     ]);
-    CheddarRational.Cast = new Map([
-        ["String", (val) => cheddar.init(cheddar.string, val.num + " / " +
-            val.den)]
-    ]);
+
     return CheddarRational;
 }

@@ -286,11 +286,11 @@ describe('Rational', function(){
 
     describe('pow', function(){
         it('should work (instance, ++)', TestCheddarFrom.Code(
-            `print Rational.of(9, 7).pow([9, 7]) - (9 / 7) ^ (9 / 7)`,
+            `print Rational.of(9, 7).pow([9, 7]) - (9 / 7) ** (9 / 7)`,
             `0`
         ))
         it('should work (instance, +-)', TestCheddarFrom.Code(
-            `print Rational.of(9, 7).pow([-8, 5]) - (9 / 7) ^ (-8 / 5)`,
+            `print Rational.of(9, 7).pow([-8, 5]) - (9 / 7) ** (-8 / 5)`,
             `0`
         ))
         it('should work (instance, -+)', TestCheddarFrom.Code(
@@ -302,11 +302,11 @@ describe('Rational', function(){
             `NaN`
         ))
         it('should work (static, ++)', TestCheddarFrom.Code(
-            `print Rational.pow([9, 7], [9, 7]) - (9 / 7) ^ (9 / 7)`,
+            `print Rational.pow([9, 7], [9, 7]) - (9 / 7) ** (9 / 7)`,
             `0`
         ))
         it('should work (static, +-)', TestCheddarFrom.Code(
-            `print Rational.pow([9, 7], [-8, 5]) - (9 / 7) ^ (-8 / 5)`,
+            `print Rational.pow([9, 7], [-8, 5]) - (9 / 7) ** (-8 / 5)`,
             `0`
         ))
         it('should work (static, -+)', TestCheddarFrom.Code(
