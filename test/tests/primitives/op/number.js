@@ -260,6 +260,48 @@ describe('Numbers', function(){
         ))
     })
 
+    describe('sin', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print round sin (Math.PI / 2)',
+            '1'
+        ))
+    })
+
+    describe('asin', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print (asin 1) * 2 == Math.PI',
+            'true'
+        ))
+    })
+
+    describe('cos', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print round cos Math.PI',
+            '-1'
+        ))
+    })
+
+    describe('acos', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print (acos -1) == Math.PI',
+            'true'
+        ))
+    })
+
+    describe('tan', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print round tan (Math.PI / 4)',
+            '1'
+        ))
+    })
+
+    describe('atan', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print (atan 1) * 4 == Math.PI',
+            'true'
+        ))
+    })
+
     describe('range', function(){
         it('should work', TestCheddarFrom.Code(
             'print "1|>5=" + String::(1|>5)',
@@ -276,6 +318,11 @@ describe('Numbers', function(){
         it('should work', TestCheddarFrom.Code(
             'print \'@"65=\' + @" 65',
             '@"65=A'
+        ))
+
+        it('should work with binary', TestCheddarFrom.Code(
+            'print 65@"90',
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         ))
     })
 });
