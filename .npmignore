@@ -1,8 +1,19 @@
-node_modules
-coverage
+# Node modules
+/node_modules/*
+
+!/node_modules/shoco/
+!/node_modules/prompt-sync/
+
+
+# junk
 npm-debug.log
+coverage
+
+# Left overs
+/dist
 /cheddar
+
+# Local test files
 TODO.md
 /*.cdr
-.travis.yml
-/*.bat
+/*.bf
