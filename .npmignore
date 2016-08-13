@@ -10,7 +10,7 @@ npm-debug.log
 coverage
 
 # Left overs
-/dist
+/src
 /cheddar
 
 # Local test files
