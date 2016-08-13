@@ -1,9 +1,5 @@
 # Node modules
-/node_modules/*
-
-!/node_modules/shoco/
-!/node_modules/prompt-sync/
-
+/node_modules
 
 # junk
 npm-debug.log

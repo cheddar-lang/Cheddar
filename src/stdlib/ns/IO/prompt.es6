@@ -1,4 +1,4 @@
-const read = require('prompt-sync')({ sigint: true });
+const read = require('../../../../local_modules/prompt-sync')({ sigint: true });
 
 export default function(cheddar) {
     return new cheddar.func(

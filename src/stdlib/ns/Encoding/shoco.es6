@@ -1,4 +1,4 @@
-import { compress, decompress } from 'shoco';
+import { compress, decompress } from '../../../../local_modules/shoco';
 
 export default function(cheddar, Encoding) {
     let CBuffer = require('../Buffer')(cheddar);

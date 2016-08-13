@@ -17,7 +17,7 @@ BIN_MAKE=$(foreach BIN_FILE,$(BIN),chmod 755 $(SRC)$(BIN_FILE) && cp $(SRC)$(BIN
 TESTRUNNER=$(PREFIX)/babel-node
 COVERAGE=$(PREFIX)/babel-istanbul
 TEST=$(PREFIX)/_mocha
-TFLAGS=cover $(TEST)
+TFLAGS=-x "./local_modules/**" cover $(TEST)
 
 ## Rules
 all: default

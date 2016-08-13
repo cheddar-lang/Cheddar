@@ -53,10 +53,6 @@
     "npm": "^3.10.6",
     "remap-istanbul": "^0.6.4"
   },
-  "bundleDependencies": [
-    "shoco",
-    "prompt-sync"
-  ],
   "main": "dist/cli/cheddar",
   "directories": {
     "test": "test"
