@@ -13,6 +13,12 @@ coverage
 /src
 /cheddar
 
+# Local test filescoverage
+
+.travis.yml
+/disf
+/cheddar
+
 # Local test files
 TODO.md
 /*.cdr
