@@ -11,5 +11,10 @@ export default new Map([
     require('./lib/ord')(api),
     require('./lib/len')(api),
     require('./lib/rev')(api),
-    require('./lib/chars')(api)
+    require('./lib/chars')(api),
+    require('./lib/head')(api),
+    require('./lib/tail')(api),
+    require('./lib/sub')(api),
+    require('./lib/index')(api),
+    require('./lib/chunk')(api)
 ]);

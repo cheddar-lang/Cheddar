@@ -15,13 +15,10 @@ export default class CheddarSymbol extends CheddarClass {
         if (typeof name !== 'string')
             return "Symbol name must be string";
 
-        if (!global.CHEDDAR_OPTS.SYMBOL_REGISTRY) global.CHEDDAR_OPTS.SYMBOL_REGISTRY = new Set();
-
-        this.value = global.CHEDDAR_OPTS.SYMBOL_REGISTRY.has(name) ? name :
-                     (global.CHEDDAR_OPTS.SYMBOL_REGISTRY.add(name), name);
+        this.value = name;
         return true;
     }
 
-    static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator])
-    static Cast = BehaviorCast;
+    Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator])
+    Cast = BehaviorCast;
 }

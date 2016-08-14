@@ -7,7 +7,7 @@ export default (api) => ["vfuse", api.prop(new api.func(
             cast, text;
 
         for (let i = 0; i < self.length; i++) {
-            cast = (self[i] instanceof api.string) || self[i].constructor.Cast.get('String');
+            cast = (self[i] instanceof api.string) || self[i].Cast.get('String');
 
             if (cast) {
                 if (cast === true) {
@@ -15,7 +15,7 @@ export default (api) => ["vfuse", api.prop(new api.func(
                 } else {
                     text = cast(self[i]).value;
                 }
-                stringified += "\n" + text;
+                stringified += (i === 0 ? "" : "\n") + text;
             } else {
                 return `Cannot stringify \`${
                     self[i].constructor.Name || self[i].Name

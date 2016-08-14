@@ -38,10 +38,18 @@ GLOBAL_SCOPE.Scope = stdlib;
 
 let STDIN;
 let resume;
+let printed = false;
+
+function print(text) {
+	process.stdout.write(text);
+	printed = true;
+}
 
 REPL.on('line', function(input) {
-
-	if (input === 'exit') REPL.close();
+	printed = false;
+	if (input === 'exit') {
+		REPL.close();
+	}
 	if (input === 'help') {
 		console.log(`
 Welcome to Cheddar!
@@ -75,30 +83,24 @@ The following commands are available:
 
 
 	if (!(Result instanceof tokenizer)) {
-		if ('({'.indexOf(Tokenizer.Code[Tokenizer.Index]) > -1) {
-			resume = true;
-			REPL.setPrompt("     ... ".yellow)
-			return REPL.prompt();
-		}
-		else {
-			resume = false;
-			REPL_ERROR(Result, "Syntax Error");
-			// Draw error pointer
-			console.error(HelperCaret(STDIN, Tokenizer.Index, true));
+		resume = false;
+		REPL_ERROR(Result, "Syntax Error");
+		// Draw error pointer
+		console.error(HelperCaret(STDIN, Tokenizer.Index, true));
 
-			REPL.setPrompt(PROMPT)
-			return REPL.prompt();
-		}
+		REPL.setPrompt(PROMPT)
+		return REPL.prompt();
 	}
 
 	resume = false;
 	REPL.setPrompt(PROMPT)
 
 	let Executor = new cheddar(Result, GLOBAL_SCOPE);
-	let Output = Executor.exec(process.stdout.write.bind(process.stdout));
+	let Output = Executor.exec({
+		PRINT: print
+	});
 
 	if (Output) {
-
 		if (typeof Output === "string") {
 			REPL_ERROR(Output, "Runtime Error");
 		}
@@ -107,31 +109,32 @@ The following commands are available:
 		}
 		else if (!Output) {
 			console.log(String(Output).red);
-		}
-		else if (Output && Output.constructor.Cast && (
-				Output.constructor.Operator.has('repr') ||
-				Output.constructor.Cast.has('String'))) {
+		} else if (!printed) {
+			if (Output && Output.Cast && (
+					Output.Operator.has('repr') ||
+					Output.Cast.has('String'))) {
 
-			let txt;
-			if (Output.constructor.Operator.has('repr')) {
-				txt = Output.constructor.Operator.get('repr')(null, Output).value;
+				let txt;
+				if (Output.Operator.has('repr')) {
+					txt = Output.Operator.get('repr')(null, Output).value;
+				}
+				else {
+					txt = Output.Cast.get('String')(Output).value;
+				}
+				console.log(txt.magenta);
+			}
+			else if (Output instanceof CheddarScope) {
+				console.log(`< Instance of "${Output.constructor.Name}" >`.cyan);
+			}
+			else if (Output.prototype instanceof CheddarScope) {
+				console.log(`< Class "${Output.Name}" >`.cyan);
+			}
+			else if (typeof Output === "symbol") {
+				console.log(Output.toString().red);
 			}
 			else {
-				txt = Output.constructor.Cast.get('String')(Output).value;
+				console.log(`< Unprintable object of class "${Output.constructor.name.magenta}" with literal value ${Output.magenta} >`.cyan);
 			}
-			console.log(txt.magenta);
-		}
-		else if (Output instanceof CheddarScope) {
-			console.log(`< Instance of "${Output.constructor.Name}" >`.cyan);
-		}
-		else if (Output.prototype instanceof CheddarScope) {
-			console.log(`< Class "${Output.Name}" >`.cyan);
-		}
-		else if (typeof Output === "symbol") {
-			console.log(Output.toString().red);
-		}
-		else {
-			console.log(`< Unprintable object of class "${Output.constructor.name.magenta}" with literal value ${Output.magenta} >`.cyan);
 		}
 	}
 
@@ -146,8 +149,7 @@ const CLOSING = () => {
 		resume = false;
 		return REPL.prompt();
 	}
-	REPL.pause();
+	REPL.close();
 };
 
 REPL.on('close', CLOSING);
-REPL.on('SIGINT', CLOSING);

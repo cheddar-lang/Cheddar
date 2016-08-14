@@ -1,9 +1,8 @@
 import NIL from './core/consts/nil';
 export default class Signal {
-    constructor(name, data) {
+    constructor(name, data = new NIL) {
         this.name = name;
         this.data = data;
-        this.res = new NIL;
     }
 
     is(sym) {
@@ -12,4 +11,5 @@ export default class Signal {
 
     // SIGNALS
     static BREAK = Symbol('SIGBREAK');
+    static RETURN = Symbol('RETURN');
 }

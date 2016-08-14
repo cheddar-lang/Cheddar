@@ -1,8 +1,15 @@
-node_modules
-coverage
+# Node modules
+/node_modules
+
+# junk
 npm-debug.log
+coverage
+
+# Left overs
+/src
 /cheddar
+
+# Local test files
 TODO.md
 /*.cdr
-.travis.yml
-/*.bat
+/*.bf

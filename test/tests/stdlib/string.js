@@ -115,4 +115,42 @@ describe('String.', function(){
             `cba`
         ))
     });
+
+    describe('chunk', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "1234".chunk(2)`,
+            `["12", "34"]`
+        ))
+    });
+
+    describe('head', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "1234".head(2)`,
+            `12`
+        ))
+    });
+
+    describe('index', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "1234".index('3')`,
+            `2`
+        ))
+    });
+
+    describe('sub', function(){
+        it('should work', TestCheddarFrom.Code(
+            `print "ab".sub(/b/, 'a')`,
+            `aa`
+        ))
+
+        it('should work globally', TestCheddarFrom.Code(
+            `print "abb".sub(/b/g, 'a')`,
+            `aaa`
+        ))
+
+        it('should work with function', TestCheddarFrom.Code(
+            `print "abb".sub(/b/g, -> 'a')`,
+            `aaa`
+        ))
+    });
 });

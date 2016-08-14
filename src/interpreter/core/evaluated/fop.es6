@@ -15,10 +15,7 @@ export default function(operator) {
         let RHS = input("b");
 
         let resp; // output / response
-        let opfunc = (
-            LHS.constructor.Operator ||
-            LHS.Operator
-        ).get(operator);
+        let opfunc = LHS.Operator.get(operator);
 
         if (opfunc) {
             if (RHS instanceof NIL)

@@ -1,24 +1,28 @@
 import CheddarVariable from './var';
 import CheddarScope from './scope';
 import CheddarClass from './class';
+import Signal from '../../signal';
 import NIL from '../consts/nil';
 
-// I have the details, planing, structure,
-// and design of functions all on my
-// whiteboard. I'll copy it here later
+import CheddarError from '../consts/err';
 
 export default class CheddarFunction extends CheddarClass {
     static Name = "Function";
 
-    constructor(args, body, preset = null) {
-        super();
+    constructor(args, body) {
+        super(null);
 
+        // List of arguments the
+        //  function is expecting
+        // Tokens handled by init
+        // #generateScope handles
+        //  the enforcement
         this.args = args;
-        this.body = body;
-        this.preset = preset;
 
-        // TODO: Redo optimizations lost due to git
-        this.cache = {};
+        // Function body, either a
+        //  native function or a
+        //  exec/eval pattern body
+        this.body = body;
     }
 
     // Initalizes from primitive arguments
@@ -50,7 +54,7 @@ export default class CheddarFunction extends CheddarClass {
                 props.Optional = arg[1] === '?';
                 props.Default = arg[2] ||
                     arg[1] &&
-                    arg[1].constructor.name === "CheddarExpressionToken" &&
+                    arg[1].constructor.name === "StatementExpression" &&
                     arg[1];
 
                 props.Type = nameargs.length > 1 && nameargs[1];
@@ -86,7 +90,6 @@ export default class CheddarFunction extends CheddarClass {
     }
 
     exec(input, self) {
-        debugger;
         let scope = this.generateScope(input, self);
 
         if (!(scope instanceof CheddarScope))
@@ -96,7 +99,8 @@ export default class CheddarFunction extends CheddarClass {
         if (typeof this.body === 'function') {
             return this.body(
                 scope,
-                name => (tmp = scope.accessor(name)) && tmp.Value
+                name => (tmp = scope.accessor(name)) && tmp.Value,
+                input
             );
         } else {
             let executor = require(
@@ -111,6 +115,12 @@ export default class CheddarFunction extends CheddarClass {
                 this.body._Tokens[0],
                 scope
             ).exec();
+
+            if (res instanceof Signal) {
+                if (res.is(Signal.RETURN)) {
+                    res = res.data;
+                }
+            }
 
             return res;
         }
@@ -129,6 +139,10 @@ export default class CheddarFunction extends CheddarClass {
 
         for (let i = 0; i < this.args.length; i++) {
             tmp = this.args[i][1];
+
+            // Pass if undefined
+            if (!tmp) continue;
+
             if (tmp.Splat === true) {
                 let splat = new CheddarArray();
                 splat.init(...input.slice(i));
@@ -140,16 +154,34 @@ export default class CheddarFunction extends CheddarClass {
                 break;
             }
             else if (input[i]) {
-                if (tmp.Type && !(input[i] instanceof tmp.Type)) {
-                    return `${this.Reference || "function"} expected arg @${i} to be ${
-                        tmp.Type.Name ||
-                        tmp.Type.constructor.Name ||
-                        "object"
-                    }, recieved ${
-                        input[i].Name ||
-                        input[i].constructor.Name ||
-                        "object"
-                    }`;
+                if (tmp.Type) {
+                    if (Array.isArray(tmp.Type)) {
+                        if (!tmp.Type.some(
+                            t => input[i] instanceof t
+                        )) {
+                            return `${this.Reference || "function"} expected arg @${i} to be any of: ${
+                                tmp.Type.map(t =>
+                                    tmp.Type.Name ||
+                                    tmp.Type.constructor.Name ||
+                                    "object"
+                                ).join(", ")
+                            }, recieved ${
+                                input[i].Name ||
+                                input[i].constructor.Name ||
+                                "object"
+                            }`;
+                        }
+                    } else if (!(input[i] instanceof tmp.Type)) {
+                        return `${this.Reference || "function"} expected arg @${i} to be ${
+                            tmp.Type.Name ||
+                            tmp.Type.constructor.Name ||
+                            "object"
+                        }, recieved ${
+                            input[i].Name ||
+                            input[i].constructor.Name ||
+                            "object"
+                        }`;
+                    }
                 }
                 args.setter(this.args[i][0], new CheddarVariable(
                     input[i]
@@ -162,6 +194,20 @@ export default class CheddarFunction extends CheddarClass {
                     ));
                 }
                 else if (tmp.Default) {
+                    // If it's an expression
+                    if (tmp.Default.constructor.name === "StatementExpression") {
+                        let res = new (require('../eval/eval'))(
+                            tmp.Default,
+                            args
+                        ).exec();
+
+                        if (typeof res === 'string') {
+                            return res;
+                        }
+
+                        tmp.Default = res;
+                    }
+
                     args.setter(this.args[i][0], new CheddarVariable(
                         tmp.Default
                     ));
@@ -174,4 +220,21 @@ export default class CheddarFunction extends CheddarClass {
 
         return args;
     }
+
+    Operator = new Map([...CheddarClass.Operator,
+        ['&', (self, value) => {
+            // Copy args to new function
+            let new_args = self.args.slice(1);
+            return new self.constructor(new_args, (a,b, args) => self.exec([value, ...args], null));
+        }],
+        ['+', (LHS, RHS) => {
+            if (RHS instanceof LHS.constructor) {
+                return new LHS.constructor([], function(a,b, rargs) {
+                    return LHS.exec([RHS.exec(rargs, null)], null);
+                });
+            } else {
+                return CheddarError.NO_OP_BEHAVIOR;
+            }
+        }]
+    ]);
 }

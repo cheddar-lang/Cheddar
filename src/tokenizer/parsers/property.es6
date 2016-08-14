@@ -15,12 +15,11 @@ let ARGLISTS = new Map([
 let MATCHBODY = new Set("([");
 
 export default class CheddarPropertyToken extends CheddarLexer {
-    exec() {
+    exec(Initial = false) {
         this.open(false);
 
         this.Type = PropertyType.Property;
 
-        let Initial = false;
         let NOVAR = false;
 
         // Plans for property parsing:
@@ -36,7 +35,6 @@ export default class CheddarPropertyToken extends CheddarLexer {
                 attempt = this.attempt(CheddarAnyLiteral, CheddarVariableToken, CheddarParenthesizedExpression);
             else
                 attempt = this.initParser(CheddarVariableToken).exec();
-
 
             if (NOVAR === true && attempt === CheddarError.EXIT_NOTFOUND) {
                 // Do nothing?

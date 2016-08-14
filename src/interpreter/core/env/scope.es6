@@ -15,7 +15,9 @@ import {RESERVED_KEYWORDS} from '../../../tokenizer/consts/ops';
 
 import CheddarVariable from './var';
 
-function enforceset(token, value) {
+import { DEFAULT_OP, DEFAULT_CAST } from './defaults';
+
+function enforceset(token, value, iv) {
     let self;
 
     if (this.has(token)) {
@@ -40,7 +42,7 @@ function enforceset(token, value) {
 
     return this.manage(
         token,
-        new CheddarVariable(value, {
+        iv ? value : new CheddarVariable(value, {
             Writeable: true,
             StrictType: self ? self.StrictType : null
         })
@@ -58,6 +60,10 @@ export default class CheddarScope {
         //  a seperate hash which is linked
         //  by overriding a properties get
         this.inheritanceChain = inherit;
+
+        if (!this.Scope) {
+            this.Scope = new Map();
+        }
     }
 
     // STATIC
@@ -108,8 +114,10 @@ export default class CheddarScope {
 
     }
 
-    static Cast = new Map();
-    static Operator = new Map();
+    Cast = DEFAULT_CAST;
+
+    static Operator = DEFAULT_OP;
+    Operator = DEFAULT_OP;
 
     static enforceset = enforceset;
     // Enforces typing
@@ -133,8 +141,7 @@ export default class CheddarScope {
     }
 
     setter(path, setter) {
+        //console.log(this.Scope);
         this.Scope.set(path, setter);
     }
 }
-
-CheddarScope.prototype.Scope = new Map();

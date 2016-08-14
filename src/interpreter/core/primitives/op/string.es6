@@ -20,10 +20,6 @@ export default new Map([
     //  implicitly cast
     ['+', (LHS, RHS) => {
 
-        //NOTE: IMPLICIT
-        //if (RHS.Cast.has(CheddarString))
-        //    RHS = RHS.Cast.get(CheddarString)();
-
         if (LHS && RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, LHS.value + RHS.value);
         else
@@ -87,7 +83,10 @@ export default new Map([
     ['*', (LHS, RHS) => {
 
         if (RHS.constructor.Name === "Number")
-            return HelperInit(LHS.constructor, LHS.value.repeat(RHS.value));
+            if (RHS.value < 0)
+                return HelperInit(LHS.constructor, "");
+            else
+                return HelperInit(LHS.constructor, LHS.value.repeat(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
 

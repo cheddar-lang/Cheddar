@@ -6,7 +6,7 @@ export default class NIL extends CheddarClass {
 
     init = () => true;
 
-    static Cast = new Map([...CheddarClass.Operator,
+    Cast = new Map([...CheddarClass.Operator,
         ['String', () => HelperInit(
             require('../primitives/String'),
             "nil"

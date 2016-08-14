@@ -29,14 +29,14 @@ export default class StatementFor extends CheddarLexer {
         let FOR = this.grammar(true,
             [
                 '(',
-                    [DECONSTRUCT, CheddarVariableToken],'in', CheddarExpressionToken,
+                    [StatementAssign, CheddarExpressionToken], ';',
+                    CheddarExpressionToken, ';',
+                    CheddarExpressionToken,
                 ')', codeblock
             ],
             [
                 '(',
-                    [StatementAssign, CheddarExpressionToken], ';',
-                    CheddarExpressionToken, ';',
-                    CheddarExpressionToken,
+                    [DECONSTRUCT, CheddarVariableToken], 'in', CheddarExpressionToken,
                 ')', codeblock
             ]
         );

@@ -62,7 +62,10 @@ export default new Map([
         if (RHS instanceof LHS.constructor)
             return HelperInit(LHS.constructor, 10, 0, LHS.value * RHS.value);
         else if (RHS.constructor.Name === "String")
-            return HelperInit(RHS.constructor, RHS.value.repeat(LHS.value));
+            if (LHS.value < 0)
+                return HelperInit(RHS.constructor, RHS.value.repeat(LHS.value));
+            else
+                return HelperInit(RHS.constructor, RHS.value.repeat(LHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -169,7 +172,10 @@ export default new Map([
         if (LHS && RHS instanceof LHS.constructor)
             return HelperInit(CheddarArray, ...range(LHS.value, RHS.value));
         else if(LHS === null)
-            return HelperInit(CheddarArray, ...range(0, RHS.value - 1));
+            if (RHS.value === 0)
+                return HelperInit(CheddarArray);
+            else
+                return HelperInit(CheddarArray, ...range(0, RHS.value - Math.sign(RHS.value)));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -254,10 +260,14 @@ export default new Map([
 
     // == Testing Operators ==
     ['@"', (LHS, RHS) => {
-        if(LHS === null)    // monadic
+        if (LHS === null) {
             return HelperInit(CheddarString, String.fromCharCode(RHS.value));
-        else if(RHS instanceof LHS.constructor)
-            return HelperInit(CheddarString, [...Array(RHS.value - LHS.value)].map((_, l) => l + LHS.value).map(e => String.fromCharCode(e)).join(""));
+        } else if (RHS instanceof LHS.constructor) {
+            return HelperInit(CheddarString,
+                range(LHS.value, RHS.value).map(
+                    l => String.fromCharCode(l.value)
+                ).join(""));
+        }
     }]
 ]);
 

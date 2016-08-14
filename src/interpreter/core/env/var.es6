@@ -26,9 +26,4 @@ export default class CheddarVariable {
         this.setter = setter;
     }
 
-    Mutate(nval) {
-        if (this.Writeable)
-            this.Value = nval;
-    }
-
 }

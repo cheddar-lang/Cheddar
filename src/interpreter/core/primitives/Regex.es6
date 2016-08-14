@@ -8,29 +8,39 @@ export default class CheddarRegex extends CheddarClass {
     static Name = "Regex";
 
     init(source, flags) {
-        if (!source)
-            return "Regex source not provided";
-        else if (source.constructor.Name === 'String')
-            source = source.value;
+        if (source instanceof XRegExp || source instanceof RegExp) {
+            this.value = source;
+            this.flags = source.xregexp.flags;
+        } else {
+            if (flags.indexOf("c") > -1) {
+                source = XRegExp.escape(source);
+                flags = flags.replace(/c/g, "");
+            }
 
-        if (!flags)
-            flags = "";
-        else if (flags.constructor.Name === 'String')
-            flags = flags.value;
+            if (!source)
+                return "Regex source not provided";
+            else if (source.constructor.Name === 'String')
+                source = source.value;
 
-        if (typeof source !== 'string' || typeof flags !== 'string')
-            return "Regex source and flags must be string. Flags are optional";
+            if (!flags)
+                flags = "";
+            else if (flags.constructor.Name === 'String')
+                flags = flags.value;
 
-        try {
-            this.value = XRegExp(source, flags);
-        } catch(e) {
-            return e.message || "error during regex instantiation";
+            if (typeof source !== 'string' || typeof flags !== 'string')
+                return "Regex source and flags must be string. Flags are optional";
+
+            try {
+                this.value = XRegExp(source, flags);
+            } catch(e) {
+                return e.message || "error during regex instantiation";
+            }
+
+            this.flags = this.value.xregexp.flags;
         }
-        this.source = source;
-        this.flags = this.value.xregexp.flags;
         return true;
     }
 
-    static Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator])
-    static Cast = BehaviorCast;
+    Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator])
+    Cast = BehaviorCast;
 }

@@ -125,9 +125,16 @@ CheddarExpressionToken.prototype.exec = function(DISALLOW_EMPTY = false, ALLOW_T
 
     /** == Ternary Handling == **/
     if (ALLOW_TERNARY) {
+        // Store index in case ternary is not found
+        let current_index = this.Index;
+
         // Lookahead for ternary `?`
         if (!this.lookAhead("?")) {
             // If it doesn't exist, just exit
+            // Set back to last safe index
+            this.Index = current_index;
+
+            // Backtrack single whitespace
             return expression;
         }
         // Increase index past the `?`

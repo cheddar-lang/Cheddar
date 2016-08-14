@@ -62,4 +62,18 @@ describe('Math', function(){
             `true`
         ))
     });
+
+    describe('rand', function(){
+        it('should work', TestCheddarFrom.Code(
+            `let n = Math.rand(); print n < 1 && n >= 0`,
+            `true`
+        ))
+    });
+
+    describe('factor', function(){
+        it('should work with 64', TestCheddarFrom.Code(
+            `print Math.factor(64)`,
+            `[1, 2, 4, 8, 16, 32, 64]`
+        ))
+    });
 });

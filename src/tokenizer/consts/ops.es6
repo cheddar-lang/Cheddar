@@ -11,14 +11,14 @@ export const RESERVED_KEYWORDS = new Set([
     'log',
     'has',
     'floor', 'ceil', 'round',
-    'len', 'reverse', 'abs', 'repr',
+    'abs', 'repr',
     'sign', 'print',
-    'and', 'or', 'xor',
-    'what', 'is',
+    'what', 'is', 'actually',
+    'as',
     // States
     'var', 'const',
     'if', 'for', 'while',
-    'break',
+    'break', 'return',
     'func', 'class',
     // Literals
     'true', 'false', 'nil'
@@ -31,12 +31,11 @@ export const OP = [
 '&', '|', '^',
 '&&', '||',
 '!=', '=', '+=', '-=', '*=', '/=', '^=', '%=', '&=', '|=', '<<', '>>', '<<=', '>>=',
-'|>', '::',
+'|>', '::', 'as',
 '@"', 'has',
-'and', 'or', 'xor',
 'log', 'sign',
 'root',
-'is'
+'is', 'actually'
 ].sort((a, b) => b.length - a.length);
 
 // Unary operators
@@ -48,15 +47,13 @@ export const UOP = [
 'sin', 'cos', 'tan',
 'acos', 'asin', 'atan',
 'floor', 'ceil', 'round',
-'len', 'reverse', 'abs', 'repr',
+'abs', 'repr',
 'print',
 'log', 'sign',
 '@"',
 'what', 'is'
 ];
 
-// TODO: how will the user modify this? no idea
-//TODO: fix precedence
 export const UNARY_PRECEDENCE = new Map([
     ['!', 20000],
     ['-', 20000],
@@ -77,9 +74,7 @@ export const UNARY_PRECEDENCE = new Map([
     ['floor', 15000],
     ['ceil', 15000],
     ['abs', 15000],
-    ['len', 15000],
     ['repr', 15000],
-    ['reverse', 15000],
     ['round', 15000],
     ['sign', 15000],
     ['print', 0]
@@ -88,8 +83,11 @@ export const UNARY_PRECEDENCE = new Map([
 export const PRECEDENCE = new Map([
     ['::', 16000],
     ['@"', 15000],
+    ['|>', 15000],
+    ['as', 14000],
     ['log', 14000],
     ['is', 14000],
+    ['actually', 14000],
     ['root', 14000],
     ['*', 13000],
     ['/', 13000],
@@ -110,14 +108,14 @@ export const PRECEDENCE = new Map([
 
     ['&', 8000],
     ['^', 7000],
-    ['xor', 7000],
     ['|', 6000],
-    ['and', 5000],
-    ['or', 4000],
 
     ['&&', 2001],
-    ['||', 2000],
+    ['||', 2000]
+]);
 
+export const RA_PRECEDENCE = new Map([
+    ['**', 14000],
     ['+=', 1000],
     ['-=', 1000],
     ['*=', 1000],
@@ -127,12 +125,8 @@ export const PRECEDENCE = new Map([
     ['|=', 1000],
     ['^=', 1000],
     ['<<=', 1000],
-    ['>>=', 1000]
-]);
-
-export const RA_PRECEDENCE = new Map([
-    ['**', 14000],
-    ['=', 1000]
+    ['>>=', 1000],
+    ['=', 1000],
 ]);
 
 export const TYPE = {

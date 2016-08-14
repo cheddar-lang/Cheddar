@@ -1,0 +1,4 @@
+instrumentation:
+  root: ./src/
+  excludes: ["**/local_modules/**"]
+  include-all-sources: true
