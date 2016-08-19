@@ -6,8 +6,8 @@
 
 <p align="center">
   <a href="https://travis-ci.org/cheddar-lang/Cheddar"><img alt="Travis Status" src="https://travis-ci.org/cheddar-lang/Cheddar.svg?branch=master"></a>
-  <a href='https://coveralls.io/github/cheddar-lang/Cheddar?branch=tests'><img src='https://coveralls.io/repos/github/cheddar-lang/Cheddar/badge.svg?branch=tests' alt='Coverage Status' /></a>
-  <a href="https://codecov.io/gh/cheddar-lang/Cheddar"><img src="https://codecov.io/gh/cheddar-lang/Cheddar/branch/master/graph/badge.svg" alt="Codecov" /></a>
+  <a href='https://coveralls.io/github/cheddar-lang/Cheddar?branch=develop'><img src='https://coveralls.io/repos/github/cheddar-lang/Cheddar/badge.svg?branch=develop' alt='Coverage Status' /></a>
+  <a href="https://codecov.io/gh/cheddar-lang/Cheddar"><img src="https://codecov.io/gh/cheddar-lang/Cheddar/branch/develop/graph/badge.svg" alt="Codecov" /></a>
   <a href="https://gitter.im/cheddar-lang/Cheddar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/cheddar-lang/Cheddar" src="https://badges.gitter.im/cheddar-lang/Cheddar.svg"></a>
   <a href="https://www.npmjs.com/package/cheddar-lang"><img alt='npm' src="https://img.shields.io/npm/dt/cheddar-lang.svg"></a>
   <img src='https://david-dm.org/cheddar-lang/Cheddar.svg' alt='Dependency Status' />
