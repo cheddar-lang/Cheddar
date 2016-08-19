@@ -34,7 +34,7 @@ echo
 echo "Copying to ~/.Cheddar..."
 cp -r "$(dirname "$cpath")" ~/.Cheddar/
 echo "Cleaning up..."
-bash "$cpath/cleanup" ~/.Cheddar
+sudo bash "$cpath/cleanup" ~/.Cheddar
 echo "Aliasing Cheddar..."
 echo "alias cheddar='~/.Cheddar/dist/cli/cheddar'" >> "$1"
 echo

@@ -27,5 +27,5 @@ set -e
 sudo ln -s "$($rp "$cpath/../dist/cli/cheddar")" "$1/bin/cheddar"
 echo
 echo "Cleaning up..."
-bash "$($rp "$cpath/cleanup")" "$1/share/cheddar"
+sudo bash "$($rp "$cpath/cleanup")" "$1/share/cheddar"
 echo "Done."

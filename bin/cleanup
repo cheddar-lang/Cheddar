@@ -1,5 +1,9 @@
-sudo rm -rf "$1/src/"
-sudo rm -rf "$1/coverage/"
-sudo rm -rf "$1/misc/"
-sudo rm -rf "$1/test/"
-sudo rm -rf "$1/bin/"
+if [ -z "$1" ]; then
+    >&2 echo "No location provided to cleanup"
+    exit 1 
+fi
+rm -rf "$1/src/"
+rm -rf "$1/coverage/"
+rm -rf "$1/misc/"
+rm -rf "$1/test/"
+rm -rf "$1/bin/"
