@@ -14,5 +14,10 @@ describe('Functionized Operators', function(){
             `print (+)(1, 2)`,
             '3'
         ))
+
+        it('should work with unary ops', TestCheddarFrom.Code(
+            `(print)(3)`,
+            '3'
+        ))
     })
 });

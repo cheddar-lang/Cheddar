@@ -23,10 +23,21 @@ export default class CheddarFunction extends CheddarClass {
         //  native function or a
         //  exec/eval pattern body
         this.body = body;
+
+        // Does the function have a self-alias?
+        this.selfRef = null;
     }
 
     // Initalizes from primitive arguments
-    init(args, body) {
+    init(args, selfRef, body) {
+        if (!body) {
+            body = selfRef;
+            selfRef = null;
+        } else {
+            selfRef = selfRef._Tokens[0];
+        }
+
+
         // Move the scope argument to correct prop
         this.inherited = this.args;
         this.Reference = this.body;
@@ -85,6 +96,7 @@ export default class CheddarFunction extends CheddarClass {
 
         this.args = args;
         this.body = body;
+        this.selfRef = selfRef;
 
         return true;
     }
@@ -132,10 +144,15 @@ export default class CheddarFunction extends CheddarClass {
         let CheddarArray = require('../primitives/Array');
         let tmp;
 
-        if (self)
+        if (self) {
             args.setter("self", new CheddarVariable(self, {
                 Writeable: false
             }));
+        }
+
+        if (this.selfRef) {
+            args.setter(this.selfRef, new CheddarVariable(this, {}))
+        }
 
         for (let i = 0; i < this.args.length; i++) {
             tmp = this.args[i][1];

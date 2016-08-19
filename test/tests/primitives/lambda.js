@@ -29,6 +29,11 @@ describe('Lambda', function(){
             `(a, b = 1) -> a + b`,
             ''
         ))
+
+        it('should work with self references', TestCheddarFrom.Code(
+            `n? g -> g`,
+            ''
+        ))
     })
 
     describe('evaluation', function(){
@@ -50,6 +55,11 @@ describe('Lambda', function(){
         it('should null unpassed arguments', TestCheddarFrom.Code(
             'print ((a?) -> a)()',
             'nil'
+        ))
+
+        it('should set self references', TestCheddarFrom.Code(
+            'print ( n f -> n < 2 ? 1 : f(n - 1) + f(n - 2) )(5)',
+            '8'
         ))
     })
 });

@@ -1,4 +1,5 @@
 import CheddarExpressionToken from '../states/expr';
+import CheddarVariableToken from '../literals/var';
 import CheddarCodeblock from '../patterns/block';
 import CheddarArrayToken from './array';
 import CheddarArgumentToken from './args/argument';
@@ -21,7 +22,7 @@ export default class CheddarFunctionToken extends CheddarPrimitive {
          */
 
         let grammar = this.grammar(true,
-            [[A, CheddarArgumentToken, ""], "->", [CheddarCodeblock, ExpressionToken]]
+            [[A, CheddarArgumentToken, ""], [ CheddarVariableToken ], "->", [CheddarCodeblock, ExpressionToken]]
         );
 
         return grammar;
