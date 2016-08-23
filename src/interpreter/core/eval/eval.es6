@@ -89,6 +89,20 @@ export default class CheddarEval extends CheddarCallStack {
             TARGET,
             REFERENCE = null;
 
+
+
+        // Helper functions
+        function run_op(LHS, RHS) {
+            if (NAME.has(TARGET)) {
+                OPERATOR = NAME.get(TARGET)(LHS, RHS);
+            } else {
+                OPERATOR = CheddarError.NO_OP_BEHAVIOR;
+            }
+        }
+
+
+        // Expression source
+
         // Handle Operator
         if (Operation instanceof CheddarOperatorToken) {
 
@@ -129,7 +143,7 @@ export default class CheddarEval extends CheddarCallStack {
                 // Binary operator. DATA is LHS, TOKEN is RHS
                 DATA = this.shift(); // Get the other arg
 
-                NAME = DATA.Operator;
+                NAME = DATA.Operator; // Get the list of operators DATA has
 
                 TARGET = Operation.Tokens[0]; // The operator
 
@@ -142,10 +156,11 @@ export default class CheddarEval extends CheddarCallStack {
                     TARGET = TARGET.slice(0,-1);
                 }
 
-                if (NAME.has(TARGET)) {
-                    OPERATOR = NAME.get(TARGET)(DATA, TOKEN);
-                } else {
-                    OPERATOR = CheddarError.NO_OP_BEHAVIOR;
+                run_op(DATA, TOKEN); // Run the operator
+
+                if (OPERATOR === CheddarError.NO_OP_BEHAVIOR) {
+                    NAME = TOKEN.RHS_Operator;
+                    run_op(TOKEN, DATA); // Run the operator again
                 }
             }
 

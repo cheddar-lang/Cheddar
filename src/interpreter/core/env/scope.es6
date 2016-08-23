@@ -15,7 +15,7 @@ import {RESERVED_KEYWORDS} from '../../../tokenizer/consts/ops';
 
 import CheddarVariable from './var';
 
-import { DEFAULT_OP, DEFAULT_CAST } from './defaults';
+import { DEFAULT_OP, DEFAULT_RHS_OP, DEFAULT_CAST } from './defaults';
 
 function enforceset(token, value, iv) {
     let self;
@@ -116,11 +116,14 @@ export default class CheddarScope {
 
     Cast = DEFAULT_CAST;
 
+    // Enforces typing
     static Operator = DEFAULT_OP;
     Operator = DEFAULT_OP;
 
+    static RHS_Operator = DEFAULT_RHS_OP;
+    RHS_Operator = DEFAULT_RHS_OP;
+
     static enforceset = enforceset;
-    // Enforces typing
     enforceset = enforceset;
 
     // Property accessors

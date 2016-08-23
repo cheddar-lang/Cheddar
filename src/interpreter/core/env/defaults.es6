@@ -163,3 +163,5 @@ export const DEFAULT_CAST = new Map([
         return HelperInit(bool, self);
     }]
 ]);
+
+export const DEFAULT_RHS_OP = new Map();

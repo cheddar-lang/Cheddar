@@ -242,7 +242,7 @@ export default class CheddarFunction extends CheddarClass {
         ['&', (self, value) => {
             // Copy args to new function
             let new_args = self.args.slice(1);
-            return new self.constructor(new_args, (a,b, args) => self.exec([value, ...args], null));
+            return new self.constructor(new_args, (a,b, args) => self.exec([...args, value], null));
         }],
         ['+', (LHS, RHS) => {
             if (RHS instanceof LHS.constructor) {
@@ -254,4 +254,12 @@ export default class CheddarFunction extends CheddarClass {
             }
         }]
     ]);
+
+    RHS_Operator = new Map([...CheddarClass.Operator,
+        ['&', (self, value) => {
+            // Copy args to new function
+            let new_args = self.args.slice(1);
+            return new self.constructor(new_args, (a,b, args) => self.exec([value, ...args], null));
+        }]
+    ])
 }
