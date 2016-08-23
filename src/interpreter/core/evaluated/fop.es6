@@ -3,8 +3,11 @@ import CheddarFunction from '../env/func';
 import CheddarError from '../consts/err';
 import CheddarClass from '../env/class';
 import CheddarErrorDesc from '../consts/err_msg';
+import { UOP, OP } from '../../../tokenizer/consts/ops';
 
-export default function(operator) {
+const UNARY_ONLY = UOP.filter(i => OP.indexOf(i) === -1);
+
+export default function(operator, force_unary) {
     return new CheddarFunction([
         ["a", {}],
         ["b", {
@@ -18,7 +21,7 @@ export default function(operator) {
         let opfunc = LHS.Operator.get(operator);
 
         if (opfunc) {
-            if (RHS instanceof NIL)
+            if (force_unary || RHS instanceof NIL || UNARY_ONLY.indexOf(operator) > -1)
                 resp = opfunc(null, LHS);
             else
                 resp = opfunc(LHS, RHS);
