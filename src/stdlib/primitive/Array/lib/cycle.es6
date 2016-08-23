@@ -6,7 +6,8 @@ export default (api) => ["cycle", api.var(new api.func(
         }]
     ],
     function(scope, input) {
-        let self = input("self").value;
+        let _self = input("self"),
+            self  = _self.value;
 
         if (self.length < 2) {
             return new api.nil;
@@ -30,6 +31,6 @@ export default (api) => ["cycle", api.var(new api.func(
             }
         }
 
-        return new api.nil;
+        return _self;
     }
 ))];
