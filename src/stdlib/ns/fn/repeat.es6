@@ -1,7 +1,7 @@
 export default function repeat(cheddar) {
     return new cheddar.func(
         [
-            ["f", {}],
+            ["f", { Type: cheddar.func }],
             ["n", {}]
         ],
         function(scope, input){
@@ -13,7 +13,7 @@ export default function repeat(cheddar) {
                     let args = k("args");
                     if(n === 0)
                         return args;
-                    
+
                     args = args.value;
                     let res = f.exec(args, null);
                     while(--n > 0){

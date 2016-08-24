@@ -1,9 +1,9 @@
 export default function fork(cheddar) {
     return new cheddar.func(
         [
-            ["f", {}],
-            ["g", {}],
-            ["h", {}]
+            ["f", { Type: cheddar.func }],
+            ["g", { Type: cheddar.func }],
+            ["h", { Type: cheddar.func }]
         ],
         function(scope, input){
             return new cheddar.func(

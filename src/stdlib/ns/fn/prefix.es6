@@ -1,6 +1,6 @@
 export default function prefix(cheddar) {
     return new cheddar.func(
-        [["f", {}]],
+        [["f", { Type: cheddar.func }]],
         function(scope, k){
             return new cheddar.func(
                 [["array", {}]],

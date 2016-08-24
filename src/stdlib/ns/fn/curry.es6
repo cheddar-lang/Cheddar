@@ -1,7 +1,7 @@
 export default function curry(cheddar) {
     return new cheddar.func(
         [
-            ["f", {}],
+            ["f", { Type: cheddar.func }],
             ["a", {}]
         ],
         function(scope, input){

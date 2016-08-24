@@ -1,7 +1,7 @@
 export default function insert(cheddar) {
     return new cheddar.func(
         [
-            ["f", {}],
+            ["f", { Type: cheddar.func }],
         ],
         function(scope, input){
             return new cheddar.func(

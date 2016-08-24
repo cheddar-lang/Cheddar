@@ -1,10 +1,13 @@
 export default function hook(cheddar) {
     return new cheddar.func(
         [
-            ["f", {}],
-            ["g", {}]
+            ["f", { Type: cheddar.func }],
+            ["g", { Type: cheddar.func }]
         ],
-        function(scope, input){
+        function(scope, input, args){
+            if(args.length !== 2)
+                return `Expected 2 arguments, received ${args.length}.`;
+
             return new cheddar.func(
                 [["args", {Splat: true}]],
                 function(s, k){
@@ -15,7 +18,7 @@ export default function hook(cheddar) {
 
                     let f = input("f");
                     let g = input("g");
-                    
+
                     return f.exec([args[0], g.exec([args.length === 1 ? args[0] : args[1]], null)], null);
                 }
             )
