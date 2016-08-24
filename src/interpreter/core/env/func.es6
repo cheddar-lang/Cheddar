@@ -244,6 +244,18 @@ export default class CheddarFunction extends CheddarClass {
             let new_args = self.args.slice(1);
             return new self.constructor(new_args, (a,b, args) => self.exec([...args, value], null));
         }],
+        ['~', (l, self) => {
+            if (l !== null) {
+                return CheddarError.NO_OP_BEHAVIOR
+            }
+
+            return new (self.constructor)(
+                [["a", {}]],
+                function(s, k){
+                    return self.exec(Array(self.args.length).fill(k("a")), null);
+                }
+            )
+        }],
         ['+', (LHS, RHS) => {
             if (RHS instanceof LHS.constructor) {
                 return new LHS.constructor([], function(a,b, rargs) {

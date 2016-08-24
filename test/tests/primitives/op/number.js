@@ -122,6 +122,15 @@ describe('Numbers', function(){
 //            'print String::(<=)'
 //        ))
     })
+    describe('bitwise not', function(){
+        it('should work', TestCheddarFrom.Code(
+            'print ~1',
+            '-2'
+        ))
+//        it('should break', TestCheddarFrom.Code(
+//            'print String::(&)'
+//        ))
+    })
     describe('bitwise and', function(){
         it('should work', TestCheddarFrom.Code(
             'print "4&4=" + String::(4 & 4)',

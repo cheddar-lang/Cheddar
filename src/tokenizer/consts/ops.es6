@@ -42,6 +42,7 @@ export const OP = [
 export const UOP = [
 '-', '+',
 '!',
+'~',
 '|>',
 'sqrt', 'cbrt',
 'sin', 'cos', 'tan',
@@ -61,6 +62,7 @@ export const UNARY_PRECEDENCE = new Map([
     ['|>', 18000],
     ['@"', 17000],
     ['what', 16000],
+    ['~', 15000],
     ['is', 15000],
     ['sqrt', 15000],
     ['cbrt', 15000],

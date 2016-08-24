@@ -166,6 +166,13 @@ export default new Map([
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
+    ['~', (LHS, RHS) => {
+        if (LHS === null)
+            return HelperInit(RHS.constructor, 10, 0, ~RHS.value);
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
     // Special Operators
     ['|>', (LHS, RHS) => {
         let CheddarArray = require("../Array");
