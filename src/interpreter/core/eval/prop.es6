@@ -145,6 +145,10 @@ export default function eval_prop(prop, scope, evaluate) {
                 DATA,
                 REFERENCE
             );
+
+            if (typeof OPERATOR === 'string') {
+                return OPERATOR;
+            }
         }
         // if it is a class call, initalize it
         // we know this if the marker is a {
