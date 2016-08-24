@@ -1,4 +1,4 @@
 instrumentation:
-  root: ./src/
-  excludes: ["**/local_modules/**"]
+  root: src
+  excludes: ["**/local_modules/**", "**/cli/**", "**/helpers/**"]
   include-all-sources: true
