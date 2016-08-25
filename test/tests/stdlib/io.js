@@ -91,4 +91,20 @@ describe('IO', function() {
         ))
     });
 
+    describe('read', function() {
+        it('should work', TestCheddarFrom.Code(
+            `print IO.read("./test/files/file")`,
+            `Hello, World!`
+        ))
+    });
+
+    describe('open', function() {
+        it('should work', TestCheddarFrom.Code(
+            `let fd = IO.open("./test/files/chr", "r");
+            print String::fd.read(1);
+            fd.close()`,
+            `a`
+        ))
+    });
+
 });
