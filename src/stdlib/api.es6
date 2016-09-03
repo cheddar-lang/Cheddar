@@ -15,14 +15,6 @@ import CheddarClass from '../interpreter/core/env/class';
 
 import HelperInit from '../helpers/init';
 
-CheddarClass.merge = {
-    accessor(override) {
-        return function(target) {
-            this.Scope.get(target) || override(target) || null;
-        };
-    }
-};
-
 var API = {
     string: CheddarString,
     symbol: CheddarSymbol,
@@ -78,7 +70,13 @@ var API = {
 
     variable: CheddarVariable,
     class: CheddarClass,
-    scope: CheddarScope
+    scope: CheddarScope,
+
+    merge: {
+        Operator(op) {
+            return new Map([...CheddarClass, ...op]);
+        }
+    }
 };
 
 export default API;
