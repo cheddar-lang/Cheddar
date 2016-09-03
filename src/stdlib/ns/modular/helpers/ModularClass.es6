@@ -4,9 +4,9 @@ export default function(cheddar){
 
     return importInstance = class ModularSystem extends cheddar.class {
         init(min, max){
-            this.setter("min", min);
+            this.setter("min", cheddar.var(min));
             this.accessor("min");
-            this.setter("max", max);
+            this.setter("max", cheddar.var(max));
             this.accessor("max");
         }
 
@@ -18,11 +18,11 @@ export default function(cheddar){
                 ], function(scope, input){
                     let self = input("self"),
                         value = input("entry"),
-                        min = self.accessor("min"),
-                        max = self.accessor("max");
+                        min = self.accessor("min").Value,
+                        max = self.accessor("max").Value;
 
-                    while(value < this.min) value += this.max;
-                    while(value >= this.max) value -= this.max;
+                    while(value < min) value += max;
+                    while(value >= max) value -= max;
                     return value;
                 })
             )]
