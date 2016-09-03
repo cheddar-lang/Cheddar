@@ -17,13 +17,14 @@ export default function(cheddar){
                     ["entry", { type: cheddar.number }]
                 ], function(scope, input){
                     let self = input("self"),
-                        value = input("entry"),
-                        min = self.accessor("min").Value,
-                        max = self.accessor("max").Value;
+                        value = input("entry").value,
+                        min = self.accessor("min").Value.value,
+                        max = self.accessor("max").Value.value;
 
                     while(value < min) value += max;
                     while(value >= max) value -= max;
-                    return value;
+
+                    return cheddar.init(cheddar.number, 10, 0, value);
                 })
             )]
         ]);
