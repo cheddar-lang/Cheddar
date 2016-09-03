@@ -6,7 +6,7 @@ export default function(cheddar){
             ["min", { type: cheddar.number }],
             ["max", { type: cheddar.number }]
         ],
-        function(cheddar, input){
+        function(scope, input){
             return new (Modular(cheddar))(
                 input("min"),
                 input("max")

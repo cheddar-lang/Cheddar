@@ -1,7 +1,5 @@
 let importInstance;
 export default function(cheddar){
-    console.log("from ModularClass.es6")
-    console.log(cheddar);
     if(importInstance) return importInstance;
 
     return importInstance = class ModularSystem extends cheddar.class {
