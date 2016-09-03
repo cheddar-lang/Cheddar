@@ -18,6 +18,7 @@ STDLIB.Item("cheddar");
 
 STDLIB.Item("Math");
 STDLIB.Item("Rational");
+STDLIB.Item("modular");
 
 // Interface Libraries
 STDLIB.Item("Encoding");
