@@ -31,7 +31,7 @@ export const DEFAULT_OP = new Map([
 
     // + is no-op by default
     ['+', (_, self) => {
-        if (_) return CheddarError.NO_OP_BEHAVIOR;
+        if (_ !== null) return CheddarError.NO_OP_BEHAVIOR;
 
         // Destroy the references
         delete self.scope

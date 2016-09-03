@@ -129,7 +129,9 @@ export default class CheddarLexer {
             tokens,
             i,
             j,
-            WDIFF;
+            WDIFF,
+            LWMIN, // last whitespcae lower bound
+            LWMAX; // last whitespcae upper bound
 
         main: for (i = 0; i < defs.length; i++) {
 
@@ -144,6 +146,8 @@ export default class CheddarLexer {
                     this.jumpWhite();
                     index = this.Index;
                     WDIFF = this.Index - deltaIndex > 0;
+                    LWMIN = deltaIndex;
+                    LWMAX = this.Index;
                     this.Index = oldIndex;
                 }
 
@@ -306,6 +310,10 @@ export default class CheddarLexer {
 
             this.Tokens = tokens;
             this.Index = index;
+
+            if (LWMAX  === this.Index && LWMIN < LWMAX) {
+                this.Index = LWMIN;
+            }
 
             return this.close();
         }

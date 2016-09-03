@@ -25,6 +25,8 @@ function to_value(variable, parent, name) {
     }
 }
 
+const EVALUATED_ACCESSOR_NAME = 'eval_accessor';
+
 // Evaluates a property
 export default function eval_prop(prop, scope, evaluate) {
     // If it's a property
@@ -38,6 +40,7 @@ export default function eval_prop(prop, scope, evaluate) {
     let TOKEN;
     let REFERENCE;
     let TARGET;
+    let EVALUATED;
 
 
     // Is a primitive
@@ -213,20 +216,10 @@ export default function eval_prop(prop, scope, evaluate) {
                     return res;
                 }
 
-                // The response should be:
-                //  A) number
-                //  B) string
+                // It was an evaluated accessor
+                EVALUATED = true;
 
-                if (res.constructor.Name === "String" || (
-                        res.constructor.Name === "Number" &&
-                        Number.isInteger(res.value)
-                    )) {
-                    TARGET = res.value + "";
-                }
-                else {
-                    return `Evaluated accessors must evaluate to a string or integer`;
-                }
-
+                TARGET = res;
             }
             else {
                 TARGET = Operation._Tokens[i]._Tokens[0];
@@ -234,16 +227,39 @@ export default function eval_prop(prop, scope, evaluate) {
 
             // Else it is a property
 
-            // Attempt to access the accessor
-            // then use the accessor to get the token
-            if (!OPERATOR.accessor || !(DATA = OPERATOR.accessor(TARGET))) {
-                // ERROR INTEGRATE
-                return `${
-                            NAME
-                        } has no property ${
-                            TARGET
-                        }`;
+            // Determine the accessor type
+            if (EVALUATED) {
+                EVALUATED = 'eval_accessor';
+            } else {
+                EVALUATED = 'accessor';
             }
+
+            // Attempt to access the accessor
+            if (!OPERATOR[EVALUATED]) {
+                return `${ NAME } cannot be${
+                    EVALUATED === EVALUATED_ACCESSOR_NAME ? ' dynamically' : ''
+                } accessed.`;
+            }
+
+            // then use the accessor to get the token
+            if (!(DATA = OPERATOR[EVALUATED](TARGET))) {
+                if (EVALUATED !== EVALUATED_ACCESSOR_NAME) {
+                    // ERROR INTEGRATE
+                    return `${
+                                NAME
+                            } has no property ${
+                                TARGET
+                            }`;
+                }
+            }
+
+            // Handle errors
+            if (typeof DATA === 'string') {
+                return DATA;
+            }
+
+            // Reset the evaluated property
+            EVALUATED = false;
 
             // Set the previous item to the REFERENCE
             REFERENCE = OPERATOR;

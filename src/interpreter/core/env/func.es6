@@ -4,6 +4,8 @@ import CheddarClass from './class';
 import Signal from '../../signal';
 import NIL from '../consts/nil';
 
+import HelperInit from '../../../helpers/init';
+
 import CheddarError from '../consts/err';
 
 export default class CheddarFunction extends CheddarClass {
@@ -273,5 +275,15 @@ export default class CheddarFunction extends CheddarClass {
             let new_args = self.args.slice(1);
             return new self.constructor(new_args, (a,b, args) => self.exec([value, ...args], null));
         }]
+    ])
+
+    Scope = new Map([
+        ['len', new CheddarVariable(null, {
+            Writeable: false,
+            getter: (self) => new CheddarFunction([], (_, input) => {
+                let CheddarNumber = require('../primitives/Number');
+                return HelperInit(CheddarNumber, 10, 0, input("self").args.length);
+            })
+        })]
     ])
 }

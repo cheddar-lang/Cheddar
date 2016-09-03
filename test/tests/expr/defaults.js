@@ -30,6 +30,13 @@ describe('Equality', function() {
         ))
     })
 
+    describe('+', function() {
+        it('should work as a no-op', TestCheddarFrom.Code(
+            `print +1`,
+            '1'
+        ))
+    })
+
     describe('!', function() {
         it('not 0 is false', TestCheddarFrom.Code(
             `print !1`,
