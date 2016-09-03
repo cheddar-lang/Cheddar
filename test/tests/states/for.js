@@ -16,9 +16,10 @@ describe('For', function(){
 
     it('break should work', TestCheddarFrom.Code(
         `for (var i = 0; i < 5; i += 1) {
-            if (i < 3) {
-                print i
-            }
+            if (i > 2) {
+                break
+            };
+            print i
         }`,
         '0\n1\n2'
     ))

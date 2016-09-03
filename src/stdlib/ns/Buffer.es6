@@ -19,13 +19,13 @@ export default function(cheddar) {
             this.value = bytestream;
         }
 
-        accessor = cheddar.class.merge.accessor(function(pointer) {
+/*        accessor = cheddar.class.merge.accessor(function(pointer) {
             return Number.isInteger(+pointer) ?
                 cheddar.var(this.value[
                     pointer < 0 ? this.value.length - pointer : pointer
                 ] || new cheddar.nil) :
                 false;
-        })
+        })*/
 
         Cast = new Map([
             ["Array", (self) => {

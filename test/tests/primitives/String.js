@@ -21,5 +21,10 @@ describe('String', function(){
             'print "ABC"[0]',
             'A'
         ))
+
+        it('should work when getting negative indexes', TestCheddarFrom.Code(
+            'print "ABC"[-1]',
+            'C'
+        ))
     })
 });

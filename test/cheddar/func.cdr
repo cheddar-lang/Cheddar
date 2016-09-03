@@ -1,0 +1,5 @@
+func getinput(file: string) {
+    return IO.read(file)
+}
+
+print getinput(cheddar.argv[1])
