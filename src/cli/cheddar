@@ -31,6 +31,7 @@ function launch() {
 var _ = {
     version: [["v", "version"], "Prints Cheddar version"],
     safe:    [["s", "safe"], "   Disables unsafe libraries"],
+    nocolor: [["no-color"], "    Removed ANSI colors from output"],
     help:    [["h", "help"], "   Prints this help dialouge"]
 };
 
@@ -62,6 +63,10 @@ args.map(function(arg) {
 
     if ($('safe')) {
         global.SAFE_MODE = true;
+    }
+
+    if (!$('nocolor')) {
+        global.CHEDDAR_CLI_COLOR = true;
     }
 
     launch();

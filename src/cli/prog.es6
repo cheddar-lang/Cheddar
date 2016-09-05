@@ -11,6 +11,18 @@ import tokenizer from '../tokenizer/tok';
 
 import stdlib from '../stdlib/stdlib';
 
+function stripansi(text) {
+    return text.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, "");
+}
+
+function error(text, data = "") {
+    if (global.CHEDDAR_CLI_COLOR) {
+        console.error(text + data);
+    } else {
+        console.error(stripansi(text) + data);
+    }
+}
+
 let execcheddar = function(input, args) {
     let GLOBAL_SCOPE = new CheddarScope(null);
     GLOBAL_SCOPE.Scope = new Map(stdlib);
@@ -19,9 +31,9 @@ let execcheddar = function(input, args) {
     let Result = Tokenizer.exec();
 
     if (!(Result instanceof tokenizer)) {
-        console.error("Syntax Error: " + Result);
+        error("Syntax Error: ".red, Result);
         // Draw error pointer
-        console.error(HelperCaret(input, Tokenizer.Index, true));
+        error(HelperCaret(input, Tokenizer.Index, global.CHEDDAR_CLI_COLOR));
         return "";
     }
 
@@ -30,7 +42,7 @@ let execcheddar = function(input, args) {
     let Output = Executor.exec(args);
 
     if (typeof Output === "string") {
-        console.error("Runtime Error: " + Output);
+        error("Runtime Error: ".red, Output);
     }
 
     return Output;
