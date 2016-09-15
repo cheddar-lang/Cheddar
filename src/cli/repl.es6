@@ -15,14 +15,49 @@ import HelperCaret from '../helpers/caret';
 
 import stdlib from '../stdlib/stdlib';
 
+import package_json from '../../package.json';
+
+let USI = 0;
+
+try {
+    let latest_version = require('child_process').spawnSync('npm', ['view', 'cheddar-lang', 'version'], { encoding: 'ascii' }).stdout.trim();
+
+    if (latest_version.length > 0 && package_json.version.length > 0) {788
+        let [latest, old] = [ latest_version.split(/[.-]/), package_json.version.split(/[.-]/) ];
+        let longest_segment = latest.length > old.length ? latest : old;
+        let shortest_segment = longest_segment === latest ? old : latest;
+
+        let status = 0;
+        
+        for (let i = 0; i < shortest_segment.length; i++) {
+            if (longest_segment[i]) {
+                if (shortest_segment[i] < longest_segment[i]) {
+                    status = -1;
+                } else if (shortest_segment[i] > longest_segment[i]) {
+                    status = 1;
+                } else {
+                    continue;
+                }
+            }
+            break;
+        }
+
+        status = longest_segment === latest ? -status : status;
+
+        if (status === 1) {
+            console.log("Notice: ".yellow + `the installed version is ${"newer".green.bold} than the latest version`);
+        } else if (status === -1) {
+            console.log("Notice: ".yellow + `the installed version is ${"older".red.bold} than the latest version. Please update as soon as possible`);
+        }
+    }
+} catch(e){}
+
+// Workaround
 let REPL = readline.createInterface(process.stdin, process.stdout);
 let PROMPT = 'cheddar> '.yellow.bold;
 REPL.setPrompt(PROMPT);
 REPL.prompt();
 
-let USI = 0;
-
-// Workaround
 REPL._setPrompt = REPL.setPrompt;
 REPL.setPrompt = (prompt, length) =>
 	REPL._setPrompt(prompt, length ? length : prompt.split(/[\r\n]/).pop().stripColors.length);
