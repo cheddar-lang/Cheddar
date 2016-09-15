@@ -6,6 +6,7 @@ var tty = require('tty');
 var fs = require('fs');
 
 function launch() {
+    process.title = "cheddar";
     if (tty.isatty(0)) {
         child_process.fork(__dirname + '/repl.js', process.argv.slice(2));
     }
