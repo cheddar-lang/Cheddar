@@ -29,6 +29,23 @@ export default function(cheddar){
         ]);
         // MUST be capitalized, otherwise bork
         Scope = new Map([
+            ["fit", cheddar.var(
+                new cheddar.func([
+                    ["value", { type: cheddar.number }]
+                ], function(scope, input){
+                    let self = input("self"),
+                        value = input("value").value,
+                        min = self.accessor("min").Value.value,
+                        max = self.accessor("max").Value.value;
+
+                    return cheddar.init(
+                        cheddar.number,
+                        10,
+                        0,
+                        fit(min, max, value)
+                    );
+                })
+            )],
             ["make", cheddar.var(
                 new cheddar.func([
                     ["entry", { type: cheddar.number }]

@@ -1,19 +1,20 @@
 import sysEqual from "./sysEqual";
-import fit from "./fit.es6";
+import fit from "./fit";
 
 let importInstance;
 export default function(cheddar){
     if(importInstance) return importInstance;
-    let Modular = _Modular(cheddar);
 
     class Modular extends cheddar.class {
         init(value, system){
-            let min = system.accessor("min"),
-                max = system.accessor("max");
+            let min = system.accessor("min").Value.value,
+                max = system.accessor("max").Value.value;
 
-            this.setter("value", cheddar.var(
-                cheddar.init(cheddar.number, 10, 0,
-                    fit(min, max, value))
+            this.setter("value",
+                cheddar.var(
+                    cheddar.init(cheddar.number, 10, 0,
+                        fit(min, max, value.value)
+                    )
                 )
             );
             this.accessor("value");
