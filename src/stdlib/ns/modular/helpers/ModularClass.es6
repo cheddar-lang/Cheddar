@@ -1,34 +1,51 @@
+import sysEqual from "./sysEqual";
+import fit from "./fit.es6";
+
 let importInstance;
 export default function(cheddar){
     if(importInstance) return importInstance;
+    let Modular = _Modular(cheddar);
 
-    return importInstance = class ModularSystem extends cheddar.class {
-        init(min, max){
-            this.setter("min", cheddar.var(min));
-            this.accessor("min");
-            this.setter("max", cheddar.var(max));
-            this.accessor("max");
+    class Modular extends cheddar.class {
+        init(value, system){
+            let min = system.accessor("min"),
+                max = system.accessor("max");
+
+            this.setter("value", cheddar.var(
+                cheddar.init(cheddar.number, 10, 0,
+                    fit(min, max, value))
+                )
+            );
+            this.accessor("value");
+            this.setter("system", cheddar.var(system));
+            this.accessor("system");
         }
 
-        // MUST be capitalized, otherwise bork
-        Scope = new Map([
-            ["fit", cheddar.var(
-                new cheddar.func([
-                    ["entry", { type: cheddar.number }]
-                ], function(scope, input){
-                    let self = input("self"),
-                        value = input("entry").value,
-                        min = self.accessor("min").Value.value,
-                        max = self.accessor("max").Value.value;
+        // Operator = new Map([
+        //     ...cheddar.class.Operator,
+        //     ["+", (LHS, RHS) => {
+        //         let l = LHS.accessor("value").Value,
+        //             r = RHS.accessor("value").Value;
+        //         let lsys = l.scope.Scope.get("system").Value;
+        //         let rsys = r.scope.Scope.get("system").Value;
+        //         if(!sysEqual(
+        //             lsys,
+        //             rsys
+        //         ))
+        //             return "two different systems cannot be added.";
+        //
+        //         let left = l.value;
+        //         let right = r.value;
+        //
+        //         let r = new Modular(null);
+        //         r.init(cheddar.init(chedar.number, 10, 0, left + right), lsys);
+        //         return r;
+        //     }]
+        // ])
 
-                    while(value < min) value += max;
-                    while(value >= max) value -= max;
-
-                    return cheddar.init(cheddar.number, 10, 0, value);
-                })
-            )]
-        ]);
     }
 
-    return ModularSystem;
+    importInstance = Modular
+
+    return Modular;
 };
