@@ -4,6 +4,9 @@
  * UOP - Unary operators
 **/
 
+export const UD_OP = new Set();
+export const UD_UOP = new Set();
+
 export const RESERVED_KEYWORDS = new Set([
     'sqrt', 'cbrt', 'root',
     'sin', 'cos', 'tan',

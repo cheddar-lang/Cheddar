@@ -5,10 +5,12 @@ import StatementBreak      from './states/break';
 import StatementFunc       from './states/func';
 import StatementFor        from './states/for';
 import StatementIf         from './states/if';
+import StatementOp         from './states/op';
 
 export default {
     StatementAssign,
     StatementIf,
+    StatementOp,
     StatementFor,
     StatementFunc,
     StatementBreak,
