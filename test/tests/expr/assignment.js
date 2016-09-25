@@ -28,6 +28,11 @@ describe('Assignment', function() {
             'var a: Number = 1; print a',
             '1'
         ))
+
+        it('should work with implicit definition', TestCheddarFrom.Code(
+            `let a := 1; a = 2`,
+            ''
+        ))
     })
 
     describe('reassignment', function() {

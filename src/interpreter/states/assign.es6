@@ -33,9 +33,14 @@ export default class CheddarAssign {
         let res;
 
         if (this.toks.tok(2)) {
-            let val = new CheddarEval({ _Tokens: [this.toks.tok(2)] }, this.scope);
+
+            let val = new CheddarEval({ _Tokens: [this.toks.tok(3)] }, this.scope);
             if (!((val = val.exec()) instanceof CheddarClass || val.prototype instanceof CheddarClass))
                 return val;
+
+            if (this.toks.tok(2) === ':=') {
+                stricttype = val.constructor;
+            }
 
             if (stricttype && !(val instanceof stricttype)) {
                 return `Attempted to set \`${varname}\` to a \`${

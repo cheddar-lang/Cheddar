@@ -177,8 +177,13 @@ export default class CheddarLexer {
                         !(result instanceof CheddarLexer) &&
                         typeof defs[i][j + 1] === 'symbol'
                     )  {
-                        this.Index = Math.max(parser.Index, index);
-                        return this.error(defs[i][j + 1]);
+                        if (defs[i][j + 1] === CheddarError.ALLOW_ERROR) {
+                            j++;
+                            continue main;
+                        } else {
+                            this.Index = Math.max(parser.Index, index);
+                            return this.error(defs[i][j + 1]);
+                        }
                     }
 
                     if (result === CheddarError.EXIT_NOTFOUND) {
@@ -292,7 +297,12 @@ export default class CheddarLexer {
                             }
                         } else {
                             // this.Index = result.Index;
-                            return this.error(CheddarError.EXIT_NOTFOUND);
+                            if (defs[i][j + 1] === CheddarError.ALLOW_ERROR) {
+                                j++;
+                                continue main;
+                            } else {
+                                return this.error(CheddarError.EXIT_NOTFOUND);
+                            }
                         }
                     }
                 } else {
