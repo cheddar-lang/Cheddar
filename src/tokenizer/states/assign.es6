@@ -12,8 +12,10 @@ export default class StatementAssign extends CheddarLexer {
         let DEFS = ['var', 'let', 'const'];
         return this.grammar(true,
             [
-                DEFS, this.jumpWhite, CheddarTypedVariableToken, CheddarError.UNEXPECTED_TOKEN,
-                [['=', CheddarExpressionToken]]
+                DEFS, this.jumpWhite, CheddarTypedVariableToken, [':=', '='], CheddarError.ALLOW_ERROR, CheddarExpressionToken
+            ],
+            [
+                DEFS, this.jumpWhite, CheddarTypedVariableToken
             ]
         );
     }
