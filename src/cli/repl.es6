@@ -1,4 +1,4 @@
-import readline from 'readline';
+import readline from 'node-color-readline';
 import colors from 'colors';
 
 import CheddarScope from '../interpreter/core/env/scope';
@@ -28,7 +28,7 @@ try {
         let shortest_segment = longest_segment === latest ? old : latest;
 
         let status = 0;
-        
+
         for (let i = 0; i < shortest_segment.length; i++) {
             if (longest_segment[i]) {
                 if (shortest_segment[i] < longest_segment[i]) {
@@ -52,9 +52,21 @@ try {
     }
 } catch(e){}
 
+function clearc(s) {
+	return s.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, "");
+}
+
+let reserved = new RegExp([...require('../tokenizer/consts/ops').RESERVED_KEYWORDS].join("|"), "g");
 // Workaround
-let REPL = readline.createInterface(process.stdin, process.stdout);
-let PROMPT = 'cheddar> '.yellow.bold;
+let REPL = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout,
+	colorize: str =>str
+		.replace(/-?(\.?\d+|\d+\.\d+)|0b[10]+|0x[\dABCDEF]+/g, s => clearc(s).blue)
+		.replace(reserved, s => clearc(s).cyan)
+		.replace(/(["'])(?:(?=\\*)\\.|.)*?\1/g, s => clearc(s).red)
+});
+let PROMPT = 'cheddar> ';//.yellow.bold;
 REPL.setPrompt(PROMPT);
 REPL.prompt();
 
