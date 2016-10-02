@@ -35,7 +35,8 @@ export const OP = [
 '@"', 'has',
 'log', 'sign',
 'root',
-'is', 'actually'
+'is', 'actually',
+'=>'
 ].sort((a, b) => b.length - a.length);
 
 // Unary operators
@@ -91,6 +92,7 @@ export const PRECEDENCE = new Map([
     ['is', 14000],
     ['actually', 14000],
     ['root', 14000],
+    ['=>', 13000],
     ['*', 13000],
     ['/', 13000],
     ['%', 13000],

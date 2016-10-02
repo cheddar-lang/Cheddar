@@ -269,11 +269,51 @@ export default class CheddarFunction extends CheddarClass {
         }]
     ]);
 
-    RHS_Operator = new Map([...CheddarClass.Operator,
+    RHS_Operator = new Map([...CheddarClass.RHS_Operator,
         ['&', (self, value) => {
             // Copy args to new function
             let new_args = self.args.slice(1);
             return new self.constructor(new_args, (a,b, args) => self.exec([value, ...args], null));
+        }],
+
+        ['/', (LHS, RHS) => {
+            let res;
+
+            try {
+                return RHS.value.reduce(function(item1, item2) {
+                    res = LHS.exec([ item1, item2 ], null);
+
+                    if (typeof res === 'string')
+                        throw res;
+
+                    return res;
+                });
+            } catch (e) {
+                return e;
+            }
+        }],
+
+        ['=>', (LHS, RHS) => {
+            let CheddarArray = require("../primitives/Array");
+
+            if (RHS.constructor.Name !== "Array")
+                return CheddarError.NO_OP_BEHAVIOR;
+
+            RHS = RHS.value;
+            let res;
+            let out = HelperInit(CheddarArray);
+
+            for (var i = 0; i < RHS.length; i++) {
+                res = LHS.exec([ RHS[i] ]);
+
+                if (typeof res === 'string') {
+                    return res;
+                } else {
+                    out.value.push(res || new NIL);
+                }
+            }
+
+            return out;
         }]
     ])
 
