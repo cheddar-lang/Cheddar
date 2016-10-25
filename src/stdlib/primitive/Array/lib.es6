@@ -28,5 +28,7 @@ export default new Map([
     require('./lib/pop')(api),
     require('./lib/reduce')(api),
     require('./lib/push')(api),
-    require('./lib/rect')(api)
+    require('./lib/rect')(api),
+    require('./lib/moore')(api),
+    require('./lib/flat')(api)
 ]);
