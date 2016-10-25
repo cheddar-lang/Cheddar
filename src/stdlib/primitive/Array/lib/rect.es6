@@ -1,24 +1,23 @@
 export default (api) => ["rect", api.var(new api.func(
     [
         ["fill", {
-            Type: api.string,
-            Default: api.init(api.string, 0)
+            Default: api.init(api.number, 10, 0, 0)
         }]
     ],
     function(scope, input) {
-        let str = input("self").value;
-        let fill = input("fill").value;
-        let lines = str.split(/\r?\n/);
+        let arr = input("self").value;
+        let fill = input("fill");
         let maxLen = 0;
-        for(let i = 0; i < lines.length; i++){
-            maxLen = Math.max(lines[i].length, maxLen);
+        for(let i = 0; i < arr.length; i++){
+            maxLen = Math.max(arr[i].value.length, maxLen);
         }
-        str = lines.map(line => {
-            while(line.length < maxLen)
-                line += fill;
+        arr = arr.map(line => {
+            let k = line.value;
+            while(k.length < maxLen)
+                k.push(fill);
 
-            return line;
-        }).join("\n");
-        return api.init(api.string, str);
+            return api.init(api.array, ...k);
+        });
+        return api.init(api.array, ...arr);
     }
 ))];
