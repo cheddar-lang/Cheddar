@@ -9,7 +9,8 @@ export default class CheddarRegexToken extends CheddarPrimitive {
 
         if (this.getChar() === REGEX_DELIMITER) {
             let loc = this.Index - 1;
-            // in a string
+            // in a regex
+            if ('*/'.includes(this.Code[this.Index])) return CheddarError.EXIT_NOTFOUND;
 
             let chr;
 
