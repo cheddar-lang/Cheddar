@@ -18,6 +18,8 @@ export default class CheddarString extends CheddarClass {
     static Name = "String";
 
     init(string) {
+        // REMOVE THIS
+        // console.log(string);
         this.value = string.toString();
 
         this.scope_ref = new CheddarScope();

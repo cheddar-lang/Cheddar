@@ -16,5 +16,7 @@ export default new Map([
     require('./lib/tail')(api),
     require('./lib/sub')(api),
     require('./lib/index')(api),
-    require('./lib/chunk')(api)
+    require('./lib/chunk')(api),
+    require('./lib/grid')(api),
+    require('./lib/rect')(api)
 ]);
