@@ -4,12 +4,14 @@ import CheddarEval from '../core/eval/eval';
 import NIL from '../core/consts/nil';
 
 export default class CheddarAssign {
-    constructor(tokl, scope) {
+    constructor(tokl, scope, noassign) {
         this.assignt = tokl.tok(0); // assignment type
         this.assignl = tokl.tok(1); // name & type?
         this.toks = tokl;
 
         this.scope = scope;
+
+        this.noassign = noassign;
     }
 
     exec() {
@@ -30,7 +32,7 @@ export default class CheddarAssign {
                 return `${stricttype} is not a class`;
         }
 
-        let res;
+        let res, value;
 
         if (this.toks.tok(2)) {
 
@@ -57,20 +59,24 @@ export default class CheddarAssign {
             val.scope = this.scope;
             val.Reference = varname;
 
-            res = this.scope.manage(varname,
-                new CheddarVariable(val, {
-                    Writeable: this.assignt !== "const",
-                    StrictType: stricttype
-                })
-            );
+            value = new CheddarVariable(val, {
+                Writeable: this.assignt !== "const",
+                StrictType: stricttype
+            });
+
+            if (this.noassign) return [varname, value];
+
+            res = this.scope.manage(varname, value);
         }
         else {
-            res = this.scope.manage(varname,
-                new CheddarVariable(new NIL, {
-                    Writeable: this.assignt !== "const",
-                    StrictType: stricttype
-                })
-            );
+            value = new CheddarVariable(new NIL, {
+                Writeable: this.assignt !== "const",
+                StrictType: stricttype
+            });
+
+            if (this.noassign) return [varname, value];
+
+            res = this.scope.manage(varname, value);
         }
 
         if (res !== true) {

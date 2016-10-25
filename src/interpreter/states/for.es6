@@ -14,7 +14,7 @@ export default class CheddarFor {
 
     exec() {
         // Create `for`'s scope, inherits from parent
-        let SCOPE = new CheddarScope(this.scope);
+        let SCOPE;
 
         // Determine whether for..in or for (a; b; c)
         // 4 tokens === for..in
@@ -54,6 +54,8 @@ export default class CheddarFor {
                 // TODO: Actually make generators
                 // Currently just extract value and iterate over that
                 for (var i = 0; i < target.value.length; i++) {
+                    SCOPE = new CheddarScope(this.scope);
+
                     // Check if destructuring properly
                     if (i === 0 && vars.length > 1) {
                         return `Unused variables in for destructuring: \`${vars.slice(1).join(", ")}\``;
@@ -113,16 +115,16 @@ export default class CheddarFor {
                 poola, poolb, poolc, // Token caching
                 res, bool, // Storage
                 ralloc, // Pending result
-                trs; // Temp
+                trs, initset; // Temp
 
             // Execute the initial setup
             pool0 = this.toks._Tokens[1];
 
             if (pool0.constructor.name === "StatementAssign") {
-                trs = new CheddarAssign(pool0, SCOPE).exec();
+                initset = trs = new CheddarAssign(pool0, this.scope, true).exec();
             }
             else {
-                trs = new CheddarEval(pool0, SCOPE).exec();
+                trs = new CheddarEval(pool0, this.scope).exec();
             }
 
             if (typeof trs === 'string')
@@ -134,6 +136,10 @@ export default class CheddarFor {
             poolc = this.toks._Tokens[4];
 
             while (true) {
+                SCOPE = new CheddarScope(this.scope);
+                if (initset) SCOPE.manage(...initset);
+
+                // Condition
                 res = new CheddarEval(poola, SCOPE);
                 res = res.exec();
 
@@ -165,6 +171,11 @@ export default class CheddarFor {
 
                     if (typeof trs === 'string')
                         return trs;
+
+                    // Setup next iteration
+                    if (initset) {
+                        initset[1] = SCOPE.accessor(initset[0]);
+                    }
                 }
                 else {
                     break;
