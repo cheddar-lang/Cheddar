@@ -17,10 +17,12 @@ export default class CheddarStringToken extends CheddarPrimitive {
             let qt = chr; // store quote
             let esc;
 
-            while ((chr = this.getChar())) {
+            while (true) {
+                chr = this.getChar();
+
                 if (chr === qt) {
                     break;
-                } else if (this.isLast) {
+                } else if (!this.Code[this.Index]) {
                     this.Index = loc;
                     return this.error(CheddarError.UNMATCHED_DELIMITER);
                 } else if (chr === STRING_ESCAPE) {

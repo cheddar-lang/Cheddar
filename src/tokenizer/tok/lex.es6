@@ -66,7 +66,7 @@ export default class CheddarLexer {
             this._Tokens.push(v);
     }
 
-    get isLast() { return this.Index === this.Code.length }
+    get isLast() { return !this.Code[this.Index] }
 
     attempt(...parsers) {
         let global_tokenizer;
