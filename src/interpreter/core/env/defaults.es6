@@ -106,7 +106,7 @@ export const DEFAULT_OP = new Map([
             require("../primitives/Bool"),
             (RHS !== undefined) && (
                 LHS === RHS ||
-                LHS instanceof RHS.constructor && (LHS.value && (LHS.value === RHS.value))
+                LHS instanceof RHS.constructor && (LHS.value !== undefined && (LHS.value === RHS.value))
             )
         );
     }],
