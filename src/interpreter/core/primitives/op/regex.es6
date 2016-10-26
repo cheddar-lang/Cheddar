@@ -30,7 +30,7 @@ export default new Map([
     ['*', (LHS, RHS) => {
         if (RHS.constructor.Name === "Number") {
             return HelperInit(LHS.constructor, XRegExp(
-                `(?:${LHS.value.xregexp.source}){${RHS.value}}`
+                `(?:${LHS.value.xregexp.source}){${RHS.value|0}}`
             ));
         }
     }],
