@@ -17,8 +17,8 @@ export default (api) => ["moore", api.var(new api.func(
 
         let grid = [];
         for(let i = y - n; i <= y + n; i++){
-            let row = [];
             if(typeof self[i] === "undefined") continue;
+            let row = [];
             for(let j = x - m; j <= x + m; j++){
                 if(typeof self[i][j] === "undefined") continue;
                 row.push(self[i][j]);
