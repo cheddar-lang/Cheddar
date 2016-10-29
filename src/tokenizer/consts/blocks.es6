@@ -1,1 +1,0 @@
-export const BLOCK_NAMES = ['if', 'for', 'while'];

@@ -1,5 +1,5 @@
 import CheddarFunction from '../env/func';
-import CheddarVariableToken from '../../../tokenizer/literals/var';
+import CheddarVariableToken from 'cheddar-parser/dist/literals/var';
 import eval_prop from '../eval/prop';
 import CheddarEval from '../eval/eval';
 
