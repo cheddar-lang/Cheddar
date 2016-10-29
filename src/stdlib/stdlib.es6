@@ -2,7 +2,7 @@ import API from './api';
 
 let STDLIB = new Map();
 STDLIB.Item = (Name, NOT_SAFE = false) => {
-    if (NOT_SAFE && global.SAFE_MODE) {
+    if (NOT_SAFE && global.SAFE_MODE || global.DISABLE_STDLIB_ITEM === Name) {
         return;
     } else {
         STDLIB.set(Name, API.var(require(`./ns/${Name}`)(API)));

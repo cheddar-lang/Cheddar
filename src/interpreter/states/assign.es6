@@ -5,8 +5,8 @@ import NIL from '../core/consts/nil';
 
 export default class CheddarAssign {
     constructor(tokl, scope, noassign) {
-        this.assignt = tokl.tok(0); // assignment type
-        this.assignl = tokl.tok(1); // name & type?
+        this.assignt = tokl._Tokens[0]; // assignment type
+        this.assignl = tokl._Tokens[1]; // name & type?
         this.toks = tokl;
 
         this.scope = scope;
@@ -15,15 +15,15 @@ export default class CheddarAssign {
     }
 
     exec() {
-        let varname = this.assignl.tok(0)._Tokens[0];
+        let varname = this.assignl._Tokens[0]._Tokens[0];
         if (this.scope.has(varname)) {
             // ERROR INTEGRATE
             return `${varname} has already been defined`;
         }
 
         // Strict typing
-        let stricttype = this.assignl.tok(1) ?
-            this.assignl.tok(1)._Tokens[0] :
+        let stricttype = this.assignl._Tokens[1] ?
+            this.assignl._Tokens[1]._Tokens[0] :
             null;
 
         if (stricttype && this.scope.has(stricttype) && !((
@@ -34,13 +34,13 @@ export default class CheddarAssign {
 
         let res, value;
 
-        if (this.toks.tok(2)) {
+        if (this.toks._Tokens[2]) {
 
-            let val = new CheddarEval({ _Tokens: [this.toks.tok(3)] }, this.scope);
+            let val = new CheddarEval({ _Tokens: [this.toks._Tokens[3]] }, this.scope);
             if (!((val = val.exec()) instanceof CheddarClass || val.prototype instanceof CheddarClass))
                 return val;
 
-            if (this.toks.tok(2) === ':=') {
+            if (this.toks._Tokens[2] === ':=') {
                 stricttype = val.constructor;
             }
 
@@ -80,7 +80,7 @@ export default class CheddarAssign {
         }
 
         if (res !== true) {
-            return `\`${this.assignl.tok(0)}\` is a reserved keyword`;
+            return `\`${this.assignl._Tokens[0]}\` is a reserved keyword`;
         }
     }
 }

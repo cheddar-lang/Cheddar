@@ -10,6 +10,8 @@ import CheddarFunction from '../env/func';
 import CheddarError from '../consts/err';
 import CheddarErrorDesc from '../consts/err_msg';
 
+import isLiteral from './isliteral';
+
 function to_value(variable, parent, name) {
     // Check if getter
     if (variable.Value) {
@@ -45,10 +47,10 @@ export default function eval_prop(prop, scope, evaluate) {
 
     // Is a primitive
     // this includes `"foo".bar`
-    if ((Operation._Tokens[0] instanceof CheddarLiteral) ||
-        (Operation instanceof CheddarLiteral)) {
+    if (isLiteral.indexOf(Operation._Tokens[0].constructor.name) > -1 ||
+        isLiteral.indexOf(Operation.constructor.name) > -1) {
 
-        if (Operation instanceof CheddarLiteral) {
+        if (isLiteral.indexOf(Operation.constructor.name) > -1) {
             TOKEN = Operation;
         } else {
             // Get the token's value
@@ -62,20 +64,20 @@ export default function eval_prop(prop, scope, evaluate) {
 
             OPERATOR = new OPERATOR(scope);
 
-            if ((TOKEN = OPERATOR.init(...TOKEN.Tokens)) !== true) {
+            if ((TOKEN = OPERATOR.init(...TOKEN._Tokens)) !== true) {
                 return TOKEN;
             }
 
             // Exit if it's a raw literal
-            if (Operation instanceof CheddarLiteral) {
+            if (isLiteral.indexOf(Operation.constructor.name) > -1) {
                 return OPERATOR;
             }
         } else if ((OPERATOR = EVALUATED_LINKS.get(TOKEN.constructor.name))) {
-            OPERATOR = OPERATOR(...TOKEN.Tokens);
+            OPERATOR = OPERATOR(...TOKEN._Tokens);
         } else {
             return CheddarError.UNLINKED_CLASS;
         }
-    } else if (Operation._Tokens[0] instanceof CheddarParenthesizedExpressionToken) {
+    } else if (Operation._Tokens[0].constructor.name === "CheddarParenthesizedExpressionToken") {
         // Evaluate
         OPERATOR = new CheddarEval(
             Operation._Tokens[0],
@@ -93,7 +95,7 @@ export default function eval_prop(prop, scope, evaluate) {
             "object";
 
     }
-    else if (Operation._Tokens[0] instanceof CheddarVariableToken) {
+    else if (Operation._Tokens[0].constructor.name === "CheddarVariableToken") {
         // Lookup variable -> initial variable name
         OPERATOR = scope.accessor(Operation._Tokens[0]._Tokens[0]);
 

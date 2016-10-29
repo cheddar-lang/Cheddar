@@ -45,6 +45,28 @@ var API = {
         return new CheddarVariable(val(API, ...args), { Writeable: false });
     },
 
+    // Run from source CST
+    // Use with compile-cheddar plugin
+    src: function(CST, stdlibItem) {
+        let scope = new CheddarScope(null);
+        delete require.cache[require.resolve('./stdlib')]
+        scope.Scope = new Map(require('./stdlib'));
+
+        global.DISABLE_STDLIB_ITEM = stdlibItem;
+        let interpreter = require('../interpreter/exec');
+        global.DISABLE_STDLIB_ITEM = undefined;
+
+        let exec = new interpreter(CST, scope);
+        let res = exec.exec(global.CHEDDAR_OPTS);
+
+        if (typeof res === "string") {
+            throw new Error(res);
+        }
+
+        if (!CST.PreCompiledNodeName) throw new Error("No nametag given");
+        return [ CST.PreCompiledNodeName, scope.accessor('main') ]
+    },
+
     // Make a property (getters & setters)
     prop: function(getter = null, setter = null) {
         return new CheddarVariable(null, {

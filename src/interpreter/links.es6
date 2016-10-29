@@ -6,7 +6,7 @@ import StatementFunc       from './states/func';
 import StatementFor        from './states/for';
 import StatementIf         from './states/if';
 
-export default {
+export default delay_addition => ({
     StatementAssign,
     StatementIf,
     StatementFor,
@@ -14,4 +14,4 @@ export default {
     StatementBreak,
     StatementReturn,
     StatementExpression
-}
+})

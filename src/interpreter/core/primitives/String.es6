@@ -56,7 +56,7 @@ export default class CheddarString extends CheddarClass {
             return 'accessor must be integer';
         }
     }
-}
 
-CheddarString.Scope = require('../../../stdlib/primitive/String/static');
-CheddarString.prototype.Scope = require('../../../stdlib/primitive/String/lib');
+    static get Scope() { if (global.DISABLE_STDLIB_ITEM !== "String") return require('../../../stdlib/primitive/String/static'); }
+    get Scope()        { if (global.DISABLE_STDLIB_ITEM !== "String") return require('../../../stdlib/primitive/String/lib'); }
+}

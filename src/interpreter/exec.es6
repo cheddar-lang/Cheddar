@@ -1,12 +1,13 @@
-import links from './links';
 import NIL from './core/consts/nil';
 import Signal from './signal';
 
 export default class CheddarExec {
-    constructor(exec_stack, scope) {
+    constructor(exec_stack, scope, filter_item) {
         this.Code = exec_stack._Tokens;
         this._csi = 0;
         this.Scope = scope;
+
+        this.links = require('./links')(filter_item);
 
         this.continue = true;
         this.lrep = new NIL;
@@ -14,7 +15,7 @@ export default class CheddarExec {
 
     step() {
         let item = this.Code[this._csi++];
-        let sproc = links[item.constructor.name];
+        let sproc = this.links[item.constructor.name];
 
         let proc = new sproc(item, this.Scope);
         let resp = proc.exec();
