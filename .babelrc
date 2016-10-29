@@ -3,6 +3,6 @@
     "plugins": [
         "babel-plugin-transform-class-properties",
         "babel-plugin-add-module-exports",
-        "babel-plugin-include"
+        "babel-plugin-compile-cheddar"
     ]
 }

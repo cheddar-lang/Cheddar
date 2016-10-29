@@ -15,7 +15,6 @@ function test(code, result) {
                 PRINT: function(text) {
                     STDOUT += text;
                 }
-
             });
         } catch (error){
             console.log("AN ERROR OCCURRED, U DONE MESSED UP. FIX IT NOW NOW NOW NOW NOW NOW FIXED IT NOW! " + error)

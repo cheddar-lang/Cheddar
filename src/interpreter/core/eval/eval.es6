@@ -42,6 +42,8 @@ import CheddarErrorDesc from '../consts/err_msg';
 
 import eval_prop from './prop';
 
+import isLiteral from './isliteral';
+
 function set_value(value, child) {
     // The CheddarVariable() wrapping the value
     let variable = value.scope.accessor(value.Reference);
@@ -104,20 +106,20 @@ export default class CheddarEval extends CheddarCallStack {
         // Expression source
 
         // Handle Operator
-        if (Operation instanceof CheddarOperatorToken) {
+        if (Operation.constructor.name === "CheddarOperatorToken") {
 
             let SETSELF = false; // If the operator is a self-asignning operator
 
             TOKEN = this.shift(); // Get the value to operate upon
 
             // SPECIAL BEHAVIOR FOR REsASSIGNMENT
-            if (Operation.tok(0) === "=") {
+            if (Operation._Tokens[0] === "=") {
                 DATA = this.shift();
 
                 if ((
                     !(DATA.scope instanceof CheddarScope) ||
                     DATA.Reference === null
-                ) || Operation.tok(1) === OP_TYPE.UNARY) {
+                ) || Operation._Tokens[1] === OP_TYPE.UNARY) {
                     return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
                 }
 
@@ -131,11 +133,11 @@ export default class CheddarEval extends CheddarCallStack {
 
                 OPERATOR = TOKEN;
 
-            } else if (Operation.Tokens[1] === OP_TYPE.UNARY) {
+            } else if (Operation._Tokens[1] === OP_TYPE.UNARY) {
                 NAME = TOKEN.Operator;
                 // It is an Unary operator use TOKEN as RHS, null as LHS
-                if (NAME.has(Operation.Tokens[0])) {
-                    OPERATOR = NAME.get(Operation.Tokens[0])(null, TOKEN);
+                if (NAME.has(Operation._Tokens[0])) {
+                    OPERATOR = NAME.get(Operation._Tokens[0])(null, TOKEN);
                 } else {
                     OPERATOR = CheddarError.NO_OP_BEHAVIOR;
                 }
@@ -145,7 +147,7 @@ export default class CheddarEval extends CheddarCallStack {
 
                 NAME = DATA.Operator; // Get the list of operators DATA has
 
-                TARGET = Operation.Tokens[0]; // The operator
+                TARGET = Operation._Tokens[0]; // The operator
 
                 // Set LHS to LHS * RHS
 
@@ -166,7 +168,7 @@ export default class CheddarEval extends CheddarCallStack {
 
             if (OPERATOR === CheddarError.NO_OP_BEHAVIOR) {
                 return CheddarErrorDesc.get(OPERATOR)
-                .replace(/\$0/g, Operation.Tokens[0])
+                .replace(/\$0/g, Operation._Tokens[0])
                 .replace(/\$1/g, TOKEN ? (
                     TOKEN.constructor.Name || (
                         TOKEN.prototype instanceof CheddarClass
@@ -190,7 +192,7 @@ export default class CheddarEval extends CheddarCallStack {
                     if ((
                         !(DATA.scope instanceof CheddarScope) ||
                         DATA.Reference === null
-                    ) || Operation.tok(1) === OP_TYPE.UNARY) {
+                    ) || Operation._Tokens[1] === OP_TYPE.UNARY) {
                         return CheddarErrorDesc.get(CheddarError.NOT_A_REFERENCE);
                     }
 
@@ -206,7 +208,7 @@ export default class CheddarEval extends CheddarCallStack {
                 this.put(OPERATOR);
             }
 
-        } else if (Operation instanceof CheddarPropertyToken || Operation instanceof CheddarLiteral) {
+        } else if (Operation.constructor.name === "CheddarPropertyToken" || isLiteral.indexOf(Operation.constructor.name) > -1) {
             let res = eval_prop(Operation, this.Scope, this.constructor);
             if (typeof res === 'string' || typeof res === 'boolean' || typeof res === 'symbol')
                 return res;

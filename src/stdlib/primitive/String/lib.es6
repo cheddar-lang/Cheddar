@@ -18,5 +18,7 @@ export default new Map([
     require('./lib/index')(api),
     require('./lib/chunk')(api),
     require('./lib/test')(api),
-    require('./lib/match')(api)
+    require('./lib/match')(api),
+
+    api.src(__COMPILE_SRC('./native/test.cheddar'))
 ]);
