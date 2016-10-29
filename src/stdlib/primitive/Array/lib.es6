@@ -30,5 +30,6 @@ export default new Map([
     require('./lib/push')(api),
     require('./lib/rect')(api),
     require('./lib/moore')(api),
-    require('./lib/flat')(api)
+    require('./lib/flat')(api),
+    require('./lib/count')(api)
 ]);

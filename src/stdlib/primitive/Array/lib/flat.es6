@@ -3,7 +3,15 @@ export default (api) => ["flat", api.prop(new api.func(
     [],
     function(scope, input) {
         // equiv. .reduce((+)).map(flat) or something
-        // todo: I need to know how to check which class
-        // let flat = (chedArr) =>
+        let flat = (arr) =>
+            api.init(api.array, ...arr.value.reduce(
+                (flt, toflt) => (
+                    flt.concat(toflt.constructor.Name === "Array" ?
+                        flat(toflt).value : toflt
+                    )
+                ),
+                []
+            ));
+        return flat(input("self"));
     }
-))]
+))];
