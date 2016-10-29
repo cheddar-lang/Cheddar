@@ -11,7 +11,7 @@
 //    |- Preset data
 
 import * as CheddarError from '../consts/err';
-import {RESERVED_KEYWORDS} from '../../../tokenizer/consts/ops';
+import {RESERVED_KEYWORDS} from 'cheddar-parser/dist/consts/ops';
 
 import CheddarVariable from './var';
 

@@ -3,7 +3,7 @@ import CheddarFunction from '../env/func';
 import CheddarError from '../consts/err';
 import CheddarClass from '../env/class';
 import CheddarErrorDesc from '../consts/err_msg';
-import { UOP, OP } from '../../../tokenizer/consts/ops';
+import { UOP, OP } from 'cheddar-parser/dist/consts/ops';
 
 const UNARY_ONLY = UOP.filter(i => OP.indexOf(i) === -1);
 

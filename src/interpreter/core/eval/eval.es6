@@ -19,13 +19,13 @@
 
 // Primitive <-> Class Links
 import {PRIMITIVE_LINKS} from '../config/link';
-import {TYPE as OP_TYPE, EXCLUDE_META_ASSIGNMENT as REG_OPS} from '../../../tokenizer/consts/ops';
+import {TYPE as OP_TYPE, EXCLUDE_META_ASSIGNMENT as REG_OPS} from 'cheddar-parser/dist/consts/ops';
 
 // Reference tokens
-import CheddarPropertyToken from '../../../tokenizer/parsers/property';
-import CheddarLiteral from '../../../tokenizer/literals/literal';
-import CheddarOperatorToken from '../../../tokenizer/literals/op';
-import CheddarExpressionToken from '../../../tokenizer/parsers/expr';
+import CheddarPropertyToken from 'cheddar-parser/dist/parsers/property';
+import CheddarLiteral from 'cheddar-parser/dist/literals/literal';
+import CheddarOperatorToken from 'cheddar-parser/dist/literals/op';
+import CheddarExpressionToken from 'cheddar-parser/dist/parsers/expr';
 
 import CheddarScope from '../env/scope';
 

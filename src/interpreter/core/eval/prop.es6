@@ -1,6 +1,6 @@
-import CheddarParenthesizedExpressionToken from '../../../tokenizer/parsers/paren_expr';
-import CheddarVariableToken from '../../../tokenizer/literals/var';
-import CheddarLiteral from '../../../tokenizer/literals/literal';
+import CheddarParenthesizedExpressionToken from 'cheddar-parser/dist/parsers/paren_expr';
+import CheddarVariableToken from 'cheddar-parser/dist/literals/var';
+import CheddarLiteral from 'cheddar-parser/dist/literals/literal';
 import CheddarClass from '../env/class';
 
 import {PRIMITIVE_LINKS, EVALUATED_LINKS} from '../config/link';

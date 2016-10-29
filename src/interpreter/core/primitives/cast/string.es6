@@ -5,8 +5,8 @@ import * as CheddarError from '../../consts/err';
 import CheddarNumber from '../Number';
 
 // Tokenizers
-import CheddarLexer from '../../../../tokenizer/tok/lex';
-import CheddarNumberToken from '../../../../tokenizer/literals/number';
+import CheddarLexer from 'cheddar-parser/dist/tok/lex';
+import CheddarNumberToken from 'cheddar-parser/dist/literals/number';
 
 import HelperInit from '../../../../helpers/init';
 
