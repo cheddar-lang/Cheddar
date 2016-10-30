@@ -1,4 +1,4 @@
-var TestCheddarFrom = require('../globals').TestCheddarFrom;
+var TestCheddarFrom = require('./globals').TestCheddarFrom;
 
 describe('Scoping', function(){
     describe('inheritance', function(){
