@@ -20,9 +20,11 @@ STDLIB.Item("Math");
 STDLIB.Item("Rational");
 
 // Interface Libraries
-STDLIB.Item("Encoding");
-STDLIB.Item("Buffer");
-STDLIB.Item("IO", true);
+STDLIB.Item("Encoding", require('./ns/Encoding'));
+STDLIB.Item("Buffer", require('./ns/Buffer'));
+STDLIB.Item("IO", require('./ns/IO'));
+STDLIB.Item("fn", require("./ns/fn"));
+//STDLIB.Item("HTTP", require('./ns/HTTP'));
 
 /** Primitives **/
 STDLIB.p("String",  API.string);
