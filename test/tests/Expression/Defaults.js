@@ -63,4 +63,27 @@ describe('Equality', function() {
             'true'
         ))
     })
+
+    describe('actually is', function() {
+        it('should work on same object', TestCheddarFrom.Code(
+            `let a = 1;
+let b = a;
+print a actually is b`,
+            'true'
+        ))
+
+        it('should return false on different object', TestCheddarFrom.Code(
+            `let a = 1;
+let b = 1;
+print a actually is b`,
+            'false'
+        ));
+    });
+
+    describe('what is', function() {
+        it('should not error', TestCheddarFrom.Code(
+            `what is "love"`,
+            ''
+        ))
+    });
 });

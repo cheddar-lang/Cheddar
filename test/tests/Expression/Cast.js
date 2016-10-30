@@ -39,4 +39,12 @@ describe('Casts', function() {
             ))
         })
     })
+
+
+    describe('as', function() {
+        it('should work', TestCheddarFrom.Code(
+            `print 123 as String`,
+            '123'
+        ))
+    });
 });

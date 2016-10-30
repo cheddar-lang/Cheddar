@@ -1,4 +1,4 @@
-var TestCheddarFrom = require('../globals').TestCheddarFrom;
+var TestCheddarFrom = require('../../globals').TestCheddarFrom;
 var chai = require('chai');
 
 describe('Array.', function(){

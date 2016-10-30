@@ -135,8 +135,6 @@ export default class CheddarFunction extends CheddarClass {
                 this.data
             ).exec();
 
-            console.log(res);
-
             if (res instanceof Signal) {
                 if (res.is(Signal.RETURN)) {
                     res = res.data;
