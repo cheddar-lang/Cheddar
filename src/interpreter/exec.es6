@@ -2,11 +2,12 @@ import NIL from './core/consts/nil';
 import Signal from './signal';
 
 export default class CheddarExec {
-    constructor(exec_stack, scope, filter_item) {
+    constructor(exec_stack, scope, filter_item, data) {
         this.Code = exec_stack._Tokens;
         this._csi = 0;
         this.Scope = scope;
 
+        this.data = data;
         this.links = require('./links')(filter_item);
 
         this.continue = true;
@@ -17,7 +18,7 @@ export default class CheddarExec {
         let item = this.Code[this._csi++];
         let sproc = this.links[item.constructor.name];
 
-        let proc = new sproc(item, this.Scope);
+        let proc = new sproc(item, this.Scope, this.data);
         let resp = proc.exec();
 
         if (typeof resp === "string") {

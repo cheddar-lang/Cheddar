@@ -30,7 +30,7 @@ function to_value(variable, parent, name) {
 const EVALUATED_ACCESSOR_NAME = 'eval_accessor';
 
 // Evaluates a property
-export default function eval_prop(prop, scope, evaluate) {
+export default function eval_prop(prop, scope, evaluate, data = {}) {
     // If it's a property
     let Operation = prop;
 
@@ -81,7 +81,8 @@ export default function eval_prop(prop, scope, evaluate) {
         // Evaluate
         OPERATOR = new CheddarEval(
             Operation._Tokens[0],
-            scope
+            scope,
+            data
         );
 
         OPERATOR = OPERATOR.exec();
@@ -97,7 +98,7 @@ export default function eval_prop(prop, scope, evaluate) {
     }
     else if (Operation._Tokens[0].constructor.name === "CheddarVariableToken") {
         // Lookup variable -> initial variable name
-        OPERATOR = scope.accessor(Operation._Tokens[0]._Tokens[0]);
+        OPERATOR = scope.accessor(Operation._Tokens[0]._Tokens[0], data.perms);
 
         // Set the name to be used in errors, extracted from token
         NAME = Operation._Tokens[0]._Tokens[0];
@@ -135,7 +136,8 @@ export default function eval_prop(prop, scope, evaluate) {
                 evalres = new CheddarEval({
                         _Tokens: [TOKEN[i]]
                     },
-                    scope
+                    scope,
+                    data
                 );
                 evalres = evalres.exec();
                 if (typeof evalres === "string") {
@@ -182,7 +184,8 @@ export default function eval_prop(prop, scope, evaluate) {
                 evalres = new CheddarEval({
                         _Tokens: [TOKEN[i]]
                     },
-                    scope
+                    scope,
+                    data
                 );
                 evalres = evalres.exec();
                 if (typeof evalres === "string") {
@@ -210,7 +213,8 @@ export default function eval_prop(prop, scope, evaluate) {
                 let res = new CheddarEval({
                         _Tokens: [Operation._Tokens[i]]
                     },
-                    scope
+                    scope,
+                    data
                 ).exec();
 
                 // If response is a string, it's errored
@@ -244,7 +248,7 @@ export default function eval_prop(prop, scope, evaluate) {
             }
 
             // then use the accessor to get the token
-            if (!(DATA = OPERATOR[EVALUATED](TARGET))) {
+            if (!(DATA = OPERATOR[EVALUATED](TARGET, data.perms))) {
                 if (EVALUATED !== EVALUATED_ACCESSOR_NAME) {
                     // ERROR INTEGRATE
                     return `${
