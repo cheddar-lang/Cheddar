@@ -20,5 +20,5 @@ export default new Map([
     require('./lib/test')(api),
     require('./lib/match')(api),
 
-    api.src(__COMPILE_SRC('./native/test.cheddar'))
+    api.src(__COMPILE_SRC('./native/padleft.cheddar'))
 ]);

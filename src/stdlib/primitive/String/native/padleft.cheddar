@@ -1,0 +1,4 @@
+# padLeft
+func main(totalLength: number, fill: string = " ") {
+    return ([0, totalLength - self.len].max * fill) + self;
+}

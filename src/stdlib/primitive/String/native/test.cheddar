@@ -1,4 +1,0 @@
-# tester
-func main(a?) {
-    return "IT WORK"
-}
