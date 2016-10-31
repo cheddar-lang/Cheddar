@@ -325,10 +325,12 @@ export default class CheddarFunction extends CheddarClass {
     Scope = new Map([
         ['len', new CheddarVariable(null, {
             Writeable: false,
-            getter: (self) => new CheddarFunction([], (_, input) => {
-                let CheddarNumber = require('../primitives/Number');
-                return HelperInit(CheddarNumber, 10, 0, input("self").args.length);
-            })
+            getter: {
+                exec: function(_, self) {
+                    let CheddarNumber = require('../primitives/Number');
+                    return HelperInit(CheddarNumber, 10, 0, self.args.length)
+                }
+            }
         })]
     ])
 }
