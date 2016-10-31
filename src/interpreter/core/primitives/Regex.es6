@@ -7,7 +7,11 @@ import BehaviorCast from './cast/regex';
 export default class CheddarRegex extends CheddarClass {
     static Name = "Regex";
 
-    init(source, flags) {
+    init(source = "", flags) {
+        if (source instanceof CheddarClass || source.prototype instanceof CheddarClass) {
+            return "Cannot construct regex";
+        }
+
         if (source instanceof XRegExp || source instanceof RegExp) {
             this.value = source;
             this.flags = source.xregexp.flags;

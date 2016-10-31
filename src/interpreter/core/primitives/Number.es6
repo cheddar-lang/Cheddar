@@ -7,6 +7,10 @@ export default class CheddarNumber extends CheddarClass {
     static Name = "Number";
 
     init(base, bitshift, value) {
+        if (!base || base instanceof CheddarClass || base.prototype instanceof CheddarClass) {
+            return "Cannot construct number.";
+        }
+
         // TODO: Optimize
         if (bitshift)
             value += "0".repeat(bitshift);

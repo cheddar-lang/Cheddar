@@ -36,6 +36,7 @@ export default class CheddarFunction extends CheddarClass {
 
     // Initalizes from primitive arguments
     init(args, selfRef, body) {
+        // Detemine if being called thruogh Cheddar
         if (!body) {
             body = selfRef;
             selfRef = null;

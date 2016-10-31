@@ -17,7 +17,11 @@ function InitalizeSubstring(source) {
 export default class CheddarString extends CheddarClass {
     static Name = "String";
 
-    init(string) {
+    init(string = "") {
+        if (string instanceof CheddarClass || string.prototype instanceof CheddarClass) {
+            return "Cannot construct string from Cheddar object.";
+        }
+
         this.value = string.toString();
 
         this.scope_ref = new CheddarScope();

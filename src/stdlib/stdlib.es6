@@ -31,5 +31,6 @@ STDLIB.p("Regex",   API.regex);
 STDLIB.p("Number",  API.number);
 STDLIB.p("Array",   API.array);
 STDLIB.p("Boolean", API.bool);
+STDLIB.p("Function", API.func);
 
 export default STDLIB;
