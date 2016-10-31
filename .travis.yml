@@ -27,4 +27,4 @@ deploy:
   on:
     tags: true
     repo: cheddar-lang/Cheddar
-    branch: release-1.0.0
+    branch: master

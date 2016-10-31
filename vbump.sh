@@ -3,7 +3,7 @@
 # It is a pain to remove all items caused by running this
 
 # Variables on where and what to do
-LEADING_BRANCH="release-1.0.0"
+LEADING_BRANCH="master"
 DEV_BRANCH="develop"
 
 # Script body
