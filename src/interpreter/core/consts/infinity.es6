@@ -1,19 +1,19 @@
 import CheddarClass from '../env/class';
 import HelperInit from '../../../helpers/init';
 
-export default class NIL extends CheddarClass {
-    static Name = 'nil';
+export default class INFINITY extends CheddarClass {
+    static Name = 'Infinity';
 
     init = () => true;
 
     Cast = new Map([...CheddarClass.Operator,
         ['String', () => HelperInit(
             require('../primitives/String'),
-            'nil'
+            'Infinity'
         ),
-        'Bool', () => HelperInit(
-            require('../primitives/Bool'),
-            false
+        'Number', () => HelperInit(
+            require('../primitives/Number'),
+            Infinity
         )]
     ]);
 }
