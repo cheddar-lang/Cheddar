@@ -5,12 +5,25 @@ var child_process = require('child_process');
 var tty = require('tty');
 var fs = require('fs');
 
-function launch() {
+function launch(dorepl, prog, encoding, compiledFile) {
     process.title = "cheddar";
-    if (tty.isatty(0)) {
+    if (prog) {
+        var c = require('./prog');
+        try {
+            var input = fs.readFileSync(prog, { encoding: 'utf8' });
+        } catch(e) {
+            throw e;
+        }
+        if (compiledFile) {
+            fs.writeFileSync(compiledFile, preCompile(input));
+        } else {
+            c(input, {
+                PRINT: process.stdout.write.bind(process.stdout)
+            });
+        }
+    } else if ((tty.isatty(0) || dorepl) & !compiledFile) {
         child_process.fork(__dirname + '/repl.js', process.argv.slice(2));
-    }
-    else {
+    } else {
         var c = require('./prog');
         var STDIN = "";
         var chunk;
@@ -21,24 +34,81 @@ function launch() {
                 STDIN += chunk;
         });
         process.stdin.on('end', function() {
-            c(STDIN, {
-                PRINT: process.stdout.write.bind(process.stdout)
-            });
+            if (compiledFile) {
+                fs.writeFileSync(compiledFile, preCompile(STDIN));
+            } else {
+                c(STDIN, {
+                    PRINT: process.stdout.write.bind(process.stdout)
+                });
+            }
         });
-
     }
 }
 
 var _ = {
-    version: [["v", "version"], "Prints Cheddar version"],
-    safe:    [["s", "safe"], "   Disables unsafe libraries"],
-    nocolor: [["no-color"], "    Removed ANSI colors from output"],
-    help:    [["h", "help"], "   Prints this help dialouge"]
+    version: [["v", "version"], " Prints Cheddar version"],
+    exec:    [["x", "exec"], "    Executes a pre-compiled Cheddar file (*.cdr)."],
+    compile: [["o", "out"], "     Output of compiled *.cdr"],
+    encode:  [["g", "encoding"], "Encoding to read program as."],
+    repl:    [["i", "repl"], "    Enters the Cheddar REPL"],
+    safe:    [["s", "safe"], "    Disables unsafe libraries"],
+    nocolor: [["no-color"],  "    Removed ANSI colors from output"],
+    help:    [["h", "help"], "    Prints this help dialouge"],
 };
+
+var unaryArg = [ 'compile', 'encode', 'exec' ];
+
+function isUnaryArg(a) {
+    for (var i = 0; i < unaryArg.length; i++) {
+        var j = _[unaryArg[i]][0];
+        if (a === '--' + (j[1] || j[0]) || (j[1] ? a === '-' + j[0] : false)) return true;
+    }
+    return false;
+}
 
 // Handle argument
 function $(args) { args = _[args][0];
     return ((args[1] && process.argv.indexOf("-"+args[0]) > -1)) || (process.argv.indexOf("--"+(args[1]||args[0])) > -1);
+}
+
+function nextArg(flag, def) {
+    var f = _[flag][0];
+    for (var index = 2; index < process.argv.length; index++) {
+        if (process.argv[index] === '--' + (f[1] || f[0]) || (f[1] ? process.argv[index] === '-' + f[0] : false)) {
+            if (!process.argv[index + 1]) {
+                console.error("No value provided for `" + process.argv[index] + "` flag");
+                process.exit(1);
+            } else {
+                return process.argv[index + 1];
+            }
+        }
+    }
+    return def;
+}
+
+function stripansi(text) {
+    return text.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, "");
+}
+
+function error(text, data) {
+    if (global.CHEDDAR_CLI_COLOR) {
+        console.error(text + (data || ""));
+    } else {
+        console.error(stripansi(text) + (data || ""));
+    }
+}
+
+function preCompile(code) {
+    var tokenizer = require('cheddar-parser/dist/tok');
+    var tok = new tokenizer(code, 0);
+    var ast = tok.exec();
+    if (!(ast instanceof tokenizer)) {
+        error("Syntax Error: ".red, Result);
+        // Draw error pointer
+        error(HelperCaret(code, tok.Index, global.CHEDDAR_CLI_COLOR));
+        process.exit(1);
+    }
+    return require('babel-generator').default(require('babel-plugin-compile-cheddar/lib/valueToNode').default(ast), { compact: true }).code;
 }
 
 if (!module.parent) {
@@ -46,7 +116,7 @@ if (!module.parent) {
     if ($('help')) {
         var args = [];
         Object.keys(_).map(function(i) { args.push( _[i] ) });
-        console.log("Usage: cheddar [< file.cdr] [arguments]\n\n" +
+        console.log("Usage: cheddar [options] [file.cheddar | -x file.cdr] [arguments]\n\n" +
 "Options:\n" +
 args.map(function(arg) {
     return "  " + (
@@ -70,7 +140,22 @@ args.map(function(arg) {
         global.CHEDDAR_CLI_COLOR = true;
     }
 
-    launch();
+    // Filter arguments out
+    var encoding = nextArg('encode', 'UTF-8');
+    var file = nextArg('exec', undefined);
+
+    if (file === undefined) {
+        for (var i = 2; i < process.argv.length; i++) {
+            if (process.argv[i][0] != '-') {
+                file = process.argv[i];
+                break;
+            }
+
+            if (isUnaryArg(process.argv[i])) i++;
+        }
+    }
+
+    launch($('repl'), file, encoding, nextArg('compile', undefined));
 }
 else {
     module.exports = require('./prog');
