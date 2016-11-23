@@ -17,6 +17,11 @@ import CheddarVariable from './var';
 
 import { DEFAULT_OP, DEFAULT_RHS_OP, DEFAULT_CAST } from './defaults';
 
+/**
+ * token: variable to set
+ * value: value to set
+ * iv: whether result should be wrapped
+ */
 function enforceset(token, value, iv) {
     let self;
 
@@ -84,7 +89,7 @@ export default class CheddarScope {
     static accessor(token) {
         let value = this.Scope.get(token);
 
-        if (value && value.Value) {
+        if (value && value.Value && token !== "self") {
             value.Value.Reference = token;
             value.Value.scope     = this;
         }
@@ -140,7 +145,7 @@ export default class CheddarScope {
             value = null;
         }
 
-        if (value && value.Value) {
+        if (value && value.Value && token !== "self") {
             value.Value.Reference = token;
             value.Value.scope     = this;
         }

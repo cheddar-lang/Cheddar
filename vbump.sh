@@ -29,10 +29,10 @@ normal=`tput sgr0`
 # Start the processs
 echo "Recieved affirmative signal to prepare release..."
 
-echo "Switching to ${bold}${LEADING_BRANCH}${normal} for version bump"
+echo "Switching to ${bold}${DEV_BRANCH}${normal} for version bump"
 echo;
 
-git checkout "$LEADING_BRANCH"
+git checkout "$DEV_BRANCH"
 
 # Do the actual version bump
 node -e 'var fs=require("fs"); fs.writeFileSync("package.json", fs.readFileSync("package.json", "utf8").replace(/("version".+?)(\d+)(?=")/, (_, s, v) => s + (+v + 1)))'
@@ -43,8 +43,14 @@ echo "Succesfully bumped version to ${bold}${VERSION}${normal}"
 echo;
 
 git add package.json
+git commit -S -s -m "version [bump]: Bumped version to $VERSION"
+
+echo "Switching to ${bold}${LEADING_BRANCH}${normal} for merge"
+echo;
+
+git checkout "$LEADING_BRANCH"
+
 git merge "$DEV_BRANCH"
-git commit -m "version [bump]: Bumped version to dev pre $VERSION"
 echo;
 
 echo "Sucesfully prepared release"

@@ -108,6 +108,12 @@ export default class CheddarFunction extends CheddarClass {
         return true;
     }
 
+    /**
+     * Executes a function given:
+     * input: array of arguments
+     * self: context to run function in
+     *   (i.e. item to set to `self`)  
+     */
     exec(input, self) {
         let scope = this.generateScope(input, self);
 
@@ -115,6 +121,8 @@ export default class CheddarFunction extends CheddarClass {
             return scope;
 
         let tmp;
+
+        // Detemine if body is JS Function, or Cheddar item
         if (typeof this.body === 'function') {
             return this.body(
                 scope,
@@ -122,12 +130,17 @@ export default class CheddarFunction extends CheddarClass {
                 input
             );
         } else {
+            // Determine if body is expression or block
             let executor = require(
                 this.body.constructor.name === "StatementExpression" ?
                 '../eval/eval' :
                 '../../exec'
             );
 
+            // Adjust Syntax Tree for proper excution pass:
+            //  1) Syntax Tree
+            //  2) Callback scope
+            //  3) Context data (for private variable accessing)
             let res = new executor(
                 this.body.constructor.name === "StatementExpression" ?
                 this.body :
@@ -136,6 +149,7 @@ export default class CheddarFunction extends CheddarClass {
                 this.data
             ).exec();
 
+            // Handle signals such as break and return
             if (res instanceof Signal) {
                 if (res.is(Signal.RETURN)) {
                     res = res.data;
@@ -147,21 +161,26 @@ export default class CheddarFunction extends CheddarClass {
     }
 
     generateScope(input, self) {
+        // The scope to inherit from (static)
         let args = new CheddarScope(this.inherited || null);
 
         let CheddarArray = require('../primitives/Array');
         let tmp;
 
+        // Set `self` variable is applicable
         if (self) {
             args.setter("self", new CheddarVariable(self, {
                 Writeable: false
             }));
         }
 
+        // TCO-self reference for recursion
+        // f in `n f -> ...`
         if (this.selfRef) {
             args.setter(this.selfRef, new CheddarVariable(this, {}))
         }
 
+        // Match and verify each argument
         for (let i = 0; i < this.args.length; i++) {
             tmp = this.args[i][1];
 
@@ -169,6 +188,7 @@ export default class CheddarFunction extends CheddarClass {
             if (!tmp) continue;
 
             if (tmp.Splat === true) {
+                // Put arugments as a Cheddar array
                 let splat = new CheddarArray();
                 splat.init(...input.slice(i));
 
@@ -176,10 +196,16 @@ export default class CheddarFunction extends CheddarClass {
                     splat
                 ));
 
+                // No other arguments should come over this
+                // This is enforced parse-time
                 break;
             }
             else if (input[i]) {
+                // No modifier so just perform valudation
+
                 if (tmp.Type) {
+                    // Check type, handles multiple allowed typed `[A, B]`
+                    //  throws applicable error
                     if (Array.isArray(tmp.Type)) {
                         if (!tmp.Type.some(
                             t => input[i] instanceof t
@@ -208,20 +234,28 @@ export default class CheddarFunction extends CheddarClass {
                         }`;
                     }
                 }
+
+                // Simply assigns variable
                 args.setter(this.args[i][0], new CheddarVariable(
                     input[i]
                 ));
             }
             else {
+                // If no value was passed, we're here
+
                 if (tmp.Optional === true) {
+                    // Since no value was passed, and it's optional, just set to null
                     args.setter(this.args[i][0], new CheddarVariable(
                         new NIL
                     ));
                 }
                 else if (tmp.Default) {
+                    let res = tmp.Default;
                     // If it's an expression
                     if (tmp.Default.constructor.name === "StatementExpression") {
-                        let res = new (require('../eval/eval'))(
+                        // Evaluate it in the current context
+                        // Gives access to such variables
+                        res = new (require('../eval/eval'))(
                             tmp.Default,
                             args
                         ).exec();
@@ -229,12 +263,11 @@ export default class CheddarFunction extends CheddarClass {
                         if (typeof res === 'string') {
                             return res;
                         }
-
-                        tmp.Default = res;
                     }
 
+                    // Set to resulting default value
                     args.setter(this.args[i][0], new CheddarVariable(
-                        tmp.Default
+                        res
                     ));
                 }
                 else {
