@@ -83,7 +83,9 @@ export default function(cheddar) {
 
                 // Read, the fd's contents from position `self.pos`
                 // to `buf` reading `bytes` bytes.
-                let bytes_read = fs.readSync(self.fd, buf, 0, bytes, self.pos);
+                console.log(self.fd);
+                let bytes_read = fs.readSync(self.fd, 1/*, buf, 0, bytes, self.pos)*/);
+                console.log(bytes_read);
 
                 // Increase amount of bytes read
                 self.pos += bytes_read;
