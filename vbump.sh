@@ -73,4 +73,5 @@ git checkout "$LEADING_BRANCH"
 echo;
 
 echo "Completed release preperation. Push with ${bold}git push --all --follow-tags${normal}"
+echo " ${LEADING_BRANCH} is protected so once the tests pass. Perform ${bold}git push origin master:master${normal}"
 echo;
