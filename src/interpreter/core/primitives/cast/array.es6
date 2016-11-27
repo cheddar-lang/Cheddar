@@ -9,14 +9,11 @@ export default new Map([
             Cast;
         for (let i = 0; i < self.value.length; i++) {
             Cast = self.value[i] && self.value[i].Cast ?
-                self.value[i].Cast.has('String') ||
-                self.value[i].Operator.has('repr') : false;
+                self.value[i].Cast.has('String') : false;
 
             if (Cast)
                 Stringified += (i ? ", " : "") + (
-                    self.value[i].Cast.has('String') ?
-                    self.value[i].Cast.get('String')(self.value[i]) :
-                    self.value[i].Operator.get('repr')(null, self.value[i])
+                    self.value[i].Cast.get('String')(self.value[i])
                 ).value;
             else
                 Stringified += (i ? ", " : "") + `<${self.value[i].constructor.Name || self.value[i].Name}>`;
