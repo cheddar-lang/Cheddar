@@ -6,15 +6,6 @@ import HelperInit from '../../../../helpers/init';
 import sprintf from '../../../../stdlib/ns/IO/sprintf';
 // == STRING ==
 export default new Map([
-    // Replace " with \"
-    //  and replace \
-    //  with \\s
-    ['repr', (_, LHS) => {
-        return HelperInit(LHS.constructor, '"' + LHS.value.replace(
-            /"|\\/g, "\\$&"
-        ) + '"');
-    }],
-
     // String concatenation
     //  using +, attempt to
     //  implicitly cast

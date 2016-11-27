@@ -11,12 +11,10 @@ export const DEFAULT_OP = new Map([
         if (!LHS || !LHS.Cast)
             return CheddarError.NO_OP_BEHAVIOR;
 
-        // Attempt to call `repr`, else, cast to string
+        // get the string representation
         let VAL = LHS.constructor.Name === 'String' ? LHS
                 : LHS.Cast.has('String')
                 ? LHS.Cast.get('String')(LHS)
-                : LHS.Operator.has('repr')
-                ? LHS.Operator.get('repr')(null, LHS)
                 : LHS;
 
 

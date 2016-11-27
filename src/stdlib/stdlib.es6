@@ -30,6 +30,7 @@ STDLIB.p("Symbol",  API.symbol);
 STDLIB.p("Regex",   API.regex);
 STDLIB.p("Number",  API.number);
 STDLIB.p("Array",   API.array);
+STDLIB.p("Dictionary", API.dictionary);
 STDLIB.p("Boolean", API.bool);
 STDLIB.p("Function", API.func);
 

@@ -30,7 +30,6 @@ export default class CheddarString extends CheddarClass {
             scope_ref_setter.call(this.scope_ref, path, res);
         };
 
-
         return true;
     }
 

@@ -56,7 +56,7 @@ echo;
 echo "Sucesfully prepared release"
 echo;
 
-git tag -a "$VERSION" -m "$VERSION"
+git tag -a "$VERSION"
 echo;
 
 echo "Created tag for ${bold}${VERSION}${normal}"

@@ -1,3 +1,4 @@
+import CheddarDictionary from '../interpreter/core/primitives/Dictionary';
 import CheddarString from '../interpreter/core/primitives/String';
 import CheddarSymbol from '../interpreter/core/primitives/Symbol';
 import CheddarNumber from '../interpreter/core/primitives/Number';
@@ -16,6 +17,7 @@ import CheddarClass from '../interpreter/core/env/class';
 import HelperInit from '../helpers/init';
 
 var API = {
+    dictionary: CheddarDictionary,
     string: CheddarString,
     symbol: CheddarSymbol,
     number: CheddarNumber,

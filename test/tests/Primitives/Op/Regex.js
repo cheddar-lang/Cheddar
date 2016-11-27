@@ -4,47 +4,47 @@ var expect = chai.expect;
 chai.should();
 
 describe('Regex', function() {
-    describe('repr', function() {
+    describe('String::', function() {
         it('should work', TestCheddarFrom.Code(
-            'print repr /.+/',
+            'print String::/.+/',
             '/.+/'
         ))
 
         it('should work with transpiled items', TestCheddarFrom.Code(
-            'print repr /(?<a>b)/',
+            'print String::/(?<a>b)/',
             '/(?<a>b)/'
         ))
 
         it('should work with flags', TestCheddarFrom.Code(
-            'print repr /(?<a>b)/gi',
+            'print String::/(?<a>b)/gi',
             '/(?<a>b)/gi'
         ))
     })
 
     describe('|', function() {
         it('should work', TestCheddarFrom.Code(
-            'print repr ( /a/ | /b/ )',
+            'print String::( /a/ | /b/ )',
             '/a|b/'
         ))
     })
 
     describe('+', function() {
         it('should work', TestCheddarFrom.Code(
-            'print repr ( /a/ + /b/ )',
+            'print String::( /a/ + /b/ )',
             '/ab/'
         ))
     })
 
     describe('-', function() {
         it('should work', TestCheddarFrom.Code(
-            'print repr ( /a/ - /b/ )',
+            'print String::( /a/ - /b/ )',
             '/(?!b)(?:a)/'
         ))
     })
 
     describe('*', function() {
         it('should work', TestCheddarFrom.Code(
-            'print repr ( /a/ * 3 )',
+            'print String::( /a/ * 3 )',
             '/(?:a){3}/'
         ))
     })

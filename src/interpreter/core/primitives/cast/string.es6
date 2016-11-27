@@ -18,7 +18,12 @@ export default new Map([
             return HelperInit(CheddarNumber, ...Attempt._Tokens);
         else
             return CheddarError.CAST_FAILED;
-    }]
+    }],
+    ['String', (self) => {
+        return HelperInit(self.constructor, '"' + self.value.replace(
+            /"|\\/g, "\\$&"
+        ) + '"');
+    }],
 ]);
 
 /*
