@@ -3,6 +3,7 @@
     "plugins": [
         "babel-plugin-transform-class-properties",
         "babel-plugin-add-module-exports",
-        "babel-plugin-compile-cheddar"
+        "babel-plugin-compile-cheddar",
+        "babel-plugin-tailcall-optimization"
     ]
 }
