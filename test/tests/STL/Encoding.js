@@ -19,7 +19,7 @@ describe('Encoding', function(){
         ))
     });
 
-    describe('shoco', function(){
+    /*describe('shoco', function(){
         it('should work with encode', TestCheddarFrom.Code(
             `print Array::Encoding.shoco.encode("Hello")`,
             `[72, 193, 77]`
@@ -34,5 +34,5 @@ describe('Encoding', function(){
             ``,
             ``
         ))
-    });
+    });*/
 });
