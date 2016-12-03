@@ -1,4 +1,4 @@
-export default (api) => ["vfuse", api.prop(new api.func(
+export default (api) => ["asLines", api.prop(new api.func(
     [],
     function(scope, input) {
         let self = input("self").value;
