@@ -1,0 +1,902 @@
+                                v1.0.1 -> v1.0.2                                
+================================================================================
+hotfix:
+ - Vihan B (e0af2b2) assignment: Fixed assignment with incorrect scope resolution
+
+
+                                v1.0.0 -> v1.0.1                                
+================================================================================
+feature:
+ - Vihan B (483ee2a) stdlib: Added `Function` to the standard library
+ - Vihan B (bc6d2d9) stdlib: `f#len` returns arity
+script:
+ - Vihan B (f33e3dd) version: Updated to reflect latest branch deployment
+
+
+                            v1.0.0-beta.57 -> v1.0.0                            
+================================================================================
+feature:
+ - Vihan   (04943d2) op: Added UD-Op backend
+ - Vihan B (6fb2a0a) class: Merged class development
+tests:
+ - Vihan B (f333f22) refactored: Refactored test structure
+
+
+                        v1.0.0-beta.56 -> v1.0.0-beta.57                        
+================================================================================
+feature:
+ - Vihan   (f90eb57) stdlib: Added padLeft function to strings
+ - Vihan   (fc81b6d) stdlib: Added dynamic STDLIB  items
+other:
+ - Vihan   (fc7eb60) Split parser and interpreter
+parser:
+ - Vihan B (126bdb5) update: Updated to parser v0.1.10
+
+
+                        v1.0.0-beta.55 -> v1.0.0-beta.56                        
+================================================================================
+feature:
+ - Vihan B (ea1b7d7) stdlib: Added `String#match` with regex
+ - Vihan B (6b79947) stdlib: Added `String#test` function for RegExp
+
+
+                        v1.0.0-beta.54 -> v1.0.0-beta.55                        
+================================================================================
+hotfix:
+ - Vihan (9ae89ff) for: Fixed retained scope within for iterations
+
+
+                        v1.0.0-beta.53 -> v1.0.0-beta.54                        
+================================================================================
+hotfix:
+ - Vihan (732d17b) comment: Fixed ambiguity between comments & regexes
+
+
+                        v1.0.0-beta.52 -> v1.0.0-beta.53                        
+================================================================================
+hotfix:
+ - Vihan (cdf7d19) op: Fixed equality operator with falsey values
+ - Vihan (d3c28f1) string: Fixed string parsing where closing `"` could be ommited
+
+
+                        v1.0.0-beta.51 -> v1.0.0-beta.52                        
+================================================================================
+hotfix:
+ - Vihan (9d2df29) equality: Fixed a bug with falsey equality values
+
+
+                        v1.0.0-beta.50 -> v1.0.0-beta.51                        
+================================================================================
+docs:
+ - Vihan (2a96c23) readme: Removed TODO list
+featre:
+ - Vihan (42e53b8) op: Added `a=>f` and `a/f`
+feature:
+ - Vihan (9d4851c) assign: Added implicit strict typing with `:=`
+
+
+                        v1.0.0-beta.49 -> v1.0.0-beta.50                        
+================================================================================
+feature:
+ - Vihan B (4333613) repl: Added version checking to REPL
+ - Vihan B (7e82d2e) cli: CLI program coloring
+ - Vihan   (857d6c2) string: Referenced evaluated accessors
+tests:
+ - Vihan   (af33a08) made: Added tests for `break`
+ - Vihan   (5a29f88) made: Added tests for STDLIB libs
+
+
+                        v1.0.0-beta.48 -> v1.0.0-beta.49                        
+================================================================================
+fix:
+ - Vihan (9ed9d67) prop: Function calls propogate errors
+
+
+                        v1.0.0-beta.47 -> v1.0.0-beta.48                        
+================================================================================
+feature:
+ - Vihan (7cfdbf3) op: Added tilde, bitwise NOT & reflexive
+
+
+                        v1.0.0-beta.46 -> v1.0.0-beta.47                        
+================================================================================
+fix:
+ - Vihan (d8b98b2) assignment: Fixed incorrect executor for assignment
+
+
+                        v1.0.0-beta.45 -> v1.0.0-beta.46                        
+================================================================================
+bin:
+ - Vihan B (ae1e1ca) cleanup: Errors when no arugment is passed
+change:
+ - Vihan   (f01e662) cycle: Cycle returns cycled object
+docs:
+ - Vihan B (c5591c5) readme: Switched coverage to leading branch
+feature:
+ - Vihan   (467610d) bonding: Functional side-dependent bonding works
+ - Vihan   (7b802c8) fop: Added unary functional operators
+ - Vihan   (4e6abbf) lambda: Added self-references
+tests:
+ - Vihan   (3d343a2) istanbul: Excluded other folders
+ - Vihan   (520ed9c) made: Added tests for new literals
+
+
+                        v1.0.0-beta.44 -> v1.0.0-beta.45                        
+================================================================================
+npm:
+ - Vihan (3278eb3) git: Fixed istanbul test
+
+
+                        v1.0.0-beta.43 -> v1.0.0-beta.44                        
+================================================================================
+npm:
+ - Vihan (00bd2f5) npmignore: Moved modules to local_modules
+other:
+ - Vihan (1ef9ece) Merge branch 'release-1.0.0' into develop
+
+
+                        v1.0.0-beta.41 -> v1.0.0-beta.43                        
+================================================================================
+npm:
+ - Vihan (a514fc0) npmignore: Npm was ignoring budled dep
+
+
+                        v1.0.0-beta.40 -> v1.0.0-beta.41                        
+================================================================================
+npm:
+ - Vihan (ea365a3) npmignore: Fixed npmignore npm installs
+other:
+ - Vihan (3db0495) Merge branch 'release-1.0.0' into develop
+
+
+                        v1.0.0-beta.39 -> v1.0.0-beta.40                        
+================================================================================
+npm:
+ - Vihan (e311576) npmignore: Fixed npmignore npm installs
+other:
+ - Vihan (20efc5b) Merge branch 'release-1.0.0' into develop
+
+
+                        v1.0.0-beta.38 -> v1.0.0-beta.39                        
+================================================================================
+change:
+ - Vihan B         (96883bb) o/c: Moved from static properties
+ - Vihan B         (95beedd) array: Minor arrays tweaks
+ - Vihan B         (1a1e0fe) cycle: Changed cycling format
+ - Vihan B         (4f62d48) func: Ommitable parens on single arg
+ - Vihan B         (badd816) func: Uses stable `nil`. From legacy `nil`
+ - Vihan B         (157b9d3) if: Required parenthesis
+ - Vihan           (9ea5444) cli: removed implicit out if printed
+cli:
+ - Vihan B         (0338a40) interfacing: Reveals stdlib to process
+ - Vihan B         (bd57e0f) interface: Interfacing returns data
+ - Vihan B         (6552fed) change: CLI internal overhaul
+ - Vihan B         (6db1ae1) repl: `exit` command didn't exit
+ - Vihan B         (68e48a1) fix: removed `node` prefix
+ - Vihan B         (fc33dd1) tty: Fixed critical tty bug
+ - Vihan B         (d91bbf9) sym: Installer uses symlinks
+ - Vihan B         (c98d3ea) realpath: Realpath works with npm cli
+ - Vihan B         (ff9008e) repl: Newlines now register
+ - Vihan B         (4ab3994) dev: dev CLI builds work
+ - Vihan B         (722e331) auto: Autostart works with dev builds
+deploy:
+ - Vihan B         (3fa2480) version: Version number updates on deployment
+ - Vihan B         (b904996) fixed: Auto-deploy now correctly works
+docs:
+ - Vihan B         (8ff9658) readme: Updated badges
+ - Vihan B         (9be4c1e) npm: Added description
+ - Vihan B         (fc5ecf8) roadmap: Checked of JS interfacing!
+feature:
+ - Vihan B         (4452eb5) fprop: Added Functionized Properties, externalized prop_eval
+ - Vihan B         (bb19bd9) dict: Added Dictionaries
+ - Vihan B         (886f55d) regex: Added escape, `c`, flag
+ - Vihan B         (6b238e0) regex: Added Regex matching
+ - Vihan B         (834b3a9) func: Added return statements
+ - Vihan B         (24f6ec2) func: Added func statement
+ - Vihan B         (c77294e) func: Added function default evaluation
+ - Vihan B         (6c1491d) op: `+` is defaulted to no-op
+ - Vihan B         (c74b436) func: Added bonding with `&`
+ - Vihan B         (00da550) op: Added `actually is` reference equality
+ - Vihan B         (d559005) symbols: Added symbols
+ - Vihan B         (209f44c) regex: Added regex literals
+ - Vihan B         (c6325af) string: Partial string formatting
+ - Vihan B         (daf4042) is: Added [`what`] `is` operators
+ - Vihan B         (91fcb41) signal: Signal runtime & break
+ - Vihan B         (b2a2e50) typing: Static typing in functions
+ - Vihan B         (c60ffe7) static: Assignment supports static typing
+ - Vihan B         (9616cfb) stream: Custom STDOUT streams
+ - Vihan B         (be03220) string: String escapes:
+ - Vihan B         (79ee2b9) ternary: Added ternary statement
+ - Vihan B         (28d958e) functionized operators: self-explanatory
+ - Vihan B         (2674aa8) for..of: Added for..of loops
+ - Vihan B         (1e9f79d) casting: Casting to self results in RHS
+ - Vihan B         (d6a6bde) init: Can now initalize functions
+ - Vihan B         (2260683) ternary: Basic ternary form
+ - Vihan           (4ab9f44) functions: Added function literal syntax
+fix:
+ - Vihan B         (fd608a9) assign: Fixed empty assignment
+ - Vihan B         (3c34f47) fop: Unary operators now parse
+ - Vihan B         (bfa912e) func: Fixed function recursion
+ - Vihan B         (28ffde8) string: Fixed string repetition with negative numbers
+ - Vihan B         (12b4766) array: Fixed various array tasks
+ - Vihan B         (3438f63) IO: include all the flags in regex for IO.sprintf
+ - Vihan B         (07a414b) is: is returned error when RHS was not class
+ - Vihan B         (d19eacf) fop: Greedy operator selection
+ - Vihan B         (16f6a90) expr: all I can say is [tag:blame-windows]
+ - Vihan B         (ee3fdc6) cli: CLI from PATH now correctly executes
+ - Vihan B         (2105943) cast: String -> Number casting fixed
+ - Vihan B         (f21a6cf) @": Fixed character range bug
+ - Vihan B         (e5853dc) tok: Fixed backtracking with expressions
+ - Vihan B         (6d29e36) precedence: add binary precedence for '^'
+ - Vihan B         (2735bca) ops: removed legacy `new` unary operator
+ - Vihan B         (b23318d) precedence: add unary precedence for '|>'
+ - Vihan B         (487db5c) ternary: Improper evaluation bug
+ - Vihan B         (f757a72) operator: add missing operator precedences
+ - Vihan B         (cdef440) operator: defined various logical operators
+ - Vihan B         (4ec671b) block: Vars can start with reserved names
+ - Vihan B         (80ab22b) novar: Allowed "NOVAR" property
+ - Vihan B         (627b7f9) empty: Allowed empty expressions
+ - Vihan B         (7975970) browser: Browser REPL fixes with deps
+ - Vihan B         (809a146) range: tests fixing!
+ - Vihan B         (c3a9a80) range: update tests
+ - Vihan B         (29a3b27) range: change symbol for range to `|>`, define monadic range as [0,n). Resolves #52 and resolves #43.
+ - Vihan B         (cf1fba8) eval: Fixed evaluation wrapping
+ - Vihan B         (0a4fe2b) LR #5: Solves LR in ( E ) + prop
+ - Vihan B         (1222514) overflow: Fixed lookbehind backtracking`
+ - Vihan B         (7cc7a45) tok: implicit semicolons now work
+ - Vihan B         (0feda9e) parser: parser now supports manual END
+git:
+ - Vihan B         (8eff340) todo: TODO list should not be tracked
+ - Vihan           (0fd2825) gitigonre: testing
+github:
+ - Vihan B         (dd2aa51) template: Golfed issue template
+interpreter:
+ - Vihan B         (9648a37) windows: added simple wrapper for recompiling
+merge:
+ - Vihan           (e686413) rational: Fixed merge conflicts
+npm:
+ - Vihan B         (49b62a9) update: Updated dependencies
+ - Vihan B         (55adb8f) npmignore: Added npmignore file for bin
+ - Vihan B         (705e5b5) data: Added more npm data
+ - Vihan B         (8324765) start: Added npm start script
+other:
+ - Vihan           (51dcefe) Merge branch 'merge-rational' into develop
+ - Vihan B         (024126d) String stdlib (#70)
+ - Vihan B         (40cbb30) removed cheddar.bat
+ - Vihan B         (2eb2d46) Improve spelling, grammar, and layout (#68)
+ - Vihan B         (6091cfd) version [bump]
+ - Vihan B         (781f01f) feature [functionized ops]
+ - Vihan B         (4ea2d4e) version [bump]
+ - LegionMammal978 (c5c6d07) today is the day
+ - LegionMammal978 (50e5530) reimplemented Rational API after nuke, merged release-1.0.0
+refactor:
+ - Vihan B         (fcbc555) assignment: Reassignment overhaul
+stdlib:
+ - Vihan           (79f90b5) encoding: Added various encodings
+ - Vihan B         (3713128) array: Created Array#sorted
+ - Vihan B         (0d70f52) array: Added Array#filter
+ - Vihan B         (877f94d) array: Added Array#any.
+ - Vihan B         (8c8e6ca) iter: Added #index()
+ - Vihan B         (d5bdff6) encoding: Added base64 encoding
+ - Vihan B         (92a769e) update: Updated both string & array
+ - Vihan B         (ef9fe6c) string: Added chunk function
+ - Vihan B         (7a6c20e) number: Added tobase
+ - Vihan B         (3890a12) fd: Improved fd writing & pos tracking
+ - Vihan B         (ea5db56) array: Added Array#all
+ - Vihan B         (76acf3e) array: Added Array#reduce
+ - Vihan B         (1f1b422) fd: Added fd#write
+ - Vihan B         (7f485e1) fd: Major fd overhaul
+ - Vihan B         (2f59fc0) array: Added `rand` getter
+ - Vihan B         (9b014af) array: Added `min`/`max`
+ - Vihan B         (88fc0f7) array: Added `sum` getter
+ - Vihan B         (ec8f29d) array: Added `slice`
+ - Vihan B         (2ef5f7d) read: Added `read` to readfile
+ - Vihan B         (0519649) bytes: Added String#bytes, maps .ord()
+ - Vihan B         (a77cc91) encding: Added encodings and buffers
+ - Vihan B         (3b96ffc) cheddar: access interfacing
+ - Vihan B         (62bf27f) interface: Object and fuction interfacing
+ - Vihan B         (4d39d84) cheddar: Internal interfacing
+ - Vihan B         (2ad620b) lines: String#lines returns split by \r?\n|\r
+tests:
+ - Vihan           (a10a199) made: Added Buffer & math NS tests
+ - Vihan           (19e8780) made: Added string & number tests
+ - Vihan           (b021271) made: Array proprety tests
+ - Vihan B         (187e4a9) coverage: Added codecov.yml for codecoving
+ - Vihan B         (61b5d10) made: General v1 tweak tests
+ - Vihan B         (fa49955) fix: updated to match req. paren
+tok:
+ - Vihan B         (f289822) vars: `$` is not a valid variable name
+travis:
+ - Vihan B         (ac18c70) npm: Added npm deployment
+windows:
+ - Vihan B         (a7c0902) interpreter: add cheddar.bat for executing files
+ - Vihan B         (c2027ca) interpreter: added .bat shorthands
+
+
+                        v1.0.0-beta.37 -> v1.0.0-beta.38                        
+================================================================================
+fix:
+ - Vihan (2715c2d) assign: Fixed empty assignment
+
+
+                        v1.0.0-beta.36 -> v1.0.0-beta.37                        
+================================================================================
+feature:
+ - Vihan (24fb94f) fprop: Added Functionized Properties, externalized prop_eval
+ - Vihan (a2bba57) dict: Added Dictionaries
+stdlib:
+ - Vihan (3005960) array: Created Array#sorted
+ - Vihan (4d19d1c) array: Added Array#filter
+ - Vihan (aac160d) array: Added Array#any.
+ - Vihan (bfcf147) iter: Added #index()
+
+
+                        v1.0.0-beta.35 -> v1.0.0-beta.36                        
+================================================================================
+change:
+ - Vihan (db96250) o/c: Moved from static properties
+feature:
+ - Vihan (9de57c0) regex: Added escape, `c`, flag
+ - Vihan (13a4981) regex: Added Regex matching
+ - Vihan (823c4f4) func: Added return statements
+ - Vihan (1d4bab4) func: Added func statement
+ - Vihan (1d869f1) func: Added function default evaluation
+fix:
+ - Vihan (481da30) fop: Unary operators now parse
+stdlib:
+ - Vihan (f41a2e6) encoding: Added base64 encoding
+
+
+                        v1.0.0-beta.34 -> v1.0.0-beta.35                        
+================================================================================
+stdlib:
+ - Vihan (015b394) update: Updated both string & array
+
+
+                        v1.0.0-beta.33 -> v1.0.0-beta.34                        
+================================================================================
+cli:
+ - Vihan (d3e5f88) interfacing: Reveals stdlib to process
+
+
+                        v1.0.0-beta.32 -> v1.0.0-beta.33                        
+================================================================================
+cli:
+ - Vihan (0ef9862) interface: Interfacing returns data
+npm:
+ - Vihan (9ab159a) update: Updated dependencies
+
+
+                        v1.0.0-beta.31 -> v1.0.0-beta.32                        
+================================================================================
+cli:
+ - Vihan (710cc33) change: CLI internal overhaul
+
+
+                        v1.0.0-beta.30 -> v1.0.0-beta.31                        
+================================================================================
+feature:
+ - Vihan (e150236) op: `+` is defaulted to no-op
+ - Vihan (38ab3ae) func: Added bonding with `&`
+stdlib:
+ - Vihan (24fb513) string: Added chunk function
+ - Vihan (0c0b546) number: Added tobase
+ - Vihan (6d4ee6b) fd: Improved fd writing & pos tracking
+ - Vihan (9907c96) array: Added Array#all
+
+
+                        v1.0.0-beta.29 -> v1.0.0-beta.30                        
+================================================================================
+fix:
+ - Vihan   (d67c1c4) func: Fixed function recursion
+ - Vihan B (eb542de) string: Fixed string repetition with negative numbers
+stdlib:
+ - Vihan B (15a67dc) array: Added Array#reduce
+
+
+                        v1.0.0-beta.28 -> v1.0.0-beta.29                        
+================================================================================
+cli:
+ - Vihan B (ffb72de) repl: `exit` command didn't exit
+
+
+                        v1.0.0-beta.27 -> v1.0.0-beta.28                        
+================================================================================
+change:
+ - Vihan Bhargava (6971778) array: Minor arrays tweaks
+ - Vihan Bhargava (b3f7d8b) cycle: Changed cycling format
+docs:
+ - Vihan Bhargava (051ab4e) readme: Updated badges
+fix:
+ - Vihan Bhargava (466ba65) array: Fixed various array tasks
+stdlib:
+ - Vihan Bhargava (680b95a) fd: Added fd#write
+ - Vihan Bhargava (655a7ef) fd: Major fd overhaul
+
+
+                        v1.0.0-beta.26 -> v1.0.0-beta.27                        
+================================================================================
+feature:
+ - Vihan Bhargava (e0cd39f) op: Added `actually is` reference equality
+other:
+ - GitHub         (37fa51b) String stdlib (#70)
+stdlib:
+ - Vihan Bhargava (78130f3) array: Added `rand` getter
+ - Vihan Bhargava (9d40089) array: Added `min`/`max`
+ - Vihan Bhargava (d0cbf5a) array: Added `sum` getter
+ - Vihan Bhargava (b352b88) array: Added `slice`
+tests:
+ - Vihan Bhargava (9d28ea1) coverage: Added codecov.yml for codecoving
+
+
+                        v1.0.0-beta.25 -> v1.0.0-beta.26                        
+================================================================================
+other:
+ - Vihan Bhargava (dda0d92) Merge remote-tracking branch 'origin/release-1.0.0' into string-stdlib
+ - Conor O'Brien  (8eda73e) added self inverse for ord operator
+
+
+                        v1.0.0-beta.24 -> v1.0.0-beta.25                        
+================================================================================
+feature:
+ - Vihan         (0ebecc5) symbols: Added symbols
+ - Vihan         (648553b) regex: Added regex literals
+ - Vihan         (da93659) string: Partial string formatting
+fix:
+ - Conor O'Brien (e197731) IO: include all the flags in regex for IO.sprintf
+other:
+ - Vihan         (da8a288) Merge branch 'develop' of https://github.com/cheddar-lang/Cheddar into develop
+ - Conor O'Brien (a607156) Merge branch 'develop' of https://github.com/cheddar-lang/Cheddar into develop
+ - Conor O'Brien (3d3c544) removed cheddar.bat
+stdlib:
+ - Vihan         (1062842) read: Added `read` to readfile
+
+
+                        v1.0.0-beta.23 -> v1.0.0-beta.24                        
+================================================================================
+feature:
+ - Vihan (b6c5e79) is: Added [`what`] `is` operators
+fix:
+ - Vihan (13faa10) is: is returned error when RHS was not class
+verison:
+ - Vihan (11a7eb1) bump: Bumped version to .24
+
+
+                        v1.0.0-beta.22 -> v1.0.0-beta.23                        
+================================================================================
+change:
+ - Vihan (f19671e) func: Ommitable parens on single arg
+
+
+                        v1.0.0-beta.21 -> v1.0.0-beta.22                        
+================================================================================
+fix:
+ - Vihan (418456b) fop: Greedy operator selection
+
+
+                        v1.0.0-beta.20 -> v1.0.0-beta.21                        
+================================================================================
+fix:
+ - Vihan (9f3206c) expr: all I can say is [tag:blame-windows]
+
+
+                        v1.0.0-beta.19 -> v1.0.0-beta.20                        
+================================================================================
+feature:
+ - Vihan (30663e3) signal: Signal runtime & break
+
+
+                       v1.0.0-beta.18.9 -> v1.0.0-beta.19                       
+================================================================================
+
+
+                      v1.0.0-beta.18.8 -> v1.0.0-beta.18.9                      
+================================================================================
+cli:
+ - Vihan (f3c28d1) fix: removed `node` prefix
+
+
+                      v1.0.0-beta.18.7 -> v1.0.0-beta.18.8                      
+================================================================================
+cli:
+ - Vihan (189c207) tty: Fixed critical tty bug
+
+
+                      v1.0.0-beta.18.6 -> v1.0.0-beta.18.7                      
+================================================================================
+cli:
+ - Vihan (71e4c92) sym: Installer uses symlinks
+
+
+                      v1.0.0-beta.18.5 -> v1.0.0-beta.18.6                      
+================================================================================
+cli:
+ - Vihan (e47b578) realpath: Realpath works with npm cli
+
+
+                      v1.0.0-beta.18.4 -> v1.0.0-beta.18.5                      
+================================================================================
+npm:
+ - Vihan (0d18749) npmignore: Added npmignore file for bin
+
+
+                      v1.0.0-beta.18.3 -> v1.0.0-beta.18.4                      
+================================================================================
+npm:
+ - Vihan (16c40c9) data: Added more npm data
+
+
+                      v1.0.0-beta.18.2 -> v1.0.0-beta.18.3                      
+================================================================================
+npm:
+ - Vihan (1a18bbf) start: Added npm start script
+
+
+                      v1.0.0-beta.18.1 -> v1.0.0-beta.18.2                      
+================================================================================
+other:
+ - Vihan          (87ff099) Merge branch 'release-1.0.0' into develop
+travis:
+ - Vihan Bhargava (b6a4289) npm: Added npm deployment
+
+
+                       v1.0.0-beta.18 -> v1.0.0-beta.18.1                       
+================================================================================
+docs:
+ - Vihan (4a18e29) npm: Added description
+
+
+                        v1.0.0-beta.17 -> v1.0.0-beta.18                        
+================================================================================
+change:
+ - Vihan (0301063) func: Uses stable `nil`. From legacy `nil`
+feature:
+ - Vihan (3c9e393) typing: Static typing in functions
+fix:
+ - Vihan (1241ba7) cli: CLI from PATH now correctly executes
+ - Vihan (89b4fcd) cast: String -> Number casting fixed
+other:
+ - Vihan (3b06df4) Merge remote-tracking branch 'origin/release-1.0.0' into develop
+ - Vihan (ef07a75) Improve spelling, grammar, and layout (#68)
+ - Vihan (be8c5cf) Merge branch 'release-1.0.0' into develop
+stdlib:
+ - Vihan (17822a1) bytes: Added String#bytes, maps .ord()
+ - Vihan (fc43e79) encding: Added encodings and buffers
+tests:
+ - Vihan (0fe93d2) made: General v1 tweak tests
+
+
+                        v1.0.0-beta.16 -> v1.0.0-beta.17                        
+================================================================================
+docs:
+ - Vihan (5002f6e) roadmap: Checked of JS interfacing!
+feature:
+ - Vihan (909870a) static: Assignment supports static typing
+fix:
+ - Vihan (4dffbe3) @": Fixed character range bug
+other:
+ - Vihan (8e0d90b) Merge branch 'feature-cheddar' into develop
+ - Vihan (e98e1c2) version [bump]
+refactor:
+ - Vihan (607fc31) assignment: Reassignment overhaul
+stdlib:
+ - Vihan (0be4363) cheddar: access interfacing
+ - Vihan (d539c04) interface: Object and fuction interfacing
+ - Vihan (92fad5a) cheddar: Internal interfacing
+tok:
+ - Vihan (6bc8e64) vars: `$` is not a valid variable name
+
+
+                        v1.0.0-beta.15 -> v1.0.0-beta.16                        
+================================================================================
+feature:
+ - Vihan         (9c4ce07) stream: Custom STDOUT streams
+fix:
+ - Vihan         (074e9af) tok: Fixed backtracking with expressions
+github:
+ - GitHub        (59d07ff) template: Golfed issue template
+other:
+ - Vihan         (01167e5) version [bump]
+ - GitHub        (fc147ea) Feature cheddar (#67)
+ - Vihan         (0a45be1) Merge remote-tracking branch 'origin/release-1.0.0' into develop
+ - Vihan         (41ca767) Merge branch 'develop' of https://github.com/cheddar-lang/Cheddar into develop
+ - Conor O'Brien (bbc7da6) Merge branch 'develop' of https://github.com/cheddar-lang/Cheddar into develop
+stdlib:
+ - Vihan         (86bc5a1) lines: String#lines returns split by \r?\n|\r
+windows:
+ - Conor O'Brien (2683eee) interpreter: add cheddar.bat for executing files
+
+
+                        v1.0.0-beta.14 -> v1.0.0-beta.15                        
+================================================================================
+feature:
+ - Vihan         (8afe533) string: String escapes:
+fix:
+ - Conor O'Brien (d4259c7) precedence: add binary precedence for '^'
+ - Vihan         (bed7a80) ops: removed legacy `new` unary operator
+ - Conor O'Brien (2177572) precedence: add unary precedence for '|>'
+interpreter:
+ - Conor O'Brien (b17448c) windows: added simple wrapper for recompiling
+other:
+ - Vihan         (1552c21) Merge branch 'feature-stresc' into develop
+ - Conor O'Brien (d203dc2) Merge branch 'develop' of https://github.com/cheddar-lang/Cheddar into develop
+ - Vihan         (4c15e52) Merge branch 'develop' of https://github.com/cheddar-lang/Cheddar into develop
+
+
+                        v1.0.0-beta.13 -> v1.0.0-beta.14                        
+================================================================================
+fix:
+ - Vihan         (f2da38d) ternary: Improper evaluation bug
+ - Conor O'Brien (9b24f9a) operator: add missing operator precedences
+ - Conor O'Brien (0da208d) operator: defined various logical operators
+ - Vihan         (08101ed) block: Vars can start with reserved names
+ - Vihan         (d8e54b4) novar: Allowed "NOVAR" property
+other:
+ - Vihan         (95788ce) Merge branch 'develop' of https://github.com/cheddar-lang/Cheddar into develop
+ - Conor O'Brien (61491e1) Merge branch 'develop' of https://github.com/cheddar-lang/Cheddar into develop
+windows:
+ - Conor O'Brien (2f2cb7b) interpreter: added .bat shorthands
+
+
+                        v1.0.0-beta.12 -> v1.0.0-beta.13                        
+================================================================================
+feature:
+ - Vihan         (4413f66) ternary: Added ternary statement
+ - Vihan         (1284a5a) functionized operators: self-explanatory
+ - Vihan         (e4bf02c) ternary: Basic ternary form
+fix:
+ - Vihan         (19eb795) empty: Allowed empty expressions
+ - Vihan         (4daa5a2) browser: Browser REPL fixes with deps
+ - Conor O'Brien (6c82e22) range: tests fixing!
+ - Conor O'Brien (e622057) range: update tests
+ - Conor O'Brien (98249c7) range: change symbol for range to `|>`, define monadic range as [0,n). Resolves #52 and resolves #43.
+git:
+ - Vihan         (64757aa) todo: TODO list should not be tracked
+other:
+ - Vihan         (78a8a12) Merge branch 'develop' into feature-ternary
+ - GitHub        (ecb2060) Merge pull request #60 from cheddar-lang/feature-funcop
+ - GitHub        (c3dad6a) Merge pull request #61 from cheddar-lang/fix-float-ranges
+ - Vihan         (7f83dfb) feature [functionized ops]
+
+
+                        v1.0.0-beta.11 -> v1.0.0-beta.12                        
+================================================================================
+cli:
+ - Vihan (0a3e0b1) repl: Newlines now register
+feature:
+ - Vihan (e0fd2aa) for..of: Added for..of loops
+other:
+ - Vihan (eff1b04) version [bump]
+
+
+                        v1.0.0-beta.10 -> v1.0.0-beta.11                        
+================================================================================
+bin:
+ - Vihan (59a8c9a) cleanup: Removed legacy clean up
+change:
+ - Vihan (4defe15) if: Required parenthesis
+cli:
+ - Vihan (d5fa671) dev: dev CLI builds work
+ - Vihan (66812f0) auto: Autostart works with dev builds
+deploy:
+ - Vihan (fa6d91b) version: Version number updates on deployment
+ - Vihan (dedea8a) fixed: Auto-deploy now correctly works
+feature:
+ - Vihan (54e0be4) casting: Casting to self results in RHS
+ - Vihan (5a19358) init: Can now initalize functions
+ - Vihan (2e094ef) var: Can now declare nil variables
+repl:
+ - Vihan (9fd242e) continuation: Ability for multiline REPL prompts
+tests:
+ - Vihan (ebaa6b2) fix: updated to match req. paren
+travis:
+ - Vihan (44ba74f) deploy: Encrypted auto-deployment
+
+
+                        v1.0.0-beta.9 -> v1.0.0-beta.10                         
+================================================================================
+fix:
+ - Vihan (1384dcb) eval: Fixed evaluation wrapping
+ - Vihan (d8f58a2) LR #5: Solves LR in ( E ) + prop
+ - Vihan (3aa23de) expr: Fixed empty expressions bug
+ - Vihan (0aa8798) +: Unary + on string would error
+stdlib:
+ - Vihan (6fb2f78) array: Better matrix support
+ - Vihan (6627f70) array: Better array joining
+ - Vihan (52ca626) rand: Added Math.rand for random functions
+
+
+                         v1.0.0-beta.8 -> v1.0.0-beta.9                         
+================================================================================
+op:
+ - Vihan (cfa08fe) string: String comparisons with < and >
+stdlib:
+ - Vihan (abe722b) v1: Bulk of v1 STDLIB
+
+
+                         v1.0.0-beta.7 -> v1.0.0-beta.8                         
+================================================================================
+stdlib:
+ - Vihan (9226f7f) array: Added array stdlib operations
+
+
+                         v1.0.0-beta.6 -> v1.0.0-beta.7                         
+================================================================================
+fix:
+ - Vihan (073e7e8) overflow: Fixed lookbehind backtracking`
+stdib:
+ - Vihan (9566ccc) api: Improved cheddar.from
+
+
+                         v1.0.0-beta.5 -> v1.0.0-beta.6                         
+================================================================================
+fix:
+ - Vihan (4d2ccf0) tok: implicit semicolons now work
+
+
+                         v1.0.0-beta.4 -> v1.0.0-beta.5                         
+================================================================================
+fix:
+ - Vihan (a7265e0) ops: Fixed various operator bugs
+ - Vihan (bd639cb) parser: parser now supports manual END
+
+
+                         v1.0.0-beta.3 -> v1.0.0-beta.4                         
+================================================================================
+cli:
+ - Vihan (ae9921e) argv: Arguments now limit to cheddar's
+feature:
+ - Vihan (cfd86b7) functions: Added lambda literals.
+stdlib:
+ - Vihan (925975e) math: Added Math.factor:
+
+
+                         v1.0.0-beta.2 -> v1.0.0-beta.3                         
+================================================================================
+feature:
+ - Vihan (cdd9820) stdin: Added STDIN to `$<n>` variables
+fix:
+ - Vihan (2bd1412) range: Fixed out of range accessing
+other:
+ - Vihan (31736a7) fix: Fixed tests in `length` -> `len`
+ - Vihan (c0d4550) feature: Evaluated accessors through [ ... ]
+stdlib:
+ - Vihan (f9d53c5) rev: Added `.rev` getter to string
+tests:
+ - Vihan (9340542) made: Added scope testing
+
+
+                         v1.0.0-beta.1 -> v1.0.0-beta.2                         
+================================================================================
+feature:
+ - Vihan (039b60c) bit shift: Implemented bit shifts
+ - Vihan (5a113c0) xor: implemented xor operator
+ - Vihan (a0871c2) nil: Added `nil` literal
+fix:
+ - Vihan (abea3ce) number: A `.` would output NaN
+ - Vihan (e2e9ced) number: Multiple blanks weren't allowed
+ - Vihan (52c6aea) binary: dyads' op behavior was unensured
+ - Vihan (365d33d) bool: Default global bool handling
+
+
+                         v0.2.0-alpha -> v1.0.0-beta.1                          
+================================================================================
+docs:
+ - Vihan    (8eacca6) readme: Add manual install information
+erroring:
+ - Vihan    (2de930d) reserved: reserved keywords now throw an error
+errors:
+ - Vihan    (ebaa545) syntax: syntax errors have had a facelift
+feature:
+ - Vihan    (b5f3777) IO: IO namespace added.
+ - Vihan    (27aa32f) methods: Method execution.
+ - Vihan    (b83c9a0) browserify: Can now build ot browser js
+ - Vihan    (175dadd) cli: Can now use `--update` flag on CLI
+ - Vihan    (876e607) assignment: Changed `:=` to `=` in deleration
+ - Vihan    (13f6640) repl: ^C or SIGINT, now exits cleanly
+ - Vihan    (8bce8a3) make: switched to makefile from grunt
+ - Vihan    (887c158) func: Functions now evaluate
+fix:
+ - Vihan    (febfcc6) TTY stdin: IO.prompt() errored on non-TTYs
+ - Vihan    (5be2469) scope: scope setting through prototype works
+ - Vihan    (11f6afc) lex.grammar: grammar now passes error indexes
+ - Vihan    (dcdde65) consts: Constants are now unoverideable
+ - Vihan    (91c8b60) assignment: Variables could be redeclared
+ - Vihan    (6db73ff) bool: Fixed painful boolean parsing and more
+ - Vihan    (c8e6392) cs: Call stack duplication on literals
+ - Vihan    (fdd1849) unary+prop: A long 4 hour parsing bug fix
+ - Vihan    (ce8c909) log: Removed log2 and log10 operators
+hotfix:
+ - Vihan    (7f061df) #55: certain keywords were acting reserved
+ - Vihan    (825c02c) repr: `repr` is called as (null, <value>)
+ - Vihan    (20dcbfd) string: String didn't verify type
+ - Vihan    (54f5783) math: Math lib was using legacy API
+ - Downgoat (54ed521) babel: Outdated dependency
+ - Vihan    (883d24c) make: Fixed missing grunt dependency
+merge:
+ - Vihan    (7d5d37b) develop: Merges dev changes to v0.3 branch
+other:
+ - Vihan    (2b64948) hotfix: Removed errant log
+ - Downgoat (7e1aacd) fixes: untangled one large interconnected mess of a bug
+props:
+ - Vihan    (4b93429) [gs]etters: Getters and Setters introduced
+refactor:
+ - Vihan    (eefca36) tests: Tests moved to ES5 & new scoping
+ - Vihan    (cd04732) make: Killed grunt, switched to make
+repl:
+ - Vihan    (fa6302c) colors: Made REPL more colorful
+ - Vihan    (f15e771) merge: Merged features between the REPLs
+stdlib:
+ - Vihan    (3b53b98) string: Added roadmapped String STDLIB items
+ - Vihan    (46c6f55) update: Abstracted responses
+ - Vihan    (0845923) linked: Linked STDLIB to REPL
+ - Vihan    (79c3a5c) math: created STDLIB libs for math
+tests:
+ - Vihan    (7b30fba) made: Added tests for String. & IO
+ - Downgoat (f780249) num.op: Finished number operators
+ - Downgoat (9d79c98) clean: Cleaned up redundant code, boosted coverage
+ - Downgoat (acb56c8) made: Bumped up coverage significantly
+travis:
+ - Vihan    (1bb666b) fix: Missed an `npm install`
+
+
+                          v0.1.2-alpha -> v0.2.0-alpha                          
+================================================================================
+cli:
+ - Vihan  (a5d3232) errors: minor tweaks here and there
+docs:
+ - Vihan  (6c3b4c5) badge: added codecov
+feature:
+ - Vihan  (cf01389) func: Created inital function execution
+ - Vihan  (13c2f4f) props: Recursive accessors are a thing
+hotfix:
+ - Vihan  (bdbc764) op: `::` had no precedence
+ - GitHub (807d3d3) casting: Fixed error in which casting error messages would improperly show (#11)
+merge:
+ - GitHub (fe7cb1d) PR #12: Accidentally commited v0.3 file
+other:
+ - Vihan  (f2390e5) revert: Accidentally commited v0.3 file
+ - Vihan  (0aaae7d) refactor: evaluation is now non-destructive
+stdlib:
+ - Vihan  (cf71c06) string: Critical failing hotfix.
+ - Vihan  (f0af220) string static: Created strings in STDLIB
+tests:
+ - Vihan  (c8ed06a) codeclimate: now directly submits results
+ - Vihan  (85dc085) codeclimate: Added codeclimate uploading/support
+ - Vihan  (46d0175) codecov: Added codecov uploading/support
+
+
+                          v0.1.1-alpha -> v0.1.2-alpha                          
+================================================================================
+hotfix:
+ - Vihan (30054cb) #7: atan function had no behavior
+
+
+                         v0.0.317-alpha -> v0.1.1-alpha                         
+================================================================================
+docs:
+ - GitHub   (de0e53c) badge: add david-dm badge for dependencies
+ - GitHub   (d1ccf12) badge: added coveralls badge
+feature:
+ - Vihan    (489439b) casting: Added support for casting operator `::`
+github:
+ - GitHub   (2b33a04) issues: Created issue templates
+hotfix:
+ - Vihan    (43f6bea) #6: range operator did not work
+ - Vihan    (902369c) install: Fixed installation bug where executor had insufficient permissions
+ - Vihan    (4c29c2b) #2: Ifs did not inherit their parent block's scope
+merge:
+ - Vihan    (39aaa98) tests->release-0.1a: Merges test changes with unit tests
+ - Vihan    (5b7468c) master->release-0.1a: Merged changes w/ r0.1a & @tests
+merge pr:
+ - Vihan    (e3d005a) #8: Added a globals file to import the Cheddar testing from, added unit tests for Number operators (#8)
+ - Vihan    (d13af19) #10: Fixed version
+other:
+ - Downgoat (6abd6f0) Added coveralls.yml for Coveralls coverage testing/support
+ - Vihan    (ea57570) release: v0.0.316-alpha (inital)
+tests:
+ - Downgoat (6ba6350) made: Made unit tests for literals
+ - Downgoat (73a4ee2) coveralls: configured, and setup for coveralls deployment
+ - Downgoat (19ad290) made: made unit tests, currently casting
+
+

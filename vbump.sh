@@ -34,6 +34,10 @@ echo;
 
 git checkout "$DEV_BRANCH"
 
+# Prepare changelog
+CHANGELOG="`./changelog.py --latest`"
+./changelog.py CHANGELOG
+
 # Do the actual version bump
 node -e 'var fs=require("fs"); fs.writeFileSync("package.json", fs.readFileSync("package.json", "utf8").replace(/("version".+?)(\d+)(?=")/, (_, s, v) => s + (+v + 1)))'
 VERSION=`node -e 'console.log("v" + require("./package.json").version)'`
@@ -43,7 +47,9 @@ echo "Succesfully bumped version to ${bold}${VERSION}${normal}"
 echo;
 
 git add package.json
-git commit -S -s -m "version [bump]: Bumped version to $VERSION"
+git commit -S -s -m "version [bump]: Bumped version to $VERSION
+
+$CHANGELOG"
 
 echo "Switching to ${bold}${LEADING_BRANCH}${normal} for merge"
 echo;
@@ -56,7 +62,7 @@ echo;
 echo "Sucesfully prepared release"
 echo;
 
-git tag -a "$VERSION"
+git tag -a "$VERSION" -m "$CHANGELOG"
 echo;
 
 echo "Created tag for ${bold}${VERSION}${normal}"
