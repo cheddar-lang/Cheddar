@@ -184,9 +184,9 @@ describe('Array.', function(){
         ))
     });
 
-    describe('vfuse', function(){
+    describe('asLines', function(){
         it('should work', TestCheddarFrom.Code(
-            `print [1, 2, 3, 4].vfuse`,
+            `print [1, 2, 3, 4].asLines`,
             `1\n2\n3\n4`
         ))
     });
