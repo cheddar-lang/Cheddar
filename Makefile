@@ -25,7 +25,7 @@ all: default
 # The default task
 # The **production** build
 default: $(JC)
-	$(JC) $(JCFLAGS) --minified
+	NODE_ENV=production $(JC) $(JCFLAGS) --minified --compact true
 	$(BIN_MAKE)
 
 # Development build task

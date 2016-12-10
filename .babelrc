@@ -6,5 +6,12 @@
         "babel-plugin-compile-cheddar",
         "babel-plugin-tailcall-optimization",
         "babel-plugin-loop-optimizer"
-    ]
+    ],
+    "env": {
+        "production": {
+            "plugins": [
+                "babel-plugin-strip-checks"
+            ]
+        }
+    }
 }
