@@ -1,6 +1,5 @@
 import CheddarClass from '../env/class';
 
-import CheddarEval from '../eval/eval';
 import { KEY_INTERNAL } from '../consts/dict';
 
 import BehaviorOperator from './op/dict';
@@ -12,6 +11,7 @@ import CheddarVariable from '../env/var';
 import CheddarScope from '../env/scope';
 
 function evaluate(item, scope) {
+    var CheddarEval = require( '../eval/eval' );
     return new CheddarEval({ _Tokens: [item] }, scope).exec();
 }
 
