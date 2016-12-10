@@ -33,6 +33,11 @@ describe('Assignment', function() {
             `let a := 1; a = 2`,
             ''
         ))
+
+        it('should work with predefined to nil', TestCheddarFrom.Code(
+            `let a; print a`,
+            'nil'
+        ))
     })
 
     describe('reassignment', function() {

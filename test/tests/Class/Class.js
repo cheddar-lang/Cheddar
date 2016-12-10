@@ -13,6 +13,7 @@ My dog's age is 3
 Created an animal named Downgoat
 Max
 Downgoat
-U CANT FUSE ANIMALS TOGETHER SILLY`
+U CANT FUSE ANIMALS TOGETHER SILLY
+YOU CANT NEGATE ANIMALS SILLY`
     ))
 });
