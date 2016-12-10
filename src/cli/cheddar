@@ -47,14 +47,28 @@ function launch(dorepl, prog, encoding, compiledFile) {
 
 var _ = {
     version: [["v", "version"], " Prints Cheddar version"],
-    exec:    [["x", "exec"], "    Executes a pre-compiled Cheddar file (*.cdr)."],
-    compile: [["o", "out"], "     Output of compiled *.cdr"],
+    exec:    [["x", "exec"], "    Executes a Cheddar file."],
+    compile: [["o", "out"], "     Outputs a compiled cdr file"],
     encode:  [["g", "encoding"], "Encoding to read program as."],
     repl:    [["i", "repl"], "    Enters the Cheddar REPL"],
     safe:    [["s", "safe"], "    Disables unsafe libraries"],
     nocolor: [["no-color"],  "    Removed ANSI colors from output"],
     help:    [["h", "help"], "    Prints this help dialouge"],
 };
+
+var prettyPrint = [
+    'version',
+    'help', '',
+
+    'exec',
+    'repl',
+    'compile', '',
+
+    'encode',
+    'safe', '',
+
+    'nocolor'
+];
 
 var unaryArg = [ 'compile', 'encode', 'exec' ];
 
@@ -100,6 +114,8 @@ function error(text, data) {
 
 function preCompile(code) {
     var tokenizer = require('cheddar-parser/dist/tok');
+    var msgpack = require('msgpack5')();
+
     var tok = new tokenizer(code, 0);
     var ast = tok.exec();
     if (!(ast instanceof tokenizer)) {
@@ -108,17 +124,25 @@ function preCompile(code) {
         error(HelperCaret(code, tok.Index, global.CHEDDAR_CLI_COLOR));
         process.exit(1);
     }
-    return require('babel-generator').default(require('babel-plugin-compile-cheddar/lib/valueToNode').default(ast), { compact: true }).code;
+    return msgpack.encode(
+        JSON.parse(require('babel-generator').default(require('babel-plugin-compile-cheddar/lib/valueToNode').default(ast), { compact: true }).code)
+    );
+}
+
+function execCompile(str) {
 }
 
 if (!module.parent) {
 
     if ($('help')) {
         var args = [];
-        Object.keys(_).map(function(i) { args.push( _[i] ) });
+        prettyPrint.map(function(i) {
+            args.push( i ? _[i] : i )
+        });
         console.log("Usage: cheddar [options] [file.cheddar | -x file.cdr] [arguments]\n\n" +
 "Options:\n" +
 args.map(function(arg) {
+    if (!arg) return "  ";
     return "  " + (
         arg[0][1] ? "-" + arg[0][0] + ", --" + arg[0][1] :
         "--" + arg[0][0]
