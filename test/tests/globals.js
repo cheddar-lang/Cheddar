@@ -1,6 +1,6 @@
 var chai    = require('chai');
-var cheddar = require('../../src/cli/prog');
-var api     = require('../../src/stdlib/api')
+var cheddar = require('../../src/cheddar/cli/prog');
+var api     = require('../../src/cheddar/stdlib/api')
 var fs      = require('fs');
 var path    = require('path');
 

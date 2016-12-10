@@ -31,13 +31,13 @@
     "xregexp": "^3.1.1"
   },
   "bin": {
-    "cheddar": "dist/cli/cheddar"
+    "cheddar": "dist/cheddar/cli/cheddar"
   },
   "scripts": {
     "prepublish": "make",
     "build": "make build",
     "test": "make test",
-    "start": "./dist/cli/cheddar",
+    "start": "./dist/cheddar/cli/cheddar",
     "coveralls": "make test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "browser_build": "make browser_build"
   },
@@ -62,7 +62,7 @@
     "npm": "^3.10.6",
     "remap-istanbul": "^0.6.4"
   },
-  "main": "dist/cli/cheddar",
+  "main": "dist/cheddar/cli/cheddar",
   "directories": {
     "test": "test"
   },

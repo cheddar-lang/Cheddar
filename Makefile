@@ -42,7 +42,7 @@ install: ./bin/install
 # Runs browser_repl build for web REPL
 # Uses browserify to compiled babelified code
 browser_build: $(JC)
-	$(PREFIX)/browserify dist/cli/browser_repl.js -o Cheddar.js
+	$(PREFIX)/browserify dist/cheddar/cli/browser_repl.js -o Cheddar.js
 
 # Performs testing, including coverage
 # At the moment uses mocha for testing
