@@ -1,3 +1,6 @@
 [submodule "include/v8"]
 	path = include/v8
 	url = https://chromium.googlesource.com/v8/v8.git
+[submodule "include/nan"]
+	path = include/nan
+	url = https://github.com/nodejs/nan

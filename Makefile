@@ -9,7 +9,7 @@ OUT=dist/
 # The flags to pass to the compiler
 JCFLAGS=$(SRC) -d $(OUT)
 # The binary files to copy
-BIN=cli/cheddar
+BIN=cheddar/cli/cheddar
 EXE=cheddar
 BIN_MAKE=$(foreach BIN_FILE,$(BIN),chmod 755 $(SRC)$(BIN_FILE) && cp $(SRC)$(BIN_FILE) $(OUT)$(BIN_FILE)${\n})
 
