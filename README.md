@@ -25,21 +25,27 @@
   </p>
 </p>
 
+## Developing
+
+Development for cheddar is described [in detail on the docs](https://docs.cheddar.vihan.org/Developing/). But first, to clone the cheddar repository, use the following:
+
+```sh
+$ git clone --recursive https://github.com/cheddar-lang/Cheddar.git
+```
+
+Additionally, when _syncinc_ your branch with the latest update to `develop`, use the following command to avoid merge commmits:
+
+```sh
+$ git rebase develop -X theirs
+```
+
+Once your changes are ready to merge, submit a PR to the `develop` branch where it'll be reviewed and then merged if applicable
+
 ## Manual Installation
 
 Manual installation is simple. The only dependencies you must have are [git](https://git-scm.com) and [nodejs + npm](https://nodejs.org/en/). Additionally you should have [make](https://www.gnu.org/software/make/) (preferably GNU), but this comes by default on almost every *nix system.
 
- - The first step is to clone the repository from GitHub:
-
-  ```bash
-$ git clone https://github.com/cheddar-lang/Cheddar.git && cd Cheddar
-```
-
-  **Note:** If you want to clone a specific branch (e.g. develop for development), use the following command:
-
-  ```bash
-$ git clone -b <branch> https://github.com/cheddar-lang/Cheddar.git && cd Cheddar
-```
+ - First, refer to the "Development" section for cloning the Cheddar repository.
 
  - The next step is to install the dependencies with npm. An automatic build should trigger if dependencies are installed succesfully. Once this command is finished you should see a `dist/` directory created. If you don't, look for any errors in the installation.
 
