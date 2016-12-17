@@ -46,5 +46,5 @@ export default class CheddarRegex extends CheddarClass {
     }
 
     Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator])
-    Cast = BehaviorCast;
+    Cast = new Map([...CheddarClass.Cast, ...BehaviorCast]);
 }

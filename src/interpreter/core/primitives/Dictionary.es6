@@ -74,7 +74,7 @@ export default class CheddarDictionary extends CheddarClass {
     }
 
     Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
-    Cast = BehaviorCast;
+    Cast = new Map([...CheddarClass.Cast, ...BehaviorCast]);
 }
 
 //CheddarDictionary.Scope = require('../../../stdlib/primitive/Dictionary/static');

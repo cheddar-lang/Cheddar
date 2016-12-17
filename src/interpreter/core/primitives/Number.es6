@@ -29,7 +29,7 @@ export default class CheddarNumber extends CheddarClass {
     }
 
     Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
-    Cast = BehaviorCast;
+    Cast = new Map([...CheddarClass.Cast, ...BehaviorCast]);
 
     get Scope() {
         return require('../../../stdlib/primitive/Number/lib');

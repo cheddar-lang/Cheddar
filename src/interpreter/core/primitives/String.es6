@@ -37,7 +37,7 @@ export default class CheddarString extends CheddarClass {
     //  meaning operators can have directly
     //  defined behavior
     Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
-    Cast = BehaviorCast;
+    Cast = new Map([...CheddarClass.Cast, ...BehaviorCast]);
 
     eval_accessor(type) {
         let val = type.value;

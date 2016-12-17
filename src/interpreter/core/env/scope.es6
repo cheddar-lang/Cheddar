@@ -120,6 +120,7 @@ export default class CheddarScope {
 
     }
 
+    static Cast = DEFAULT_CAST;
     Cast = DEFAULT_CAST;
 
     // Enforces typing

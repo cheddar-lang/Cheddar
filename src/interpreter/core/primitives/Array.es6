@@ -92,7 +92,7 @@ export default class CheddarArray extends CheddarClass {
     //  meaning operators can have directly
     //  defined behavior
     Operator = new Map([...CheddarClass.Operator, ...BehaviorOperator]);
-    Cast = BehaviorCast;
+    Cast = new Map([...CheddarClass.Cast, ...BehaviorCast]);
 }
 
 CheddarArray.Scope = require('../../../stdlib/primitive/Array/static');
