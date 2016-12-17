@@ -20,7 +20,13 @@ export default class CheddarArray extends CheddarClass {
         this.scope_ref = new CheddarScope();
         let scope_ref_setter = this.scope_ref.setter;
         this.scope_ref.setter = (path, res) => {
-            this.value[+path] = res.Value;
+            let index = +path;
+            // Fill in empty items
+            while (this.value.length < index) {
+                this.value.push(new NIL);
+            }
+
+            this.value[index] = res.Value;
             scope_ref_setter.call(this.scope_ref, path, res);
         };
 
@@ -70,7 +76,7 @@ export default class CheddarArray extends CheddarClass {
             if (val < 0) val = this.value.length + val;
             let v = this.value[val];
 
-            if (!v) return new CheddarVariable(new NIL);
+            if (!v) v = new CheddarVariable(new NIL);
 
             v.scope = this.scope_ref;
             v.Reference = val + "";

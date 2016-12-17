@@ -62,7 +62,7 @@ export default class CheddarDictionary extends CheddarClass {
         // Go ahead and grab token
         let val = this.value.get(toRepr(token));
 
-        if (!val) return new CheddarVariable(new NIL);
+        if (!val) val = new CheddarVariable(new NIL);
 
         // Scope boilerplate
         val.scope = this.scope_ref;

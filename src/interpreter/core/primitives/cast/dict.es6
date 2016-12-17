@@ -38,11 +38,11 @@ export default new Map([
                 }
             );
 
-            string += `\n  ${k}: ${v}`;
+            string += `\n  ${k}: ${v},`;
         });
 
         if (!string) return HelperInit(CheddarString, "[:]");
 
-        return HelperInit(CheddarString, `[${string}\n]`);
+        return HelperInit(CheddarString, `[${string.substring(0, string.length - 1)}\n]`);
     }]
 ]);
