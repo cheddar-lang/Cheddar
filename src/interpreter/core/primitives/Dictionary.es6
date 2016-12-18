@@ -25,26 +25,28 @@ export default class CheddarDictionary extends CheddarClass {
     init(dict) {
         this.value = new Map();
 
-        // Dictionary entries [ktok, vtok]
-        let entries = dict._Tokens;
-        let entry;
+        if (dict) {
+            // Dictionary entries [ktok, vtok]
+            let entries = dict._Tokens;
+            let entry;
 
-        // Evaluate & move to `this.value`
-        for (var i = 0; i < entries.length; i++) {
-            entry = entries[i]._Tokens;
-            let tok_key = evaluate(entry[0], this.scope);
+            // Evaluate & move to `this.value`
+            for (var i = 0; i < entries.length; i++) {
+                entry = entries[i]._Tokens;
+                let tok_key = evaluate(entry[0], this.scope);
 
-            if (typeof tok_key === "string") {
-                return tok_key;
+                if (typeof tok_key === "string") {
+                    return tok_key;
+                }
+
+                let tok_value = evaluate(entry[1], this.scope);
+
+                if (typeof tok_value === "string") {
+                    return tok_value;
+                }
+
+                this.value.set(toRepr(tok_key), tok_value);
             }
-
-            let tok_value = evaluate(entry[1], this.scope);
-
-            if (typeof tok_value === "string") {
-                return tok_value;
-            }
-
-            this.value.set(toRepr(tok_key), tok_value);
         }
 
         // evaluated accessor boilerplate
@@ -62,7 +64,7 @@ export default class CheddarDictionary extends CheddarClass {
         // Go ahead and grab token
         let val = this.value.get(toRepr(token));
 
-        if (!val) val = new CheddarVariable(new NIL);
+        if (!val) val = new NIL;
 
         // Scope boilerplate
         val.scope = this.scope_ref;

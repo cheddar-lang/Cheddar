@@ -76,7 +76,7 @@ export default class CheddarArray extends CheddarClass {
             if (val < 0) val = this.value.length + val;
             let v = this.value[val];
 
-            if (!v) v = new CheddarVariable(new NIL);
+            if (!v) v = new NIL;
 
             v.scope = this.scope_ref;
             v.Reference = val + "";
