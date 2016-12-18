@@ -14,7 +14,7 @@ export default class CheddarFor {
 
     exec() {
         // Create `for`'s scope, inherits from parent
-        let SCOPE;
+        let SCOPE = this.scope;
 
         // Determine whether for..in or for (a; b; c)
         // 4 tokens === for..in

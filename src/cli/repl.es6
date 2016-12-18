@@ -144,7 +144,10 @@ The following commands are available:
 		else if (!Output) {
 			console.log(String(Output).red);
 		} else if (!printed) {
-			if (Output && Output.Cast && (
+            if (Output instanceof NIL) {
+                // do nothing?
+            }
+            else if (Output && Output.Cast && (
 					Output.Operator.has('repr') ||
 					Output.Cast.has('String'))) {
 
@@ -157,9 +160,6 @@ The following commands are available:
 				}
 				console.log(txt.magenta);
 			}
-            else if (Output instanceof NIL) {
-                // do nothing?
-            }
 			else if (Output instanceof CheddarScope) {
 				console.log(`< Instance of "${Output.constructor.Name}" >`.cyan);
 			}
