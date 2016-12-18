@@ -19,6 +19,6 @@ export default new Map([
     require('./lib/chunk')(api),
     require('./lib/test')(api),
     require('./lib/match')(api),
-
-    api.src(__COMPILE_SRC('./native/padleft.cheddar'))
+    require('./lib/exec')(api),
+    require('./lib/center')(api),
 ]);
