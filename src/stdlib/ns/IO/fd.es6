@@ -105,7 +105,7 @@ export default function(cheddar) {
                 ["position", {
                     Type: cheddar.number,
                     // Default to 0 or start of file
-                    Default: cheddar.init(cheddar.number, 10, 0, 0)
+                    Default: cheddar.init(cheddar.number, 10, 0, NaN)
                 }]
             ], function(scope, input) {
                 // The file descriptor object
@@ -140,7 +140,10 @@ export default function(cheddar) {
                     // Perform the write
                     // write `writing` to self.fd
                     // position is at `position`, default 0
-                    fs.writeSync(self.fd, writing, position);
+                    if (isNaN(position))
+                        fs.writeSync(self.fd, writing);
+                    else
+                        fs.writeSync(self.fd, writing, position);
                 } catch(e) {
                     // TODO: handle this error better
                     return `Could not write,  error ${e.code}`;

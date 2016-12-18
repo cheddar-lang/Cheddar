@@ -7,5 +7,8 @@ export default function(cheddar) {
         ["open", cheddar.var(require("./IO/open")(cheddar))],
         ["stdin", cheddar.var(require("./IO/stdin")(cheddar))],
         ["fd", cheddar.var(require("./IO/fd")(cheddar))],
+        ["rm", cheddar.var(require("./IO/rm")(cheddar))],
+        ["rmdir", cheddar.var(require("./IO/rmdir")(cheddar))],
+        ["exec", cheddar.var(require("./IO/exec")(cheddar))],
     ]);
 }
