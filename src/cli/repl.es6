@@ -74,9 +74,11 @@ GLOBAL_SCOPE.Scope = stdlib;
 let STDIN;
 let resume;
 let printed = false;
+let trailingNewline = false;
 
 function print(text) {
 	process.stdout.write(text);
+    trailingNewline = text[text.length - 1] === "\n";
 	printed = true;
 }
 
@@ -128,7 +130,7 @@ The following commands are available:
 	}
 
 	resume = false;
-	REPL.setPrompt(PROMPT)
+	REPL.setPrompt(PROMPT);
 
 	let Executor = new cheddar(Result, GLOBAL_SCOPE);
 	let Output = Executor.exec({
@@ -138,9 +140,6 @@ The following commands are available:
 	if (Output) {
 		if (typeof Output === "string") {
 			REPL_ERROR(Output, "Runtime Error");
-		}
-		else if (Output instanceof NIL) {
-			// do nothing?
 		}
 		else if (!Output) {
 			console.log(String(Output).red);
@@ -158,6 +157,9 @@ The following commands are available:
 				}
 				console.log(txt.magenta);
 			}
+            else if (Output instanceof NIL) {
+                // do nothing?
+            }
 			else if (Output instanceof CheddarScope) {
 				console.log(`< Instance of "${Output.constructor.Name}" >`.cyan);
 			}
@@ -170,7 +172,9 @@ The following commands are available:
 			else {
 				console.log(`< Unprintable object of class "${Output.constructor.name.magenta}" with literal value ${Output.magenta} >`.cyan);
 			}
-		}
+		} else if (!trailingNewline) {
+            console.log();
+        }
 	}
 
 	REPL.prompt();
