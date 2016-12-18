@@ -1,3 +1,20 @@
+                                v1.0.2 -> v1.0.3                                
+================================================================================
+change:
+ - Vihan B (ec956b7) stdlib: renamed `vfuse` to `asLines`
+feature:
+ - Vihan B (8d75286) hook: Added interrpeter step hooks
+ - Vihan B (913e574) changelog: Added changelog
+ - Vihan   (9376c8e) dict: Added eval_accessor to dicts, abandoned `repr`
+fix:
+ - Vihan B (284058b) noop: Removed buggy noop op (`+`).
+git:
+ - Vihan B (e05819f) vbump: Adjusted vbump script for verification
+optimize:
+ - Vihan B (3d10b87) loop: Loops are now converted to `for`s
+ - Vihan B (e00c048) TCO: Performed internal tail-call optimization
+
+
                                 v1.0.1 -> v1.0.2                                
 ================================================================================
 hotfix:
