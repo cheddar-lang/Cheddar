@@ -1,0 +1,99 @@
+//
+// Cheddar changelog generator
+// (c) cheddar-lang 2016-
+// 
+// Outputs information including:
+//   - Change type
+//   - Change author
+//   - Change description
+//   - Change hash
+//
+
+// Constants
+
+const ITEM_LENGTH := 80;
+const INDENT := ' - ';
+
+// Objects
+class Commit(
+    public string: author,
+    public string: email,
+    public string: hash,
+    public string: change
+) {}
+
+// Heavy lifting functions
+func getlog(start, end) {
+    return (
+        String::IO.exec("git log %s..%s --format=%cn%n%ce%n%h%n%s" % start % end)
+    ).lines.filter(line -> line).chunk(4).map(
+        item -> Commit { item[0], item[1], item[2], item[3] }
+    );
+}
+
+// Handle command-line args
+let logoutput = cheddar.argc.len > 2 ? cheddar.argv[2] : "/dev/stdout";
+
+// Get tags
+let tags := (
+    String::IO.exec( "git for-each-ref --sort=taggerdate --format '%(tag)'")
+).lines.filter(i -> i).rev;
+
+let output := IO.open(logoutput, "a");
+
+for (let i = 0; i < tags.len - 1; i += 1) {
+    let former = tags[i + 1];
+    let latter = tags[i];
+
+    let logItems = getlog(former, latter);
+    let longestAuthor = logItems.reduce((a, b) -> a.author.len > b.author.len ? a : b, 0).author.len;
+
+    output.write(
+        (former + " -> " + latter).center(80) + "\n"
+    );
+
+    output.write( "=" * 80 + "\n");
+
+    // Handle commits
+    let commits = [
+        "other": []
+    ];
+
+    let categories = [ ];
+    for (item in logItems) {
+        let details = item.change.exec(/^(.+?) \[(.+?)\]: (.+)/g);
+
+        let name;
+        let value;
+
+        if (details['1']) {
+            name = details['1'].lower;
+            item.change = "%s: %s" % details['2'] % details['3'];
+            if (commits[name]) {
+                commits[name].push(item);
+            } else {
+                categories.push(name);
+                commits[name] = [ item ];
+            }
+        } else {
+            // Unstandard commit
+            commits["other"].push(item);
+
+            if (!( categories has "other" )) {
+                categories.push("other");
+            }
+        }
+    }
+
+    for (category in categories.sorted) {
+        output.write(category + ":\n");
+
+        for (item in commits[category]) {
+            output.write(INDENT + IO.sprintf("%-*s", longestAuthor, item.author) + " (%s) %s\n" % item.hash % item.change);
+        }
+    }
+
+    output.write("\n\n");
+}
+
+output.close();

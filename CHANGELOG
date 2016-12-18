@@ -1,3 +1,24 @@
+                                v1.0.3 -> v1.0.4                                
+================================================================================
+docs:
+ - Vihan B (4ce9df5) readme: Added cloning information
+feature:
+ - Vihan B (85f64e3) cast: Added global casts to primitives
+ - Vihan B (edd07a9) cli: Added pre-compiled cheddar option
+ - Vihan B (e53b48b) cli: Revamped CLI execution
+hotfix:
+ - Vihan B (13f9bdb) for: Fixed for..in unset scope
+ - Vihan B (75b5f45) printf: Fixed printf in REPL.
+ - Vihan B (c0927c8) iterable: Fixes bug where new keys couldn't be created
+ - Vihan B (c579928) dict: Fixed circular dependencies with Dictionaries
+optimize:
+ - Vihan B (72a05a5) class: Added `strip-checks` plugin
+tests:
+ - Vihan B (1808332) made: Added Dictionary tests
+version:
+ - Vihan B (5ad1b2a) bump: Bumped version to v1.0.4
+
+
                                 v1.0.2 -> v1.0.3                                
 ================================================================================
 change:
@@ -13,12 +34,16 @@ git:
 optimize:
  - Vihan B (3d10b87) loop: Loops are now converted to `for`s
  - Vihan B (e00c048) TCO: Performed internal tail-call optimization
+version:
+ - Vihan B (806d514) bump: Bumped version to v1.0.3
 
 
                                 v1.0.1 -> v1.0.2                                
 ================================================================================
 hotfix:
  - Vihan B (e0af2b2) assignment: Fixed assignment with incorrect scope resolution
+version:
+ - Vihan B (965998f) bump: Bumped version to v1.0.2
 
 
                                 v1.0.0 -> v1.0.1                                
@@ -28,6 +53,8 @@ feature:
  - Vihan B (bc6d2d9) stdlib: `f#len` returns arity
 script:
  - Vihan B (f33e3dd) version: Updated to reflect latest branch deployment
+version:
+ - Vihan B (57f552a) bump: Bumped version to dev pre v1.0.1
 
 
                             v1.0.0-beta.57 -> v1.0.0                            
@@ -37,6 +64,8 @@ feature:
  - Vihan B (6fb2a0a) class: Merged class development
 tests:
  - Vihan B (f333f22) refactored: Refactored test structure
+version:
+ - Vihan B (3c9489d) bump: Set to release v1.0.0
 
 
                         v1.0.0-beta.56 -> v1.0.0-beta.57                        
@@ -48,6 +77,8 @@ other:
  - Vihan   (fc7eb60) Split parser and interpreter
 parser:
  - Vihan B (126bdb5) update: Updated to parser v0.1.10
+version:
+ - Vihan B (8fe41e0) bump: Bumped version to dev pre v1.0.0-beta.57
 
 
                         v1.0.0-beta.55 -> v1.0.0-beta.56                        
@@ -55,18 +86,24 @@ parser:
 feature:
  - Vihan B (ea1b7d7) stdlib: Added `String#match` with regex
  - Vihan B (6b79947) stdlib: Added `String#test` function for RegExp
+version:
+ - Vihan B (e68eb6d) bump: Bumped version to dev pre v1.0.0-beta.56
 
 
                         v1.0.0-beta.54 -> v1.0.0-beta.55                        
 ================================================================================
 hotfix:
  - Vihan (9ae89ff) for: Fixed retained scope within for iterations
+version:
+ - Vihan (574e464) bump: Bumped version to dev pre v1.0.0-beta.55
 
 
                         v1.0.0-beta.53 -> v1.0.0-beta.54                        
 ================================================================================
 hotfix:
  - Vihan (732d17b) comment: Fixed ambiguity between comments & regexes
+version:
+ - Vihan (bd1e8a9) bump: Bumped version to dev pre v1.0.0-beta.54
 
 
                         v1.0.0-beta.52 -> v1.0.0-beta.53                        
@@ -74,12 +111,16 @@ hotfix:
 hotfix:
  - Vihan (cdf7d19) op: Fixed equality operator with falsey values
  - Vihan (d3c28f1) string: Fixed string parsing where closing `"` could be ommited
+version:
+ - Vihan (d9fd467) bump: Bumped version to dev pre v1.0.0-beta.53
 
 
                         v1.0.0-beta.51 -> v1.0.0-beta.52                        
 ================================================================================
 hotfix:
  - Vihan (9d2df29) equality: Fixed a bug with falsey equality values
+version:
+ - Vihan (b01ab40) bump: Bumped version to dev pre v1.0.0-beta.52
 
 
                         v1.0.0-beta.50 -> v1.0.0-beta.51                        
@@ -90,6 +131,8 @@ featre:
  - Vihan (42e53b8) op: Added `a=>f` and `a/f`
 feature:
  - Vihan (9d4851c) assign: Added implicit strict typing with `:=`
+version:
+ - Vihan (5ef3eda) bump: Bumped version to dev pre v1.0.0-beta.51
 
 
                         v1.0.0-beta.49 -> v1.0.0-beta.50                        
@@ -101,24 +144,32 @@ feature:
 tests:
  - Vihan   (af33a08) made: Added tests for `break`
  - Vihan   (5a29f88) made: Added tests for STDLIB libs
+version:
+ - Vihan   (0c53299) bump: Bumped version to dev pre v1.0.0-beta.50
 
 
                         v1.0.0-beta.48 -> v1.0.0-beta.49                        
 ================================================================================
 fix:
  - Vihan (9ed9d67) prop: Function calls propogate errors
+version:
+ - Vihan (ebe5a66) bump: Bumped version to dev pre v1.0.0-beta.49
 
 
                         v1.0.0-beta.47 -> v1.0.0-beta.48                        
 ================================================================================
 feature:
  - Vihan (7cfdbf3) op: Added tilde, bitwise NOT & reflexive
+version:
+ - Vihan (ab920e2) bump: Bumped version to dev pre v1.0.0-beta.48
 
 
                         v1.0.0-beta.46 -> v1.0.0-beta.47                        
 ================================================================================
 fix:
  - Vihan (d8b98b2) assignment: Fixed incorrect executor for assignment
+version:
+ - Vihan (1286419) bump: Bumped version to dev pre v1.0.0-beta.47
 
 
                         v1.0.0-beta.45 -> v1.0.0-beta.46                        
@@ -136,12 +187,16 @@ feature:
 tests:
  - Vihan   (3d343a2) istanbul: Excluded other folders
  - Vihan   (520ed9c) made: Added tests for new literals
+version:
+ - Vihan   (99f3455) bump: Bumped version to dev pre v1.0.0-beta.46
 
 
                         v1.0.0-beta.44 -> v1.0.0-beta.45                        
 ================================================================================
 npm:
  - Vihan (3278eb3) git: Fixed istanbul test
+version:
+ - Vihan (68d69ee) bump: Bumped version to dev pre v1.0.0-beta.45
 
 
                         v1.0.0-beta.43 -> v1.0.0-beta.44                        
@@ -150,6 +205,8 @@ npm:
  - Vihan (00bd2f5) npmignore: Moved modules to local_modules
 other:
  - Vihan (1ef9ece) Merge branch 'release-1.0.0' into develop
+version:
+ - Vihan (455a261) bump: Bumped version to dev pre v1.0.0-beta.44
 
 
                         v1.0.0-beta.41 -> v1.0.0-beta.43                        
@@ -164,6 +221,8 @@ npm:
  - Vihan (ea365a3) npmignore: Fixed npmignore npm installs
 other:
  - Vihan (3db0495) Merge branch 'release-1.0.0' into develop
+version:
+ - Vihan (638b4a7) bump: Bumped version to dev pre v1.0.0-beta.41
 
 
                         v1.0.0-beta.39 -> v1.0.0-beta.40                        
@@ -172,6 +231,8 @@ npm:
  - Vihan (e311576) npmignore: Fixed npmignore npm installs
 other:
  - Vihan (20efc5b) Merge branch 'release-1.0.0' into develop
+version:
+ - Vihan (882fc61) bump: Bumped version to dev pre v1.0.0-beta.40
 
 
                         v1.0.0-beta.38 -> v1.0.0-beta.39                        
@@ -325,6 +386,12 @@ tok:
  - Vihan B         (f289822) vars: `$` is not a valid variable name
 travis:
  - Vihan B         (ac18c70) npm: Added npm deployment
+version:
+ - Vihan           (460e826) bump: Bumped version to dev pre v1.0.0-beta.39
+ - Vihan           (f38b33a) bump: Bumped version to dev pre v1.0.0-beta.39
+ - Vihan B         (0bc7ec9) bump: bumped version
+ - Vihan B         (025c53e) bump: Bumped version to pre v1.0.0-beta.18
+ - Vihan B         (2b09d5c) bump: bumped to pre 1.0.0-beta.17
 windows:
  - Vihan B         (a7c0902) interpreter: add cheddar.bat for executing files
  - Vihan B         (c2027ca) interpreter: added .bat shorthands
@@ -334,6 +401,8 @@ windows:
 ================================================================================
 fix:
  - Vihan (2715c2d) assign: Fixed empty assignment
+version:
+ - Vihan (80d35d7) bump: Bumped version to dev pre v1.0.0-beta.38
 
 
                         v1.0.0-beta.36 -> v1.0.0-beta.37                        
@@ -346,6 +415,8 @@ stdlib:
  - Vihan (4d19d1c) array: Added Array#filter
  - Vihan (aac160d) array: Added Array#any.
  - Vihan (bfcf147) iter: Added #index()
+version:
+ - Vihan (b7c4d67) bump: Bumped version to dev pre v1.0.0-beta.37
 
 
                         v1.0.0-beta.35 -> v1.0.0-beta.36                        
@@ -362,6 +433,8 @@ fix:
  - Vihan (481da30) fop: Unary operators now parse
 stdlib:
  - Vihan (f41a2e6) encoding: Added base64 encoding
+version:
+ - Vihan (7aac73d) bump: Bumped version to v1.0.0-beta.36
 
 
                         v1.0.0-beta.34 -> v1.0.0-beta.35                        
@@ -400,6 +473,8 @@ stdlib:
  - Vihan (0c0b546) number: Added tobase
  - Vihan (6d4ee6b) fd: Improved fd writing & pos tracking
  - Vihan (9907c96) array: Added Array#all
+version:
+ - Vihan (86c1248) bump: Bumped version to v1.0.0-beta.31
 
 
                         v1.0.0-beta.29 -> v1.0.0-beta.30                        
@@ -409,6 +484,8 @@ fix:
  - Vihan B (eb542de) string: Fixed string repetition with negative numbers
 stdlib:
  - Vihan B (15a67dc) array: Added Array#reduce
+version:
+ - Vihan   (afd9a09) bump: Bumped version to dev pre v1.0.0-beta.30
 
 
                         v1.0.0-beta.28 -> v1.0.0-beta.29                        
@@ -429,6 +506,8 @@ fix:
 stdlib:
  - Vihan Bhargava (680b95a) fd: Added fd#write
  - Vihan Bhargava (655a7ef) fd: Major fd overhaul
+version:
+ - Vihan Bhargava (8fa802e) bump: Bumped version to dev pre v1.0.0-beta.28
 
 
                         v1.0.0-beta.26 -> v1.0.0-beta.27                        
@@ -444,6 +523,8 @@ stdlib:
  - Vihan Bhargava (b352b88) array: Added `slice`
 tests:
  - Vihan Bhargava (9d28ea1) coverage: Added codecov.yml for codecoving
+version:
+ - Vihan Bhargava (0b55bb4) bump: Bumped version to dev pre v1.0.0-beta.27
 
 
                         v1.0.0-beta.25 -> v1.0.0-beta.26                        
@@ -451,6 +532,8 @@ tests:
 other:
  - Vihan Bhargava (dda0d92) Merge remote-tracking branch 'origin/release-1.0.0' into string-stdlib
  - Conor O'Brien  (8eda73e) added self inverse for ord operator
+version:
+ - Vihan Bhargava (a6a6198) bump: Bumped version to .26
 
 
                         v1.0.0-beta.24 -> v1.0.0-beta.25                        
@@ -505,6 +588,8 @@ feature:
 
                        v1.0.0-beta.18.9 -> v1.0.0-beta.19                       
 ================================================================================
+version:
+ - Vihan (d513f31) bump: bumped version
 
 
                       v1.0.0-beta.18.8 -> v1.0.0-beta.18.9                      
@@ -523,6 +608,8 @@ cli:
 ================================================================================
 cli:
  - Vihan (71e4c92) sym: Installer uses symlinks
+version:
+ - Vihan (714d458) bump: bumped version to dev pre-v1.0.0-beta.18.7
 
 
                       v1.0.0-beta.18.5 -> v1.0.0-beta.18.6                      
@@ -581,6 +668,8 @@ stdlib:
  - Vihan (fc43e79) encding: Added encodings and buffers
 tests:
  - Vihan (0fe93d2) made: General v1 tweak tests
+version:
+ - Vihan (6d329e6) bump: Bumped version to pre v1.0.0-beta.18
 
 
                         v1.0.0-beta.16 -> v1.0.0-beta.17                        
@@ -602,6 +691,8 @@ stdlib:
  - Vihan (92fad5a) cheddar: Internal interfacing
 tok:
  - Vihan (6bc8e64) vars: `$` is not a valid variable name
+version:
+ - Vihan (193eb95) bump: bumped to pre 1.0.0-beta.17
 
 
                         v1.0.0-beta.15 -> v1.0.0-beta.16                        
@@ -708,9 +799,11 @@ tests:
  - Vihan (ebaa6b2) fix: updated to match req. paren
 travis:
  - Vihan (44ba74f) deploy: Encrypted auto-deployment
+version:
+ - Vihan (6bb5908) bump: Bumped version to v1.0.0-beta.10
 
 
-                        v1.0.0-beta.9 -> v1.0.0-beta.10                         
+                         v1.0.0-beta.9 -> v1.0.0-beta.10                        
 ================================================================================
 fix:
  - Vihan (1384dcb) eval: Fixed evaluation wrapping
@@ -766,6 +859,9 @@ feature:
  - Vihan (cfd86b7) functions: Added lambda literals.
 stdlib:
  - Vihan (925975e) math: Added Math.factor:
+version:
+ - Vihan (9eb8b60) bump: Bumped version to v1.0.0-beta.4
+ - Vihan (af1a9f5) bump: Bumped version to v1.0.0-beta.3
 
 
                          v1.0.0-beta.2 -> v1.0.0-beta.3                         
@@ -781,6 +877,8 @@ stdlib:
  - Vihan (f9d53c5) rev: Added `.rev` getter to string
 tests:
  - Vihan (9340542) made: Added scope testing
+version:
+ - Vihan (aef050f) bump: v1.0.0-beta.2 dev
 
 
                          v1.0.0-beta.1 -> v1.0.0-beta.2                         
@@ -796,7 +894,7 @@ fix:
  - Vihan (365d33d) bool: Default global bool handling
 
 
-                         v0.2.0-alpha -> v1.0.0-beta.1                          
+                          v0.2.0-alpha -> v1.0.0-beta.1                         
 ================================================================================
 docs:
  - Vihan    (8eacca6) readme: Add manual install information
@@ -855,6 +953,9 @@ tests:
  - Downgoat (acb56c8) made: Bumped up coverage significantly
 travis:
  - Vihan    (1bb666b) fix: Missed an `npm install`
+version:
+ - Vihan    (6e8c2e3) bump: v1.0.0-beta.1 dev
+ - Vihan    (3c07462) bump: bumped version to 0.3.0-alpha
 
 
                           v0.1.2-alpha -> v0.2.0-alpha                          
@@ -887,6 +988,8 @@ tests:
 ================================================================================
 hotfix:
  - Vihan (30054cb) #7: atan function had no behavior
+version:
+ - Vihan (2ec9240) bump: bumped version to 0.1.2-alpha
 
 
                          v0.0.317-alpha -> v0.1.1-alpha                         
@@ -915,5 +1018,8 @@ tests:
  - Downgoat (6ba6350) made: Made unit tests for literals
  - Downgoat (73a4ee2) coveralls: configured, and setup for coveralls deployment
  - Downgoat (19ad290) made: made unit tests, currently casting
+version:
+ - Vihan    (066e15e) bump: bumped version to 0.1.1-alpha
+ - Vihan    (99708ef) bump: Bumped version to v0.1-alpha
 
 
