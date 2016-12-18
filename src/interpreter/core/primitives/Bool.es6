@@ -1,4 +1,5 @@
 import CheddarClass from '../env/class';
+import NIL from '../consts/nil';
 
 import BehaviorOperator from './op/bool';
 import BehaviorCast from './cast/bool';
@@ -24,7 +25,11 @@ export default class CheddarBool extends CheddarClass {
                     if ((bool.value) instanceof Array) {
                         this.value = bool.value.length > 0;
                     } else {
-                        this.value = true;
+                        if (bool instanceof NIL) {
+                            this.value = false;
+                        } else {
+                            this.value = true;
+                        }
                     }
             }
         } else {
