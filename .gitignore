@@ -1,3 +1,6 @@
+# Cheddar debug logs
+/benckmark/debug
+
 # Node modules
 /node_modules
 

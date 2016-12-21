@@ -19,6 +19,8 @@ COVERAGE=$(PREFIX)/babel-istanbul
 TEST=$(PREFIX)/_mocha
 TFLAGS=cover $(TEST)
 
+BENCHMARK=benchmark/
+
 ## Rules
 all: default
 
@@ -41,15 +43,19 @@ install: ./bin/install
 
 # Runs browser_repl build for web REPL
 # Uses browserify to compiled babelified code
-browser_build: $(JC)
-	$(PREFIX)/browserify dist/cli/browser_repl.js -o Cheddar.js
+# browser_build: $(JC)
+# 	$(PREFIX)/browserify dist/cli/browser_repl.js -o Cheddar.js
 
 # Performs testing, including coverage
 # At the moment uses mocha for testing
 # and babel-istanbul for coverage
-test:$(TESTRUNNER) $(COVERAGE) $(TEST)
+test: $(TESTRUNNER) $(COVERAGE) $(TEST)
 	$(TESTRUNNER) $(COVERAGE) $(TFLAGS)
-clean:
-	rm -rf ./dist/
 
-.PHONY: test
+benchmark: $(BENCHMARK) $(OUT)
+	node $(BENCHMARK)
+
+clean: $(OUT)
+	rm -rf $(OUT)
+
+.PHONY: test benchmark clean

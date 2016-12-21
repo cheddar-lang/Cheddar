@@ -13,6 +13,7 @@ install:
 - npm install
 - npm install -g codeclimate-test-reporter
 after_success:
+- make benchmark
 - npm run coveralls
 - bash <(curl -s https://codecov.io/bash)
 - codeclimate-test-reporter < ./coverage/lcov.info
