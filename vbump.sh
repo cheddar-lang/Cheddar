@@ -46,7 +46,7 @@ echo;
 echo "Succesfully bumped version to ${bold}${VERSION}${normal}"
 echo;
 
-git add package.json
+git add package.json CHANGELOG vbump.sh
 git commit -S -s -m "version [bump]: Bumped version to $VERSION
 
 $CHANGELOG"
