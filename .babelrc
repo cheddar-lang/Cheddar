@@ -1,5 +1,5 @@
 {
-    "presets": ["es2015"],
+    "presets": ["features"],
     "plugins": [
         "babel-plugin-transform-class-properties",
         "babel-plugin-add-module-exports",

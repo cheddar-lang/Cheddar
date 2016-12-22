@@ -1,4 +1,5 @@
 var benchmark = require('benchmark');
+var fs = require('fs');
 var colors = require('colors');
 var log = "";
 
@@ -118,7 +119,8 @@ Bench("Literal Parsing", [
 ]);
 
 Bench("Prime Generation", [
-    [ "Built-in", "let i = 0; for ( let a = []; a.len < 10; i += 1) { if (Math.prime(i)) { a.push(i) } }" ]
+    [ "Built-in", "let i = 0; for ( let a = []; a.len < 1000; i += 1) { if (Math.prime(i)) { a.push(i) } }" ],
+    [ "Native Implementation", fs.readFileSync(__dirname + "/prime.cheddar", "utf-8") ]
 ]);
 
 process.stdout.write(log);
