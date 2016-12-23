@@ -6,7 +6,7 @@ import colors from 'colors';
 
 import HelperCaret from '../helpers/caret';
 
-import cheddar from '../interpreter/exec';
+import cheddar from '../interpreter/';
 import tokenizer from 'cheddar-parser/dist/tok';
 
 import stdlib from '../stdlib/stdlib';

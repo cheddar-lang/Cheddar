@@ -119,8 +119,11 @@ Bench("Literal Parsing", [
 ]);
 
 Bench("Prime Generation", [
-    [ "Built-in", "let i = 0; for ( let a = []; a.len < 1000; i += 1) { if (Math.prime(i)) { a.push(i) } }" ],
-    [ "Native Implementation", fs.readFileSync(__dirname + "/prime.cheddar", "utf-8") ]
+    [ ".primes  (< 1000)", "Math.primes(1000);" ],
+    [ ".isprime (< 1000)", "let i = 0; for ( let a = []; a.len < 1000; i += 1) { if (Math.isprime(i)) { a.push(i) } }" ],
+    [ "Native   (< 1000)", fs.readFileSync(__dirname + "/prime.cheddar", "utf-8") ],
+
+    [ ".primes  (= 1000)", "Math.primes(1000, true);" ]
 ]);
 
 process.stdout.write(log);

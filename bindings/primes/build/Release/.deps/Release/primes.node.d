@@ -1,0 +1,1 @@
+cmd_Release/primes.node := c++ -bundle -undefined dynamic_lookup -Wl,-no_pie -Wl,-search_paths_first -mmacosx-version-min=10.7 -arch x86_64 -L./Release -stdlib=libc++  -o Release/primes.node Release/obj.target/primes/src/binding.o Release/prime_binding.dylib -Wl,-rpath,/Users/vihan/Documents/Code/Cheddar/bindings/primes/build/Release/

@@ -8,7 +8,7 @@ import CheddarString from '../interpreter/core/primitives/String';
 
 import NIL from '../interpreter/core/consts/nil';
 
-import cheddar from '../interpreter/exec';
+import cheddar from '../interpreter/';
 import tokenizer from 'cheddar-parser/dist/tok';
 
 import HelperCaret from '../helpers/caret';

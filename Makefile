@@ -38,7 +38,7 @@ BENCHMARK=benchmark/
 
 # Bindings
 BINDING_SRC = $(wildcard bindings/*/binding.gyp)
-BINDING_TARGETS = $(patsubst bindings/%/binding.gyp, %.node, $(BINDING_SRC))
+BINDING_TARGETS = $(foreach B,$(patsubst bindings/%/binding.gyp, %, $(BINDING_SRC)),bindings/$B/build/Release/$B.node)
 
 ## Rules
 all: default
@@ -77,10 +77,10 @@ install: ./bin/install
 test: $(TESTRUNNER) $(COVERAGE) $(TEST)
 	$(TESTRUNNER) $(COVERAGE) $(TFLAGS)
 
-benchmark: $(BENCHMARK) $(OUT)
+bench: $(BENCHMARK) $(OUT)
 	node $(BENCHMARK)
 
 clean: $(OUT)
 	rm -rf $(OUT)
 
-.PHONY: test benchmark clean
+.PHONY: test benchmark clean build default

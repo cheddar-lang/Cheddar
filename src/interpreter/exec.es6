@@ -36,8 +36,6 @@ export default class CheddarExec {
     }
 
     exec(OPTS) {
-        if (OPTS) global.CHEDDAR_OPTS = OPTS;
-
         if (this.Code[this._csi] && this.continue) {
             if (global.CHEDDAR_OPTS && global.CHEDDAR_OPTS.hook) {
                 return global.CHEDDAR_OPTS.hook(this);
