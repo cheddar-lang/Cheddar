@@ -30,7 +30,7 @@
                 "include_dirs": [
                     "primesieve/include"
                 ],
-                "libraries": [ "-Wl,-rpath,./build/Release/" ],
+                "libraries": [ "-Wl,-rpath,<!(pwd)/build/Release/" ],
                 'cflags!': [ '-fno-exceptions' ],
                 'cflags_cc!': [ '-fno-exceptions' ],
                 'conditions': [
