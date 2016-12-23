@@ -1,3 +1,18 @@
+################################################################################
+#                              Cheddar Makefile
+# Available Targets:
+#  default: Production build
+#  build  : Development build
+#  %.node : Builds binding/%
+#  install: Installs to given path
+#
+# Phony targets:
+#  clean  : Removed unecessary stuff from directory
+#  test   : Performs tests
+#  bench  : Performs benchmarks
+#
+################################################################################
+
 PREFIX=./node_modules/.bin
 SELF=$(lastword $(MAKEFILE_LIST))
 ## Compiler
@@ -21,18 +36,28 @@ TFLAGS=cover $(TEST)
 
 BENCHMARK=benchmark/
 
+# Bindings
+BINDING_SRC = $(wildcard bindings/*/binding.gyp)
+BINDING_TARGETS = $(patsubst bindings/%/binding.gyp, %.node, $(BINDING_SRC))
+
 ## Rules
 all: default
 
+# The binding task
+# Compiles all gyp bingings
+# from bingings/foo/binding.gyp
+%.node:
+	node-gyp rebuild -C bindings/$*/
+
 # The default task
 # The **production** build
-default: $(JC)
+default: $(BINDING_TARGETS) $(JC)
 	NODE_ENV=production $(JC) $(JCFLAGS) --minified --compact true
 	$(BIN_MAKE)
 
 # Development build task
 # This builds and includes source maps
-build: $(JC)
+build: $(BINDING_TARGETS) $(JC)
 	$(JC) $(JCFLAGS) --source-maps
 	$(BIN_MAKE)
 

@@ -61,6 +61,7 @@
     "coveralls": "^2.11.12",
     "install": "^0.8.1",
     "mocha": "^3.0.1",
+    "nan": "^2.5.0",
     "npm": "^3.10.6",
     "remap-istanbul": "^0.6.4"
   },

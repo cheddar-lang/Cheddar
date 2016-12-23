@@ -1,0 +1,3 @@
+[submodule "bindings/primes/primesieve"]
+	path = bindings/primes/primesieve
+	url = https://github.com/kimwalisch/primesieve.git
