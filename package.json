@@ -27,6 +27,8 @@
     "commander": "^2.9.0",
     "crypto": "0.0.3",
     "msgpack5": "^3.4.1",
+    "nan": "^2.5.0",
+    "node-gyp": "^3.4.0",
     "readline": "^1.3.0",
     "xregexp": "^3.1.1"
   },
@@ -35,6 +37,7 @@
   },
   "scripts": {
     "prepublish": "make",
+    "install": "node build.js",
     "build": "make build",
     "test": "make test",
     "start": "./dist/cli/cheddar",
@@ -61,7 +64,6 @@
     "coveralls": "^2.11.12",
     "install": "^0.8.1",
     "mocha": "^3.0.1",
-    "nan": "^2.5.0",
     "npm": "^3.10.6",
     "remap-istanbul": "^0.6.4"
   },
