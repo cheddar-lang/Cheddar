@@ -51,14 +51,26 @@ describe('Math', function(){
         ))
     });
 
+    describe('primes', function(){
+        it('should work with zero', TestCheddarFrom.Code(
+            `print Math.primes(0)`,
+            `[]`
+        ))
+
+        it('should work with large values', TestCheddarFrom.Code(
+            `Math.primes(1000)`,
+            ``
+        ))
+    });
+
     describe('isprime', function(){
         it('should be false', TestCheddarFrom.Code(
-            `print Math.prime(10)`,
+            `print Math.isprime(10)`,
             `false`
         ))
 
         it('should be true', TestCheddarFrom.Code(
-            `print Math.prime(11)`,
+            `print Math.isprime(11)`,
             `true`
         ))
     });
