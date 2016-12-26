@@ -41,6 +41,7 @@
                     }]
                 ]
             },
+            'cflags': [ '-O3' ],
             'cflags!': [ '-fno-exceptions' ],
             'cflags_cc!': [ '-fno-exceptions' ],
             'conditions': [
