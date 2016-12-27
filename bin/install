@@ -1,14 +1,25 @@
 #!/usr/bin/env bash
-echo "Downloading..."
-npm install
-echo "Installing..."
-cpath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+CHEDDAR_FIG='          ________             __    __          
+         / ____/ /_  ___  ____/ /___/ /___ ______
+        / /   / __ \/ _ \/ __  / __  / __ `/ ___/
+       / /___/ / / /  __/ /_/ / /_/ / /_/ / /    
+       \____/_/ /_/\___/\__,_/\__,_/\__,_/_/     
+                                           '
 
-which realpath &> /dev/null
-if [ $? -eq 0 ]; then
-    rp="realpath"
-else
-    rp="readlink -f"
-fi
+# Colors
+source colors.sh
 
-"$($rp "$cpath/path")" /usr/local
+# Print intro
+echo -e "${Yel}${CHEDDAR_FIG}${RCol}"
+
+echo -e "           Welcome to the ${Bol}Cheddar${RCol} installer."
+echo -e "${Dim}--------------------------------------------------------${RCol}"
+echo -e "You will be prompted for various installation options"
+echo -e "Press enter to specify the default value if available"
+echo
+
+# Handle Dependencies
+source gendeps.sh
+
+# Generate Script Configuration
+source genopt.sh
