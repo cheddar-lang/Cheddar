@@ -1,5 +1,5 @@
 import XRegExp from 'xregexp';
-export default (cheddar) => ["sub", cheddar.var(new cheddar.func(
+export default (cheddar) => ["replace", cheddar.var(new cheddar.func(
     [
         ['regex', {
             // Type: cheddar.(string|regex)

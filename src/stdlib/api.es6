@@ -16,6 +16,10 @@ import CheddarClass from '../interpreter/core/env/class';
 
 import HelperInit from '../helpers/init';
 
+// Handle bindings for early hook
+if (!global.bindings)
+    global.bindings = require('../../bindings/');
+
 var API = {
     dictionary: CheddarDictionary,
     string: CheddarString,

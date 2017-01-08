@@ -20,6 +20,7 @@ export default class CheddarArray extends CheddarClass {
         this.scope_ref = new CheddarScope();
         let scope_ref_setter = this.scope_ref.setter;
         this.scope_ref.setter = (path, res) => {
+            // Implicitly casts down path.toString() to number
             let index = +path;
             // Fill in empty items
             while (this.value.length < index) {
@@ -71,16 +72,14 @@ export default class CheddarArray extends CheddarClass {
 
     // Accessor to redirect [n]
     eval_accessor(type) {
-        let val = type.value;
-        if (Number.isInteger(val)) {
-            if (val < 0) val = this.value.length + val;
-            let v = this.value[val];
+        if (type.value.isInteger()) {
+            let v = type.value.accessAt(this.value);
 
             if (!v) v = new NIL;
 
             v.scope = this.scope_ref;
-            v.Reference = val + "";
-            this.scope_ref.setter(val + "", v = new CheddarVariable(v));
+            v.Reference = type.value;
+            this.scope_ref.setter(type.value, v = new CheddarVariable(v));
 
             return v;
         } else {

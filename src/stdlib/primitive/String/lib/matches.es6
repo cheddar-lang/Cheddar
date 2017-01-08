@@ -1,6 +1,6 @@
 import XRegExp from 'xregexp';
 
-export default (api) => ["match", api.var(new api.func(
+export default (api) => ["matches", api.var(new api.func(
     [
         ["regex", {
             Type: api.regex

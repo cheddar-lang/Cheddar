@@ -6,25 +6,12 @@ import BehaviorCast from './cast/number';
 export default class CheddarNumber extends CheddarClass {
     static Name = "Number";
 
-    init(base, bitshift, value) {
-        if (!base || base instanceof CheddarClass || base.prototype instanceof CheddarClass) {
+    init(a,b, value) {
+        if (value === undefined || value instanceof CheddarClass || value.prototype instanceof CheddarClass) {
             return "Cannot construct number.";
         }
 
-        // TODO: Optimize
-        if (bitshift)
-            value += "0".repeat(bitshift);
-
-        if (typeof value === "string") {
-            let [INT, DEC] = value.split(".");
-
-            if (base !== 10)
-                this.value = DEC ? parseInt(INT, base) + parseInt(DEC, base) / Math.pow(base, DEC.length) : parseInt(value, base)
-            else
-                this.value = +value;
-        } else {
-            this.value = value;
-        }
+        this.value = new bindings.number(value);
         return true;
     }
 

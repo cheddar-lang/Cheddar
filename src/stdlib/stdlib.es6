@@ -17,11 +17,11 @@ STDLIB.p = (Name, Item) => {
 STDLIB.Item("cheddar");
 
 STDLIB.Item("Math");
-STDLIB.Item("Rational");
+// STDLIB.Item("Rational");
 
-// Interface Libraries
 STDLIB.Item("Encoding");
 STDLIB.Item("Buffer");
+STDLIB.Item("Console");
 STDLIB.Item("IO", true);
 
 /** Primitives **/

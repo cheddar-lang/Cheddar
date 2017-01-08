@@ -6,12 +6,12 @@ chai.should();
 describe('Functionized Properties', function(){
     describe('literals', function(){
         it('should work', TestCheddarFrom.Code(
-            '@.len',
+            '@.length',
             ''
         ))
 
         it('should not error', TestCheddarFrom.Code(
-            `print (@.len)("foo")`,
+            `print (@.length)("foo")`,
             '3'
         ))
     })

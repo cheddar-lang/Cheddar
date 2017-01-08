@@ -15,7 +15,7 @@ export default function(cheddar) {
             let f = bindings.primes.primesUnder;
             if (t) f = bindings.primes.generatePrimes;
 
-            return cheddar.init(cheddar.array, ...f(n).map(i => cheddar.init(cheddar.number, 10, 0, i)));
+            return cheddar.init(cheddar.array, ...f(+n).map(i => cheddar.init(cheddar.number, 10, 0, i)));
         }
     );
 }

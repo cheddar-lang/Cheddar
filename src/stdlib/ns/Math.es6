@@ -9,7 +9,7 @@ export default function(cheddar) {
 
         ["fib", cheddar.from(require("./Math/fib"))],
         ["factor", cheddar.from(require("./Math/factor"))],
-        ["isprime", cheddar.from(require("./Math/isprime"))],
+        ["isPrime", cheddar.from(require("./Math/isPrime"))],
         ["primes", cheddar.from(require("./Math/primes"))],
         ["rand", cheddar.from(require("./Math/rand"))]
     ]);

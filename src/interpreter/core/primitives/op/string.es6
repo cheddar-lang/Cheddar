@@ -3,7 +3,7 @@ import CheddarError from '../../consts/err';
 import CheddarNumber from '../Number';
 import HelperInit from '../../../../helpers/init';
 
-import sprintf from '../../../../stdlib/ns/IO/sprintf';
+import sprintf from '../../../../stdlib/ns/Console/sprintf';
 // == STRING ==
 export default new Map([
     // String concatenation

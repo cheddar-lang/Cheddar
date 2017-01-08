@@ -2,14 +2,14 @@ var TestCheddarFrom = require('../../globals').TestCheddarFrom;
 var chai = require('chai');
 
 describe('String.', function(){
-    describe('len', function(){
+    describe('length', function(){
         it('should work', TestCheddarFrom.Code(
-            `print "1234".len`,
+            `print "1234".length`,
             `4`
         ))
 
         it('should not error', TestCheddarFrom.Code(
-            `"".len`,
+            `"".length`,
             ``
         ))
     });
@@ -109,9 +109,9 @@ describe('String.', function(){
         ))
     });
 
-    describe('rev', function(){
+    describe('reverse', function(){
         it('should work', TestCheddarFrom.Code(
-            `print "abc".rev`,
+            `print "abc".reverse`,
             `cba`
         ))
     });
@@ -137,19 +137,19 @@ describe('String.', function(){
         ))
     });
 
-    describe('sub', function(){
+    describe('replace', function(){
         it('should work', TestCheddarFrom.Code(
-            `print "ab".sub(/b/, 'a')`,
+            `print "ab".replace(/b/, 'a')`,
             `aa`
         ))
 
         it('should work globally', TestCheddarFrom.Code(
-            `print "abb".sub(/b/g, 'a')`,
+            `print "abb".replace(/b/g, 'a')`,
             `aaa`
         ))
 
         it('should work with function', TestCheddarFrom.Code(
-            `print "abb".sub(/b/g, -> 'a')`,
+            `print "abb".replace(/b/g, -> 'a')`,
             `aaa`
         ))
     });

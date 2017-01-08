@@ -1,5 +1,5 @@
 // Rational extension written by LegionMammal978
-
+/*
 var TestCheddarFrom = require('../globals').TestCheddarFrom;
 var chai = require('chai');
 
@@ -605,3 +605,4 @@ describe('Rational', function(){
         ))
     });
 });
+//*/

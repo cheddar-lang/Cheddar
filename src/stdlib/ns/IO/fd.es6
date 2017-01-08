@@ -79,7 +79,7 @@ export default function(cheddar) {
                 }
 
                 // Buffer to place read bytes in
-                let buf = new Buffer(bytes);
+                let buf = new Buffer(+bytes);
 
                 // Read, the fd's contents from position `self.pos`
                 // to `buf` reading `bytes` bytes.
