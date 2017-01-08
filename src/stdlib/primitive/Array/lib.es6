@@ -4,7 +4,7 @@ export default new Map([
     require('./lib/rand')(api),
     require('./lib/max')(api),
     require('./lib/min')(api),
-    require('./lib/len')(api),
+    require('./lib/length')(api),
     require('./lib/turn')(api),
     require('./lib/fuse')(api),
     require('./lib/asLines')(api),

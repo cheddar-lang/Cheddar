@@ -8,7 +8,7 @@ export default function(cheddar) {
             }]
         ], function(scope, input) {
             let n = input("n").value;
-            return cheddar.init(cheddar.bool, _factor(n).length === 1);
+            return cheddar.init(cheddar.bool, _factor(+n).length === 1);
         }
     );
 }

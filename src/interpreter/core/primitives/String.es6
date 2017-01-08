@@ -40,17 +40,15 @@ export default class CheddarString extends CheddarClass {
     Cast = new Map([...CheddarClass.Cast, ...BehaviorCast]);
 
     eval_accessor(type) {
-        let val = type.value;
-        if (Number.isInteger(val)) {
-            if (val < 0) val = this.value.length + val;
-            let v = this.value[val];
+        if (type.value.isInteger()) {
+            let v = type.value.accessAt(this.value);
 
             if (!v) return new CheddarVariable(new NIL);
 
             v = InitalizeSubstring(v);
             v.scope = this.scope_ref;
-            v.Reference = val + "";
-            this.scope_ref.setter(val + "", v = new CheddarVariable(v, {
+            v.Reference = type.value;
+            this.scope_ref.setter(type.value, v = new CheddarVariable(v, {
                 Type: CheddarString
             }));
 

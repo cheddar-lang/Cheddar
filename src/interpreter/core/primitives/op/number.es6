@@ -32,9 +32,9 @@ export default new Map([
         //    RHS = RHS.Cast.get(CheddarString)();
 
         if (LHS === null)
-            return HelperInit(RHS.constructor, 10, 0, RHS.value);
+            return HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value));
         else if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value + RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).add(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -48,9 +48,9 @@ export default new Map([
         //    RHS = RHS.Cast.get(CheddarString)();
 
         if (LHS === null)
-            return HelperInit(RHS.constructor, 10, 0, -RHS.value);
+            return HelperInit(RHS.constructor, 10, 0, RHS.value.minus());
         else if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value - RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).minus(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -60,7 +60,7 @@ export default new Map([
     ['*', (LHS, RHS) => {
 
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value * RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).times(RHS.value));
         else if (RHS.constructor.Name === "String")
             if (LHS.value < 0)
                 return HelperInit(RHS.constructor, RHS.value.repeat(LHS.value));
@@ -74,7 +74,7 @@ export default new Map([
     ['/', (LHS, RHS) => {
 
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value / RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).divide(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
 
@@ -82,14 +82,14 @@ export default new Map([
 
     ['**', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, Math.pow(LHS.value, RHS.value));
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).pow(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['%', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value % RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).mod(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -97,35 +97,49 @@ export default new Map([
     // == Boolean Operators ==
     ['!', (LHS, RHS) => {
         if (LHS === null)
-            return HelperInit(CheddarBool, RHS.value === 0);
+            return HelperInit(CheddarBool, RHS.value.not());
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
+    ['!=', (LHS, RHS) => {
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(CheddarBool, LHS.value.neq(RHS.value));
+        else
+            return CheddarError.NO_OP_BEHAVIOR;
+    }],
+
+    ['==', (LHS, RHS) => {
+        if (RHS instanceof LHS.constructor)
+            return HelperInit(CheddarBool, LHS.value.eq(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['<', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(CheddarBool, LHS.value < RHS.value);
+            return HelperInit(CheddarBool, LHS.value.lt(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['>', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(CheddarBool, LHS.value > RHS.value);
+            return HelperInit(CheddarBool, LHS.value.gt(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['<=', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(CheddarBool, LHS.value <= RHS.value);
+            return HelperInit(CheddarBool, LHS.value.lte(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['>=', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(CheddarBool, LHS.value >= RHS.value);
+            return HelperInit(CheddarBool, LHS.value.gte(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -133,42 +147,42 @@ export default new Map([
     // == Bitwise Operators ==
     ['&', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value & RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).bAND(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['|', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value | RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).bOR(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['^', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value ^ RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).bXOR(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['<<', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value << RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).bLEFT(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['>>', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, LHS.value >> RHS.value);
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).bRIGHT(RHS.value));
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['~', (LHS, RHS) => {
         if (LHS === null)
-            return HelperInit(RHS.constructor, 10, 0, ~RHS.value);
+            return HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).bNOT());
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
@@ -190,80 +204,73 @@ export default new Map([
     // == Word Operators ==
     ['sign', (LHS, RHS) => {
         if (LHS === null)
-            return HelperInit(RHS.constructor, 10, 0, Math.sign(RHS.value));
+            return HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).sign());
         else if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, Math.sign(LHS.value - RHS.value));
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).minus(RHS.value).sign());
         else
             return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['sqrt', (LHS, RHS) => {
         if (LHS === null)
-            return HelperInit(RHS.constructor, 10, 0, Math.sqrt(RHS.value));
+            return HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).sqrt());
         return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['cbrt', (LHS, RHS) => {
         if (LHS === null)
-            return HelperInit(RHS.constructor, 10, 0, Math.cbrt(RHS.value));
+            return HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).cbrt());
         return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['root', (LHS, RHS) => {
         if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, Math.pow(LHS.value, 1 / RHS.value));
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).root(RHS.value));
         return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     ['log', (LHS, RHS) => {
         if (LHS === null)
-            return HelperInit(RHS.constructor, 10, 0, Math.log(RHS.value));
+            return HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).log());
         else if (RHS instanceof LHS.constructor)
-            return HelperInit(LHS.constructor, 10, 0, Math.log(LHS.value) / Math.log(RHS.value));
+            return HelperInit(LHS.constructor, 10, 0, new bindings.number(LHS.value).logn(RHS.value));
 
         return CheddarError.NO_OP_BEHAVIOR;
     }],
 
     // == Trig Functions ==
     ['sin', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.sin(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).sin())
         : CheddarError.NO_OP_BEHAVIOR],
     ['cos', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.cos(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).cos())
         : CheddarError.NO_OP_BEHAVIOR],
     ['tan', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.tan(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).tan())
         : CheddarError.NO_OP_BEHAVIOR],
     ['asin', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.asin(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).asin())
         : CheddarError.NO_OP_BEHAVIOR],
     ['acos', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.acos(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).acos())
         : CheddarError.NO_OP_BEHAVIOR],
     ['atan', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.atan(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).atan())
         : CheddarError.NO_OP_BEHAVIOR],
 
     // == Rounding Functions ==
     ['ceil', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.ceil(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).ceil())
         : CheddarError.NO_OP_BEHAVIOR],
     ['floor', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.floor(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).floor())
         : CheddarError.NO_OP_BEHAVIOR],
     ['round', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.round(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).round())
         : CheddarError.NO_OP_BEHAVIOR],
     ['abs', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.abs(RHS.value))
+        ? HelperInit(RHS.constructor, 10, 0, new bindings.number(RHS.value).abs())
         : CheddarError.NO_OP_BEHAVIOR],
-
-    // == Misc Operators ==
-    ['len', (LHS, RHS) => LHS === null
-        ? HelperInit(RHS.constructor, 10, 0, Math.abs(Math.floor(RHS.value)))
-        : CheddarError.NO_OP_BEHAVIOR],
-
-    // == Assignment Operators
 
     // == Testing Operators ==
     ['@"', (LHS, RHS) => {

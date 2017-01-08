@@ -2,7 +2,7 @@ import bases from 'bases';
 
 const ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-export default (api) => ["tobase", api.var(new api.func(
+export default (api) => ["toBase", api.var(new api.func(
     [
         ["base", {}]
     ],

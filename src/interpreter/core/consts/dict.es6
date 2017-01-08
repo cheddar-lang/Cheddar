@@ -1,1 +1,1 @@
-export const KEY_INTERNAL = new Set(["String", "Number"]);
+export const KEY_INTERNAL = new Set(["String"]);

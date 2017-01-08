@@ -72,9 +72,9 @@ describe('Array.', function(){
         ))
     });
 
-    describe('len', function(){
+    describe('length', function(){
         it('should work', TestCheddarFrom.Code(
-            `print [1, 2, 3, 4].len`,
+            `print [1, 2, 3, 4].length`,
             `4`
         ))
     });

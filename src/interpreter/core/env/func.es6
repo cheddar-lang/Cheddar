@@ -357,7 +357,7 @@ export default class CheddarFunction extends CheddarClass {
     ])
 
     Scope = new Map([
-        ['len', new CheddarVariable(null, {
+        ['length', new CheddarVariable(null, {
             Writeable: false,
             getter: {
                 exec: function(_, self) {

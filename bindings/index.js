@@ -1,3 +1,4 @@
 module.exports = {
-    primes: require('./primes')
+    primes: require('./primes'),
+    number: require('./number')
 };

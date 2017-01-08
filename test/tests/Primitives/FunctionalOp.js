@@ -11,7 +11,7 @@ describe('Functionized Operators', function(){
         ))
 
         it('should not error', TestCheddarFrom.Code(
-            `print (+)(1, 2)`,
+            'print (+)(1, 2)',
             '3'
         ))
 

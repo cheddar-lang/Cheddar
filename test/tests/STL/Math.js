@@ -65,12 +65,12 @@ describe('Math', function(){
 
     describe('isprime', function(){
         it('should be false', TestCheddarFrom.Code(
-            `print Math.isprime(10)`,
+            `print Math.isPrime(10)`,
             `false`
         ))
 
         it('should be true', TestCheddarFrom.Code(
-            `print Math.isprime(11)`,
+            `print Math.isPrime(11)`,
             `true`
         ))
     });
