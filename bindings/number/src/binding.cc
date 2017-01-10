@@ -104,14 +104,8 @@ NAN_METHOD(NumberObject::New) {
         
         if (info.Length() == 0) {
             self = new NumberObject( 0 );
-        } else if (info[0]->IsNumber()) {
+        } else if (info[0]->IsNumber() || info[0]->IsString()) {
             self = new NumberObject(info[0]->NumberValue());
-        } else if (info[0]->IsString()) {
-            // Step 1. unwrap to C string
-            char *str = *v8::String::Utf8Value( info[0] );
-            // We can be sure this is value because the
-            //  parser verified it/
-            self = new NumberObject( strtod(str, NULL) );
         } else {
             // Unwrap existing internal number object
             NumberObject* old = Nan::ObjectWrap::Unwrap<NumberObject>(

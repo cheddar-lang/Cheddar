@@ -47,7 +47,7 @@ all: default
 # Compiles all gyp bingings
 # from bingings/foo/binding.gyp
 %.node:
-	node-gyp rebuild -C bindings/$*/
+	node-gyp rebuild -C ./bindings/$(shell echo $* | cut -d "/" -f2)/
 
 # The default task
 # The **production** build
