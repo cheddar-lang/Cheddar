@@ -1,0 +1,3 @@
+dependencies:
+    pre:
+        - git submodule update --init --recursive
