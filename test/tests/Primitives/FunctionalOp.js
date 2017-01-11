@@ -16,7 +16,7 @@ describe('Functionized Operators', function(){
         ))
 
         it('should work with unary ops', TestCheddarFrom.Code(
-            `(print)(3)`,
+            `(:print)(3)`,
             '3'
         ))
     })
