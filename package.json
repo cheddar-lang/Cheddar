@@ -22,7 +22,7 @@
     "babel-plugin-compile-cheddar": "^2.0.2",
     "bases": "^0.2.1",
     "btoa": "^1.1.2",
-    "cheddar-parser": "^0.3.0",
+    "cheddar-parser": "^0.4.0",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "crypto": "0.0.3",

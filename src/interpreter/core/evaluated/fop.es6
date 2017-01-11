@@ -3,53 +3,76 @@ import CheddarFunction from '../env/func';
 import CheddarError from '../consts/err';
 import CheddarClass from '../env/class';
 import CheddarErrorDesc from '../consts/err_msg';
-import { UOP, OP } from 'cheddar-parser/dist/consts/ops';
 
-const UNARY_ONLY = UOP.filter(i => OP.indexOf(i) === -1);
-
-export default function(operator, force_unary) {
+export default function(isunary, operator, le, re) {
+    let CheddarEval = require('../eval/eval');
     return new CheddarFunction([
-        ["a", {}],
+        ["a", {
+            Optional: isunary ? !!re : !!le && !!re
+        }],
         ["b", {
             Optional: true
         }]
     ], function(scope, input) {
-        let LHS = input("a");
+        let LHS = input("a"); // Used for unary if so
         let RHS = input("b");
 
-        let resp; // output / response
-        let opfunc = LHS.Operator.get(operator);
+        let leftexpression = le;
+        let rightexpression = re;
 
-        if (opfunc) {
-            if (force_unary || RHS instanceof NIL || UNARY_ONLY.indexOf(operator) > -1)
-                resp = opfunc(null, LHS);
-            else
-                resp = opfunc(LHS, RHS);
-        }
-        else {
-            resp = CheddarError.NO_OP_BEHAVIOR;
+        if (!leftexpression && !rightexpression) {
+            // No default expressions
+            leftexpression = LHS;
+            rightexpression = isunary ? LHS : RHS;
+        } else {
+            // Otherwise evaluate the expressions which exist
+            if (rightexpression) {
+                let evaluator = new CheddarEval({ _Tokens: [ rightexpression ] }, scope.inheritanceChain).exec();
+                if (typeof evaluator === "string")
+                    return evaluator;
+                rightexpression = evaluator;
+            } else {
+                rightexpression = leftexpression ? LHS : RHS;
+                if (isunary) rightexpression = LHS;
+            }
+
+            if (leftexpression) {
+                let evaluator = new CheddarEval({ _Tokens: [ leftexpression ] }, scope.inheritanceChain).exec();
+                if (typeof evaluator === "string")
+                    return evaluator;
+                leftexpression = evaluator;
+            } else {
+                leftexpression = LHS;
+            }
         }
 
-        if (resp === CheddarError.NO_OP_BEHAVIOR) {
-            return CheddarErrorDesc.get(resp)
+        let op = (isunary ? rightexpression : leftexpression).Operator.get(operator);
+        if (!op)
+            op = CheddarError.NO_OP_BEHAVIOR;
+        else if (isunary)
+            op = op( null, rightexpression );
+        else
+            op = op( leftexpression, rightexpression )
+
+        if (op === CheddarError.NO_OP_BEHAVIOR) {
+            return CheddarErrorDesc.get(op)
                 .replace(/\$0/g, operator)
-                .replace(/\$1/g, LHS ? (
-                    LHS.constructor.Name || (
-                        LHS.prototype instanceof CheddarClass ?
+                .replace(/\$1/g, leftexpression ? (
+                    leftexpression.constructor.Name || (
+                        leftexpression.prototype instanceof CheddarClass ?
                         "Class" :
                         "nil"
                     )
                 ) : "nil")
-                .replace(/\$2/g, RHS ? (
-                    RHS.constructor.Name || (
-                        RHS.prototype instanceof CheddarClass ?
+                .replace(/\$2/g, rightexpression ? (
+                    rightexpression.constructor.Name || (
+                        rightexpression.prototype instanceof CheddarClass ?
                         "Class" :
                         "nil"
                     )
                 ) : "nil");
         } else {
-            return resp;
+            return op;
         }
-
     });
 }
