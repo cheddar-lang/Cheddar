@@ -19,6 +19,13 @@ describe('Encoding', function(){
         ))
     });
 
+    describe('UTF8', function() {
+        it('should decode surrogates properly', TestCheddarFrom.Code(
+            `print Encoding.UTF8.decode( Buffer.create( [240, 159, 152, 128] ) ) == ( @" [ 55357, 56832 ] )`,
+            `true`
+        ))
+    });
+
     /*describe('shoco', function(){
         it('should work with encode', TestCheddarFrom.Code(
             `print Array::Encoding.shoco.encode("Hello")`,
