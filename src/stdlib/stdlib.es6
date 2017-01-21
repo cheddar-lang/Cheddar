@@ -17,7 +17,8 @@ STDLIB.p = (Name, Item) => {
 STDLIB.Item("cheddar");
 
 STDLIB.Item("Math");
-// STDLIB.Item("Rational");
+
+STDLIB.Item("Size");
 
 STDLIB.Item("Encoding");
 STDLIB.Item("Buffer");
