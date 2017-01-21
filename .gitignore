@@ -1,6 +1,8 @@
 # Build
 build
 
+profile-*
+
 # Cheddar debug logs
 /benckmark/debug
 

@@ -37,7 +37,7 @@
   },
   "scripts": {
     "prepublish": "make",
-    "install": "node build.js",
+    "install": "node bin/build.js",
     "build": "make build",
     "test": "make test",
     "start": "./dist/cli/cheddar",

@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --allow-natives-syntax --never_compact
 
 var pjson = require('../../package.json');
 var child_process = require('child_process');
