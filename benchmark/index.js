@@ -6,8 +6,9 @@ var log = "";
 // Start up
 
 var cheddar = (function(cheddar) {
+    var f;
     if (process.argv.indexOf('--debug') > -1) {
-        return function(code) {
+        f = function(code) {
             return function() {
                 cheddar(code, {
                     PRINT: function(value) { log += value }
@@ -15,7 +16,7 @@ var cheddar = (function(cheddar) {
             }
         };
     } else {
-        return function(code) {
+        f = function(code) {
             return function() {
                 cheddar(code, {
                     PRINT: function() {}
@@ -23,7 +24,11 @@ var cheddar = (function(cheddar) {
             }
         }
     }
+    f.stdlib = cheddar.stdlib;
+    return f;
 }(require('../')));
+
+var api = cheddar.stdlib;
 
 function leftPad(string, num) {
     return string + " ".repeat(Math.max(num - string.length, 0));
@@ -61,7 +66,11 @@ function Bench(name, args) {
     } else {
         var suite = new benchmark.Suite(name);
         for (var i = 0; i < args.length; i++) {
-            suite.add(args[i][0], cheddar(args[i][1]));
+            if (typeof args[i][1] === 'function') {
+                suite.add(args[i][0], args[i][1]);
+            } else {
+                suite.add(args[i][0], cheddar(args[i][1]));
+            }
         }
 
         suite.on('complete', function() {
@@ -118,9 +127,30 @@ Bench("Literal Parsing", [
     [ "Array", "[1, 2, 3]" ],
 ]);
 
+Bench("Unwrapped Literal Creation (init)", [
+    [ "string", () => api.init(api.string, "Hello, World!") ],
+    [ "number", () => api.init(api.number, 10, 0, 1) ],
+    [ "array",  () => api.init(api.array, api.init(api.number, 10, 0, 1), api.init(api.number, 10, 0, 2), api.init(api.number, 10, 0, 3)) ]
+]);
+
+Bench("Unwrapped Literal Creation (init)", [
+    [ "string", () => {
+        var o = new api.string(null);
+        o.init("Hello, World!");
+    }],
+    [ "number", () => {
+        var o = new api.number(null);
+        o.init(10, 0, 10);
+    }]
+]);
+
+Bench("Call stack cycle time", [
+    ["binary", "1 + 1" ]
+]);
+
 Bench("Prime Generation", [
     [ ".primes  (< 1000)", "Math.primes(1000);" ],
-    [ ".isprime (< 1000)", "let i = 0; for ( let a = []; a.len < 1000; i += 1) { if (Math.isprime(i)) { a.push(i) } }" ],
+    [ ".isprime (< 1000)", "let i = 0; for ( let a = []; a.length < 1000; i += 1) { if (Math.isPrime(i)) { a.push(i) } }" ],
     [ "Native   (< 1000)", fs.readFileSync(__dirname + "/prime.cheddar", "utf-8") ],
 
     [ ".primes  (= 1000)", "Math.primes(1000, true);" ]

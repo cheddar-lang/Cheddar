@@ -11,7 +11,7 @@ for (var i = 0; i < dirs.length; i++) {
     if (dirs[i] !== "index.js") {
         item = path.join(__dirname, "../bindings/", dirs[i]) + "/";
         var res = child_process.spawnSync(path.join(__dirname, "../node_modules/.bin/node-gyp"), [ "rebuild", "-C", item ]);
-        process.stdout.write(res.stdout);
-        process.stderr.write(res.stderr);
+        process.stdout.write(res.stdout || "");
+        process.stderr.write(res.stderr || "");
     }
 }
