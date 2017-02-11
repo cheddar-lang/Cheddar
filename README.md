@@ -33,7 +33,7 @@ Development for cheddar is described [in detail on the docs](https://docs.chedda
 $ git clone --recursive https://github.com/cheddar-lang/Cheddar.git
 ```
 
-Additionally, when _syncinc_ your branch with the latest update to `develop`, use the following command to avoid merge commmits:
+Additionally, when _syncing_ your branch with the latest update to `develop`, use the following command to avoid merge commmits:
 
 ```sh
 $ git rebase develop -X theirs
