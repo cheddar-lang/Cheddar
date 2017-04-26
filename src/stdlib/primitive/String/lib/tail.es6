@@ -7,7 +7,7 @@ export default (api) => ["tail", api.var(new api.func(
     function(scope, input) {
         let item = input("self").value;
         return api.init(api.string, item.substring(
-            Math.abs(input("A").value)
+            0,-Math.abs(input("A").value)
         ));
     }
 ))]
